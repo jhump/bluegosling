@@ -133,65 +133,65 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Types.html#arrayTypeOf-java.lang.reflect.Type-">arrayTypeOf</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;componentType)</code>
-<div class="block">Returns an array type with the given component type.</div>
-</td>
-</tr>
-<tr id="i1" class="rowColor">
 <td class="colFirst"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Types.html#box-java.lang.Class-">box</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;clazz)</code>
 <div class="block">Boxes the given class if it is a primitive type.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Types.html#box-java.lang.reflect.Type-">box</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;type)</code>
 <div class="block">Boxes the given type if it is a primitive type.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Types.html#equals-java.lang.reflect.Type-java.lang.reflect.Type-">equals</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;a,
       <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;b)</code>
 <div class="block">Returns true if both of the given types refer to the same type or are equivalent.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/WildcardType.html?is-external=true" title="class or interface in java.lang.reflect">WildcardType</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Types.html#extendsAnyWildcard--">extendsAnyWildcard</a></span>()</code>
 <div class="block">Returns a <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/WildcardType.html?is-external=true" title="class or interface in java.lang.reflect"><code>WildcardType</code></a> with an upper bound of <code>Object</code>, i.e.&nbsp;<code>?</code>.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Types.html#getActualTypeArguments-java.lang.reflect.Type-">getActualTypeArguments</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;type)</code>
 <div class="block">Returns the actual type arguments if the given type is a parameterized type.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Types.html#getAllSupertypes-java.lang.reflect.Type-">getAllSupertypes</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;type)</code>
 <div class="block">Returns the set of all supertypes for the given type.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>static &lt;A extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;<br>A</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Types.html#getAnnotation-java.lang.reflect.Type-java.lang.Class-">getAnnotation</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;type,
              <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;A&gt;&nbsp;annotationType)</code>
 <div class="block">Finds the given annotation on the given type.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Types.html#getAnnotations-java.lang.reflect.Type-">getAnnotations</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;type)</code>
 <div class="block">Finds all annotations on the given type.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T[]&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Types.html#getArrayType-java.lang.Class-">getArrayType</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;componentType)</code>
 <div class="block">Gets the class token that represents an array of the given component type.</div>
+</td>
+</tr>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Types.html#getArrayType-java.lang.reflect.Type-">getArrayType</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;componentType)</code>
+<div class="block">Returns an array type with the given component type.</div>
 </td>
 </tr>
 <tr id="i10" class="altColor">
@@ -213,45 +213,45 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </td>
 </tr>
 <tr id="i13" class="rowColor">
+<td class="colFirst"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Types.html#getErasure-java.lang.reflect.Type-">getErasure</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;type)</code>
+<div class="block">Determines the erasure for the given type.</div>
+</td>
+</tr>
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Types.html#getGenericInterfaces-java.lang.reflect.Type-">getGenericInterfaces</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;type)</code>
 <div class="block">Returns the generic interfaces implemented by the given type.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Types.html#getGenericSuperclass-java.lang.reflect.Type-">getGenericSuperclass</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;type)</code>
 <div class="block">Returns the generic superclass of the given type.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Types.html#getInterfaces-java.lang.reflect.Type-">getInterfaces</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;type)</code>
 <div class="block">Returns the interfaces implemented by the given type.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Types.html#getLeastUpperBounds-java.lang.Iterable-">getLeastUpperBounds</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&gt;&nbsp;types)</code>
 <div class="block">Computes least upper bounds for the given types.</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Types.html#getLeastUpperBounds-java.lang.reflect.Type...-">getLeastUpperBounds</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>...&nbsp;types)</code>
 <div class="block">Computes least upper bounds for the given array of types.</div>
 </td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Types.html#getOwnerType-java.lang.reflect.Type-">getOwnerType</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;type)</code>
 <div class="block">Returns the owner of the given type.</div>
-</td>
-</tr>
-<tr id="i19" class="rowColor">
-<td class="colFirst"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Types.html#getRawType-java.lang.reflect.Type-">getRawType</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;type)</code>
-<div class="block">Finds the raw class token that best represents the given type.</div>
 </td>
 </tr>
 <tr id="i20" class="altColor">
@@ -301,15 +301,15 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </tr>
 <tr id="i27" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Types.html#isAssignable-java.lang.reflect.Type-java.lang.reflect.Type-">isAssignable</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;to,
-            <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;from)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Types.html#isAssignable-java.lang.reflect.Type-java.lang.reflect.Type-">isAssignable</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;from,
+            <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;to)</code>
 <div class="block">Determines if one type is assignable to another.</div>
 </td>
 </tr>
 <tr id="i28" class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Types.html#isAssignableStrict-java.lang.reflect.Type-java.lang.reflect.Type-">isAssignableStrict</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;to,
-                  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;from)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Types.html#isAssignableStrict-java.lang.reflect.Type-java.lang.reflect.Type-">isAssignableStrict</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;from,
+                  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;to)</code>
 <div class="block">Determines if one type is assignable to another, with restrictions.</div>
 </td>
 </tr>
@@ -358,16 +358,16 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </tr>
 <tr id="i36" class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Types.html#isSubtype-java.lang.reflect.Type-java.lang.reflect.Type-">isSubtype</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;aType,
-         <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;possibleSubtype)</code>
-<div class="block">Determines if one type is a subtype of another.</div>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Types.html#isSubtype-java.lang.reflect.Type-java.lang.reflect.Type-">isSubtype</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;possibleSubtype,
+         <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;aType)</code>
+<div class="block">Determines if one type is a <em>proper</em> subtype of another.</div>
 </td>
 </tr>
 <tr id="i37" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Types.html#isSubtypeStrict-java.lang.reflect.Type-java.lang.reflect.Type-">isSubtypeStrict</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;aType,
-               <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;possibleSubtype)</code>
-<div class="block">Determines if one type is a subtype of another, with restrictions.</div>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Types.html#isSubtypeStrict-java.lang.reflect.Type-java.lang.reflect.Type-">isSubtypeStrict</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;possibleSubtype,
+               <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;aType)</code>
+<div class="block">Determines if one type is a <em>proper</em> subtype of another, with restrictions.</div>
 </td>
 </tr>
 <tr id="i38" class="altColor">
@@ -437,9 +437,9 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </tr>
 <tr id="i47" class="rowColor">
 <td class="colFirst"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Types.html#resolveSuperType-java.lang.reflect.Type-java.lang.Class-">resolveSuperType</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;type,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/Types.html#resolveSupertype-java.lang.reflect.Type-java.lang.Class-">resolveSupertype</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;type,
                 <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;superClass)</code>
-<div class="block">For the given generic type, computes the generic super-type corresponding to the given raw
+<div class="block">For the given generic type, computes the generic supertype corresponding to the given raw
  class token.</div>
 </td>
 </tr>
@@ -497,18 +497,17 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getRawType-java.lang.reflect.Type-">
+<a name="getErasure-java.lang.reflect.Type-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getRawType</h4>
-<pre>public static&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;getRawType(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;type)</pre>
-<div class="block">Finds the raw class token that best represents the given type. If the type is a class then it
- is returned. If it is a parameterized type, the parameterized type's raw type is returned. If
- it is a generic array type, an class token representing an array of the component type is
- returned. Finally, if it is either a wildcard type or type variable, its first upper bound is
- returned.
+<h4>getErasure</h4>
+<pre>public static&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;getErasure(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;type)</pre>
+<div class="block">Determines the erasure for the given type. If the type is a class then it is returned. If it
+ is a parameterized type, the parameterized type's raw type is returned. If it is a generic
+ array type, a class token representing an array of the component type is returned. Finally, if
+ it is either a wildcard type or type variable, its first upper bound is returned.
  
  <p>These are the same rules as defined in <em>Type Erasure</em>
  (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.6">JLS
@@ -562,7 +561,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <li class="blockList">
 <h4>isInterface</h4>
 <pre>public static&nbsp;boolean&nbsp;isInterface(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;type)</pre>
-<div class="block">Determines if the given type is an interface type.</div>
+<div class="block">Determines if the given type is an interface type. If the type is a wildcard or type variable
+ then its actual type isn't known, so this method returns false regardless of bounds.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>type</code> - a generic type</dd>
@@ -594,7 +594,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <li class="blockList">
 <h4>isAnnotation</h4>
 <pre>public static&nbsp;boolean&nbsp;isAnnotation(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;type)</pre>
-<div class="block">Determines if the given type is an annotation type.</div>
+<div class="block">Determines if the given type is an annotation type. If the type is a wildcard or type variable
+ then its actual type isn't known, so this method returns false regardless of bounds.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>type</code> - a generic type</dd>
@@ -761,7 +762,17 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
  <p>This differs from <a href="../../../com/apriori/reflect/Types.html#getSuperclass-java.lang.reflect.Type-"><code>getSuperclass(Type)</code></a> in that it can return a non-raw type. For
  example if a wildcard's bound is a parameterized type or if a class extends a parameterized
  type (e.g. <code>class MyClass extends ArrayList&lt;String&gt;</code>) then a parameterized type is
- returned.</div>
+ returned. 
+
+ <p>This can differ from the classes that may be present in <a href="../../../com/apriori/reflect/Types.html#getDirectSupertypes-java.lang.reflect.Type-"><code>getDirectSupertypes(Type)</code></a>.
+ This method is similar to <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true#getGenericSuperclass--" title="class or interface in java.lang"><code>Class.getGenericSuperclass()</code></a> in how array and primitive
+ types are handled: all array types return <code>Object</code>, and all primitive types return
+ <code>null</code>. Whereas <a href="../../../com/apriori/reflect/Types.html#getDirectSupertypes-java.lang.reflect.Type-"><code>getDirectSupertypes(Type)</code></a> uses the rules defined in
+ <em>Subtyping among Primitive Types</em>
+ (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.10.1">JLS
+ 4.10.1</a>) and <em>Subtyping among Array Types</em>
+ (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.10.3">JLS
+ 4.10.3</a>)</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>type</code> - a generic type</dd>
@@ -791,7 +802,13 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
  <p>This differs from <a href="../../../com/apriori/reflect/Types.html#getInterfaces-java.lang.reflect.Type-"><code>getInterfaces(Type)</code></a> in that it can return a non-raw type. For
  example if a wildcard type has an interface bound that is a parameterized type or if a class
  implements a parameterized type (e.g. <code>class MyClass implements List&lt;String&gt;</code>) then a
- parameterized type is returned.</div>
+ parameterized type is returned.
+ 
+ <p>This can differ from the interfaces present in <a href="../../../com/apriori/reflect/Types.html#getDirectSupertypes-java.lang.reflect.Type-"><code>getDirectSupertypes(Type)</code></a>. This
+ method is similar to <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true#getGenericInterfaces--" title="class or interface in java.lang"><code>Class.getGenericInterfaces()</code></a> in how array types are handled: all
+ array types return <code>Cloneable</code> and <code>Serializable</code>. Whereas
+ <a href="../../../com/apriori/reflect/Types.html#getDirectSupertypes-java.lang.reflect.Type-"><code>getDirectSupertypes(Type)</code></a> returns no interfaces unless <code>Object[]</code> or a
+ primitive array type is given.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>type</code> - a generic type</dd>
@@ -963,10 +980,10 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockList">
 <li class="blockList">
 <h4>isAssignable</h4>
-<pre>public static&nbsp;boolean&nbsp;isAssignable(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;to,
-                                   <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;from)</pre>
+<pre>public static&nbsp;boolean&nbsp;isAssignable(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;from,
+                                   <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;to)</pre>
 <div class="block">Determines if one type is assignable to another. This is true when the RHS is the same type or
- a sub-type of the LHS (co-variance), but also true when the RHS is compatible with the LHS
+ a subtype of the LHS (co-variance), but also true when the RHS is compatible with the LHS
  after possible assignment conversions. The possible conversions include <em>Widening Primitive
  Conversions</em>
  (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-5.html#jls-5.1.3">JLS
@@ -981,8 +998,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true#isAssignableFrom-java.lang.Class-" title="class or interface in java.lang"><code>Class.isAssignableFrom(Class)</code></a>, but supporting generic types instead of only raw types.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>to</code> - the LHS of assignment</dd>
 <dd><code>from</code> - the RHS of assignment</dd>
+<dd><code>to</code> - the LHS of assignment</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>true if the assignment is allowed</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
@@ -997,8 +1014,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockList">
 <li class="blockList">
 <h4>isAssignableStrict</h4>
-<pre>public static&nbsp;boolean&nbsp;isAssignableStrict(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;to,
-                                         <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;from)</pre>
+<pre>public static&nbsp;boolean&nbsp;isAssignableStrict(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;from,
+                                         <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;to)</pre>
 <div class="block">Determines if one type is assignable to another, with restrictions. This is true when the RHS
  is the same type or a subtype of the LHS (co-variance).
  
@@ -1039,8 +1056,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
  widening primitive conversion. This is analogous to the observation that <code>long.class.isAssignableFrom(int.class)</code> returns false.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>to</code> - the LHS of assignment</dd>
 <dd><code>from</code> - the RHS of assignment</dd>
+<dd><code>to</code> - the LHS of assignment</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>true if the assignment is allowed</dd>
 </dl>
@@ -1052,15 +1069,20 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockList">
 <li class="blockList">
 <h4>isSubtype</h4>
-<pre>public static&nbsp;boolean&nbsp;isSubtype(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;aType,
-                                <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;possibleSubtype)</pre>
-<div class="block">Determines if one type is a subtype of another. This uses the rules in <em>Subtyping</em>
+<pre>public static&nbsp;boolean&nbsp;isSubtype(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;possibleSubtype,
+                                <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;aType)</pre>
+<div class="block">Determines if one type is a <em>proper</em> subtype of another. This uses the rules in
+ <em>Subtyping</em>
  (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.10">JLS
- 4.10</a>) to decide if one type is a subtype of the other.</div>
+ 4.10</a>) to decide if one type is a subtype of the other.
+ 
+ <p>As this checks if one types is a <strong>proper</strong> subtype, it will return false if
+ the two types are the same. To check if a type is the same or a subtype, consider using
+ <a href="../../../com/apriori/reflect/Types.html#isAssignable-java.lang.reflect.Type-java.lang.reflect.Type-"><code>Types.isAssignable(possibleSubtype, aType)</code></a>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>aType</code> - a type</dd>
 <dd><code>possibleSubtype</code> - another type</dd>
+<dd><code>aType</code> - a type</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>true if the second type is a subtype of the first</dd>
 </dl>
@@ -1072,22 +1094,27 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockList">
 <li class="blockList">
 <h4>isSubtypeStrict</h4>
-<pre>public static&nbsp;boolean&nbsp;isSubtypeStrict(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;aType,
-                                      <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;possibleSubtype)</pre>
-<div class="block">Determines if one type is a subtype of another, with restrictions. The restrictions are the
- same as those observed in calls to <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true#isAssignableFrom-java.lang.Class-" title="class or interface in java.lang"><code>Class.isAssignableFrom(Class)</code></a>: primitive subtyping
- rules are ignored. So this will return false if given {code int} and <code>short</code> (even
- though <code>short</code> is a subtype of <code>int</code> per primitive subtyping rules).
+<pre>public static&nbsp;boolean&nbsp;isSubtypeStrict(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;possibleSubtype,
+                                      <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;aType)</pre>
+<div class="block">Determines if one type is a <em>proper</em> subtype of another, with restrictions. The
+ restrictions are the same as those observed in calls to <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true#isAssignableFrom-java.lang.Class-" title="class or interface in java.lang"><code>Class.isAssignableFrom(Class)</code></a>:
+ primitive subtyping rules are ignored. So this will return false if given <code>int</code> and
+ <code>short</code> (even though <code>short</code> is a subtype of <code>int</code> per primitive subtyping
+ rules).
  
  <p>So only the rules defined in <em>Subtyping among Class and Interface Types</em>
  (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.10.2">JLS
  4.10.2</a>) and <em>Subtyping among Array Types</em>
  (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.10.3">JLS
- 4.10.3</a>) are consulted.</div>
+ 4.10.3</a>) are used.
+ 
+ <p>As this checks if one types is a <strong>proper</strong> subtype, it will return false if
+ the two types are the same. To check if a type is the same or a subtype, consider using
+ <a href="../../../com/apriori/reflect/Types.html#isAssignableStrict-java.lang.reflect.Type-java.lang.reflect.Type-"><code>Types.isAssignable(possibleSubtype, aType)</code></a>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>aType</code> - a type</dd>
 <dd><code>possibleSubtype</code> - another type</dd>
+<dd><code>aType</code> - a type</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>true if the second type is a subtype of the first (but not according to primitive
        subtyping rules)</dd>
@@ -1241,9 +1268,12 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
  
  <p>The JLS indicates that recursive types, which could result in infinite recursion in
  computing the last upper bounds, should result in cyclic data structures. Core reflection type
- interfaces are not designed to model such cycles. So if the computed least upper bound
+ interfaces are generally not expected to be cyclic. So if the computed least upper bound
  <code>`lub`</code> were, for example, to result in <code>Comparable&lt;`lub`&gt;</code> then a non-cyclic
- type, <code>Comparable&lt;?&gt;</code> would be returned instead.</div>
+ type, <code>Comparable&lt;?&gt;</code> would be returned instead.
+ 
+ <p>If a mix of reference and primitive types are given, an empty array is returned since
+ primitive types and reference types have no shared bound.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>types</code> - the types whose least upper bounds are computed</dd>
@@ -1263,11 +1293,14 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
  interface type that has exactly one abstract method. Default methods on an interface are not
  counted as abstract.
  
- <p>This applies the rules defined in</div>
+ <p>This applies the rules defined in <em>Functional Interfaces</em>
+ (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-9.html#jls-9.8">JLS
+ 9.8</a>).</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>type</code> - </dd>
+<dd><code>type</code> - a type</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if the given type is a functional interface (i.e. has a single abstract method)</dd>
 </dl>
 </li>
 </ul>
@@ -1364,16 +1397,16 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </dl>
 </li>
 </ul>
-<a name="resolveSuperType-java.lang.reflect.Type-java.lang.Class-">
+<a name="resolveSupertype-java.lang.reflect.Type-java.lang.Class-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>resolveSuperType</h4>
-<pre>public static&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;resolveSuperType(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;type,
+<h4>resolveSupertype</h4>
+<pre>public static&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;resolveSupertype(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;type,
                                     <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;superClass)</pre>
-<div class="block">For the given generic type, computes the generic super-type corresponding to the given raw
- class token. If the given generic type is not actually assignable to the given super-type
+<div class="block">For the given generic type, computes the generic supertype corresponding to the given raw
+ class token. If the given generic type is not actually assignable to the given supertype
  token then <code>null</code> is returned. 
  
  <p>For example, if the given generic type is <code>List&lt;String&gt;</code> and the given raw class
@@ -1383,32 +1416,31 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
  <p>If the given generic type is a raw class token but represents a type with type parameters,
  then raw types are returned. For example, if the generic type is <code>HashMap.class</code> and
  the given raw class token is <code>Map.class</code>, then this method simply returns the raw type
- <code>Map.class</code>. This is also done if any super-type traversed uses raw types. For example,
+ <code>Map.class</code>. This is also done if any supertype traversed uses raw types. For example,
  if the given type's super-class were defined as <code>class Xyz extends HashMap</code>, then the
  type arguments to <code>HashMap</code> are lost due to raw type usage and a raw type is returned.
  
  <p>If the given generic type is a raw class token that does <em>not</em> have any type
  parameters, then the returned value can still be a generic type. For example, if the given
  type is <code>Xyz.class</code> and that class is defined as <code>class Xyz extends
- ArrayList&lt;String&gt;</code>, then querying for a super-type of <code>List.class</code> will return a
+ ArrayList&lt;String&gt;</code>, then querying for a supertype of <code>List.class</code> will return a
  parameterized type: <code>List&lt;String&gt;</code>.
  
- <p>If the given generic type is a wildcard type or type variable, its super-types include all
- upper bounds (and their super-types), and the type's hierarchy is traversed as such.
+ <p>If the given generic type is a wildcard type or type variable, its supertypes include all
+ upper bounds (and their supertypes), and the type's hierarchy is traversed as such.
  
- <p>Technically, a generic array type's only super-types are <code>Object</code>, <code>Cloneable</code>,
- and <code>Serializable</code>. However, since array types are co-variant, this method can resolve
- other super-types to which the given type is assignable. For example, if the given type is
+ <p>Since array types are co-variant on their component type, this method can resolve other
+ supertypes to which the given type is assignable. For example, if the given type is
  <code>HashMap&lt;String, Number&gt;[]</code> and the given raw class token queried is <code>Map[].class</code>
  then this method will resolve type parameters and return a generic type:
  <code>Map&lt;String, Number&gt;[]</code>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>type</code> - a generic type</dd>
-<dd><code>superClass</code> - a class token for the super-type to query</dd>
+<dd><code>superClass</code> - a class token for the supertype to query</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a generic type that represents the given super-type token resolved in the context of
-       the given type or <code>null</code> if the given token is not a super-type of the given
+<dd>a generic type that represents the given supertype token resolved in the context of
+       the given type or <code>null</code> if the given token is not a supertype of the given
        generic type</dd>
 </dl>
 </li>
@@ -1452,13 +1484,13 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </dl>
 </li>
 </ul>
-<a name="arrayTypeOf-java.lang.reflect.Type-">
+<a name="getArrayType-java.lang.reflect.Type-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>arrayTypeOf</h4>
-<pre>public static&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;arrayTypeOf(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;componentType)</pre>
+<h4>getArrayType</h4>
+<pre>public static&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;getArrayType(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect">Type</a>&nbsp;componentType)</pre>
 <div class="block">Returns an array type with the given component type. If the given component type is a simple
  class token, then a class token that represents an array of that type is returned. Otherwise,
  a generic array type is returned.
@@ -1483,12 +1515,12 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <div class="block">Returns the type parameters for the given type or an empty array if it has none. Only class
  tokens and parameterized types have type parameters. Array types cannot have type parameters
  (only the arrays' component types can). Wildcard types and type variables also do not have
- type parameters (only their bounds, e.g. super-types, can).</div>
+ type parameters (only their bounds, e.g. supertypes, can).</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>type</code> - a generic type</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the type parameters for the given type; an empty array if the type ha no parameters</dd>
+<dd>the type parameters for the given type; an empty array if the type has no parameters</dd>
 </dl>
 </li>
 </ul>
@@ -1689,7 +1721,10 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <li class="blockList">
 <h4>extendsAnyWildcard</h4>
 <pre>public static&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/WildcardType.html?is-external=true" title="class or interface in java.lang.reflect">WildcardType</a>&nbsp;extendsAnyWildcard()</pre>
-<div class="block">Returns a <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/WildcardType.html?is-external=true" title="class or interface in java.lang.reflect"><code>WildcardType</code></a> with an upper bound of <code>Object</code>, i.e.&nbsp;<code>?</code>.</div>
+<div class="block">Returns a <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/WildcardType.html?is-external=true" title="class or interface in java.lang.reflect"><code>WildcardType</code></a> with an upper bound of <code>Object</code>, i.e.&nbsp;<code>?</code>.
+ 
+ <p>The returned value is a constant. Multiple calls to this method all return references to
+ that same constant object.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the wildcard type with an open upper bound of <code>Object</code></dd>

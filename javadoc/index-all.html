@@ -1329,7 +1329,8 @@
 </dd>
 <dt><a href="com/apriori/apt/testing/AnnotationProcessorTestRunner.html" title="class in com.apriori.apt.testing"><span class="typeNameLink">AnnotationProcessorTestRunner</span></a> - Class in <a href="com/apriori/apt/testing/package-summary.html">com.apriori.apt.testing</a></dt>
 <dd>
-<div class="block">A test runner for executing tests inside the context of the annotation processing phase of a Java compiler.</div>
+<div class="block">A test runner for executing tests inside the context of the annotation processing phase of a Java
+ compiler.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/testing/AnnotationProcessorTestRunner.html#AnnotationProcessorTestRunner-java.lang.Class-">AnnotationProcessorTestRunner(Class&lt;?&gt;)</a></span> - Constructor for class com.apriori.apt.testing.<a href="com/apriori/apt/testing/AnnotationProcessorTestRunner.html" title="class in com.apriori.apt.testing">AnnotationProcessorTestRunner</a></dt>
 <dd>&nbsp;</dd>
@@ -1566,10 +1567,6 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/ArrayMappedStringTrie.html#ArrayMappedStringTrie-java.text.Collator-java.util.Map-">ArrayMappedStringTrie(Collator, Map&lt;? extends CharSequence, ? extends V&gt;)</a></span> - Constructor for class com.apriori.collections.<a href="com/apriori/collections/ArrayMappedStringTrie.html" title="class in com.apriori.collections">ArrayMappedStringTrie</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/apriori/reflect/Types.html#arrayTypeOf-java.lang.reflect.Type-">arrayTypeOf(Type)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Types.html" title="class in com.apriori.reflect">Types</a></dt>
-<dd>
-<div class="block">Returns an array type with the given component type.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeRef.html#arrayTypeRef-com.apriori.reflect.TypeRef-">arrayTypeRef(TypeRef&lt;T&gt;)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a></dt>
 <dd>
 <div class="block">Creates a <a href="com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect"><code>TypeRef</code></a> for an array type with the given component type.</div>
@@ -1624,6 +1621,10 @@
 <dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArTypes.html#asClass-com.apriori.apt.reflect.ArType-">asClass(ArType)</a></span> - Static method in class com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArTypes.html" title="class in com.apriori.apt.reflect">ArTypes</a></dt>
 <dd>
 <div class="block">Downcasts the specified type as a <a href="com/apriori/apt/reflect/ArClass.html" title="class in com.apriori.apt.reflect"><code>ArClass</code></a>.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.ClassInfo.html#asClass--">asClass()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.ClassInfo.html" title="class in com.apriori.reflect">PackageScanner.ClassInfo</a></dt>
+<dd>
+<div class="block">TODO: document me!</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeRef.html#asClass--">asClass()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a></dt>
 <dd>
@@ -2826,6 +2827,10 @@
 <dd>
 <div class="block">Gets the result value.</div>
 </dd>
+<dt><a href="com/apriori/apt/testing/CheckedProcessingTask.html" title="interface in com.apriori.apt.testing"><span class="typeNameLink">CheckedProcessingTask</span></a>&lt;<a href="com/apriori/apt/testing/CheckedProcessingTask.html" title="type parameter in CheckedProcessingTask">T</a>,<a href="com/apriori/apt/testing/CheckedProcessingTask.html" title="type parameter in CheckedProcessingTask">X</a> extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt; - Interface in <a href="com/apriori/apt/testing/package-summary.html">com.apriori.apt.testing</a></dt>
+<dd>
+<div class="block">A task that can be run from the context of the annotation processing phase of a compiler.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/testing/ObjectVerifiers.html#checkInstance-T-">checkInstance(T)</a></span> - Static method in class com.apriori.testing.<a href="com/apriori/testing/ObjectVerifiers.html" title="class in com.apriori.testing">ObjectVerifiers</a></dt>
 <dd>
 <div class="block">Returns an object that verifies that the test object is the same as a specified instance.</div>
@@ -3524,6 +3529,22 @@
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/EnumType.EnumElement.html#compareTo-com.apriori.reflect.EnumType.EnumElement-">compareTo(EnumType.EnumElement&lt;T&gt;)</a></span> - Method in interface com.apriori.reflect.<a href="com/apriori/reflect/EnumType.EnumElement.html" title="interface in com.apriori.reflect">EnumType.EnumElement</a></dt>
 <dd>
 <div class="block">Compares this element to another.</div>
+</dd>
+<dt><a href="com/apriori/apt/testing/CompilationContext.html" title="class in com.apriori.apt.testing"><span class="typeNameLink">CompilationContext</span></a> - Class in <a href="com/apriori/apt/testing/package-summary.html">com.apriori.apt.testing</a></dt>
+<dd>
+<div class="block">The context for invoking a compiler and running annotation processors.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/apt/testing/CompilationContext.html#CompilationContext--">CompilationContext()</a></span> - Constructor for class com.apriori.apt.testing.<a href="com/apriori/apt/testing/CompilationContext.html" title="class in com.apriori.apt.testing">CompilationContext</a></dt>
+<dd>
+<div class="block">Constructs a new context</div>
+</dd>
+<dt><a href="com/apriori/apt/testing/CompilationContext.TaskBuilder.html" title="interface in com.apriori.apt.testing"><span class="typeNameLink">CompilationContext.TaskBuilder</span></a> - Interface in <a href="com/apriori/apt/testing/package-summary.html">com.apriori.apt.testing</a></dt>
+<dd>
+<div class="block">Builds a task to run in this compilation context.</div>
+</dd>
+<dt><a href="com/apriori/apt/testing/CompilationContext.TaskBuilderWithProcessor.html" title="interface in com.apriori.apt.testing"><span class="typeNameLink">CompilationContext.TaskBuilderWithProcessor</span></a> - Interface in <a href="com/apriori/apt/testing/package-summary.html">com.apriori.apt.testing</a></dt>
+<dd>
+<div class="block">Builds a task to run in this compilation context.</div>
 </dd>
 <dt><a href="com/apriori/apt/testing/CompilationFailedException.html" title="class in com.apriori.apt.testing"><span class="typeNameLink">CompilationFailedException</span></a> - Exception in <a href="com/apriori/apt/testing/package-summary.html">com.apriori.apt.testing</a></dt>
 <dd>
@@ -4357,7 +4378,7 @@
 <dd>
 <div class="block">Creates a new instance that holds the specified value.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/reflect/Annotations.html#create-java.lang.Class-java.util.Map-">create(Class&lt;T&gt;, Map&lt;String, Object&gt;)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Annotations.html" title="class in com.apriori.reflect">Annotations</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/Annotations.html#create-java.lang.Class-java.util.Map-">create(Class&lt;T&gt;, Map&lt;String, ?&gt;)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Annotations.html" title="class in com.apriori.reflect">Annotations</a></dt>
 <dd>
 <div class="block">Creates an annotation instance.</div>
 </dd>
@@ -4405,17 +4426,25 @@
 <dd>
 <div class="block">Creates a new <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/BlockingDeque.html?is-external=true" title="class or interface in java.util.concurrent"><code>BlockingDeque</code></a>.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/apt/testing/TestJavaFileManager.html#createFileObject-javax.tools.JavaFileManager.Location-java.lang.String-java.lang.String-java.lang.String-">createFileObject(JavaFileManager.Location, String, String, String)</a></span> - Method in class com.apriori.apt.testing.<a href="com/apriori/apt/testing/TestJavaFileManager.html" title="class in com.apriori.apt.testing">TestJavaFileManager</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/apt/testing/TestJavaFileManager.html#createFileObject-javax.tools.JavaFileManager.Location-java.lang.String-java.lang.String-java.lang.String-java.nio.charset.Charset-">createFileObject(JavaFileManager.Location, String, String, String, Charset)</a></span> - Method in class com.apriori.apt.testing.<a href="com/apriori/apt/testing/TestJavaFileManager.html" title="class in com.apriori.apt.testing">TestJavaFileManager</a></dt>
 <dd>
 <div class="block">Creates a new text file in the in-memory file system.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/apt/testing/TestJavaFileManager.html#createFileObject-javax.tools.JavaFileManager.Location-java.lang.String-java.lang.String-java.lang.String-">createFileObject(JavaFileManager.Location, String, String, String)</a></span> - Method in class com.apriori.apt.testing.<a href="com/apriori/apt/testing/TestJavaFileManager.html" title="class in com.apriori.apt.testing">TestJavaFileManager</a></dt>
+<dd>
+<div class="block">Creates a new text file (UTF-8 encoded) in the in-memory file system.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/testing/TestJavaFileManager.html#createFileObject-javax.tools.JavaFileManager.Location-java.lang.String-java.lang.String-byte:A-">createFileObject(JavaFileManager.Location, String, String, byte[])</a></span> - Method in class com.apriori.apt.testing.<a href="com/apriori/apt/testing/TestJavaFileManager.html" title="class in com.apriori.apt.testing">TestJavaFileManager</a></dt>
 <dd>
 <div class="block">Creates a new binary file in the in-memory file system.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/apt/testing/TestJavaFileManager.html#createJavaFileObject-javax.tools.JavaFileManager.Location-java.lang.String-javax.tools.JavaFileObject.Kind-java.lang.String-">createJavaFileObject(JavaFileManager.Location, String, JavaFileObject.Kind, String)</a></span> - Method in class com.apriori.apt.testing.<a href="com/apriori/apt/testing/TestJavaFileManager.html" title="class in com.apriori.apt.testing">TestJavaFileManager</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/apt/testing/TestJavaFileManager.html#createJavaFileObject-javax.tools.JavaFileManager.Location-java.lang.String-javax.tools.JavaFileObject.Kind-java.lang.String-java.nio.charset.Charset-">createJavaFileObject(JavaFileManager.Location, String, JavaFileObject.Kind, String, Charset)</a></span> - Method in class com.apriori.apt.testing.<a href="com/apriori/apt/testing/TestJavaFileManager.html" title="class in com.apriori.apt.testing">TestJavaFileManager</a></dt>
 <dd>
 <div class="block">Creates a new java file that has text contents in the in-memory file system.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/apt/testing/TestJavaFileManager.html#createJavaFileObject-javax.tools.JavaFileManager.Location-java.lang.String-javax.tools.JavaFileObject.Kind-java.lang.String-">createJavaFileObject(JavaFileManager.Location, String, JavaFileObject.Kind, String)</a></span> - Method in class com.apriori.apt.testing.<a href="com/apriori/apt/testing/TestJavaFileManager.html" title="class in com.apriori.apt.testing">TestJavaFileManager</a></dt>
+<dd>
+<div class="block">Creates a new java file that has text contents (UTF-8 encoded) in the in-memory file system.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/testing/TestJavaFileManager.html#createJavaFileObject-javax.tools.JavaFileManager.Location-java.lang.String-javax.tools.JavaFileObject.Kind-byte:A-">createJavaFileObject(JavaFileManager.Location, String, JavaFileObject.Kind, byte[])</a></span> - Method in class com.apriori.apt.testing.<a href="com/apriori/apt/testing/TestJavaFileManager.html" title="class in com.apriori.apt.testing">TestJavaFileManager</a></dt>
 <dd>
@@ -4915,7 +4944,8 @@
 <dt><span class="memberNameLink"><a href="com/apriori/collections/SortedArraySet.html#descendingSet--">descendingSet()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/SortedArraySet.html" title="class in com.apriori.collections">SortedArraySet</a></dt>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/testing/TestEnvironment.html#diagnosticCollector--">diagnosticCollector()</a></span> - Method in class com.apriori.apt.testing.<a href="com/apriori/apt/testing/TestEnvironment.html" title="class in com.apriori.apt.testing">TestEnvironment</a></dt>
 <dd>
-<div class="block">Gets the current collector of diagnostics emitted by the compiler and by annotation processors.</div>
+<div class="block">Gets the current collector of diagnostics emitted by the compiler and by annotation
+ processors.</div>
 </dd>
 <dt><a href="com/apriori/reflect/DispatchSettings.html" title="class in com.apriori.reflect"><span class="typeNameLink">DispatchSettings</span></a> - Class in <a href="com/apriori/reflect/package-summary.html">com.apriori.reflect</a></dt>
 <dd>
@@ -5268,6 +5298,8 @@
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/EnumType.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/EnumType.html" title="class in com.apriori.reflect">EnumType</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/MethodSignature.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/MethodSignature.html" title="class in com.apriori.reflect">MethodSignature</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.ClassInfo.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.ClassInfo.html" title="class in com.apriori.reflect">PackageScanner.ClassInfo</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeRef.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a></dt>
 <dd>
@@ -5674,7 +5706,8 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/testing/TestEnvironment.html#filterAnnotationTypesFor-javax.annotation.processing.Processor-">filterAnnotationTypesFor(Processor)</a></span> - Method in class com.apriori.apt.testing.<a href="com/apriori/apt/testing/TestEnvironment.html" title="class in com.apriori.apt.testing">TestEnvironment</a></dt>
 <dd>
-<div class="block">Filters the current set of annotation types to only those supported by the specified processor.</div>
+<div class="block">Filters the current set of annotation types to only those supported by the specified
+ processor.</div>
 </dd>
 <dt><a href="com/apriori/collections/FilteringCollection.html" title="class in com.apriori.collections"><span class="typeNameLink">FilteringCollection</span></a>&lt;<a href="com/apriori/collections/FilteringCollection.html" title="type parameter in FilteringCollection">E</a>&gt; - Class in <a href="com/apriori/collections/package-summary.html">com.apriori.collections</a></dt>
 <dd>
@@ -6036,10 +6069,6 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/testing/TestJavaFileManager.html#flush--">flush()</a></span> - Method in class com.apriori.apt.testing.<a href="com/apriori/apt/testing/TestJavaFileManager.html" title="class in com.apriori.apt.testing">TestJavaFileManager</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/apriori/util/IndentingPrinter.html#flush--">flush()</a></span> - Method in class com.apriori.util.<a href="com/apriori/util/IndentingPrinter.html" title="class in com.apriori.util">IndentingPrinter</a></dt>
-<dd>
-<div class="block">Ensures that all content printed so far is flushed to underlying writer or output stream.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/function/Functions.html#foldLeft-java.lang.Iterable-java.util.function.BiFunction-O-">foldLeft(Iterable&lt;I&gt;, BiFunction&lt;? super O, ? super I, ? extends O&gt;, O)</a></span> - Static method in class com.apriori.function.<a href="com/apriori/function/Functions.html" title="class in com.apriori.function">Functions</a></dt>
 <dd>
 <div class="block">Performs a fold-left operation over the specified values and returns the result.</div>
@@ -7468,6 +7497,10 @@
 <dd>
 <div class="block">Gets the class token that represents an array of the given component type.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/Types.html#getArrayType-java.lang.reflect.Type-">getArrayType(Type)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Types.html" title="class in com.apriori.reflect">Types</a></dt>
+<dd>
+<div class="block">Returns an array type with the given component type.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/model/Types.html#getArrayTypeMirror-java.lang.Class-">getArrayTypeMirror(Class&lt;?&gt;)</a></span> - Method in interface com.apriori.reflect.model.<a href="com/apriori/reflect/model/Types.html" title="interface in com.apriori.reflect.model">Types</a></dt>
 <dd>
 <div class="block">Returns a type mirror that represents the same type as the given array type.</div>
@@ -7591,6 +7624,10 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Table5D.html#getColumns-C-">getColumns(C)</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/Table5D.html" title="interface in com.apriori.collections">Table5D</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/apt/testing/CompilationContext.html#getCompiler--">getCompiler()</a></span> - Method in class com.apriori.apt.testing.<a href="com/apriori/apt/testing/CompilationContext.html" title="class in com.apriori.apt.testing">CompilationContext</a></dt>
+<dd>
+<div class="block">Returns the system compiler that will be invoked when tasks are run in this context.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ActorThreadPool.html#getCompletedTaskCount--">getCompletedTaskCount()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ActorThreadPool.html" title="class in com.apriori.concurrent">ActorThreadPool</a></dt>
 <dd>
 <div class="block">Returns the total number of tasks completed by this executor.</div>
@@ -7729,6 +7766,10 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableScheduledFutureTask.html#getDelay-java.util.concurrent.TimeUnit-">getDelay(TimeUnit)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableScheduledFutureTask.html" title="class in com.apriori.concurrent">ListenableScheduledFutureTask</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/apt/testing/CompilationContext.html#getDiagnosticCollector--">getDiagnosticCollector()</a></span> - Method in class com.apriori.apt.testing.<a href="com/apriori/apt/testing/CompilationContext.html" title="class in com.apriori.apt.testing">CompilationContext</a></dt>
+<dd>
+<div class="block">Returns the diagnostic collector used to collect output from compiler invocations.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/testing/CategorizingDiagnosticCollector.html#getDiagnostics-javax.tools.Diagnostic.Kind-">getDiagnostics(Diagnostic.Kind)</a></span> - Method in class com.apriori.apt.testing.<a href="com/apriori/apt/testing/CategorizingDiagnosticCollector.html" title="class in com.apriori.apt.testing">CategorizingDiagnosticCollector</a></dt>
 <dd>
 <div class="block">Gets a view of diagnostics of a given kind collected so far.</div>
@@ -7823,6 +7864,10 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/AnnotatedTypes.html#getErasedType-java.lang.reflect.AnnotatedType-">getErasedType(AnnotatedType)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/AnnotatedTypes.html" title="class in com.apriori.reflect">AnnotatedTypes</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/Types.html#getErasure-java.lang.reflect.Type-">getErasure(Type)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Types.html" title="class in com.apriori.reflect">Types</a></dt>
+<dd>
+<div class="block">Determines the erasure for the given type.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/atoms/AsynchronousAtom.html#getErrorHandler--">getErrorHandler()</a></span> - Method in class com.apriori.concurrent.atoms.<a href="com/apriori/concurrent/atoms/AsynchronousAtom.html" title="class in com.apriori.concurrent.atoms">AsynchronousAtom</a></dt>
 <dd>
 <div class="block">Returns the atom's error handler.</div>
@@ -7896,6 +7941,11 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/testing/TestJavaFileManager.html#getFileForOutput-javax.tools.JavaFileManager.Location-java.lang.String-java.lang.String-javax.tools.FileObject-">getFileForOutput(JavaFileManager.Location, String, String, FileObject)</a></span> - Method in class com.apriori.apt.testing.<a href="com/apriori/apt/testing/TestJavaFileManager.html" title="class in com.apriori.apt.testing">TestJavaFileManager</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/apt/testing/CompilationContext.html#getFileManager--">getFileManager()</a></span> - Method in class com.apriori.apt.testing.<a href="com/apriori/apt/testing/CompilationContext.html" title="class in com.apriori.apt.testing">CompilationContext</a></dt>
+<dd>
+<div class="block">Returns the file manager for this compilation context, used to seed input files or examine
+ output files.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/choice/Choice.html#getFirst--">getFirst()</a></span> - Method in interface com.apriori.choice.<a href="com/apriori/choice/Choice.html" title="interface in com.apriori.choice">Choice</a></dt>
 <dd>
 <div class="block">Retrieves the value of the first option, if it is present.</div>
@@ -8006,7 +8056,7 @@
 <dd>
 <div class="block">Returns the type of this parameter.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/util/IndentingPrinter.html#getIndentLevel--">getIndentLevel()</a></span> - Method in class com.apriori.util.<a href="com/apriori/util/IndentingPrinter.html" title="class in com.apriori.util">IndentingPrinter</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/util/IndentingPrintWriter.html#getIndentLevel--">getIndentLevel()</a></span> - Method in class com.apriori.util.<a href="com/apriori/util/IndentingPrintWriter.html" title="class in com.apriori.util">IndentingPrintWriter</a></dt>
 <dd>
 <div class="block">Gets the current level of indentation.</div>
 </dd>
@@ -8224,6 +8274,8 @@
 <dd>
 <div class="block">Returns the name of the method that this signature represents.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.ClassInfo.html#getName--">getName()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.ClassInfo.html" title="class in com.apriori.reflect">PackageScanner.ClassInfo</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/AbstractListenableFuture.html#getNow-T-">getNow(T)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/AbstractListenableFuture.html" title="class in com.apriori.concurrent">AbstractListenableFuture</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableFuture.html#getNow-T-">getNow(T)</a></span> - Method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a></dt>
@@ -8263,6 +8315,8 @@
 <dd>
 <div class="block">Returns a package element for the given package.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.ClassInfo.html#getPackageName--">getPackageName()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.ClassInfo.html" title="class in com.apriori.reflect">PackageScanner.ClassInfo</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.PathResult.html#getPackagesFound--">getPackagesFound()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.PathResult.html" title="class in com.apriori.reflect">PackageScanner.PathResult</a></dt>
 <dd>
 <div class="block">Returns the set of package names found in this path.</div>
@@ -8394,10 +8448,6 @@
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeRef.html#getRawType--">getRawType()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a></dt>
 <dd>
 <div class="block">Returns the raw type that corresponds to this generic type.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/apriori/reflect/Types.html#getRawType-java.lang.reflect.Type-">getRawType(Type)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Types.html" title="class in com.apriori.reflect">Types</a></dt>
-<dd>
-<div class="block">Finds the raw class token that best represents the given type.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/model/Types.html#getReferenceTypeMirror-java.lang.Class-">getReferenceTypeMirror(Class&lt;?&gt;)</a></span> - Method in interface com.apriori.reflect.model.<a href="com/apriori/reflect/model/Types.html" title="interface in com.apriori.reflect.model">Types</a></dt>
 <dd>
@@ -8704,6 +8754,8 @@
 <div class="block">Returns the set of unchecked exceptions thrown by method calls as configured using
  <a href="com/apriori/testing/InterfaceVerifier.MethodConfiguration.html#uncheckedExceptions-java.lang.Class...-"><code>InterfaceVerifier.MethodConfiguration.uncheckedExceptions(java.lang.Class&lt;? extends java.lang.Throwable&gt;...)</code></a>.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.ClassInfo.html#getUnqualifiedName--">getUnqualifiedName()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.ClassInfo.html" title="class in com.apriori.reflect">PackageScanner.ClassInfo</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/unsafe/UnsafeUtils.html#getUnsafe--">getUnsafe()</a></span> - Static method in class com.apriori.concurrent.unsafe.<a href="com/apriori/concurrent/unsafe/UnsafeUtils.html" title="class in com.apriori.concurrent.unsafe">UnsafeUtils</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Table2D.Cell2D.html#getValue--">getValue()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/Table2D.Cell2D.html" title="interface in com.apriori.collections">Table2D.Cell2D</a></dt>
@@ -8973,6 +9025,8 @@
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/EnumType.html#hashCode--">hashCode()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/EnumType.html" title="class in com.apriori.reflect">EnumType</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/MethodSignature.html#hashCode--">hashCode()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/MethodSignature.html" title="class in com.apriori.reflect">MethodSignature</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.ClassInfo.html#hashCode--">hashCode()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.ClassInfo.html" title="class in com.apriori.reflect">PackageScanner.ClassInfo</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeRef.html#hashCode--">hashCode()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a></dt>
 <dd>&nbsp;</dd>
@@ -9402,23 +9456,23 @@
 <dd>
 <div class="block">Increments the variable by one.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/util/IndentingPrinter.html#indent--">indent()</a></span> - Method in class com.apriori.util.<a href="com/apriori/util/IndentingPrinter.html" title="class in com.apriori.util">IndentingPrinter</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/util/IndentingPrintWriter.html#indent--">indent()</a></span> - Method in class com.apriori.util.<a href="com/apriori/util/IndentingPrintWriter.html" title="class in com.apriori.util">IndentingPrintWriter</a></dt>
 <dd>
 <div class="block">Increases the current level of indentation by one.</div>
 </dd>
-<dt><a href="com/apriori/util/IndentingPrinter.html" title="class in com.apriori.util"><span class="typeNameLink">IndentingPrinter</span></a> - Class in <a href="com/apriori/util/package-summary.html">com.apriori.util</a></dt>
+<dt><a href="com/apriori/util/IndentingPrintWriter.html" title="class in com.apriori.util"><span class="typeNameLink">IndentingPrintWriter</span></a> - Class in <a href="com/apriori/util/package-summary.html">com.apriori.util</a></dt>
 <dd>
 <div class="block">A utility for printing indented content.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/util/IndentingPrinter.html#IndentingPrinter-java.io.Writer-int-">IndentingPrinter(Writer, int)</a></span> - Constructor for class com.apriori.util.<a href="com/apriori/util/IndentingPrinter.html" title="class in com.apriori.util">IndentingPrinter</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/util/IndentingPrintWriter.html#IndentingPrintWriter-java.io.Writer-int-">IndentingPrintWriter(Writer, int)</a></span> - Constructor for class com.apriori.util.<a href="com/apriori/util/IndentingPrintWriter.html" title="class in com.apriori.util">IndentingPrintWriter</a></dt>
 <dd>
 <div class="block">Creates a new printer that sends all output to the specified writer.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/util/IndentingPrinter.html#IndentingPrinter-java.io.OutputStream-int-">IndentingPrinter(OutputStream, int)</a></span> - Constructor for class com.apriori.util.<a href="com/apriori/util/IndentingPrinter.html" title="class in com.apriori.util">IndentingPrinter</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/util/IndentingPrintWriter.html#IndentingPrintWriter-java.io.OutputStream-int-">IndentingPrintWriter(OutputStream, int)</a></span> - Constructor for class com.apriori.util.<a href="com/apriori/util/IndentingPrintWriter.html" title="class in com.apriori.util">IndentingPrintWriter</a></dt>
 <dd>
 <div class="block">Creates a new printer that sends all output to the specified stream.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/util/IndentingPrinter.html#IndentingPrinter-java.io.OutputStream-java.nio.charset.Charset-int-">IndentingPrinter(OutputStream, Charset, int)</a></span> - Constructor for class com.apriori.util.<a href="com/apriori/util/IndentingPrinter.html" title="class in com.apriori.util">IndentingPrinter</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/util/IndentingPrintWriter.html#IndentingPrintWriter-java.io.OutputStream-java.nio.charset.Charset-int-">IndentingPrintWriter(OutputStream, Charset, int)</a></span> - Constructor for class com.apriori.util.<a href="com/apriori/util/IndentingPrintWriter.html" title="class in com.apriori.util">IndentingPrintWriter</a></dt>
 <dd>
 <div class="block">Creates a new printer that sends all output to the specified stream.</div>
 </dd>
@@ -9887,8 +9941,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/testing/TestEnvironment.html#invokeProcessor--">invokeProcessor()</a></span> - Method in class com.apriori.apt.testing.<a href="com/apriori/apt/testing/TestEnvironment.html" title="class in com.apriori.apt.testing">TestEnvironment</a></dt>
 <dd>
-<div class="block">Invokes the current processor under test by calling its <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Processor.html?is-external=true#process-java.util.Set-javax.annotation.processing.RoundEnvironment-" title="class or interface in javax.annotation.processing"><code>Processor.process(Set, RoundEnvironment)</code></a>
- method.</div>
+<div class="block">Invokes the current processor under test by calling its <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Processor.html?is-external=true#process-java.util.Set-javax.annotation.processing.RoundEnvironment-" title="class or interface in javax.annotation.processing"><code>Processor.process(Set,
+ RoundEnvironment)</code></a> method.</div>
 </dd>
 <dt><a href="com/apriori/util/IoStreams.html" title="class in com.apriori.util"><span class="typeNameLink">IoStreams</span></a> - Class in <a href="com/apriori/util/package-summary.html">com.apriori.util</a></dt>
 <dd>
@@ -9978,7 +10032,7 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeRef.html#isAssignableStrictFrom-com.apriori.reflect.TypeRef-">isAssignableStrictFrom(TypeRef&lt;?&gt;)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a></dt>
 <dd>
-<div class="block">Determines if this is a super type of the specified type token.</div>
+<div class="block">Determines if the type this token represents can be assigned from the given type.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/graph/Node.Input.html#isAsync--">isAsync()</a></span> - Method in class com.apriori.graph.<a href="com/apriori/graph/Node.Input.html" title="class in com.apriori.graph">Node.Input</a></dt>
 <dd>
@@ -10319,7 +10373,7 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/Types.html#isSubtype-java.lang.reflect.Type-java.lang.reflect.Type-">isSubtype(Type, Type)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Types.html" title="class in com.apriori.reflect">Types</a></dt>
 <dd>
-<div class="block">Determines if one type is a subtype of another.</div>
+<div class="block">Determines if one type is a <em>proper</em> subtype of another.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArClass.html#isSubTypeOf-com.apriori.apt.reflect.ArClass-">isSubTypeOf(ArClass)</a></span> - Method in class com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArClass.html" title="class in com.apriori.apt.reflect">ArClass</a></dt>
 <dd>
@@ -10327,11 +10381,11 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeRef.html#isSubtypeOf-com.apriori.reflect.TypeRef-">isSubtypeOf(TypeRef&lt;?&gt;)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a></dt>
 <dd>
-<div class="block">Determines if this is a sub-type of the specified type token.</div>
+<div class="block">Determines if this is a <em>proper</em> sub-type of the specified type token.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/Types.html#isSubtypeStrict-java.lang.reflect.Type-java.lang.reflect.Type-">isSubtypeStrict(Type, Type)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Types.html" title="class in com.apriori.reflect">Types</a></dt>
 <dd>
-<div class="block">Determines if one type is a subtype of another, with restrictions.</div>
+<div class="block">Determines if one type is a <em>proper</em> subtype of another, with restrictions.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeRef.html#isSubtypeStrictOf-com.apriori.reflect.TypeRef-">isSubtypeStrictOf(TypeRef&lt;?&gt;)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a></dt>
 <dd>&nbsp;</dd>
@@ -11555,6 +11609,10 @@
 <dd>
 <div class="block">Constructs a new signature based on the given name and list of arguments.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/MethodSignature.html#MethodSignature-java.lang.String-java.util.List-">MethodSignature(String, List&lt;Class&lt;?&gt;&gt;)</a></span> - Constructor for class com.apriori.reflect.<a href="com/apriori/reflect/MethodSignature.html" title="class in com.apriori.reflect">MethodSignature</a></dt>
+<dd>
+<div class="block">Constructs a new signature based on the given name and list of arguments.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/Duration.html#micros-long-">micros(long)</a></span> - Static method in class com.apriori.concurrent.<a href="com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></dt>
 <dd>
 <div class="block">Returns a new duration whose length is the specified number of microseconds.</div>
@@ -11923,6 +11981,11 @@
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/Types.html#newSuperWildcardType-java.lang.reflect.Type-">newSuperWildcardType(Type)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Types.html" title="class in com.apriori.reflect">Types</a></dt>
 <dd>
 <div class="block">Creates a new <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/WildcardType.html?is-external=true" title="class or interface in java.lang.reflect"><code>WildcardType</code></a> with a lower bound, i.e.&nbsp;<code>? super T</code>.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/apt/testing/CompilationContext.html#newTask--">newTask()</a></span> - Method in class com.apriori.apt.testing.<a href="com/apriori/apt/testing/CompilationContext.html" title="class in com.apriori.apt.testing">CompilationContext</a></dt>
+<dd>
+<div class="block">Returns a new task builder that can execute a task during the annotation processing phase of
+ the compiler.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ThreadLimitingExecutorService.html#newTaskFor-java.util.concurrent.Callable-">newTaskFor(Callable&lt;T&gt;)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ThreadLimitingExecutorService.html" title="class in com.apriori.concurrent">ThreadLimitingExecutorService</a></dt>
 <dd>&nbsp;</dd>
@@ -12454,7 +12517,11 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/testing/TestJavaFileObject.html#openReader-boolean-">openReader(boolean)</a></span> - Method in class com.apriori.apt.testing.<a href="com/apriori/apt/testing/TestJavaFileObject.html" title="class in com.apriori.apt.testing">TestJavaFileObject</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/apt/testing/TestJavaFileObject.html#openReader-java.nio.charset.Charset-">openReader(Charset)</a></span> - Method in class com.apriori.apt.testing.<a href="com/apriori/apt/testing/TestJavaFileObject.html" title="class in com.apriori.apt.testing">TestJavaFileObject</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/testing/TestJavaFileObject.html#openWriter--">openWriter()</a></span> - Method in class com.apriori.apt.testing.<a href="com/apriori/apt/testing/TestJavaFileObject.html" title="class in com.apriori.apt.testing">TestJavaFileObject</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/apt/testing/TestJavaFileObject.html#openWriter-java.nio.charset.Charset-">openWriter(Charset)</a></span> - Method in class com.apriori.apt.testing.<a href="com/apriori/apt/testing/TestJavaFileObject.html" title="class in com.apriori.apt.testing">TestJavaFileObject</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/apriori/function/Operators.html" title="class in com.apriori.function"><span class="typeNameLink">Operators</span></a> - Class in <a href="com/apriori/function/package-summary.html">com.apriori.function</a></dt>
 <dd>&nbsp;</dd>
@@ -12559,7 +12626,7 @@
 <dd>
 <div class="block">Gets the contained value or gets an exception from the specified source and throws it</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/util/IndentingPrinter.html#outdent--">outdent()</a></span> - Method in class com.apriori.util.<a href="com/apriori/util/IndentingPrinter.html" title="class in com.apriori.util">IndentingPrinter</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/util/IndentingPrintWriter.html#outdent--">outdent()</a></span> - Method in class com.apriori.util.<a href="com/apriori/util/IndentingPrintWriter.html" title="class in com.apriori.util">IndentingPrintWriter</a></dt>
 <dd>
 <div class="block">Decreases the current level of indentation by one.</div>
 </dd>
@@ -12585,6 +12652,8 @@
 <dd>
 <div class="block">Creates a new package scanner.</div>
 </dd>
+<dt><a href="com/apriori/reflect/PackageScanner.ClassInfo.html" title="class in com.apriori.reflect"><span class="typeNameLink">PackageScanner.ClassInfo</span></a> - Class in <a href="com/apriori/reflect/package-summary.html">com.apriori.reflect</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/apriori/reflect/PackageScanner.PathResult.html" title="class in com.apriori.reflect"><span class="typeNameLink">PackageScanner.PathResult</span></a> - Class in <a href="com/apriori/reflect/package-summary.html">com.apriori.reflect</a></dt>
 <dd>
 <div class="block">The results of scanning a single path.</div>
@@ -13219,18 +13288,8 @@
 <dd>&nbsp;</dd>
 <dt><a href="com/apriori/collections/PrimitiveListIterator.OfShort.html" title="interface in com.apriori.collections"><span class="typeNameLink">PrimitiveListIterator.OfShort</span></a> - Interface in <a href="com/apriori/collections/package-summary.html">com.apriori.collections</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/apriori/util/IndentingPrinter.html#print-java.lang.String-java.lang.Object...-">print(String, Object...)</a></span> - Method in class com.apriori.util.<a href="com/apriori/util/IndentingPrinter.html" title="class in com.apriori.util">IndentingPrinter</a></dt>
-<dd>
-<div class="block">Prints indented content.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/apriori/util/IndentingPrinter.html#println-java.lang.String-java.lang.Object...-">println(String, Object...)</a></span> - Method in class com.apriori.util.<a href="com/apriori/util/IndentingPrinter.html" title="class in com.apriori.util">IndentingPrinter</a></dt>
-<dd>
-<div class="block">Prints indented content and ends it with a newline character.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/apriori/util/IndentingPrinter.html#println--">println()</a></span> - Method in class com.apriori.util.<a href="com/apriori/util/IndentingPrinter.html" title="class in com.apriori.util">IndentingPrinter</a></dt>
-<dd>
-<div class="block">Prints an empty blank line.</div>
-</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/util/IndentingPrintWriter.html#println--">println()</a></span> - Method in class com.apriori.util.<a href="com/apriori/util/IndentingPrintWriter.html" title="class in com.apriori.util">IndentingPrintWriter</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/apriori/collections/PriorityQueue.html" title="interface in com.apriori.collections"><span class="typeNameLink">PriorityQueue</span></a>&lt;<a href="com/apriori/collections/PriorityQueue.html" title="type parameter in PriorityQueue">E</a>,<a href="com/apriori/collections/PriorityQueue.html" title="type parameter in PriorityQueue">P</a>&gt; - Interface in <a href="com/apriori/collections/package-summary.html">com.apriori.collections</a></dt>
 <dd>
 <div class="block">A priority queue abstract data structure.</div>
@@ -13257,6 +13316,18 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/reflect/ArProcessor.html#process-java.util.Set-">process(Set&lt;ArClass&gt;)</a></span> - Method in class com.apriori.apt.reflect.<a href="com/apriori/apt/reflect/ArProcessor.html" title="class in com.apriori.apt.reflect">ArProcessor</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/apt/testing/CompilationContext.TaskBuilder.html#processingClasses-java.lang.Iterable-">processingClasses(Iterable&lt;Class&lt;?&gt;&gt;)</a></span> - Method in interface com.apriori.apt.testing.<a href="com/apriori/apt/testing/CompilationContext.TaskBuilder.html" title="interface in com.apriori.apt.testing">CompilationContext.TaskBuilder</a></dt>
+<dd>
+<div class="block">Adds classes to be processed by the annotation processing round of compilation.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/apt/testing/CompilationContext.TaskBuilder.html#processingClasses-java.lang.Class...-">processingClasses(Class&lt;?&gt;...)</a></span> - Method in interface com.apriori.apt.testing.<a href="com/apriori/apt/testing/CompilationContext.TaskBuilder.html" title="interface in com.apriori.apt.testing">CompilationContext.TaskBuilder</a></dt>
+<dd>
+<div class="block">Adds classes to be processed by the annotation processing round of compilation.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/apt/testing/CompilationContext.TaskBuilderWithProcessor.html#processingClasses-java.lang.Iterable-">processingClasses(Iterable&lt;Class&lt;?&gt;&gt;)</a></span> - Method in interface com.apriori.apt.testing.<a href="com/apriori/apt/testing/CompilationContext.TaskBuilderWithProcessor.html" title="interface in com.apriori.apt.testing">CompilationContext.TaskBuilderWithProcessor</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/apt/testing/CompilationContext.TaskBuilderWithProcessor.html#processingClasses-java.lang.Class...-">processingClasses(Class&lt;?&gt;...)</a></span> - Method in interface com.apriori.apt.testing.<a href="com/apriori/apt/testing/CompilationContext.TaskBuilderWithProcessor.html" title="interface in com.apriori.apt.testing">CompilationContext.TaskBuilderWithProcessor</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/testing/TestEnvironment.html#processingEnvironment--">processingEnvironment()</a></span> - Method in class com.apriori.apt.testing.<a href="com/apriori/apt/testing/TestEnvironment.html" title="class in com.apriori.apt.testing">TestEnvironment</a></dt>
 <dd>
 <div class="block">Gets the current processing environment.</div>
@@ -13264,6 +13335,22 @@
 <dt><a href="com/apriori/apt/ProcessingEnvironments.html" title="class in com.apriori.apt"><span class="typeNameLink">ProcessingEnvironments</span></a> - Class in <a href="com/apriori/apt/package-summary.html">com.apriori.apt</a></dt>
 <dd>
 <div class="block">Static helper methods related to the current processing environment.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/apt/testing/CompilationContext.TaskBuilder.html#processingFiles-java.lang.Iterable-">processingFiles(Iterable&lt;JavaFileObject&gt;)</a></span> - Method in interface com.apriori.apt.testing.<a href="com/apriori/apt/testing/CompilationContext.TaskBuilder.html" title="interface in com.apriori.apt.testing">CompilationContext.TaskBuilder</a></dt>
+<dd>
+<div class="block">Adds files to the list of things to process during compilation.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/apt/testing/CompilationContext.TaskBuilder.html#processingFiles-javax.tools.JavaFileObject...-">processingFiles(JavaFileObject...)</a></span> - Method in interface com.apriori.apt.testing.<a href="com/apriori/apt/testing/CompilationContext.TaskBuilder.html" title="interface in com.apriori.apt.testing">CompilationContext.TaskBuilder</a></dt>
+<dd>
+<div class="block">Adds files to the list of things to process during compilation.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/apt/testing/CompilationContext.TaskBuilderWithProcessor.html#processingFiles-java.lang.Iterable-">processingFiles(Iterable&lt;JavaFileObject&gt;)</a></span> - Method in interface com.apriori.apt.testing.<a href="com/apriori/apt/testing/CompilationContext.TaskBuilderWithProcessor.html" title="interface in com.apriori.apt.testing">CompilationContext.TaskBuilderWithProcessor</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/apt/testing/CompilationContext.TaskBuilderWithProcessor.html#processingFiles-javax.tools.JavaFileObject...-">processingFiles(JavaFileObject...)</a></span> - Method in interface com.apriori.apt.testing.<a href="com/apriori/apt/testing/CompilationContext.TaskBuilderWithProcessor.html" title="interface in com.apriori.apt.testing">CompilationContext.TaskBuilderWithProcessor</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/apriori/apt/testing/ProcessingTask.html" title="interface in com.apriori.apt.testing"><span class="typeNameLink">ProcessingTask</span></a>&lt;<a href="com/apriori/apt/testing/ProcessingTask.html" title="type parameter in ProcessingTask">T</a>&gt; - Interface in <a href="com/apriori/apt/testing/package-summary.html">com.apriori.apt.testing</a></dt>
+<dd>
+<div class="block">A <a href="com/apriori/apt/testing/CheckedProcessingTask.html" title="interface in com.apriori.apt.testing">processing task</a> that does not throw a checked exception.</div>
 </dd>
 <dt><a href="com/apriori/apt/testing/ProcessorUnderTest.html" title="annotation in com.apriori.apt.testing"><span class="typeNameLink">ProcessorUnderTest</span></a> - Annotation Type in <a href="com/apriori/apt/testing/package-summary.html">com.apriori.apt.testing</a></dt>
 <dd>
@@ -14468,6 +14555,8 @@
 <dd>
 <div class="block">Resets the current thread, clearing thread-local state related to the current environment.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/apt/testing/CategorizingDiagnosticCollector.html#reset--">reset()</a></span> - Method in class com.apriori.apt.testing.<a href="com/apriori/apt/testing/CategorizingDiagnosticCollector.html" title="class in com.apriori.apt.testing">CategorizingDiagnosticCollector</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/testing/TestJavaFileManager.html#reset--">reset()</a></span> - Method in class com.apriori.apt.testing.<a href="com/apriori/apt/testing/TestJavaFileManager.html" title="class in com.apriori.apt.testing">TestJavaFileManager</a></dt>
 <dd>
 <div class="block">Resets the file system.</div>
@@ -14507,9 +14596,9 @@
 <div class="block">For the given generic type, computes the generic super-type corresponding to the given raw
  class token.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/reflect/Types.html#resolveSuperType-java.lang.reflect.Type-java.lang.Class-">resolveSuperType(Type, Class&lt;?&gt;)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Types.html" title="class in com.apriori.reflect">Types</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/Types.html#resolveSupertype-java.lang.reflect.Type-java.lang.Class-">resolveSupertype(Type, Class&lt;?&gt;)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Types.html" title="class in com.apriori.reflect">Types</a></dt>
 <dd>
-<div class="block">For the given generic type, computes the generic super-type corresponding to the given raw
+<div class="block">For the given generic type, computes the generic supertype corresponding to the given raw
  class token.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeRef.html#resolveSuperTypeRef-com.apriori.reflect.TypeRef-java.lang.Class-">resolveSuperTypeRef(TypeRef&lt;T&gt;, Class&lt;S&gt;)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a></dt>
@@ -14718,6 +14807,19 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/Table5D.html#rowKeySet--">rowKeySet()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/Table5D.html" title="interface in com.apriori.collections">Table5D</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/apt/testing/CheckedProcessingTask.html#run-com.apriori.apt.testing.TestEnvironment-">run(TestEnvironment)</a></span> - Method in interface com.apriori.apt.testing.<a href="com/apriori/apt/testing/CheckedProcessingTask.html" title="interface in com.apriori.apt.testing">CheckedProcessingTask</a></dt>
+<dd>
+<div class="block">Runs the task.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/apt/testing/CompilationContext.TaskBuilder.html#run-com.apriori.apt.testing.CheckedProcessingTask-">run(CheckedProcessingTask&lt;T, X&gt;)</a></span> - Method in interface com.apriori.apt.testing.<a href="com/apriori/apt/testing/CompilationContext.TaskBuilder.html" title="interface in com.apriori.apt.testing">CompilationContext.TaskBuilder</a></dt>
+<dd>
+<div class="block">Invokes the compiler and runs the specified task during the annotation processing phase.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/apt/testing/CompilationContext.TaskBuilderWithProcessor.html#run--">run()</a></span> - Method in interface com.apriori.apt.testing.<a href="com/apriori/apt/testing/CompilationContext.TaskBuilderWithProcessor.html" title="interface in com.apriori.apt.testing">CompilationContext.TaskBuilderWithProcessor</a></dt>
+<dd>
+<div class="block">Invokes the compiler and runs the processor under test during the annotation processing
+ phase.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableRepeatingFutureTask.html#run--">run()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableRepeatingFutureTask.html" title="class in com.apriori.concurrent">ListenableRepeatingFutureTask</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/SettableRunnableFuture.html#run--">run()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/SettableRunnableFuture.html" title="class in com.apriori.concurrent">SettableRunnableFuture</a></dt>
@@ -14744,6 +14846,10 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/SettableRunnableFuture.html#runnerUpdater">runnerUpdater</a></span> - Static variable in class com.apriori.concurrent.<a href="com/apriori/concurrent/SettableRunnableFuture.html" title="class in com.apriori.concurrent">SettableRunnableFuture</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/apt/testing/CompilationContext.TaskBuilder.html#runReentrant-com.apriori.apt.testing.CheckedProcessingTask-">runReentrant(CheckedProcessingTask&lt;T, X&gt;)</a></span> - Method in interface com.apriori.apt.testing.<a href="com/apriori/apt/testing/CompilationContext.TaskBuilder.html" title="interface in com.apriori.apt.testing">CompilationContext.TaskBuilder</a></dt>
+<dd>
+<div class="block">Invokes the compiler and runs the specified task during the annotation processing phase.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/HierarchicalLock.html#runWithExclusiveLock-java.lang.Runnable-">runWithExclusiveLock(Runnable)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/HierarchicalLock.html" title="class in com.apriori.concurrent">HierarchicalLock</a></dt>
 <dd>
 <div class="block">Invokes the specified runnable while holding this lock in exclusive mode.</div>
@@ -17180,6 +17286,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/MethodSignature.html#toString--">toString()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/MethodSignature.html" title="class in com.apriori.reflect">MethodSignature</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.ClassInfo.html#toString--">toString()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.ClassInfo.html" title="class in com.apriori.reflect">PackageScanner.ClassInfo</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeRef.html#toString--">toString()</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/Types.html#toString-java.lang.reflect.Type-">toString(Type)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Types.html" title="class in com.apriori.reflect">Types</a></dt>
@@ -18173,11 +18281,13 @@
 <dl>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/testing/TestEnvironment.html#validateGeneratedFile-javax.tools.FileObject-java.lang.String-">validateGeneratedFile(FileObject, String)</a></span> - Method in class com.apriori.apt.testing.<a href="com/apriori/apt/testing/TestEnvironment.html" title="class in com.apriori.apt.testing">TestEnvironment</a></dt>
 <dd>
-<div class="block">Validates the contents of the specified file by comparing them to the contents of the specified resource.</div>
+<div class="block">Validates the contents of the specified file by comparing them to the contents of the
+ specified resource.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/apt/testing/TestEnvironment.html#validateGeneratedFile-javax.tools.FileObject-java.lang.String-boolean-">validateGeneratedFile(FileObject, String, boolean)</a></span> - Method in class com.apriori.apt.testing.<a href="com/apriori/apt/testing/TestEnvironment.html" title="class in com.apriori.apt.testing">TestEnvironment</a></dt>
 <dd>
-<div class="block">Validates the contents of the specified file by comparing them to the contents of the specified resource.</div>
+<div class="block">Validates the contents of the specified file by comparing them to the contents of the
+ specified resource.</div>
 </dd>
 <dt><a href="com/apriori/apt/testing/ValidateGeneratedFiles.html" title="annotation in com.apriori.apt.testing"><span class="typeNameLink">ValidateGeneratedFiles</span></a> - Annotation Type in <a href="com/apriori/apt/testing/package-summary.html">com.apriori.apt.testing</a></dt>
 <dd>
@@ -19039,6 +19149,18 @@ the order they are declared.</div>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/graph/Node.NodeBuilder9.html#withOptionalInput-com.apriori.graph.Key-">withOptionalInput(Key&lt;J&gt;)</a></span> - Method in class com.apriori.graph.<a href="com/apriori/graph/Node.NodeBuilder9.html" title="class in com.apriori.graph">Node.NodeBuilder9</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/apt/testing/CompilationContext.TaskBuilder.html#withOptions-java.lang.Iterable-">withOptions(Iterable&lt;String&gt;)</a></span> - Method in interface com.apriori.apt.testing.<a href="com/apriori/apt/testing/CompilationContext.TaskBuilder.html" title="interface in com.apriori.apt.testing">CompilationContext.TaskBuilder</a></dt>
+<dd>
+<div class="block">Adds option strings to pass to the compiler.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/apt/testing/CompilationContext.TaskBuilder.html#withOptions-java.lang.String...-">withOptions(String...)</a></span> - Method in interface com.apriori.apt.testing.<a href="com/apriori/apt/testing/CompilationContext.TaskBuilder.html" title="interface in com.apriori.apt.testing">CompilationContext.TaskBuilder</a></dt>
+<dd>
+<div class="block">Adds option strings to pass to the compiler.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/apt/testing/CompilationContext.TaskBuilderWithProcessor.html#withOptions-java.lang.Iterable-">withOptions(Iterable&lt;String&gt;)</a></span> - Method in interface com.apriori.apt.testing.<a href="com/apriori/apt/testing/CompilationContext.TaskBuilderWithProcessor.html" title="interface in com.apriori.apt.testing">CompilationContext.TaskBuilderWithProcessor</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/apt/testing/CompilationContext.TaskBuilderWithProcessor.html#withOptions-java.lang.String...-">withOptions(String...)</a></span> - Method in interface com.apriori.apt.testing.<a href="com/apriori/apt/testing/CompilationContext.TaskBuilderWithProcessor.html" title="interface in com.apriori.apt.testing">CompilationContext.TaskBuilderWithProcessor</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/di/Key.html#withoutAnnotation-java.lang.Class-">withoutAnnotation(Class&lt;? extends Annotation&gt;)</a></span> - Method in class com.apriori.di.<a href="com/apriori/di/Key.html" title="class in com.apriori.di">Key</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/di/Key.html#withoutAnnotation-java.lang.annotation.Annotation-">withoutAnnotation(Annotation)</a></span> - Method in class com.apriori.di.<a href="com/apriori/di/Key.html" title="class in com.apriori.di">Key</a></dt>
@@ -19056,6 +19178,10 @@ the order they are declared.</div>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/PackageScanner.html#withParallelism-int-">withParallelism(int)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/PackageScanner.html" title="class in com.apriori.reflect">PackageScanner</a></dt>
 <dd>
 <div class="block">Sets the parallelism of the scan.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/apt/testing/CompilationContext.TaskBuilder.html#withProcessor-javax.annotation.processing.Processor-">withProcessor(Processor)</a></span> - Method in interface com.apriori.apt.testing.<a href="com/apriori/apt/testing/CompilationContext.TaskBuilder.html" title="interface in com.apriori.apt.testing">CompilationContext.TaskBuilder</a></dt>
+<dd>
+<div class="block">Sets the processor under test for the task.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/di/AbstractBinding.BindBuilder.html#withResolver-java.lang.Class-">withResolver(Class&lt;? extends ConflictResolver&lt;? super T&gt;&gt;)</a></span> - Method in interface com.apriori.di.<a href="com/apriori/di/AbstractBinding.BindBuilder.html" title="interface in com.apriori.di">AbstractBinding.BindBuilder</a></dt>
 <dd>&nbsp;</dd>
@@ -19177,6 +19303,12 @@ the order they are declared.</div>
 <dd>
 <div class="block">Performs a write operation that produces a result value.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/util/IndentingPrintWriter.html#write-char:A-int-int-">write(char[], int, int)</a></span> - Method in class com.apriori.util.<a href="com/apriori/util/IndentingPrintWriter.html" title="class in com.apriori.util">IndentingPrintWriter</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/util/IndentingPrintWriter.html#write-int-">write(int)</a></span> - Method in class com.apriori.util.<a href="com/apriori/util/IndentingPrintWriter.html" title="class in com.apriori.util">IndentingPrintWriter</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/util/IndentingPrintWriter.html#write-java.lang.String-int-int-">write(String, int, int)</a></span> - Method in class com.apriori.util.<a href="com/apriori/util/IndentingPrintWriter.html" title="class in com.apriori.util">IndentingPrintWriter</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/DoubleInstanceLock.html#writeWith-java.util.function.Consumer-">writeWith(Consumer&lt;? super T&gt;)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/DoubleInstanceLock.html" title="class in com.apriori.concurrent">DoubleInstanceLock</a></dt>
 <dd>
 <div class="block">Performs a write operation that does not produce a value.</div>

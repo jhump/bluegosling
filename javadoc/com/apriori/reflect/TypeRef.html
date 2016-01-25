@@ -297,7 +297,7 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/
 <tr id="i22" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#isAssignableStrictFrom-com.apriori.reflect.TypeRef-">isAssignableStrictFrom</a></span>(<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;?&gt;&nbsp;ref)</code>
-<div class="block">Determines if this is a super type of the specified type token.</div>
+<div class="block">Determines if the type this token represents can be assigned from the given type.</div>
 </td>
 </tr>
 <tr id="i23" class="rowColor">
@@ -338,7 +338,7 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/
 <tr id="i29" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#isSubtypeOf-com.apriori.reflect.TypeRef-">isSubtypeOf</a></span>(<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;?&gt;&nbsp;ref)</code>
-<div class="block">Determines if this is a sub-type of the specified type token.</div>
+<div class="block">Determines if this is a <em>proper</em> sub-type of the specified type token.</div>
 </td>
 </tr>
 <tr id="i30" class="altColor">
@@ -618,7 +618,7 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/
 <pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../com/apriori/reflect/TypeRef.html" title="type parameter in TypeRef">T</a>&gt;&nbsp;asClass()</pre>
 <div class="block">Returns a <code>Class</code> representation of this type. Unlike using normal class tokens (e.g.
  <code>MyType.class</code>), this token can encode type arguments. This type can only be represented
- as a class if it <a href="../../../com/apriori/reflect/TypeRef.html#isResolved--">is resolved</a>.
+ as a class if it is neither a wildcard nor a type variable.
  
  <p>This is a convenience for using generic types with APIs that require class tokens:
  <pre>
@@ -641,7 +641,9 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a <code>Class</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if this type is not resolved</dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if this type is a wildcard or a type variable</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../com/apriori/reflect/TypeRef.html#getRawType--"><code>getRawType()</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -659,7 +661,7 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the raw type that corresponds to this generic type</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../com/apriori/reflect/Types.html#getRawType-java.lang.reflect.Type-"><code>Types.getRawType(Type)</code></a></dd>
+<dd><a href="../../../com/apriori/reflect/Types.html#getErasure-java.lang.reflect.Type-"><code>Types.getErasure(Type)</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -901,7 +903,7 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the specified type is not actually a super type of the
        current type</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../com/apriori/reflect/Types.html#resolveSuperType-java.lang.reflect.Type-java.lang.Class-"><code>Types.resolveSuperType(Type, Class)</code></a></dd>
+<dd><a href="../../../com/apriori/reflect/Types.html#resolveSupertype-java.lang.reflect.Type-java.lang.Class-"><code>Types.resolveSupertype(Type, Class)</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -912,16 +914,14 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/
 <li class="blockList">
 <h4>isSubtypeOf</h4>
 <pre>public&nbsp;boolean&nbsp;isSubtypeOf(<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;?&gt;&nbsp;ref)</pre>
-<div class="block">Determines if this is a sub-type of the specified type token. This has the same caveats as
- does <a href="../../../com/apriori/reflect/TypeRef.html#equals-java.lang.Object-"><code>equals(Object)</code></a> in that wildcard and type variables are not "captured" and
- wildcard bounds are not checked for compatibility. If either this type token or the specified
- other token is not fully resolved then this will return false, even if the Java compiler might
- treat it as a sub-type due to compatible bounds.</div>
+<div class="block">Determines if this is a <em>proper</em> sub-type of the specified type token.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>ref</code> - a <code>Type Ref</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>true if this represents a sub-type of <code>ref</code></dd>
+<dd>true if this represents a sub-type of the given type</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../com/apriori/reflect/Types.html#isSubtype-java.lang.reflect.Type-java.lang.reflect.Type-"><code>Types.isSubtype(Type, Type)</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -941,16 +941,14 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/
 <li class="blockList">
 <h4>isAssignableStrictFrom</h4>
 <pre>public&nbsp;boolean&nbsp;isAssignableStrictFrom(<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;?&gt;&nbsp;ref)</pre>
-<div class="block">Determines if this is a super type of the specified type token. This has the same caveats as
- does <a href="../../../com/apriori/reflect/TypeRef.html#equals-java.lang.Object-"><code>equals(Object)</code></a> in that wildcard and type variables are not "captured" and 
- wildcard bounds are not checked for compatibility. If either this type token or the specified
- other token are is fully resolved then this will return false, even if the Java compiler might
- treat it as a super type due to compatible bounds.</div>
+<div class="block">Determines if the type this token represents can be assigned from the given type. This does
+ not consider assignment conversions other than reference widening conversion, so this can be
+ used to determine if this type is a supertype of the given type.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>ref</code> - a <code>TypeRef</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>true if this represents a super type of <code>ref</code></dd>
+<dd>true if this type is assignable from the given type</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../com/apriori/reflect/Types.html#isAssignableStrict-java.lang.reflect.Type-java.lang.reflect.Type-"><code>Types.isAssignableStrict(Type, Type)</code></a></dd>
 </dl>

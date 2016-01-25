@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -121,16 +121,16 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/tools/SimpleJav
 <div class="block">A simple in-memory file. This is used by <a href="../../../../com/apriori/apt/testing/TestJavaFileManager.html" title="class in com.apriori.apt.testing"><code>TestJavaFileManager</code></a> to provide an in-memory file
  system for use in unit tests for annotation processors.
  
- <p>When writing contents to a file, calling code <em>must</em> close and/or flush the output stream
- for changes to actually be "written" to the in-memory contents. Opening an output stream for a file
- effectively locks it, so only one output stream can be opened at any given time for a file. Open
- input streams read consistent data. So if the file is changed while one thread is reading its
- contents, the reading thread will not see the updates (unless it were to close and re-open an
- input stream for the file).
+ <p>When writing contents to a file, calling code <em>must</em> close and/or flush the output
+ stream for changes to actually be "written" to the in-memory contents. Opening an output stream
+ for a file effectively locks it, so only one output stream can be opened at any given time for a
+ file. Open input streams read consistent data. So if the file is changed while one thread is
+ reading its contents, the reading thread will not see the updates (unless it were to close and
+ re-open a new input stream for the file).
  
- <p>The in-memory contents of the file are stored as a byte array, not a character array. Using the
- <a href="https://docs.oracle.com/javase/8/docs/api/javax/tools/FileObject.html?is-external=true" title="class or interface in javax.tools"><code>FileObject</code></a> interface to open a reader or writer for the file implicitly uses the UTF-8
- character set for encoding and decoding.</div>
+ <p>The in-memory contents of the file are stored as a byte array, not a character array. Using
+ the <a href="https://docs.oracle.com/javase/8/docs/api/javax/tools/FileObject.html?is-external=true" title="class or interface in javax.tools"><code>FileObject</code></a> interface to open a reader or writer for the file assume UTF-8 character
+ set for encoding and decoding.</div>
 </li>
 </ul>
 </div>
@@ -214,8 +214,16 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/tools/SimpleJav
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/apt/testing/TestJavaFileObject.html#openReader-boolean-">openReader</a></span>(boolean&nbsp;ignoreEncodingErrors)</code>&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io">Reader</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/apt/testing/TestJavaFileObject.html#openReader-java.nio.charset.Charset-">openReader</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/nio/charset/Charset.html?is-external=true" title="class or interface in java.nio.charset">Charset</a>&nbsp;charset)</code>&nbsp;</td>
+</tr>
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/io/Writer.html?is-external=true" title="class or interface in java.io">Writer</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/apt/testing/TestJavaFileObject.html#openWriter--">openWriter</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i10" class="altColor">
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/io/Writer.html?is-external=true" title="class or interface in java.io">Writer</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/apriori/apt/testing/TestJavaFileObject.html#openWriter-java.nio.charset.Charset-">openWriter</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/nio/charset/Charset.html?is-external=true" title="class or interface in java.nio.charset">Charset</a>&nbsp;charset)</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -351,6 +359,15 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/tools/SimpleJav
 </dl>
 </li>
 </ul>
+<a name="openReader-java.nio.charset.Charset-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>openReader</h4>
+<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io">Reader</a>&nbsp;openReader(<a href="https://docs.oracle.com/javase/8/docs/api/java/nio/charset/Charset.html?is-external=true" title="class or interface in java.nio.charset">Charset</a>&nbsp;charset)</pre>
+</li>
+</ul>
 <a name="openOutputStream--">
 <!--   -->
 </a>
@@ -372,7 +389,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/tools/SimpleJav
 <a name="openWriter--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>openWriter</h4>
 <pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/io/Writer.html?is-external=true" title="class or interface in java.io">Writer</a>&nbsp;openWriter()
@@ -382,6 +399,20 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/tools/SimpleJav
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/javax/tools/FileObject.html?is-external=true#openWriter--" title="class or interface in javax.tools">openWriter</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/javax/tools/FileObject.html?is-external=true" title="class or interface in javax.tools">FileObject</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/javax/tools/SimpleJavaFileObject.html?is-external=true#openWriter--" title="class or interface in javax.tools">openWriter</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/javax/tools/SimpleJavaFileObject.html?is-external=true" title="class or interface in javax.tools">SimpleJavaFileObject</a></code></dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+</dl>
+</li>
+</ul>
+<a name="openWriter-java.nio.charset.Charset-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>openWriter</h4>
+<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/io/Writer.html?is-external=true" title="class or interface in java.io">Writer</a>&nbsp;openWriter(<a href="https://docs.oracle.com/javase/8/docs/api/java/nio/charset/Charset.html?is-external=true" title="class or interface in java.nio.charset">Charset</a>&nbsp;charset)
+                  throws <a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
 </dl>

@@ -77,6 +77,41 @@
 <div class="contentContainer">
 <ul class="blockList">
 <li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../com/apriori/apt/testing/CheckedProcessingTask.html" title="interface in com.apriori.apt.testing">CheckedProcessingTask</a>&lt;T,X extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;</td>
+<td class="colLast">
+<div class="block">A task that can be run from the context of the annotation processing phase of a compiler.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../com/apriori/apt/testing/CompilationContext.TaskBuilder.html" title="interface in com.apriori.apt.testing">CompilationContext.TaskBuilder</a></td>
+<td class="colLast">
+<div class="block">Builds a task to run in this compilation context.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../com/apriori/apt/testing/CompilationContext.TaskBuilderWithProcessor.html" title="interface in com.apriori.apt.testing">CompilationContext.TaskBuilderWithProcessor</a></td>
+<td class="colLast">
+<div class="block">Builds a task to run in this compilation context.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../com/apriori/apt/testing/ProcessingTask.html" title="interface in com.apriori.apt.testing">ProcessingTask</a>&lt;T&gt;</td>
+<td class="colLast">
+<div class="block">A <a href="../../../../com/apriori/apt/testing/CheckedProcessingTask.html" title="interface in com.apriori.apt.testing">processing task</a> that does not throw a checked exception.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
 <table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
 <caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
@@ -87,7 +122,8 @@
 <tr class="altColor">
 <td class="colFirst"><a href="../../../../com/apriori/apt/testing/AnnotationProcessorTestRunner.html" title="class in com.apriori.apt.testing">AnnotationProcessorTestRunner</a></td>
 <td class="colLast">
-<div class="block">A test runner for executing tests inside the context of the annotation processing phase of a Java compiler.</div>
+<div class="block">A test runner for executing tests inside the context of the annotation processing phase of a Java
+ compiler.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -97,18 +133,24 @@
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><a href="../../../../com/apriori/apt/testing/CompilationContext.html" title="class in com.apriori.apt.testing">CompilationContext</a></td>
+<td class="colLast">
+<div class="block">The context for invoking a compiler and running annotation processors.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../../com/apriori/apt/testing/TestEnvironment.html" title="class in com.apriori.apt.testing">TestEnvironment</a></td>
 <td class="colLast">
 <div class="block">Information about the current test, processing, and round environments.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../../com/apriori/apt/testing/TestJavaFileManager.html" title="class in com.apriori.apt.testing">TestJavaFileManager</a></td>
 <td class="colLast">
 <div class="block">An in-memory file manager.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../../com/apriori/apt/testing/TestJavaFileObject.html" title="class in com.apriori.apt.testing">TestJavaFileObject</a></td>
 <td class="colLast">
 <div class="block">A simple in-memory file.</div>

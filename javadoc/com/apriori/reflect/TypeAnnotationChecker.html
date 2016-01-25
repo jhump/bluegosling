@@ -159,15 +159,15 @@ public interface <span class="typeNameLabel">TypeAnnotationChecker</span></pre>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>default boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeAnnotationChecker.html#isAssignable-java.lang.annotation.Annotation:A-java.lang.annotation.Annotation:A-">isAssignable</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>[]&nbsp;target,
-            <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>[]&nbsp;source)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeAnnotationChecker.html#isAssignable-java.lang.annotation.Annotation:A-java.lang.annotation.Annotation:A-">isAssignable</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>[]&nbsp;from,
+            <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>[]&nbsp;to)</code>
 <div class="block">Determines if the first given annotations are "assignable from" the second given annotations.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeAnnotationChecker.html#isAssignable-java.util.Collection-java.util.Collection-">isAssignable</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;target,
-            <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;source)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeAnnotationChecker.html#isAssignable-java.util.Collection-java.util.Collection-">isAssignable</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;from,
+            <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;to)</code>
 <div class="block">Determines if the first given annotations are "assignable from" the second given annotations.</div>
 </td>
 </tr>
@@ -192,8 +192,8 @@ public interface <span class="typeNameLabel">TypeAnnotationChecker</span></pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>isAssignable</h4>
-<pre>boolean&nbsp;isAssignable(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;target,
-                     <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;source)</pre>
+<pre>boolean&nbsp;isAssignable(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;from,
+                     <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;to)</pre>
 <div class="block">Determines if the first given annotations are "assignable from" the second given annotations.
  If an annotation <code>A1</code> is assignable from annotation <code>A2</code>, then a given annotated
  type <code>@A1 T1</code> is assignable from another type <code>@A2 T2</code> as long as <code>T1</code> is
@@ -206,8 +206,8 @@ public interface <span class="typeNameLabel">TypeAnnotationChecker</span></pre>
  <p>An argument that is empty indicates the absence of any type annotations.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>target</code> - annotations that appear on the type of the assignment target (LHS)</dd>
-<dd><code>source</code> - annotations that appear on the type of the assignment source (RHS)</dd>
+<dd><code>from</code> - annotations that appear on the type of the assignment source (RHS)</dd>
+<dd><code>to</code> - annotations that appear on the type of the assignment target (LHS)</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>true if a type annotated with <code>target</code> annotations is assignable from a type
        annotated with <code>source</code> annotations</dd>
@@ -224,15 +224,15 @@ public interface <span class="typeNameLabel">TypeAnnotationChecker</span></pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>isAssignable</h4>
-<pre>default&nbsp;boolean&nbsp;isAssignable(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>[]&nbsp;target,
-                             <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>[]&nbsp;source)</pre>
+<pre>default&nbsp;boolean&nbsp;isAssignable(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>[]&nbsp;from,
+                             <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>[]&nbsp;to)</pre>
 <div class="block">Determines if the first given annotations are "assignable from" the second given annotations.
  This is a convenience method for use with core reflection, where most methods that query
  annotations return arrays, not collections.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>target</code> - annotations that appear on the type of the assignment target (LHS)</dd>
-<dd><code>source</code> - annotations that appear on the type of the assignment source (RHS)</dd>
+<dd><code>from</code> - annotations that appear on the type of the assignment source (RHS)</dd>
+<dd><code>to</code> - annotations that appear on the type of the assignment target (LHS)</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>true if a type annotated with <code>target</code> annotations is assignable from a type
        annotated with <code>source</code> annotations</dd>

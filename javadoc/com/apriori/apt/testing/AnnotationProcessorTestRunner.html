@@ -128,102 +128,110 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre>public class <span class="typeNameLabel">AnnotationProcessorTestRunner</span>
 extends org.junit.runners.BlockJUnit4ClassRunner</pre>
-<div class="block">A test runner for executing tests inside the context of the annotation processing phase of a Java compiler.
+<div class="block">A test runner for executing tests inside the context of the annotation processing phase of a Java
+ compiler.
  
- <p>The environment of the test is setup using annotations, either on the class or on the test method.
+ <p>
+ The environment of the test is setup using annotations, either on the class or on the test
+ method.
  
  <p><strong>On the test class:</strong>
  <ul>
- <li><a href="../../../../com/apriori/apt/testing/ProcessorUnderTest.html" title="annotation in com.apriori.apt.testing"><code>@ProcessorUnderTest</code></a>: Indicates the class of the processor under test.</li>
- <li><a href="../../../../com/apriori/apt/testing/InitializeProcessorField.html" title="annotation in com.apriori.apt.testing"><code>@InitializeProcessorField</code></a>: Indicates the name of a field on the test
- class that has the processor under test. The processor must be instantiated and the field set in a set-up
- step (i.e. <code>@Before</code> method). If neither this annotation nor <a href="../../../../com/apriori/apt/testing/ProcessorUnderTest.html" title="annotation in com.apriori.apt.testing"><code>ProcessorUnderTest</code></a> is present,
- no processor is setup. If a test methods needs to invoke methods on an instance of a processor, it will have
- to instantiate the processor itself.</li>
- <li><a href="../../../../com/apriori/apt/testing/OptionsForProcessing.html" title="annotation in com.apriori.apt.testing"><code>@OptionsForProcessing</code></a>: Indicates the sequence of options (like command-line
- options) that are provided to the Java compiler. These can include options interpreted by the processor
- under test.</li>
- <li><a href="../../../../com/apriori/apt/testing/FilesToProcess.html" title="annotation in com.apriori.apt.testing"><code>@FilesToProcess</code></a>: Indicates the set of input files (like source and resource files)
- for the Java compiler and the annotaiton processor.</li>
- <li><a href="../../../../com/apriori/apt/testing/ClassesToProcess.html" title="annotation in com.apriori.apt.testing"><code>@ClassesToProcess</code></a>: Indicates the set of classes to process. These classes will
- be included in the root elements on each round of processing, even if there are no input files to process.</li>
- <li><a href="../../../../com/apriori/apt/testing/ValidateGeneratedFiles.html" title="annotation in com.apriori.apt.testing"><code>@ValidateGeneratedFiles</code></a>: Indicates a set of "golden" output files. When
- the processor completes, the test runner will verify that the processor produced the correct output by
- comparing it to these files.</li>
- <li><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/SupportedSourceVersion.html?is-external=true" title="class or interface in javax.annotation.processing"><code>@SupportedSourceVersion</code></a>: Usually the supported source version comes from
- the processor under test. But if neither <a href="../../../../com/apriori/apt/testing/ProcessorUnderTest.html" title="annotation in com.apriori.apt.testing"><code>ProcessorUnderTest</code></a> nor <a href="../../../../com/apriori/apt/testing/InitializeProcessorField.html" title="annotation in com.apriori.apt.testing"><code>InitializeProcessorField</code></a> is
- used, then you can use this annotation on the test class to provide this information.<br>
- <strong>Note:</strong> Despite the fact that this annotation is <em>not</em> defined  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Inherited.html?is-external=true" title="class or interface in java.lang.annotation">inherited</a>, this test runner will interpret the value as inherited. So if you sub-class a test that has the
- annotation, it is not necessary re-annotate the sub-class.</li>
- <li><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/SupportedAnnotationTypes.html?is-external=true" title="class or interface in javax.annotation.processing"><code>@SupportedAnnotationTypes</code></a>: Same remarks as for <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/SupportedSourceVersion.html?is-external=true" title="class or interface in javax.annotation.processing"><code>SupportedSourceVersion</code></a>.
- If a test does not otherwise define a processor for testing, this annotation can be used to provide this
- information to the environment. Also same notes about inheritance of this annotation.</li>
- <li><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/SupportedOptions.html?is-external=true" title="class or interface in javax.annotation.processing"><code>@SupportedOptions</code></a>: Same remarks again as for <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/SupportedSourceVersion.html?is-external=true" title="class or interface in javax.annotation.processing"><code>SupportedSourceVersion</code></a> and
- <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/SupportedAnnotationTypes.html?is-external=true" title="class or interface in javax.annotation.processing"><code>SupportedAnnotationTypes</code></a>.</li>
+ <li><a href="../../../../com/apriori/apt/testing/ProcessorUnderTest.html" title="annotation in com.apriori.apt.testing"><code>@ProcessorUnderTest</code></a>: Indicates the class of the processor under
+ test.</li>
+ <li><a href="../../../../com/apriori/apt/testing/InitializeProcessorField.html" title="annotation in com.apriori.apt.testing"><code>@InitializeProcessorField</code></a>: Indicates the name of a field on
+ the test class that has the processor under test. The processor must be instantiated and the
+ field set in a set-up step (i.e. <code>@Before</code> method). If neither this annotation nor
+ <a href="../../../../com/apriori/apt/testing/ProcessorUnderTest.html" title="annotation in com.apriori.apt.testing"><code>ProcessorUnderTest</code></a> is present, no processor is setup. If a test methods needs to invoke
+ methods on an instance of a processor, it will have to instantiate the processor itself.</li>
+ <li><a href="../../../../com/apriori/apt/testing/OptionsForProcessing.html" title="annotation in com.apriori.apt.testing"><code>@OptionsForProcessing</code></a>: Indicates the sequence of options (like
+ command-line options) that are provided to the Java compiler. These can include options
+ interpreted by the processor under test.</li>
+ <li><a href="../../../../com/apriori/apt/testing/FilesToProcess.html" title="annotation in com.apriori.apt.testing"><code>@FilesToProcess</code></a>: Indicates the set of input files (like source and
+ resource files) for the Java compiler and the annotaiton processor.</li>
+ <li><a href="../../../../com/apriori/apt/testing/ClassesToProcess.html" title="annotation in com.apriori.apt.testing"><code>@ClassesToProcess</code></a>: Indicates the set of classes to process. These
+ classes will be included in the root elements on each round of processing, even if there are no
+ input files to process.</li>
+ <li><a href="../../../../com/apriori/apt/testing/ValidateGeneratedFiles.html" title="annotation in com.apriori.apt.testing"><code>@ValidateGeneratedFiles</code></a>: Indicates a set of "golden" output
+ files. When the processor completes, the test runner will verify that the processor produced the
+ correct output by comparing it to these files.</li>
+ <li><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/SupportedSourceVersion.html?is-external=true" title="class or interface in javax.annotation.processing"><code>@SupportedSourceVersion</code></a>: Usually the supported source version
+ comes from the processor under test. But if neither <a href="../../../../com/apriori/apt/testing/ProcessorUnderTest.html" title="annotation in com.apriori.apt.testing"><code>ProcessorUnderTest</code></a> nor
+ <a href="../../../../com/apriori/apt/testing/InitializeProcessorField.html" title="annotation in com.apriori.apt.testing"><code>InitializeProcessorField</code></a> is used, then you can use this annotation on the test class to
+ provide this information.<br>
+ <strong>Note:</strong> Despite the fact that this annotation is <em>not</em> defined
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Inherited.html?is-external=true" title="class or interface in java.lang.annotation">inherited</a>, this test runner will interpret the value as inherited. So if
+ you sub-class a test that has the annotation, it is not necessary re-annotate the sub-class.</li>
+ <li><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/SupportedAnnotationTypes.html?is-external=true" title="class or interface in javax.annotation.processing"><code>@SupportedAnnotationTypes</code></a>: Same remarks as for
+ <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/SupportedSourceVersion.html?is-external=true" title="class or interface in javax.annotation.processing"><code>SupportedSourceVersion</code></a>. If a test does not otherwise define a processor for testing, this
+ annotation can be used to provide this information to the environment. Also same notes about
+ inheritance of this annotation.</li>
+ <li><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/SupportedOptions.html?is-external=true" title="class or interface in javax.annotation.processing"><code>@SupportedOptions</code></a>: Same remarks again as for
+ <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/SupportedSourceVersion.html?is-external=true" title="class or interface in javax.annotation.processing"><code>SupportedSourceVersion</code></a> and <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/SupportedAnnotationTypes.html?is-external=true" title="class or interface in javax.annotation.processing"><code>SupportedAnnotationTypes</code></a>.</li>
  </ul>
  
  <p><strong>On the test method:</strong>
  <ul>
- <li><a href="../../../../com/apriori/apt/testing/NoProcess.html" title="annotation in com.apriori.apt.testing"><code>@NoProcess</code></a>: Indicates that a given method is a normal test method. The processing
- environment will not be setup for this method.</li>
- <li><a href="../../../../com/apriori/apt/testing/Reentrant.html" title="annotation in com.apriori.apt.testing"><code>@Reentrant</code></a>: Indicates that a given method can be called more than once if the processing
- phase results in multiple rounds. So the method may be called more than once during the course of a single
- test case, once for each round.</li>
- <li><a href="../../../../com/apriori/apt/testing/ProcessorUnderTest.html" title="annotation in com.apriori.apt.testing"><code>@ProcessorUnderTest</code></a>: This is the same as used on the class, except that it
- overrides the processor to test for a single method.</li>
- <li><a href="../../../../com/apriori/apt/testing/OptionsForProcessing.html" title="annotation in com.apriori.apt.testing"><code>@OptionsForProcessing</code></a>: This is the same as used on the class, except that it
- overrides the options for a single method. It can also be used to <em>add to</em> the options that are defined
- on the class.</li>
- <li><a href="../../../../com/apriori/apt/testing/FilesToProcess.html" title="annotation in com.apriori.apt.testing"><code>@FilesToProcess</code></a>: This is the same as used on the class, except that it overrides
- the files used for a single method. It can also be used to <em>add to</em> the set of files that are defined
- on the class.</li>
- <li><a href="../../../../com/apriori/apt/testing/ClassesToProcess.html" title="annotation in com.apriori.apt.testing"><code>@ClassesToProcess</code></a>: This is the same as used on the class, except that it overrides
- the classes processed for a single method. It can also be used to <em>add to</em> the set of classes that are
- defined on the test class.</li>
- <li><a href="../../../../com/apriori/apt/testing/ValidateGeneratedFiles.html" title="annotation in com.apriori.apt.testing"><code>@ValidateGeneratedFiles</code></a>: This is the same as used on the class, except that
- it overrides the output files to validate for a single method. It can also be used to <em>add to</em> the set
- of validated output files that are defined on the class.</li>
+ <li><a href="../../../../com/apriori/apt/testing/NoProcess.html" title="annotation in com.apriori.apt.testing"><code>@NoProcess</code></a>: Indicates that a given method is a normal test method. The
+ processing environment will not be setup for this method.</li>
+ <li><a href="../../../../com/apriori/apt/testing/Reentrant.html" title="annotation in com.apriori.apt.testing"><code>@Reentrant</code></a>: Indicates that a given method can be called more than once if
+ the processing phase results in multiple rounds. So the method may be called more than once
+ during the course of a single test case, once for each round.</li>
+ <li><a href="../../../../com/apriori/apt/testing/ProcessorUnderTest.html" title="annotation in com.apriori.apt.testing"><code>@ProcessorUnderTest</code></a>: This is the same as used on the class, except
+ that it overrides the processor to test for a single method.</li>
+ <li><a href="../../../../com/apriori/apt/testing/OptionsForProcessing.html" title="annotation in com.apriori.apt.testing"><code>@OptionsForProcessing</code></a>: This is the same as used on the class,
+ except that it overrides the options for a single method. It can also be used to <em>add to</em>
+ the options that are defined on the class.</li>
+ <li><a href="../../../../com/apriori/apt/testing/FilesToProcess.html" title="annotation in com.apriori.apt.testing"><code>@FilesToProcess</code></a>: This is the same as used on the class, except that it
+ overrides the files used for a single method. It can also be used to <em>add to</em> the set of
+ files that are defined on the class.</li>
+ <li><a href="../../../../com/apriori/apt/testing/ClassesToProcess.html" title="annotation in com.apriori.apt.testing"><code>@ClassesToProcess</code></a>: This is the same as used on the class, except
+ that it overrides the classes processed for a single method. It can also be used to
+ <em>add to</em> the set of classes that are defined on the test class.</li>
+ <li><a href="../../../../com/apriori/apt/testing/ValidateGeneratedFiles.html" title="annotation in com.apriori.apt.testing"><code>@ValidateGeneratedFiles</code></a>: This is the same as used on the
+ class, except that it overrides the output files to validate for a single method. It can also be
+ used to <em>add to</em> the set of validated output files that are defined on the class.</li>
  </ul>
  
- <p>Unlike normal test methods, tests run by <a href="../../../../com/apriori/apt/testing/AnnotationProcessorTestRunner.html" title="class in com.apriori.apt.testing"><code>AnnotationProcessorTestRunner</code></a> can accept arguments. That
- is how the test method gets access to the processing environment. Test methods' can have arguments of the
- following types:
+ <p>Unlike normal test methods, tests run by <a href="../../../../com/apriori/apt/testing/AnnotationProcessorTestRunner.html" title="class in com.apriori.apt.testing"><code>AnnotationProcessorTestRunner</code></a> can accept
+ arguments. That is how the test method gets access to the processing environment. Test methods'
+ can have arguments of the following types:
  <ul>
- <li><a href="../../../../com/apriori/apt/testing/TestEnvironment.html" title="class in com.apriori.apt.testing"><code>TestEnvironment</code></a>: a reference to the test environment, including accessor methods for everything
- else and a few extra utility methods, too. This is really the only thing any test method <em>needs</em>, but
- the other types are supported for convenience.</li>
- <li><a href="../../../../com/apriori/apt/testing/TestJavaFileManager.html" title="class in com.apriori.apt.testing"><code>TestJavaFileManager</code></a> or <a href="https://docs.oracle.com/javase/8/docs/api/javax/tools/JavaFileManager.html?is-external=true" title="class or interface in javax.tools"><code>JavaFileManager</code></a>: a reference to the Java compiler's file manager.</li>
- <li><a href="../../../../com/apriori/apt/testing/CategorizingDiagnosticCollector.html" title="class in com.apriori.apt.testing"><code>CategorizingDiagnosticCollector</code></a>: a reference to the collector of diagnostics emitted by the Java
- compiler. (See <a href="https://docs.oracle.com/javase/8/docs/api/javax/tools/DiagnosticListener.html?is-external=true" title="class or interface in javax.tools"><code>DiagnosticListener</code></a>.)</li>
+ <li><a href="../../../../com/apriori/apt/testing/TestEnvironment.html" title="class in com.apriori.apt.testing"><code>TestEnvironment</code></a>: a reference to the test environment, including accessor methods for
+ everything else and a few extra utility methods, too. This is really the only thing any test
+ method <em>needs</em>, but the other types are supported for convenience.</li>
+ <li><a href="../../../../com/apriori/apt/testing/TestJavaFileManager.html" title="class in com.apriori.apt.testing"><code>TestJavaFileManager</code></a> or <a href="https://docs.oracle.com/javase/8/docs/api/javax/tools/JavaFileManager.html?is-external=true" title="class or interface in javax.tools"><code>JavaFileManager</code></a>: a reference to the Java compiler's
+ file manager.</li>
+ <li><a href="../../../../com/apriori/apt/testing/CategorizingDiagnosticCollector.html" title="class in com.apriori.apt.testing"><code>CategorizingDiagnosticCollector</code></a>: a reference to the collector of diagnostics emitted
+ by the Java compiler. (See <a href="https://docs.oracle.com/javase/8/docs/api/javax/tools/DiagnosticListener.html?is-external=true" title="class or interface in javax.tools"><code>DiagnosticListener</code></a>.)</li>
  <li><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true" title="class or interface in javax.annotation.processing"><code>ProcessingEnvironment</code></a>: a reference to the processing environment.</li>
  <li><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Elements.html?is-external=true" title="class or interface in javax.lang.model.util"><code>Elements</code></a>: a reference to the utility class for working with elements. (See
  <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true#getElementUtils--" title="class or interface in javax.annotation.processing"><code>ProcessingEnvironment.getElementUtils()</code></a>).</li>
  <li><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/util/Types.html?is-external=true" title="class or interface in javax.lang.model.util"><code>Types</code></a>: a reference to the utility class for working with type mirrors. (See
  <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true#getTypeUtils--" title="class or interface in javax.annotation.processing"><code>ProcessingEnvironment.getTypeUtils()</code></a>).</li>
- <li><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Filer.html?is-external=true" title="class or interface in javax.annotation.processing"><code>Filer</code></a>: a reference to the interface used by an annotation processor to read and write files.
- (See <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true#getFiler--" title="class or interface in javax.annotation.processing"><code>ProcessingEnvironment.getFiler()</code></a>).</li>
- <li><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Messager.html?is-external=true" title="class or interface in javax.annotation.processing"><code>Messager</code></a>: a reference to the interfaced used by an annotation processor to emit messages and/or
- diagnostics. (See <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true#getMessager--" title="class or interface in javax.annotation.processing"><code>ProcessingEnvironment.getMessager()</code></a>).</li>
- <li><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/SourceVersion.html?is-external=true" title="class or interface in javax.lang.model"><code>SourceVersion</code></a>: a reference to the current version of the source code being processed. See
- <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true#getSourceVersion--" title="class or interface in javax.annotation.processing"><code>ProcessingEnvironment.getSourceVersion()</code></a>).</li>
+ <li><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Filer.html?is-external=true" title="class or interface in javax.annotation.processing"><code>Filer</code></a>: a reference to the interface used by an annotation processor to read and write
+ files. (See <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true#getFiler--" title="class or interface in javax.annotation.processing"><code>ProcessingEnvironment.getFiler()</code></a>).</li>
+ <li><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Messager.html?is-external=true" title="class or interface in javax.annotation.processing"><code>Messager</code></a>: a reference to the interfaced used by an annotation processor to emit
+ messages and/or diagnostics. (See <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true#getMessager--" title="class or interface in javax.annotation.processing"><code>ProcessingEnvironment.getMessager()</code></a>).</li>
+ <li><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/SourceVersion.html?is-external=true" title="class or interface in javax.lang.model"><code>SourceVersion</code></a>: a reference to the current version of the source code being processed.
+ See <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true#getSourceVersion--" title="class or interface in javax.annotation.processing"><code>ProcessingEnvironment.getSourceVersion()</code></a>).</li>
  <li><code>Map&lt;String, String&gt;</code>: a reference to the current options. See
  <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/ProcessingEnvironment.html?is-external=true#getOptions--" title="class or interface in javax.annotation.processing"><code>ProcessingEnvironment.getOptions()</code></a>).</li>
  <li><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/RoundEnvironment.html?is-external=true" title="class or interface in javax.annotation.processing"><code>RoundEnvironment</code></a>: a reference to the current round environment.</li>
- <li><code>Set&lt;<a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/TypeElement.html?is-external=true" title="class or interface in javax.lang.model.element"><code>TypeElement</code></a>&gt;</code>: a reference to the set of annotation types for the current
- round of processing.</li>
- <li><code>? extends</code> <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Processor.html?is-external=true" title="class or interface in javax.annotation.processing"><code>Processor</code></a>: a reference to the processor under test. If the method accepts a
- sub-class or sub-interface of <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Processor.html?is-external=true" title="class or interface in javax.annotation.processing"><code>Processor</code></a> that is not compatible with the actual processor instance
- under test, the test method will fail with a <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/ClassCastException.html?is-external=true" title="class or interface in java.lang"><code>ClassCastException</code></a>.</li>
+ <li><code>Set&lt;<a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/TypeElement.html?is-external=true" title="class or interface in javax.lang.model.element"><code>TypeElement</code></a>&gt;</code>: a reference to the set of annotation types for
+ the current round of processing.</li>
+ <li><code>? extends</code> <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Processor.html?is-external=true" title="class or interface in javax.annotation.processing"><code>Processor</code></a>: a reference to the processor under test. If the method
+ accepts a sub-class or sub-interface of <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Processor.html?is-external=true" title="class or interface in javax.annotation.processing"><code>Processor</code></a> that is not compatible with the actual
+ processor instance under test, the test method will fail with a <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/ClassCastException.html?is-external=true" title="class or interface in java.lang"><code>ClassCastException</code></a>.</li>
  </ul>
- Test methods are also allowed to return <code>boolean</code>, which represents the return value of executing
- <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Processor.html?is-external=true#process-java.util.Set-javax.annotation.processing.RoundEnvironment-" title="class or interface in javax.annotation.processing"><code>Processor.process(Set, RoundEnvironment)</code></a> and indicates whether the annotations for that round were
- consumed by the processor.
+ Test methods are also allowed to return <code>boolean</code>, which represents the return value of
+ executing <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Processor.html?is-external=true#process-java.util.Set-javax.annotation.processing.RoundEnvironment-" title="class or interface in javax.annotation.processing"><code>Processor.process(Set, RoundEnvironment)</code></a> and indicates whether the annotations
+ for that round were consumed by the processor.
  
- <p>Note that a method annotated with <a href="../../../../com/apriori/apt/testing/NoProcess.html" title="annotation in com.apriori.apt.testing"><code>@NoProcess</code></a> must accept no arguments and return void
- since it is run as a normal test method.
+ <p>Note that a method annotated with <a href="../../../../com/apriori/apt/testing/NoProcess.html" title="annotation in com.apriori.apt.testing"><code>@NoProcess</code></a> must accept no arguments and
+ return void since it is run as a normal test method.
  
  <p>Here is a short example of a test.
- 
  <pre>
   @RunWith(AnnotationProcessorTestRunner.class)
   @FilesToProcess( @InputFiles({"test/my/package/MyClass1.java", "test/my/package/MyClass2.java"}))
