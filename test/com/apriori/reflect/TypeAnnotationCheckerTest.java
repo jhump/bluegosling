@@ -16,7 +16,9 @@ import com.apriori.collections.MapBuilder;
 import org.junit.Test;
 
 import java.lang.annotation.Annotation;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 public class TypeAnnotationCheckerTest {
    
@@ -266,6 +268,135 @@ public class TypeAnnotationCheckerTest {
       assertNotAssignable(checker, singleton(levelB00_other), singleton(levelB00));
    }
    
+   @interface FromA {
+      String a();
+      int b();
+      double c();
+      boolean d();
+   }
+
+   @interface FromB {
+      String z();
+      int y();
+      double x();
+      boolean w();
+      Class<?>[] u();
+   }
+
+   @interface To {
+      String one();
+      int two();
+      double three();
+      boolean four();
+   }
+   
+   @Test public void attributeMaps() {
+      TypeAnnotationChecker checker = new TypeAnnotationChecker.Builder()
+         .equivalent(FromA.class, To.class, MapBuilder.<String, String>forHashMap()
+               .put("a", "one")
+               .put("b", "two")
+               .put("c", "three")
+               .put("d", "four")
+               .build())
+         .assignable(FromB.class, To.class, MapBuilder.<String, String>forHashMap()
+               .put("z", "one")
+               .put("y", "two")
+               .put("x", "three")
+               .put("w", "four")
+               .build())
+         .build();
+      
+      List<FromA> fromAs = Arrays.asList(
+            create(FromA.class, MapBuilder.<String, Object>forHashMap()
+                  .put("a", "test")
+                  .put("b", 123)
+                  .put("c", 456789.0F)
+                  .put("d", true)
+                  .build()),
+            create(FromA.class, MapBuilder.<String, Object>forHashMap()
+                  .put("a", "test")
+                  .put("b", 123)
+                  .put("c", 456789.0F)
+                  .put("d", false)
+                  .build()),
+            create(FromA.class, MapBuilder.<String, Object>forHashMap()
+                  .put("a", "foobar")
+                  .put("b", 1)
+                  .put("c", Math.PI)
+                  .put("d", true)
+                  .build()));
+      List<FromB> fromBs = Arrays.asList(
+            create(FromB.class, MapBuilder.<String, Object>forHashMap()
+                  .put("z", "test")
+                  .put("y", 123)
+                  .put("x", 456789.0F)
+                  .put("w", true)
+                  .put("u", Arrays.asList(Object.class, String.class))
+                  .build()),
+            create(FromB.class, MapBuilder.<String, Object>forHashMap()
+                  .put("z", "test")
+                  .put("y", 123)
+                  .put("x", 456789.0F)
+                  .put("w", false)
+                  .put("u", Arrays.asList(Object.class, String.class))
+                  .build()),
+            create(FromB.class, MapBuilder.<String, Object>forHashMap()
+                  .put("z", "foobar")
+                  .put("y", 1)
+                  .put("x", Math.PI)
+                  .put("w", true)
+                  .put("u", Arrays.asList(Integer.class))
+                  .build()));
+      List<To> tos = Arrays.asList(
+            create(To.class, MapBuilder.<String, Object>forHashMap()
+                  .put("one", "test")
+                  .put("two", 123)
+                  .put("three", 456789.0F)
+                  .put("four", true)
+                  .build()),
+            create(To.class, MapBuilder.<String, Object>forHashMap()
+                  .put("one", "test")
+                  .put("two", 123)
+                  .put("three", 456789.0F)
+                  .put("four", false)
+                  .build()),
+            create(To.class, MapBuilder.<String, Object>forHashMap()
+                  .put("one", "foobar")
+                  .put("two", 1)
+                  .put("three", Math.PI)
+                  .put("four", true)
+                  .build()));      
+      
+      for (int i = 0; i < fromAs.size(); i++) {
+         for (int j = 0; j < tos.size(); j++) {
+            if (i == j) {
+               assertEquivalent(checker, singleton(fromAs.get(i)), singleton(tos.get(j)));
+            } else {
+               assertNotAssignable(checker, singleton(fromAs.get(i)), singleton(tos.get(j)));
+            }
+         }
+      }
+      for (int i = 0; i < fromBs.size(); i++) {
+         for (int j = 0; j < tos.size(); j++) {
+            if (i == j) {
+               assertAssignable(checker, singleton(fromBs.get(i)), singleton(tos.get(j)));
+            } else {
+               assertNotAssignable(checker, singleton(fromBs.get(i)), singleton(tos.get(j)));
+            }
+         }
+      }
+      // transitive assignability
+      for (int i = 0; i < fromBs.size(); i++) {
+         for (int j = 0; j < fromAs.size(); j++) {
+            if (i == j) {
+               assertAssignable(checker, singleton(fromBs.get(i)), singleton(fromAs.get(j)));
+            } else {
+               assertNotAssignable(checker, singleton(fromBs.get(i)), singleton(fromAs.get(j)));
+            }
+         }
+      }
+   }
+
    private void assertAssignable(TypeAnnotationChecker checker,
          Collection<? extends Annotation> from, Collection<? extends Annotation> to) {
       assertTrue(checker.isAssignable(from, to));

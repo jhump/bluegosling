@@ -1,11 +1,13 @@
 package com.apriori.reflect;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import com.apriori.collections.MapBuilder;
 
 import org.junit.Test;
 
+import java.lang.annotation.Annotation;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.Arrays;
@@ -185,16 +187,21 @@ public class AnnotationsTest {
 
    @Test public void create() {
       NestedAnnotationOuter a1 = TestExhaustive.class.getAnnotation(NestedAnnotationOuter.class);
-      assertEquals(a1,
+      assertAnnotationsEqual(a1,
             Annotations.create(NestedAnnotationOuter.class, NESTED_ANNOTATION_OUTER_MAP));
 
       ExhaustiveAnnotation a2 = TestExhaustive.class.getAnnotation(ExhaustiveAnnotation.class);
-      assertEquals(a2, Annotations.create(ExhaustiveAnnotation.class, EXHAUSTIVE_ANNOTATION_MAP));
+      assertAnnotationsEqual(a2,
+            Annotations.create(ExhaustiveAnnotation.class, EXHAUSTIVE_ANNOTATION_MAP));
 
       ExhaustiveArraysAnnotation a3 =
             TestExhaustiveArrays.class.getAnnotation(ExhaustiveArraysAnnotation.class);
-      assertEquals(a3,
+      assertAnnotationsEqual(a3,
             Annotations.create(ExhaustiveArraysAnnotation.class, EXHAUSTIVE_ARRAYS_ANNOTATION_MAP));
+   }
+   
+   private static void assertAnnotationsEqual(Annotation a1, Annotation a2) {
+      assertTrue(a1.equals(a2) && a2.equals(a1));
    }
    
    private static <K, V> MapBuilder<K, V, ?, ?> mapBuilder() {

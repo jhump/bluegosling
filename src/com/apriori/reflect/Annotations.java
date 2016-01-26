@@ -457,6 +457,7 @@ public final class Annotations {
                }
             }
          }
+         return true;
       }
       return false;
    }
@@ -561,7 +562,7 @@ public final class Annotations {
       return sb.toString();
    }
    
-   private static Object getAnnotationFieldValue(Method annotationField, Annotation annotation) {
+   static Object getAnnotationFieldValue(Method annotationField, Annotation annotation) {
       try {
          if (!annotationField.isAccessible()) {
             annotationField.setAccessible(true);
