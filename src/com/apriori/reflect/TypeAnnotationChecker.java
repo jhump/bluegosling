@@ -25,13 +25,12 @@ import java.util.stream.Collectors;
  * is assignable from another type {@code @A2 T2} as long as {@code T1} is assignable from
  * {@code T2} according to the Java type system. (See {@link Types#isAssignable} for more info.)
  *  
- * This provides functionality similar to the Checker Framework, except that it works at runtime
+ * <p>This provides functionality similar to the Checker Framework, except that it works at runtime
  * instead of compile-time and is backed by core reflection.
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 // TODO: more doc, examples, comparisons with checker framework
-// TODO: tests
 @FunctionalInterface
 public interface TypeAnnotationChecker {
    /**
@@ -90,7 +89,12 @@ public interface TypeAnnotationChecker {
     * API for defining assignment compatibility of type annotations. Assignability is defined in
     * terms of pairs of annotation types: an assignment target and an assignment source. Annotations
     * with fields are further checked for value compatibility by checking that the values on a
-    * target annotation match those of a source annotation. 
+    * target annotation match those of a source annotation.
+    * 
+    * <p>It is valid to pass {@code null} as an annotation type to the builder methods. A
+    * {@code null} type annotation corresponds to an unannotated type, or an "unqualified" type. A
+    * {@code null} type is considered to have the same structure as a non-{@code null} annotation
+    * that has no methods.
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
@@ -129,14 +133,49 @@ public interface TypeAnnotationChecker {
       private final Map<Class<? extends Annotation>, SupertypeInfo> supertypes =
             new LinkedHashMap<>();
 
+      /**
+       * Defines an equivalence relationship between the given two type annotations. The structure
+       * of the annotations (method names and their return values) must be the same.
+       *
+       * @param anno1 a type annotation
+       * @param anno2 another type annotation
+       * @return {@code this}, for method chaining
+       * @throws IllegalArgumentException if introducing the relationship would form a cycle in the
+       *       relationships already defined in this builder, if the two types do not have
+       *       compatible structure, or if the two given types are the same type
+       */
       public Builder equivalent(Class<? extends Annotation> anno1,
             Class<? extends Annotation> anno2) {
+         if (anno1 == anno2) {
+            throw new IllegalArgumentException("Two given types are the same: " + anno1);
+         }
          equivalent(anno1, anno2, Function.identity(), Function.identity());
          return this;
       }
 
+      /**
+       * Defines an equivalence relationship between the given two type annotations. The signatures
+       * of the annotations' methods must be the same, though the names can vary. The given map
+       * defines the mapping in structure, from method names in the first annotation to
+       * corresponding method names in the second. The map must be invertible -- e.g. the mappings
+       * must be 1-to-1 (multiple keys with the same value are not permitted).
+       *
+       * @param anno1 a type annotation
+       * @param anno2 another type annotation
+       * @param attributeMap a map of method names in {@code anno1} to their corresponding method
+       *       name in {@code anno2}
+       * @return {@code this}, for method chaining
+       * @throws IllegalArgumentException if introducing the relationship would form a cycle in the
+       *       relationships already defined in this builder, if the two types do not have
+       *       compatible structure, if the two given types are the same type, or if the given
+       *       mapping is invalid (e.g. missing a mapping, has keys and values that do not
+       *       correspond to valid methods, or does not have 1-to-1 mappings)
+       */
       public Builder equivalent(Class<? extends Annotation> anno1,
             Class<? extends Annotation> anno2, Map<String, String> attributeMap) {
+         if (anno1 == anno2) {
+            throw new IllegalArgumentException("Two given types are the same: " + anno1);
+         }
          Map<String, String> safeCopy = new LinkedHashMap<>(attributeMap);
          Map<String, String> inverse = invert(safeCopy);
          checkAttributes(anno1, safeCopy.keySet(), true);
@@ -170,14 +209,57 @@ public interface TypeAnnotationChecker {
          });
       }
       
+      /**
+       * Defines an assignability relationship (or subtype relationship) between the given two type
+       * annotations. The first type (or source) is assignable to the second type (or target); it
+       * can be interpreted as the first type being a subtype of the second type. The structure of
+       * the annotations (method names and their return values) must be the compatible: all methods
+       * present in the target type are present (with the same return type) in the source type. The
+       * source type may have methods that do not appear in the target type, but not vice versa.
+       *
+       * @param anno1 a type annotation
+       * @param anno2 another type annotation
+       * @param attributeMap a map of method names in {@code anno1} to their corresponding method
+       *       name in {@code anno2}
+       * @return {@code this}, for method chaining
+       * @throws IllegalArgumentException if introducing the relationship would form a cycle in the
+       *       relationships already defined in this builder, if the two types do not have
+       *       compatible structure, if the two given types are the same type, or if the given
+       *       mapping is invalid (e.g. missing a mapping, has keys and values that do not
+       *       correspond to valid methods, or does not have 1-to-1 mappings)
+       */
       public Builder assignable(Class<? extends Annotation> from,
             Class<? extends Annotation> to) {
+         if (from == to) {
+            throw new IllegalArgumentException("Two given types are the same: " + from);
+         }
          assignable(from, to, Function.identity());
          return this;
       }
 
+      /**
+       * Defines an assignability relationship (or subtype relationship) between the given two type
+       * annotations. The first type (or source) is assignable to the second type (or target); it
+       * can be interpreted as the first type being a subtype of the second type. The signatures of
+       * the annotations' methods must be the compatible: all methods present in the target type
+       * must have a corresponding method with the same return type in the source type. The
+       * source type may have methods that do not appear in the target type, but not vice versa. The
+       * given map defines the mapping in structure, from method names in the source annotation to
+       * corresponding method names in the target. The map must be invertible -- e.g. the mappings
+       * must be 1-to-1 (multiple keys with the same value are not permitted).
+       *
+       * @param anno1 a type annotation
+       * @param anno2 another type annotation
+       * @return {@code this}, for method chaining
+       * @throws IllegalArgumentException if introducing the relationship would form a cycle in the
+       *       relationships already defined in this builder, if the two types do not have
+       *       compatible structure, or if the two given types are the same type
+       */
       public Builder assignable(Class<? extends Annotation> from,
             Class<? extends Annotation> to, Map<String, String> attributeMap) {
+         if (from == to) {
+            throw new IllegalArgumentException("Two given types are the same: " + from);
+         }
          Map<String, String> map = invert(attributeMap);
          checkAttributes(to, map.keySet(), true);
          checkAttributes(from, map.values(), false);
@@ -258,9 +340,11 @@ public interface TypeAnnotationChecker {
 
       private static void checkAttributes(Class<? extends Annotation> annoType,
             Collection<String> names, boolean namesAreExhaustive) {
-         Set<String> annotationAttributes = Arrays.stream(annoType.getDeclaredMethods())
-               .map(Method::getName)
-               .collect(Collectors.toSet());
+         Set<String> annotationAttributes = annoType == null
+               ? Collections.emptySet()
+               : Arrays.stream(annoType.getDeclaredMethods())
+                     .map(Method::getName)
+                     .collect(Collectors.toSet());
          Iterator<String> notAttribute = names.stream()
                .filter(s -> !annotationAttributes.contains(s))
                .iterator();
@@ -278,7 +362,7 @@ public interface TypeAnnotationChecker {
          StringBuilder sb = new StringBuilder();
          if (notAttribute.hasNext()) {
             sb.append("Given attribute map contains names that are not valid attributes of ")
-                  .append(annoType.getCanonicalName())
+                  .append(getName(annoType))
                   .append(": ");
             boolean first = true;
             while (notAttribute.hasNext()) {
@@ -296,7 +380,7 @@ public interface TypeAnnotationChecker {
                sb.append(' ');
             }
             sb.append("Given attribute map is missing attributes of ")
-                  .append(annoType.getCanonicalName())
+                  .append(getName(annoType))
                   .append(": ");
             boolean first = true;
             while (notInMap.hasNext()) {

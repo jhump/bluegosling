@@ -109,28 +109,28 @@ public abstract class TypeRef<T> implements AnnotatedElement {
    }
 
    /**
-    * Returns a super-type of the given type, as a {@link TypeRef}. This could be an ancestor class
+    * Returns a supertype of the given type, as a {@link TypeRef}. This could be an ancestor class
     * of the given type or an interface implemented by the given type.
     * 
-    * <p>This method is similar to {@link #resolveSuperTypeRef(Class)} except that, being a static
+    * <p>This method is similar to {@link #resolveSupertypeRef(Class)} except that, being a static
     * method, can better express the relationships between the two types and provide a more precise
     * return type.
     *
-    * @param subType the type for whom a super-type is queried
-    * @param superType the super type
-    * @return a {@code TypeRef} representation of the specified super type
+    * @param subtype the type for whom a supertype is queried
+    * @param supertype the supertype
+    * @return a {@code TypeRef} representation of the specified supertype
     * @throws NullPointerException if either of the given types is {@code null}
-    * @throws IllegalArgumentException if the given super type is not actually a super type of the
-    *       given sub-type (which the compiler will only allow when using arguments with raw types)
+    * @throws IllegalArgumentException if the given supertype is not actually a supertype of the
+    *       given subtype (which the compiler will only allow when using arguments with raw types)
     */
    // Constraints on type variables mean this should be safe. Limitations in Java generics prevent
    // this from being possible, without unchecked cast, as a non-static method
    // TODO: should this return TypeRef<? extends S> instead since parameterized type is a subtype
    // of the raw type represented by given class token?
    @SuppressWarnings("unchecked")
-   public static <S, T extends S> TypeRef<S> resolveSuperTypeRef(TypeRef<T> subType,
-         Class<S> superType) {
-      return (TypeRef<S>) subType.resolveSuperTypeRef(superType);
+   public static <S, T extends S> TypeRef<S> resolveSupertypeRef(TypeRef<T> subtype,
+         Class<S> supertype) {
+      return (TypeRef<S>) subtype.resolveSupertypeRef(supertype);
    }
    
    /** The type that this {@code TypeRef} represents. */
@@ -424,7 +424,7 @@ public abstract class TypeRef<T> implements AnnotatedElement {
    /**
     * Gets the owner type, as a {@link TypeRef}. The owner type is the declaring type of a nested
     * or inner class. Array types will not have an owner type, but their component type might.
-    * Wildcard types and type variables also have no owner type, but super-types representing their
+    * Wildcard types and type variables also have no owner type, but supertypes representing their
     * upper bounds might. If this type has no owner type then {@code null} is returned.
     *
     * @return this type's owner type or {@code null} if it has no owner type
@@ -438,7 +438,7 @@ public abstract class TypeRef<T> implements AnnotatedElement {
     * Returns superclass of the current type, as a {@code TypeRef}.
     * 
     * <p>If the super-class is a generic type, its type arguments will be resolved based on the
-    * context of the current type. For example, the super-type for a class {@code ListOfSomeType
+    * context of the current type. For example, the supertype for a class {@code ListOfSomeType
     * extends ArrayList<SomeType>} will be {@code ArrayList<SomeType>}, and the resulting type
     * reference will have the type argument {@code E} resolved to {@code SomeType}.
     * 
@@ -480,33 +480,33 @@ public abstract class TypeRef<T> implements AnnotatedElement {
    }
    
    /**
-    * Returns a super type of the current type, as a {@code TypeRef}. This could be an ancestor
+    * Returns a supertype of the current type, as a {@code TypeRef}. This could be an ancestor
     * class of the current type or an interface implemented by the current type.
     * 
     * <p>Limitations on the expressiveness of method type variables prevent a more precise return
-    * type. Consider instead using the static version, {@link #resolveSuperTypeRef(TypeRef, Class)}. 
+    * type. Consider instead using the static version, {@link #resolveSupertypeRef(TypeRef, Class)}. 
     * 
-    * @param superclass the super type
-    * @return a {@code TypeRef} representation of the specified super type
+    * @param superclass the supertype
+    * @return a {@code TypeRef} representation of the specified supertype
     * @throws NullPointerException if the specified type is {@code null}
-    * @throws IllegalArgumentException if the specified type is not actually a super type of the
+    * @throws IllegalArgumentException if the specified type is not actually a supertype of the
     *       current type
     * @see Types#resolveSupertype(Type, Class)
     */
-   public TypeRef<? super T> resolveSuperTypeRef(Class<?> superclass) {
-      Type superType = Types.resolveSupertype(type, superclass);
-      if (superType == null) {
+   public TypeRef<? super T> resolveSupertypeRef(Class<?> superclass) {
+      Type supertype = Types.resolveSupertype(type, superclass);
+      if (supertype == null) {
          throw new IllegalArgumentException(
-               Types.toString(superclass) + " is not a super type of " + this);
+               Types.toString(superclass) + " is not a supertype of " + this);
       }
-      return forTypeInternal(superType);
+      return forTypeInternal(supertype);
    }
 
    /**
-    * Determines if this is a <em>proper</em> sub-type of the specified type token.
+    * Determines if this is a <em>proper</em> subtype of the specified type token.
     * 
     * @param ref a {@code Type Ref}
-    * @return true if this represents a sub-type of the given type
+    * @return true if this represents a subtype of the given type
     * @see Types#isSubtype(Type, Type)
     */
    public boolean isSubtypeOf(TypeRef<?> ref) {

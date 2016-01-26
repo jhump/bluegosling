@@ -523,7 +523,7 @@ public class TypeRefTest extends TestCase {
    }
 
    /**
-    * Tests {@link TypeRef#getSuperclassTypeRef()}, {@link TypeRef#resolveSuperTypeRef(Class)}, and
+    * Tests {@link TypeRef#getSuperclassTypeRef()}, {@link TypeRef#resolveSupertypeRef(Class)}, and
     * {@link TypeRef#getInterfaceTypeRefs()}.
     */
    public void testSuperTypeAndInterfaceTypeRefs() {
@@ -536,7 +536,7 @@ public class TypeRefTest extends TestCase {
       // superclass
       assertSame(Number.class, tr.getSuperclassTypeRef().asClass());
       //   again, but this time using superTypeRefFor
-      assertSame(Number.class, tr.resolveSuperTypeRef(Number.class).asClass());
+      assertSame(Number.class, tr.resolveSupertypeRef(Number.class).asClass());
       // interface
       List<TypeRef<?>> ifaceTypes = new ArrayList<TypeRef<?>>(tr.getInterfaceTypeRefs());
       assertEquals(2, ifaceTypes.size());
@@ -544,7 +544,7 @@ public class TypeRefTest extends TestCase {
       assertSame(List.class, superRef.asClass());
       assertSame(CharSequence.class, superRef.resolveTypeParameterNamed("E").asClass());
       //   again, but this time using superTypeRefFor
-      superRef = tr.resolveSuperTypeRef(List.class);
+      superRef = tr.resolveSupertypeRef(List.class);
       assertSame(List.class, superRef.asClass());
       assertSame(CharSequence.class, superRef.resolveTypeParameterNamed("E").asClass());
       // another interface
@@ -554,7 +554,7 @@ public class TypeRefTest extends TestCase {
       assertSame(Collection.class, varRef.asClass());
       assertSame(Number.class, varRef.resolveTypeParameterNamed("E").asClass());
       //   again, but this time using superTypeRefFor
-      superRef = tr.resolveSuperTypeRef(Comparable.class);
+      superRef = tr.resolveSupertypeRef(Comparable.class);
       assertSame(Comparable.class, superRef.asClass());
       varRef = superRef.resolveTypeParameterNamed("T");
       assertSame(Collection.class, varRef.asClass());
@@ -574,7 +574,7 @@ public class TypeRefTest extends TestCase {
    static abstract class MyCrazySet<S, T> implements CrazySet<Class<S>, S, String, T> {}
 
    /**
-    * Tests {@link TypeRef#getSuperclassTypeRef()} and {@link TypeRef#resolveSuperTypeRef(Class)} with a very
+    * Tests {@link TypeRef#getSuperclassTypeRef()} and {@link TypeRef#resolveSupertypeRef(Class)} with a very
     * complex example to hopefully catch any possible edge cases in the lookup/resolution of
     * super types.
     */
@@ -594,7 +594,7 @@ public class TypeRefTest extends TestCase {
          assertSame(Number.class, superRef.resolveTypeParameterNamed("S").asClass());
          assertSame(Callable.class, superRef.resolveTypeParameterNamed("T").asClass());
    
-         superRef = tr.resolveSuperTypeRef(CrazySet.class);
+         superRef = tr.resolveSupertypeRef(CrazySet.class);
          assertSame(CrazySet.class, superRef.asClass());
          assertEquals(Arrays.asList("W", "X", "Y", "Z"), superRef.getTypeParameterNames());
          assertSame(Class.class, superRef.resolveTypeParameterNamed("W").asClass());
@@ -602,13 +602,13 @@ public class TypeRefTest extends TestCase {
          assertSame(String.class, superRef.resolveTypeParameterNamed("Y").asClass());
          assertSame(Callable.class, superRef.resolveTypeParameterNamed("Z").asClass());
    
-         superRef = tr.resolveSuperTypeRef(Map.class);
+         superRef = tr.resolveSupertypeRef(Map.class);
          assertSame(Map.class, superRef.asClass());
          assertEquals(Arrays.asList("K", "V"), superRef.getTypeParameterNames());
          assertSame(Pair.class, superRef.resolveTypeParameterNamed("K").asClass());
          assertSame(SortedSet.class, superRef.resolveTypeParameterNamed("V").asClass());
    
-         superRef = tr.resolveSuperTypeRef(TypeVariable.class);
+         superRef = tr.resolveSupertypeRef(TypeVariable.class);
          assertSame(TypeVariable.class, superRef.asClass());
          assertEquals(Arrays.asList("D"), superRef.getTypeParameterNames());
          assertSame(Class.class, superRef.resolveTypeParameterNamed("D").asClass());
@@ -630,7 +630,7 @@ public class TypeRefTest extends TestCase {
          assertSame(Callable.class, varRef.asClass());
          assertSame(RuntimeException.class, varRef.resolveTypeParameterNamed("V").asClass());
    
-         superRef = tr.resolveSuperTypeRef(CrazySet.class);
+         superRef = tr.resolveSupertypeRef(CrazySet.class);
          assertEquals(Arrays.asList("W", "X", "Y", "Z"), superRef.getTypeParameterNames());
          varRef = superRef.resolveTypeParameterNamed("W");
          assertSame(Class.class, varRef.asClass());
@@ -641,14 +641,14 @@ public class TypeRefTest extends TestCase {
          assertSame(Callable.class, varRef.asClass());
          assertSame(RuntimeException.class, varRef.resolveTypeParameterNamed("V").asClass());
    
-         superRef = tr.resolveSuperTypeRef(Map.class);
+         superRef = tr.resolveSupertypeRef(Map.class);
          assertEquals(Arrays.asList("K", "V"), superRef.getTypeParameterNames());
          varRef = superRef.resolveTypeParameterNamed("K");
          assertSame(Pair.class, varRef.asClass());
          assertSame(Number.class, varRef.resolveTypeParameterNamed("A").asClass());
          assertSame(String.class, varRef.resolveTypeParameterNamed("B").asClass());
          // and get super-type of this Pair type
-         TypeRef<?> pairSuperRef = varRef.resolveSuperTypeRef(Tuple5.class);
+         TypeRef<?> pairSuperRef = varRef.resolveSupertypeRef(Tuple5.class);
          assertEquals(pairSuperRef, varRef.getInterfaceTypeRefs().get(0));
          assertSame(Number.class, pairSuperRef.resolveTypeParameterNamed("M1").asClass());
          assertSame(String.class, pairSuperRef.resolveTypeParameterNamed("M2").asClass());
@@ -661,7 +661,7 @@ public class TypeRefTest extends TestCase {
          assertSame(Callable.class, varRef.asClass());
          assertSame(RuntimeException.class, varRef.resolveTypeParameterNamed("V").asClass());
    
-         superRef = tr.resolveSuperTypeRef(TypeVariable.class);
+         superRef = tr.resolveSupertypeRef(TypeVariable.class);
          assertEquals(Arrays.asList("D"), superRef.getTypeParameterNames());
          varRef = superRef.resolveTypeParameterNamed("D");
          assertSame(Class.class, varRef.asClass());
@@ -670,23 +670,23 @@ public class TypeRefTest extends TestCase {
    }
 
    /**
-    * Tests {@link TypeRef#resolveSuperTypeRef(Class)} when an invalid type is queried.
+    * Tests {@link TypeRef#resolveSupertypeRef(Class)} when an invalid type is queried.
     */
    public void testSuperTypeRefForInvalidType() {
       TypeRef<?> tr = new TypeRef<ArrayList<String>>() {};
 
       try {
-         tr.resolveSuperTypeRef(Set.class);
+         tr.resolveSupertypeRef(Set.class);
          fail();
       } catch (IllegalArgumentException expected) {}
 
       try {
-         tr.resolveSuperTypeRef(Number.class);
+         tr.resolveSupertypeRef(Number.class);
          fail();
       } catch (IllegalArgumentException expected) {}
 
       try {
-         tr.resolveSuperTypeRef(null);
+         tr.resolveSupertypeRef(null);
          fail();
       } catch (NullPointerException expected) {}
    }
