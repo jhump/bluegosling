@@ -5,6 +5,7 @@ import static com.apriori.concurrent.ListenableFuture.cast;
 import static com.apriori.concurrent.ListenableFuture.makeListenable;
 
 import com.apriori.collections.Iterables;
+import com.apriori.concurrent.unsafe.UnsafeReferenceFieldUpdater;
 import com.apriori.possible.Fulfillable;
 import com.apriori.tuples.Pair;
 
@@ -270,7 +271,9 @@ final class ListenableFutures {
       ListenableFutureWrapper(Future<T> future) {
          this.future = future;
          // use a new thread that just blocks for the future and then completes the result
-         new Thread(() -> { copyFutureInto(future, this); }).start();
+         String threadName = "ListenableFuture.makeListenable-"
+                  + Integer.toHexString(System.identityHashCode(future));
+         new Thread(() -> copyFutureInto(future, this), threadName).start();
       }
       
       @Override public boolean cancel(boolean mayInterrupt) {
@@ -320,20 +323,31 @@ final class ListenableFutures {
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    static class CompletionStageWrapper<T> implements ListenableFuture<T> {
-      final CompletionStage<T> stage;
-      CompletableFuture<T> cf;
+      @SuppressWarnings("rawtype")
+      private static final UnsafeReferenceFieldUpdater<CompletionStageWrapper, CompletableFuture>
+      cfUpdater = new UnsafeReferenceFieldUpdater<>(
+            CompletionStageWrapper.class, CompletableFuture.class, "cf");
+      
+      private final CompletionStage<T> stage;
+      private volatile CompletableFuture<T> cf;
       
       CompletionStageWrapper(CompletionStage<T> stage) {
          this.stage = stage;
       }
       
       private CompletableFuture<T> future() {
-         if (cf == null) {
-            cf = stage.toCompletableFuture();
+         while (true) {
+            CompletableFuture<T> future = cf;
+            if (future != null) {
+               return future;
+            }
+            future = stage.toCompletableFuture();
+            if (cfUpdater.compareAndSet(this, null, future)) {
+               return future;
+            }
          }
-         return cf;
       }
-
+      
       @Override
       public boolean cancel(boolean mayInterruptIfRunning) {
          return future().cancel(mayInterruptIfRunning);
@@ -364,8 +378,7 @@ final class ListenableFutures {
       public void await() throws InterruptedException {
          try {
             future().get();
-         } catch (ExecutionException e) {
-         } catch (CancellationException e) {
+         } catch (ExecutionException | CancellationException e) {
          }
       }
 
@@ -373,8 +386,7 @@ final class ListenableFutures {
       public boolean await(long limit, TimeUnit unit) throws InterruptedException {
          try {
             future().get(limit, unit);
-         } catch (ExecutionException e) {
-         } catch (CancellationException e) {
+         } catch (ExecutionException | CancellationException e) {
          } catch (TimeoutException e) {
             return false;
          }
@@ -383,40 +395,64 @@ final class ListenableFutures {
 
       @Override
       public boolean isSuccessful() {
-         return future().isDone() && !future().isCompletedExceptionally();
+         if (!future().isDone()) {
+            return false;
+         }
+         try {
+            getResult();
+            return true;
+         } catch (IllegalStateException e) {
+            return false;
+         }
       }
 
       @Override
       public T getResult() {
-         if (!isSuccessful()) {
-            throw new IllegalStateException("future did not complete successfully");
+         if (!isDone()) {
+            throw new IllegalStateException("future has not yet completed");
          }
+         boolean interrupted = false;
          try {
-            return future().join();
-         } catch (Throwable t) {
-            // sadly possible thanks to asynchronous obtrudeException
-            throw new IllegalStateException("future did not complete successfully");
+            while (true) {
+               try {
+                  return future().get();
+               } catch (ExecutionException | CancellationException e) {
+                  throw new IllegalStateException("future did not complete successfully");
+               } catch (InterruptedException e) {
+                  interrupted = true;
+               }
+            }
+         } finally {
+            if (interrupted) Thread.currentThread().interrupt();
          }
       }
 
       @Override
       public boolean isFailed() {
-         return future().isCompletedExceptionally() && !future().isCancelled();
+         if (!future().isDone()) {
+            return false;
+         }
+         try {
+            getFailure();
+            return true;
+         } catch (IllegalStateException e) {
+            return false;
+         }
       }
 
       @Override
       public Throwable getFailure() {
-         if (!isFailed()) {
-            throw new IllegalStateException("future did not complete with failure");
+         if (!isDone()) {
+            throw new IllegalStateException("future has not yet completed");
          }
-         // ugly... consider instead using CompletableFuture.handle(...) to extract failure?
          boolean interrupted = false;
          try {
             while (true) {
                try {
                   future().get();
-                  // sadly possible thanks to asynchronous obtrudeValue
-                  throw new IllegalStateException("future did not complete with failure");
+                  throw new IllegalStateException("future did not complete with a failure");
+               } catch (CancellationException e) {
+                  throw new IllegalStateException("future did not complete with a failure");
                } catch (ExecutionException e) {
                   return e.getCause();
                } catch (InterruptedException e) {
@@ -430,8 +466,7 @@ final class ListenableFutures {
 
       @Override
       public void addListener(FutureListener<? super T> listener, Executor executor) {
-         ListenableFuture<T> self = this;
-         stage.whenCompleteAsync((err, val) -> { listener.onCompletion(self); }, executor);
+         stage.whenCompleteAsync((err, val) -> listener.onCompletion(this), executor);
       }
 
       @Override
@@ -443,7 +478,6 @@ final class ListenableFutures {
             visitor.cancelled();
             return;
          }
-         // ugly... consider instead using CompletableFuture.handle(...) to extract failure?
          boolean interrupted = false;
          try {
             while (true) {
@@ -452,6 +486,9 @@ final class ListenableFutures {
                   return;
                } catch (ExecutionException e) {
                   visitor.failed(e.getCause());
+                  return;
+               } catch (CancellationException e) {
+                  visitor.cancelled();
                   return;
                } catch (InterruptedException e) {
                   interrupted = true;
@@ -522,7 +559,6 @@ final class ListenableFutures {
     * 
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-
    static abstract class AbstractDeferredFuture<T> extends AbstractListenableFuture<T> {
 
       /**
@@ -1091,7 +1127,7 @@ final class ListenableFutures {
     * 
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   static class ListenableCompletionStage<T> implements CompletionStage<T> {
+   static class ListenableCompletionStage<T> implements CompletionStageFuture<T> {
       final ListenableFuture<T> future;
       
       ListenableCompletionStage(ListenableFuture<T> future) {
@@ -1579,6 +1615,32 @@ final class ListenableFutures {
                next.setFailure(new CompletionException(self.getFailure()));
             }
          };
+      }
+
+      @Override
+      public boolean cancel(boolean mayInterruptIfRunning) {
+         return future.cancel(mayInterruptIfRunning);
+      }
+
+      @Override
+      public boolean isCancelled() {
+         return future.isCancelled();
+      }
+
+      @Override
+      public boolean isDone() {
+         return future.isDone();
+      }
+
+      @Override
+      public T get() throws InterruptedException, ExecutionException {
+         return future.get();
+      }
+
+      @Override
+      public T get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException,
+            TimeoutException {
+         return future.get(timeout, unit);
       }
    }
  }

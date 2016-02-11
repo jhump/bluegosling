@@ -131,7 +131,7 @@ public class DoubleInstanceLock<T> {
     * @param action the read operation to perform
     */
    public void readWith(Consumer<? super T> action) {
-      read((T t) -> { action.accept(t); return null; });
+      read(t -> { action.accept(t); return null; });
    }
 
    /**
@@ -168,7 +168,7 @@ public class DoubleInstanceLock<T> {
     * @throws ReentranceException if the given action is reentrant
     */
    public void writeWith(Consumer<? super T> action) {
-      write((T t) -> { action.accept(t); return null; });
+      write(t -> { action.accept(t); return null; });
    }
    
    /**

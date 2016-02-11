@@ -8,9 +8,11 @@ import com.apriori.util.IndentingPrintWriter;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Executable;
 import java.lang.reflect.Field;
+import java.lang.reflect.GenericDeclaration;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.lang.reflect.TypeVariable;
@@ -311,30 +313,96 @@ enum CoreReflectionElements implements Elements {
 
             @Override
             public Boolean visitTypeParameter(TypeParameterElement e, Element hidden) {
-               return checkType(e.getGenericElement(), hidden);
+               TypeVariable<?> typeVar = ((CoreReflectionTypeParameterElement) e).base();
+               GenericDeclaration decl = typeVar.getGenericDeclaration();
+               if (decl instanceof Class) {
+                  Class<?> declaringClass = (Class<?>) decl;
+                  if (!declaringClass.isMemberClass() && !declaringClass.isLocalClass()) {
+                     // type variables for top-level classes can't hide anything
+                     return false;
+                  }
+                  assert !declaringClass.isAnonymousClass();
+               }
+               return checkType(decl, ((CoreReflectionBaseElement<?>) hidden).base());
             }
             
             @Override
             public Boolean visitType(TypeElement e, Element hidden) {
-               if (e.getNestingKind() != NestingKind.MEMBER) {
+               Class<?> type = ((CoreReflectionTypeElement) e).base();
+               if (!type.isMemberClass() && !type.isLocalClass()) {
                   return false;
                }
-               return checkType(e, hidden);
+               return checkType(type, ((CoreReflectionBaseElement<?>) hidden).base());
             }
             
-            private boolean checkType(Element memberElement, Element hidden) {
+            private boolean checkType(AnnotatedElement member, AnnotatedElement hidden) {
                // Member types (and type parameters on members) can hide other member types on
                // the enclosing types (or the enclosing types' supertypes). They can also hide
                // type variables on the enclosing types if they are non-static members (or type
                // variables on non-static members).
-               if (!hidden.getKind().isClass() && !hidden.getKind().isInterface()
-                     && hidden.getKind() != ElementKind.TYPE_PARAMETER) {
+               
+               AnnotatedElement hiddenEnclosing = getEnclosing(hidden);
+               boolean hiddenIsTypeVar = hidden instanceof TypeVariable;
+               if (!hiddenIsTypeVar && !(hidden instanceof Class)) {
+                  // can only hide types and type variables
                   return false;
                }
-               Class<?> enclosingType =
-                     ((CoreReflectionTypeElement) memberElement.getEnclosingElement()).base();
-               // TODO: implement me!
+               AnnotatedElement e = member;
+               while (true) {
+                  if (!isStatic(e) && hiddenIsTypeVar) {
+                     return false;
+                  }
+                  AnnotatedElement enclosing = getEnclosing(e);
+                  if (enclosing == null) {
+                     return false;
+                  }
+                  if (matches(enclosing, hiddenEnclosing)) {
+                     return true;
+                  }
+                  e = enclosing;
+               }
+            }
+            
+            private AnnotatedElement getEnclosing(AnnotatedElement e) {
+               if (e instanceof Class) {
+                  Class<?> clazz = (Class<?>) e;
+                  if (clazz.isLocalClass()) {
+                     Class<?> enclosingClass = clazz.getEnclosingClass();
+                     if (enclosingClass.isLocalClass()) {
+                        // nested local class, so enclosing class is immediately enclosing element
+                        assert clazz.isLocalClass();
+                        return enclosingClass;
+                     }
+                     // otherwise, enclosing method or ctor is immediately enclosing element
+                     Executable ex = clazz.getEnclosingMethod();
+                     if (ex == null) {
+                        ex = clazz.getEnclosingConstructor();
+                        assert ex != null;
+                     }
+                     return ex;
+                  }
+                  return clazz.getEnclosingClass();
+               } else {
+                  Executable ex = (Executable) e;
+                  return ex.getDeclaringClass();
+               }
+            }
+            
+            private boolean matches(AnnotatedElement enclosesHider, AnnotatedElement enclosesHidden) {
+               if (enclosesHider.equals(enclosesHidden)) {
+                  return true;
+               }
+               if ((enclosesHider instanceof Class) && (enclosesHidden instanceof Class)) {
+                  return ((Class<?>) enclosesHidden).isAssignableFrom((Class<?>) enclosesHider);
+               }
                return false;
+            }
+            
+            private boolean isStatic(AnnotatedElement e) {
+               int mods = e instanceof Class
+                     ? ((Class<?>) e).getModifiers()
+                     : ((Executable) e).getModifiers();
+               return java.lang.reflect.Modifier.isStatic(mods);
             }
          };
          
@@ -360,12 +428,13 @@ enum CoreReflectionElements implements Elements {
       if (!overriddenType.isAssignableFrom(clazz)) {
          return false;
       }
+      
+      // Overridden type should usually be a supertype of the overriding type. If that's not
+      // the case, the only way it can override is if the overrider is a class and overridden
+      // is an interface (in which case the given type, being a subtype of both, inherits the
+      // overrider and thus overrides, aka implements, the overridden)
       if (!overriddenType.isAssignableFrom(overriderType)
             && (overriderType.isInterface() || !overriddenType.isInterface())) {
-         // Overridden type should usually be a supertype of the overriding type. If that's not
-         // the case, the only way it can override is if the overrider is a class and overridden
-         // is an interface. In this case, the given type, being a subtype of both, inherits the
-         // overrider and thus implements (e.g. overrides) the overridden.
          return false;
       }
       if (!ExecutableSignature.of(overriderMethod)

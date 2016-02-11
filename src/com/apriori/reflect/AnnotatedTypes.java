@@ -26,10 +26,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
@@ -521,7 +522,8 @@ public final class AnnotatedTypes {
             false);
    }
 
-   private static boolean isAssignable(AnnotatedType target, List<Annotation> extraTargetAnnotations,
+   private static boolean isAssignable(
+         AnnotatedType target, List<Annotation> extraTargetAnnotations,
          AnnotatedType source, List<Annotation> extraSourceAnnotations,
          TypeAnnotationChecker checker, boolean allowUncheckedConverion) {
       if (requireNonNull(target) == requireNonNull(source)) {
@@ -700,14 +702,14 @@ public final class AnnotatedTypes {
    
    private static Collection<Annotation> getAllAnnotations(AnnotatedType type,
          List<Annotation> extras) {
-      Map<Class<? extends Annotation>, Annotation> allAnnotations = new HashMap<>();
-      extras.forEach(a -> allAnnotations.putIfAbsent(a.annotationType(), a));
+      Set<Annotation> allAnnotations = new HashSet<>();
+      extras.forEach(a -> allAnnotations.add(a));
       addAllAnnotationsFromHierarchy(type, allAnnotations);
-      return allAnnotations.values();
+      return allAnnotations;
    }
    
    private static void addAllAnnotationsFromHierarchy(AnnotatedType type,
-         Map<Class<? extends Annotation>, Annotation> allAnnotations) {
+         Set<Annotation> allAnnotations) {
       addAll(type.getAnnotations(), allAnnotations);
       if (type instanceof AnnotatedWildcardType) {
          // add annotations for upper bounds
@@ -737,10 +739,9 @@ public final class AnnotatedTypes {
       }
    }
    
-   private static void addAll(Annotation[] annotations,
-         Map<Class<? extends Annotation>, Annotation> allAnnotations) {
+   private static void addAll(Annotation[] annotations, Set<Annotation> allAnnotations) {
       for (Annotation a : annotations) {
-         allAnnotations.putIfAbsent(a.annotationType(), a);
+         allAnnotations.add(a);
       }
    }
    

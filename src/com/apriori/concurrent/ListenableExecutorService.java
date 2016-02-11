@@ -74,12 +74,15 @@ public interface ListenableExecutorService extends ExecutorService {
     * @return a listenable version of the specified service
     */
    static ListenableExecutorService makeListenable(ExecutorService executor) {
-      if (executor instanceof ListenableExecutorService) {
-         return (ListenableExecutorService) executor;
-      } else if (executor instanceof ScheduledExecutorService) {
-         return new ListenableScheduledExecutorServiceWrapper((ScheduledExecutorService) executor);
+      if (executor instanceof ScheduledExecutorService) {
+         return executor instanceof ListenableScheduledExecutorService
+               ? (ListenableScheduledExecutorService) executor
+               : new ListenableScheduledExecutorServiceWrapper((ScheduledExecutorService) executor);
       }
-      return new ListenableExecutorServiceWrapper(executor);
+      
+      return executor instanceof ListenableExecutorService
+            ? (ListenableExecutorService) executor
+            : new ListenableExecutorServiceWrapper(executor);
    }
 
    /**

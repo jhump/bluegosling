@@ -37,7 +37,6 @@ public class WorkSharingThreadPool extends AbstractExecutorService {
    @Override
    public void shutdown() {
       // TODO: implement me
-      
    }
 
    @Override
@@ -72,10 +71,10 @@ public class WorkSharingThreadPool extends AbstractExecutorService {
             return;
          }
          shortest = queues.pollFirstEntry();
-         if ((shortest == null || shortest.getValue().isEmpty()) && tryStartWorker(command)) {
-            return;
-         }
-         if (shortest == null) {
+         if (shortest == null || shortest.getValue().isEmpty()) {
+            if (tryStartWorker(command)) {
+               return;
+            }
             // another thread concurrently started the last worker; try again
             Thread.yield();
             continue;

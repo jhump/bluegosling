@@ -49,6 +49,30 @@ public interface MapBuilder<K, V, M extends Map<K, V>, B extends MapBuilder<K, V
     * @return the map
     */
    M build();
+   
+   /**
+    * Builds the map, but keeps this builder usable for adding other elements in addition to the
+    * already added elements.
+    * 
+    * <p>Implementations will need to copy the elements added so far into a new map. The extra copy
+    * can usually be avoided, as long as the builder is no longer needed, by instead using
+    * {@link #build()}.
+    * 
+    * <p>The default implementation looks like so:<pre>
+    * M builtMap = build();
+    * reset();          // make builder usable again
+    * putAll(builtMap); // seed it with elements already added
+    * return builtMap;
+    * </pre>
+    *
+    * @return the map
+    */
+   default M buildAndContinue() {
+      M ret = build();
+      reset(); // make builder usable again
+      putAll(ret);
+      return ret;
+   }
 
    /**
     * Resets the map so it can be re-used to construct another map. Items previously added to the
@@ -233,7 +257,7 @@ public interface MapBuilder<K, V, M extends Map<K, V>, B extends MapBuilder<K, V
             valid = false;
             return map;
          }
-
+         
          @Override
          public void reset() {
             M m = mapConstructor.get();

@@ -148,11 +148,14 @@ enum CoreReflectionTypes implements Types {
             }
          }
          return false;
+      } else if (k1 == TypeKind.NULL) {
+         return !k2.isPrimitive();
       }
 
       AnnotatedType at1 = asAnnotatedTypeAllowVoid(t1, "first type");
       AnnotatedType at2 = asAnnotatedTypeAllowVoid(t1, "second type");
-      return com.apriori.reflect.Types.isSubtype(at1.getType(), at2.getType());
+      return com.apriori.reflect.Types.equals(at1.getType(), at2.getType())
+            || com.apriori.reflect.Types.isSubtype(at1.getType(), at2.getType());
    }
 
    @Override
@@ -195,20 +198,140 @@ enum CoreReflectionTypes implements Types {
             }
          }
          return false;
+      } else if (k1 == TypeKind.NULL) {
+         return !k2.isPrimitive();
       }
 
-      AnnotatedType at1 = asAnnotatedTypeAllowVoid(t1, "first type");
-      AnnotatedType at2 = asAnnotatedTypeAllowVoid(t1, "second type");
-      return com.apriori.reflect.Types.isAssignable(at1.getType(), at2.getType());
+      Type type1 = asAnnotatedTypeAllowVoid(t1, "first type").getType();
+      Type type2 = asAnnotatedTypeAllowVoid(t1, "second type").getType();
+      return com.apriori.reflect.Types.isAssignable(type1, type2);
    }
 
    @Override
    public boolean contains(TypeMirror t1, TypeMirror t2) {
+      TypeKind k1 = t1.getKind();
+      TypeKind k2 = t2.getKind();
+      if (k1 == TypeKind.EXECUTABLE || k1 == TypeKind.PACKAGE) {
+         throw new IllegalArgumentException("Invalid type kind: " + k1);
+      } else if (k2 == TypeKind.EXECUTABLE || k2 == TypeKind.PACKAGE) {
+         throw new IllegalArgumentException("Invalid type kind: " + k2);
+      } else if (k1 == TypeKind.INTERSECTION) {
+         IntersectionType i = checkType(t1, CoreReflectionIntersectionType.class, "first type");
+         // an intersection can only contain another type if every bound contains it
+         for (TypeMirror m : i.getBounds()) {
+            if (!contains(m, t2)) {
+               return false;
+            }
+         }
+         return true;
+      } else if (k1 == TypeKind.UNION) {
+         UnionType u = checkType(t1, CoreReflectionUnionType.class, "first type");
+         // a union contains all of its alternatives
+         for (TypeMirror m : u.getAlternatives()) {
+            if (contains(m, t2)) {
+               return true;
+            }
+         }
+         return false;
+      } else if (k2 == TypeKind.INTERSECTION) {
+         // an intersection is contained by any of its bounds
+         IntersectionType i = checkType(t2, CoreReflectionIntersectionType.class, "second type");
+         for (TypeMirror m : i.getBounds()) {
+            if (contains(t1, m)) {
+               return true;
+            }
+         }
+         return false;
+      } else if (k2 == TypeKind.UNION) {
+         UnionType u = checkType(t2, CoreReflectionUnionType.class, "second type");
+         // a union can only be contained by another type if that type contains all of its
+         // alternatives
+         for (TypeMirror m : u.getAlternatives()) {
+            if (!contains(t1, m)) {
+               return false;
+            }
+         }
+         return true;
+      } else if (t1.getKind() == TypeKind.NULL) {
+         return t2.getKind() == TypeKind.NULL;
+      }
+
+      Type type1 = asAnnotatedTypeAllowVoid(t1, "first type").getType();
+      Type type2 = asAnnotatedTypeAllowVoid(t1, "second type").getType();
+      return contains(type1, type2);
+   }
+   
+   private boolean contains(Type type1, Type type2) {
+      if (com.apriori.reflect.Types.equals(type1, type2)) {
+         // two types contain each other if they are equal
+         return true;
+      }
       
-      // TODO: implement me!
+      if (type1 instanceof java.lang.reflect.WildcardType) {
+         return type2 instanceof java.lang.reflect.WildcardType
+               ? contains((java.lang.reflect.WildcardType) type1,
+                     (java.lang.reflect.WildcardType) type2)
+               : contains((java.lang.reflect.WildcardType) type1, type2);
+      }
+      
+      // non-wildcard type only contains itself, so if we get here, it didn't work out
       return false;
    }
    
+   private boolean contains(java.lang.reflect.WildcardType type1, Type type2) {
+      for (Type bound : type1.getLowerBounds()) {
+         if (!com.apriori.reflect.Types.isAssignableStrict(bound, type2)) {
+            return false;
+         }
+      }
+      
+      for (Type bound : type1.getUpperBounds()) {
+         if (!com.apriori.reflect.Types.isAssignableStrict(type2, bound)) {
+            return false;
+         }
+      }
+      
+      return true;
+   }
+
+   private boolean contains(java.lang.reflect.WildcardType type1,
+         java.lang.reflect.WildcardType type2) {
+      Type[] lowerBounds = type1.getLowerBounds();
+      if (lowerBounds.length > 0) {
+         // if containing type has lower bound, then every lower bound of contained type must be a
+         // supertype of a lower bound of containing
+         for (Type bound2 : type2.getLowerBounds()) {
+            boolean isSupertype = false;
+            for (Type bound1 : lowerBounds) {
+               if (com.apriori.reflect.Types.isAssignableStrict(bound1, bound2)) {
+                  isSupertype = true;
+                  break;
+               }
+            }
+            if (!isSupertype) {
+               return false;
+            }
+         }
+      }
+
+      // every upper bound of containing type must be a supertype of a upper bound of contained
+      for (Type bound1 : type1.getUpperBounds()) {
+         boolean isSupertype = false;
+         for (Type bound2 : type2.getUpperBounds()) {
+            if (com.apriori.reflect.Types.isAssignableStrict(bound2, bound1)) {
+               isSupertype = true;
+               break;
+            }
+         }
+         if (!isSupertype) {
+            return false;
+         }
+      }
+      
+      // bounds are compatible
+      return true;
+   }
+
    @Override
    public boolean isSubsignature(ExecutableType m1, ExecutableType m2) {
       ExecutableSignature e1 =

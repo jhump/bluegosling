@@ -111,8 +111,9 @@ public interface TaskDefinition<V> {
    /**
     * Returns the {@link UncaughtExceptionHandler} for this task. If any invocation
     * throws an uncaught exception, this handler will be dispatched to handle it. If
-    * the tasks's handler is never assigned (i.e. {@code null}) then the thread's
-    * default handler is used.
+    * the tasks's handler is never assigned (i.e. {@code null}) then no action is taken,
+    * other than recording the exception as the cause of failure for an instance of
+    * {@link ScheduledTask}.
     * 
     * @return the {@code UncaughtExceptionHandler} for this task
     * 
@@ -240,8 +241,9 @@ public interface TaskDefinition<V> {
 
       /**
        * Configures the {@link UncaughtExceptionHandler} for this task. If this is set, it will
-       * be used instead of the thread's normal {@link UncaughtExceptionHandler} to handle any
-       * uncaught exceptions (including {@code Throwable}s) raised by an instance of the task.
+       * be invoked if an uncaught exception (including {@code Throwable}s) is raised by an instance
+       * of the task. If unset, the exception is not handled, though will still be recorded as the
+       * cause of failure for a {@link ScheduledTask}.
        * 
        * @param handler the {@code UncaughtExceptionHandler}
        * @return {@code this}, for method chaining

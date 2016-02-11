@@ -516,6 +516,11 @@ public interface ListenableFuture<T> extends Future<T>, Cancellable, Awaitable {
     * @return a view of this future as a completion stage
     */
    default CompletionStage<T> asCompletionStage() {
+      if (this instanceof CompletionStageFuture) {
+         Future<T> self = this; // we need intermediate upcast to Future to make compiler happy;
+                                // otherwise, it thinks the cast below is unchecked
+         return (CompletionStageFuture<T>) self;
+      }
       return new ListenableCompletionStage<>(this);
    }
 

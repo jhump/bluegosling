@@ -131,7 +131,7 @@ class RepeatingScheduledTaskImpl<V> implements RepeatingScheduledTask<V> {
       taskDef.addListener(new ScheduledTaskListener<V>() {
          @Override
          public void taskCompleted(ScheduledTask<? extends V> task) {
-            listener.onCompletion(self);
+            executor.execute(() -> listener.onCompletion(self));
          }
       });
    }
@@ -178,7 +178,7 @@ class RepeatingScheduledTaskImpl<V> implements RepeatingScheduledTask<V> {
          @Override
          public void taskCompleted(ScheduledTask<? extends V> task) {
             if (isDone()) {
-               listener.onCompletion(self);
+               executor.execute(() -> listener.onCompletion(self));
             }
          }
       });

@@ -867,6 +867,12 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
    void forEachWorker(Consumer<Worker<T>> cons) {
       long stamp = sync.getStamp();
       while (true) {
+         if (!Sync.validateStamp(stamp)) {
+            // there is a concurrent change to the worker pool in progress; try again
+            Thread.yield();
+            stamp = sync.getStamp();
+            continue;
+         }
          Worker<T> ws[] = workers;
          for (Worker<T> w : ws) {
             if (w == null) {
@@ -893,8 +899,8 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
       long stamp = sync.getStamp();
       while (true) {
          Worker<T> ws[] = workers;
-         int s = start.getIndex();
-         if (ws[s] != start || !Sync.validateStamp(stamp)) {
+         int s;
+         if (!Sync.validateStamp(stamp) || ws[s = start.getIndex()] != start) {
             // there is a concurrent change to the worker pool in progress; try again
             Thread.yield();
             stamp = sync.getStamp();
@@ -939,8 +945,8 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
       long stamp = sync.getStamp();
       while (true) {
          Worker<T> ws[] = workers;
-         int s = stealer.getIndex();
-         if (ws[s] != stealer || !Sync.validateStamp(stamp)) {
+         int s;
+         if (!Sync.validateStamp(stamp) || ws[s = stealer.getIndex()] != stealer) {
             // there is a concurrent change to the worker pool in progress; try again
             Thread.yield();
             stamp = sync.getStamp();
@@ -1142,11 +1148,11 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
        * @return the stamp
        */
       long getStamp() {
-         return getState() & STAMP_MASK;
+         return getState() & STAMP_WIDE_MASK;
       }
       
       /**
-       * Validates the given stamp. The stamp is invalid if it a "write bit" is set, indicating that
+       * Validates the given stamp. The stamp is invalid if a "write bit" is set, indicating that
        * another thread is concurrently modifying the worker pool. In this case, the stamp observer
        * should yield and read the stamp again until it sees a valid stamp.
        *
@@ -1206,16 +1212,16 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
       }
       
       /**
-       * Marks the executor as shutdown. The return flag is a heuristic: it is possible for two
-       * racing threads to both call this method and both get a return value of {@code true}. (So
-       * don't use it to make important decisions that could effect correctness.)
+       * Marks the executor as shutdown. The return flag is does not guarantee that the calling
+       * thread was the one to shut the executor down; e.g. it is possible for two racing threads to
+       * both call this method and both get a return value of {@code true}. (So don't use it to make
+       * important decisions that could effect correctness.)
        * 
        * <p>If another thread has this synchronizer locked (e.g. is adjusting the size of the pool)
        * then this will block until the lock is available. However, the lock is not held when this
        * method returns.
        *
-       * @return true if the executor was shutdown by this method or false if it was already
-       *       shutdown
+       * @return true if the executor was not already shutdown at the onset of this method
        */
       boolean shutdown() {
          if (isShutdown()) {
@@ -1291,17 +1297,34 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
                return false;
             }
             long newState;
+            boolean terminated = false;
             if (mode == MODE_SHUTDOWN) {
                if ((s & STATE_MASK) != RUNNING_STATE) {
                   // already shutdown
                   return true;
                }
-               newState = s | TERMINATING_STATE;
+               int threadCount = (int) s;
+               if (threadCount == 0) {
+                  newState = s | TERMINATED_STATE;
+                  terminated = true;
+               } else {
+                  newState = s | TERMINATING_STATE;
+               }
             } else {
                assert mode == MODE_LOCK;
                newState = (s & ~STAMP_MASK) | ((s + STAMP_INC) & STAMP_MASK) | LOCK_MASK;
             }
             if (compareAndSetState(s, newState)) {
+               if (terminated) {
+                  // if we just terminated the executor, wake up the waiters
+                  while (true) {
+                     Thread th = terminateWaiters.poll();
+                     if (th == null) {
+                        break;
+                     }
+                     LockSupport.unpark(th);
+                  }
+               }
                return true;
             }
          }
@@ -1638,6 +1661,7 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
        * Creates a new worker with the given initial actor to process.
        *
        * @param owner the executor that owns the worker
+       * @param index the position of this worker in the pool's worker array
        * @param actor the initial actor to process
        */
       Worker(ActorThreadPool<T> owner, int index, ActorQueue<T> actor) {
@@ -1649,6 +1673,7 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
          }
          this.thread.start();
          owner.activeCount.increment(); // start off active
+         assert index >= 0;
          this.workerIndexAndStamp = index;
       }
       
@@ -1854,10 +1879,12 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
             if (result == ActorQueue.TaskResult.NO_TASK) {
                iter.remove();
             } else if (result == ActorQueue.TaskResult.TASK_FOUND) {
-               // move this actor to the end of the queue to give the others a chance in the
-               // next round of finding a task
-               iter.remove();
-               actors.add(actor);
+               if (iter.hasNext()) {
+                  // not the last actor? move it to the end of the queue to give the others a chance
+                  // in the next round of finding a task
+                  iter.remove();
+                  actors.add(actor);
+               }
                return actor;
             }                  
          }

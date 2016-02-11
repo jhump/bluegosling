@@ -505,7 +505,7 @@ public abstract class TypeRef<T> implements AnnotatedElement {
    /**
     * Determines if this is a <em>proper</em> subtype of the specified type token.
     * 
-    * @param ref a {@code Type Ref}
+    * @param ref a {@code TypeRef}
     * @return true if this represents a subtype of the given type
     * @see Types#isSubtype(Type, Type)
     */

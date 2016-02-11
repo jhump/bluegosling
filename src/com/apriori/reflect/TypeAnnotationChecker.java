@@ -47,8 +47,8 @@ public interface TypeAnnotationChecker {
     *
     * @param from annotations that appear on the type of the assignment source (RHS)
     * @param to annotations that appear on the type of the assignment target (LHS)
-    * @return true if a type annotated with {@code target} annotations is assignable from a type
-    *       annotated with {@code source} annotations
+    * @return true if a type annotated with {@code to} annotations is assignable from a type
+    *       annotated with {@code from} annotations
     * @throws IllegalArgumentException if either collection of annotations represents an illegal
     *       combination of type annotations (for example, contains both {@code NotNull} and
     *       {@code Nullable})
@@ -62,11 +62,12 @@ public interface TypeAnnotationChecker {
     *
     * @param from annotations that appear on the type of the assignment source (RHS)
     * @param to annotations that appear on the type of the assignment target (LHS)
-    * @return true if a type annotated with {@code target} annotations is assignable from a type
-    *       annotated with {@code source} annotations
+    * @return true if a type annotated with {@code to} annotations is assignable from a type
+    *       annotated with {@code from} annotations
     * @throws IllegalArgumentException if either collection of annotations represents an illegal
     *       combination of type annotations (for example, contains both {@code NotNull} and
     *       {@code Nullable})
+    * @see #isAssignable(Collection, Collection)
     */
    default boolean isAssignable(Annotation[] from, Annotation[] to) {
       return isAssignable(Arrays.asList(from), Arrays.asList(to));
@@ -102,14 +103,25 @@ public interface TypeAnnotationChecker {
       private static final Method[] EMPTY_METHODS = new Method[0];
       
       /**
-       * A structure with annotations that represent supertypes of a given annotation. This also
+       * A structure with annotations that represent supertypes of some annotation. This also
        * includes equivalences (two equivalent annotations are both supertypes and subtypes of
        * one another).
        *
        * @author Joshua Humphries (jhumphries131@gmail.com)
        */
       private static class SupertypeInfo {
+         /**
+          * The set of annotations to which some annotation is assignable. The keys are the
+          * annotation types and the values are mapping functions, for mapping attribute names on
+          * the supertype to those on some annotation.
+          */
          final Map<Class<? extends Annotation>, Function<String, String>> assignableTo;
+
+         /**
+          * The set of annotations with which some annotation is equivalent. The keys are the
+          * annotation types and the values are mapping functions, for mapping attribute names on
+          * the equivalent annotation to those on some annotation.
+          */
          final Map<Class<? extends Annotation>, Function<String, String>> equivalences;
          
          /** Create empty sources. */
@@ -128,7 +140,8 @@ public interface TypeAnnotationChecker {
       /**
        * The map of type relationships. The keys are assignment sources and the values contain
        * allowed assignment targets. Allowed assignment targets are annotations that represent
-       * supertypes of the key annotation.
+       * supertypes of the key annotation and those that are considered equivalent to the key
+       * annotation.
        */
       private final Map<Class<? extends Annotation>, SupertypeInfo> supertypes =
             new LinkedHashMap<>();
@@ -140,9 +153,10 @@ public interface TypeAnnotationChecker {
        * @param anno1 a type annotation
        * @param anno2 another type annotation
        * @return {@code this}, for method chaining
-       * @throws IllegalArgumentException if introducing the relationship would form a cycle in the
-       *       relationships already defined in this builder, if the two types do not have
-       *       compatible structure, or if the two given types are the same type
+       * @throws IllegalArgumentException if the two types do not have compatible structure or if
+       *       the two given types are the same type
+       * @throws IllegalStateException if introducing the relationship would form a cycle in the
+       *       relationships already defined in this builder
        */
       public Builder equivalent(Class<? extends Annotation> anno1,
             Class<? extends Annotation> anno2) {
@@ -165,11 +179,12 @@ public interface TypeAnnotationChecker {
        * @param attributeMap a map of method names in {@code anno1} to their corresponding method
        *       name in {@code anno2}
        * @return {@code this}, for method chaining
-       * @throws IllegalArgumentException if introducing the relationship would form a cycle in the
-       *       relationships already defined in this builder, if the two types do not have
-       *       compatible structure, if the two given types are the same type, or if the given
-       *       mapping is invalid (e.g. missing a mapping, has keys and values that do not
-       *       correspond to valid methods, or does not have 1-to-1 mappings)
+       * @throws IllegalArgumentException if the two types do not have compatible structure, if the
+       *       two given types are the same type, or if the given mapping is invalid (e.g. missing
+       *       a method, has keys and values that do not correspond to valid methods, or does not
+       *       have 1-to-1 mappings)
+       * @throws IllegalStateException if introducing the relationship would form a cycle in the
+       *       relationships already defined in this builder
        */
       public Builder equivalent(Class<? extends Annotation> anno1,
             Class<? extends Annotation> anno2, Map<String, String> attributeMap) {
@@ -192,6 +207,8 @@ public interface TypeAnnotationChecker {
          checkNotAssignable(anno2, anno1);
          checkNoCycle(anno1, anno2, true);
          checkNoCycle(anno2, anno1, true);
+         checkStructure(anno1, anno2, attributeMapperTo);
+         checkStructure(anno2, anno1, attributeMapperFrom);
          // and store two pairs, one for each direction
          supertypes.compute(anno1, (k, v) -> {
             if (v == null) {
@@ -217,16 +234,13 @@ public interface TypeAnnotationChecker {
        * present in the target type are present (with the same return type) in the source type. The
        * source type may have methods that do not appear in the target type, but not vice versa.
        *
-       * @param anno1 a type annotation
-       * @param anno2 another type annotation
-       * @param attributeMap a map of method names in {@code anno1} to their corresponding method
-       *       name in {@code anno2}
+       * @param from a source annotation
+       * @param to a target annotation
        * @return {@code this}, for method chaining
-       * @throws IllegalArgumentException if introducing the relationship would form a cycle in the
-       *       relationships already defined in this builder, if the two types do not have
-       *       compatible structure, if the two given types are the same type, or if the given
-       *       mapping is invalid (e.g. missing a mapping, has keys and values that do not
-       *       correspond to valid methods, or does not have 1-to-1 mappings)
+       * @throws IllegalArgumentException if the two types do not have compatible structure or if
+       *       the two given types are the same type
+       * @throws IllegalStateException if introducing the relationship would form a cycle in the
+       *       relationships already defined in this builder
        */
       public Builder assignable(Class<? extends Annotation> from,
             Class<? extends Annotation> to) {
@@ -248,12 +262,17 @@ public interface TypeAnnotationChecker {
        * corresponding method names in the target. The map must be invertible -- e.g. the mappings
        * must be 1-to-1 (multiple keys with the same value are not permitted).
        *
-       * @param anno1 a type annotation
-       * @param anno2 another type annotation
+       * @param from a source annotation
+       * @param to a target annotation
+       * @param attributeMap a map of method names in {@code from} to their corresponding method
+       *       name in {@code to}
        * @return {@code this}, for method chaining
-       * @throws IllegalArgumentException if introducing the relationship would form a cycle in the
-       *       relationships already defined in this builder, if the two types do not have
-       *       compatible structure, or if the two given types are the same type
+       * @throws IllegalArgumentException if the two types do not have compatible structure, if the
+       *       two given types are the same type, or if the given mapping is invalid (e.g. missing a
+       *       mapping for the target annotation, has keys and values that do not correspond to
+       *       valid methods, or does not have 1-to-1 mappings)
+       * @throws IllegalStateException if introducing the relationship would form a cycle in the
+       *       relationships already defined in this builder
        */
       public Builder assignable(Class<? extends Annotation> from,
             Class<? extends Annotation> to, Map<String, String> attributeMap) {
@@ -269,6 +288,7 @@ public interface TypeAnnotationChecker {
 
       private void assignable(Class<? extends Annotation> from,
             Class<? extends Annotation> to, Function<String, String> attributeMapper) {
+         checkNotAssignable(from, to);
          checkNotEquivalent(from, to);
          checkNoCycle(from, to, false);
          checkStructure(from, to, attributeMapper);
@@ -304,7 +324,7 @@ public interface TypeAnnotationChecker {
             boolean forEquivalence) {
          if (hasCycle(from, to, forEquivalence, new HashSet<>())) {
             String combineMessage = forEquivalence ? " equivalent to " : " assignable from ";
-            throw new IllegalArgumentException("Making " + getName(to) + combineMessage
+            throw new IllegalStateException("Making " + getName(to) + combineMessage
                   + getName(from) + " would result in a cycle");
          }
       }

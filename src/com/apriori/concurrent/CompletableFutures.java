@@ -1,7 +1,5 @@
 package com.apriori.concurrent;
 
-import com.apriori.vars.Variable;
-
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
@@ -16,6 +14,28 @@ import java.util.function.Supplier;
  */
 public final class CompletableFutures {
    private CompletableFutures() {
+   }
+   
+   /**
+    * Returns a copy of the given future that completes with the same result or failure as the given
+    * completable future. However, the given future cannot be modified (completed or obtruded) via
+    * methods on the returned future (hence making it effectively read-only).
+    *
+    * @param f a completable future
+    * @return a read-only future that mirrors the given future
+    * 
+    * @see ReadOnlyCompletableFuture
+    */
+   public static <T> ReadOnlyCompletableFuture<T> readOnly(CompletableFuture<T> f) {
+      ReadOnlyCompletableFuture<T> ret = new ReadOnlyCompletableFuture<>();
+      f.whenComplete((t, th) -> {
+         if (th != null) {
+            ret.setFailure(th);
+         } else {
+            ret.setValue(t);
+         }
+      });
+      return ret;
    }
    
    /**
@@ -136,67 +156,8 @@ public final class CompletableFutures {
     * @return a future that completes with the value computed by the given task
     */
    public static <T> CompletableFuture<T> callInterruptiblyAsync(Callable<T> c, Executor executor) {
-      // kind of ugly, but...
-      Variable<Thread> runner = new Variable<>();
-      // make a future that knows how to cancel the task if it is running
-      CompletableFuture<T> cf = new InterruptibleCompletableFuture<>(runner);
-      // the actual task we execute: invokes the callable and completes the future
-      executor.execute(() -> {
-         synchronized (runner) {
-            if (cf.isDone()) {
-               // no need to do anything if task is done
-               // (e.g. asynchronously cancelled or completed)
-               return; 
-            }
-            runner.set(Thread.currentThread());
-         }
-         try {
-            cf.complete(c.call());
-         } catch (Throwable t) {
-            cf.completeExceptionally(t);
-         } finally {
-            synchronized (runner) {
-               runner.clear();
-            }
-         }
-      });
-      return cf;
-   }
-   
-   /**
-    * A sub-class of {@link CompletableFuture} that can interrupt its corresponding task if it's
-    * still running.
-    *
-    * @param <T> the type of the future value
-    * 
-    * @author Joshua Humphries (jhumphries131@gmail.com)
-    */
-   private static class InterruptibleCompletableFuture<T> extends CompletableFuture<T> {
-      private final Variable<Thread> runner;
-      
-      /**
-       * Creates a new future. The given variable references the thread that is running the
-       * corresponding task. Access to it should be synchronized (using the variable's intrinsic
-       * lock).
-       *
-       * @param runner the variable that either references the thread running the task or references
-       *    {@code null} if no thread is currently running it
-       */
-      InterruptibleCompletableFuture(Variable<Thread> runner) {
-         this.runner = runner;
-      }
-      
-      @Override public boolean cancel(boolean mayInterrupt) {
-         boolean ret = super.cancel(mayInterrupt);
-         if (ret && mayInterrupt) {
-            synchronized (runner) {
-               Thread th = runner.get();
-               if (th != null) {
-                  th.interrupt();
-               }
-            }
-         }
-         return ret;
-      }
+      RunnableCompletableFuture<T> ret = new RunnableCompletableFuture<>(c);
+      executor.execute(ret);
+      return ret;
    }
 }

@@ -15,7 +15,9 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -199,8 +201,36 @@ public class TransactionalAtomTest extends AbstractSynchronousAtomTest {
       assertEquals(Trio.create(atom, 100, 400), notices.get(0));
    }
 
-   @Test public void pin_inTransaction() {
-      // TODO
+   @Test public void pin_inTransaction() throws Exception {
+      TransactionalAtom<String> atom = create("abc");
+      CountDownLatch ready = new CountDownLatch(1);
+      CountDownLatch go = new CountDownLatch(1);
+      AtomicReference<String> observedVal = new AtomicReference<>();
+      Thread thread = new Thread(() -> {
+         ready.countDown();
+         try {
+            go.await();
+         } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+         }
+         // this blocks until transaction below completes because pinning the atom
+         // acquires a read lock, causing this mutation to block
+         observedVal.set(atom.set("foo"));
+      });
+      thread.start();
+      
+      Transaction.execute(t -> {
+         ready.await();
+         String val = atom.pin();
+         assertEquals("abc", val);
+         go.countDown();
+         Thread.sleep(200);
+         atom.set("def");
+      });
+      
+      thread.join();
+      assertEquals("def", observedVal.get());
+      assertEquals("foo", atom.get());
    }
    
    @Test public void newComponent() {
