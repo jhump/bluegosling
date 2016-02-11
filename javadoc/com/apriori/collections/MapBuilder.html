@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":17,"i2":17,"i3":17,"i4":17,"i5":17,"i6":17,"i7":17,"i8":17,"i9":17,"i10":17,"i11":17,"i12":6,"i13":6,"i14":6,"i15":17};
+var methods = {"i0":6,"i1":18,"i2":17,"i3":17,"i4":17,"i5":17,"i6":17,"i7":17,"i8":17,"i9":17,"i10":17,"i11":17,"i12":17,"i13":6,"i14":6,"i15":6,"i16":17};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -133,93 +133,100 @@ var activeTableTab = "activeTableTab";
 </td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>default <a href="../../../com/apriori/collections/MapBuilder.html" title="type parameter in MapBuilder">M</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/MapBuilder.html#buildAndContinue--">buildAndContinue</a></span>()</code>
+<div class="block">Builds the map, but keeps this builder usable for adding other elements in addition to the
+ already added elements.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>static &lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/MapBuilder.html" title="interface in com.apriori.collections">MapBuilder</a>&lt;K,V,<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentHashMap.html?is-external=true" title="class or interface in java.util.concurrent">ConcurrentHashMap</a>&lt;K,V&gt;,?&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/MapBuilder.html#forConcurrentHashMap--">forConcurrentHashMap</a></span>()</code>
 <div class="block">Returns a map builder that constructs <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentHashMap.html?is-external=true" title="class or interface in java.util.concurrent"><code>ConcurrentHashMap</code></a> instances.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>static &lt;K extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;K&gt;,V&gt;<br><a href="../../../com/apriori/collections/MapBuilder.html" title="interface in com.apriori.collections">MapBuilder</a>&lt;K,V,<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentSkipListMap.html?is-external=true" title="class or interface in java.util.concurrent">ConcurrentSkipListMap</a>&lt;K,V&gt;,?&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/MapBuilder.html#forConcurrentSkipListMap--">forConcurrentSkipListMap</a></span>()</code>
 <div class="block">Returns a map builder that constructs <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentSkipListMap.html?is-external=true" title="class or interface in java.util.concurrent"><code>ConcurrentSkipListMap</code></a> instances.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>static &lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/MapBuilder.html" title="interface in com.apriori.collections">MapBuilder</a>&lt;K,V,<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentSkipListMap.html?is-external=true" title="class or interface in java.util.concurrent">ConcurrentSkipListMap</a>&lt;K,V&gt;,?&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/MapBuilder.html#forConcurrentSkipListMap-java.util.Comparator-">forConcurrentSkipListMap</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super K&gt;&nbsp;comparator)</code>
 <div class="block">Returns a map builder that constructs <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentSkipListMap.html?is-external=true" title="class or interface in java.util.concurrent"><code>ConcurrentSkipListMap</code></a> instances that orders
  elements per the given comparator.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>static &lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/MapBuilder.html" title="interface in com.apriori.collections">MapBuilder</a>&lt;K,V,<a href="../../../com/apriori/collections/HamtMap.html" title="class in com.apriori.collections">HamtMap</a>&lt;K,V&gt;,?&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/MapBuilder.html#forHamtMap--">forHamtMap</a></span>()</code>
 <div class="block">Returns a map builder that constructs <a href="../../../com/apriori/collections/HamtMap.html" title="class in com.apriori.collections"><code>HamtMap</code></a> instances.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>static &lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/MapBuilder.html" title="interface in com.apriori.collections">MapBuilder</a>&lt;K,V,<a href="https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html?is-external=true" title="class or interface in java.util">HashMap</a>&lt;K,V&gt;,?&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/MapBuilder.html#forHashMap--">forHashMap</a></span>()</code>
 <div class="block">Returns a map builder that constructs <a href="https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html?is-external=true" title="class or interface in java.util"><code>HashMap</code></a> instances.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>static &lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/MapBuilder.html" title="interface in com.apriori.collections">MapBuilder</a>&lt;K,V,<a href="../../../com/apriori/collections/LinearHashingMap.html" title="class in com.apriori.collections">LinearHashingMap</a>&lt;K,V&gt;,?&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/MapBuilder.html#forLinearHashingMap--">forLinearHashingMap</a></span>()</code>
 <div class="block">Returns a map builder that constructs <a href="../../../com/apriori/collections/LinearHashingMap.html" title="class in com.apriori.collections"><code>LinearHashingMap</code></a> instances.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>static &lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/MapBuilder.html" title="interface in com.apriori.collections">MapBuilder</a>&lt;K,V,<a href="https://docs.oracle.com/javase/8/docs/api/java/util/LinkedHashMap.html?is-external=true" title="class or interface in java.util">LinkedHashMap</a>&lt;K,V&gt;,?&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/MapBuilder.html#forLinkedHashMap--">forLinkedHashMap</a></span>()</code>
 <div class="block">Returns a map builder that constructs <a href="https://docs.oracle.com/javase/8/docs/api/java/util/LinkedHashMap.html?is-external=true" title="class or interface in java.util"><code>LinkedHashMap</code></a> instances.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>static &lt;K extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;K&gt;,V&gt;<br><a href="../../../com/apriori/collections/MapBuilder.html" title="interface in com.apriori.collections">MapBuilder</a>&lt;K,V,<a href="https://docs.oracle.com/javase/8/docs/api/java/util/TreeMap.html?is-external=true" title="class or interface in java.util">TreeMap</a>&lt;K,V&gt;,?&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/MapBuilder.html#forTreeMap--">forTreeMap</a></span>()</code>
 <div class="block">Returns a map builder that constructs <a href="https://docs.oracle.com/javase/8/docs/api/java/util/TreeMap.html?is-external=true" title="class or interface in java.util"><code>TreeMap</code></a> instances.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>static &lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/MapBuilder.html" title="interface in com.apriori.collections">MapBuilder</a>&lt;K,V,<a href="https://docs.oracle.com/javase/8/docs/api/java/util/TreeMap.html?is-external=true" title="class or interface in java.util">TreeMap</a>&lt;K,V&gt;,?&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/MapBuilder.html#forTreeMap-java.util.Comparator-">forTreeMap</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;? super K&gt;&nbsp;comparator)</code>
 <div class="block">Returns a map builder that constructs <a href="https://docs.oracle.com/javase/8/docs/api/java/util/TreeMap.html?is-external=true" title="class or interface in java.util"><code>TreeMap</code></a> instances that orders elements per the
  given comparator.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>static &lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/MapBuilder.html" title="interface in com.apriori.collections">MapBuilder</a>&lt;K,V,?,?&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/MapBuilder.html#forUnmodifiableMap--">forUnmodifiableMap</a></span>()</code>
 <div class="block">Returns a map builder that constructs unmodifiable maps.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>static &lt;K,V&gt;&nbsp;<a href="../../../com/apriori/collections/MapBuilder.html" title="interface in com.apriori.collections">MapBuilder</a>&lt;K,V,?,?&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/MapBuilder.html#forUnmodifiableMap-com.apriori.collections.MapBuilder-">forUnmodifiableMap</a></span>(<a href="../../../com/apriori/collections/MapBuilder.html" title="interface in com.apriori.collections">MapBuilder</a>&lt;K,V,?,?&gt;&nbsp;base)</code>
 <div class="block">Returns a map builder that constructs unmodifiable maps.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/MapBuilder.html" title="type parameter in MapBuilder">B</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/MapBuilder.html#put-K-V-">put</a></span>(<a href="../../../com/apriori/collections/MapBuilder.html" title="type parameter in MapBuilder">K</a>&nbsp;key,
    <a href="../../../com/apriori/collections/MapBuilder.html" title="type parameter in MapBuilder">V</a>&nbsp;value)</code>
 <div class="block">Adds an item to the map being built.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/collections/MapBuilder.html" title="type parameter in MapBuilder">B</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/MapBuilder.html#putAll-java.util.Map-">putAll</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;? extends <a href="../../../com/apriori/collections/MapBuilder.html" title="type parameter in MapBuilder">K</a>,? extends <a href="../../../com/apriori/collections/MapBuilder.html" title="type parameter in MapBuilder">V</a>&gt;&nbsp;otherMap)</code>
 <div class="block">Adds all items from another map into the map being built.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/MapBuilder.html#reset--">reset</a></span>()</code>
 <div class="block">Resets the map so it can be re-used to construct another map.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>static &lt;K,V,M extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;K,V&gt;&gt;<br><a href="../../../com/apriori/collections/MapBuilder.html" title="interface in com.apriori.collections">MapBuilder</a>&lt;K,V,M,?&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/collections/MapBuilder.html#withMapConstructor-java.util.function.Supplier-">withMapConstructor</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html?is-external=true" title="class or interface in java.util.function">Supplier</a>&lt;M&gt;&nbsp;mapConstructor)</code>
 <div class="block">Returns a map builder that constructs maps using the given map constructor.</div>
@@ -291,6 +298,32 @@ var activeTableTab = "activeTableTab";
 <pre><a href="../../../com/apriori/collections/MapBuilder.html" title="type parameter in MapBuilder">M</a>&nbsp;build()</pre>
 <div class="block">Builds the map. This builder is not usable again after the map is built until <a href="../../../com/apriori/collections/MapBuilder.html#reset--"><code>reset()</code></a>
  is invoked.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the map</dd>
+</dl>
+</li>
+</ul>
+<a name="buildAndContinue--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>buildAndContinue</h4>
+<pre>default&nbsp;<a href="../../../com/apriori/collections/MapBuilder.html" title="type parameter in MapBuilder">M</a>&nbsp;buildAndContinue()</pre>
+<div class="block">Builds the map, but keeps this builder usable for adding other elements in addition to the
+ already added elements.
+ 
+ <p>Implementations will need to copy the elements added so far into a new map. The extra copy
+ can usually be avoided, as long as the builder is no longer needed, by instead using
+ <a href="../../../com/apriori/collections/MapBuilder.html#build--"><code>build()</code></a>.
+ 
+ <p>The default implementation looks like so:<pre>
+ M builtMap = build();
+ reset();          // make builder usable again
+ putAll(builtMap); // seed it with elements already added
+ return builtMap;
+ </pre></div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the map</dd>

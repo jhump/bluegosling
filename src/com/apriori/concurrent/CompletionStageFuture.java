@@ -281,7 +281,7 @@ public interface CompletionStageFuture<T> extends CompletionStage<T>, Future<T> 
    
    /**
     * Adapts a {@link CompletionStage} to this broader interface. The {@link Future} methods on the
-    * returned object delegate to the completable future {@linkplaun #toCompletableFuture() provided
+    * returned object delegate to the completable future {@linkplain #toCompletableFuture() provided
     * by} the given stage.
     *
     * @param stage a completion stage

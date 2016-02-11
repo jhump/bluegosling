@@ -110,7 +110,7 @@ public interface <span class="typeNameLabel">TypeAnnotationChecker</span></pre>
  is assignable from another type <code>@A2 T2</code> as long as <code>T1</code> is assignable from
  <code>T2</code> according to the Java type system. (See <a href="../../../com/apriori/reflect/Types.html#isAssignable-java.lang.reflect.Type-java.lang.reflect.Type-"><code>Types.isAssignable(java.lang.reflect.Type, java.lang.reflect.Type)</code></a> for more info.)
   
- This provides functionality similar to the Checker Framework, except that it works at runtime
+ <p>This provides functionality similar to the Checker Framework, except that it works at runtime
  instead of compile-time and is backed by core reflection.</div>
 </li>
 </ul>
@@ -209,8 +209,8 @@ public interface <span class="typeNameLabel">TypeAnnotationChecker</span></pre>
 <dd><code>from</code> - annotations that appear on the type of the assignment source (RHS)</dd>
 <dd><code>to</code> - annotations that appear on the type of the assignment target (LHS)</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>true if a type annotated with <code>target</code> annotations is assignable from a type
-       annotated with <code>source</code> annotations</dd>
+<dd>true if a type annotated with <code>to</code> annotations is assignable from a type
+       annotated with <code>from</code> annotations</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if either collection of annotations represents an illegal
        combination of type annotations (for example, contains both <code>NotNull</code> and
@@ -234,12 +234,14 @@ public interface <span class="typeNameLabel">TypeAnnotationChecker</span></pre>
 <dd><code>from</code> - annotations that appear on the type of the assignment source (RHS)</dd>
 <dd><code>to</code> - annotations that appear on the type of the assignment target (LHS)</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>true if a type annotated with <code>target</code> annotations is assignable from a type
-       annotated with <code>source</code> annotations</dd>
+<dd>true if a type annotated with <code>to</code> annotations is assignable from a type
+       annotated with <code>from</code> annotations</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if either collection of annotations represents an illegal
        combination of type annotations (for example, contains both <code>NotNull</code> and
        <code>Nullable</code>)</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../com/apriori/reflect/TypeAnnotationChecker.html#isAssignable-java.util.Collection-java.util.Collection-"><code>isAssignable(Collection, Collection)</code></a></dd>
 </dl>
 </li>
 </ul>

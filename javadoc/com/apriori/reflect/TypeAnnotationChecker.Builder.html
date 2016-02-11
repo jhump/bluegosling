@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -117,7 +117,12 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
  API for defining assignment compatibility of type annotations. Assignability is defined in
  terms of pairs of annotation types: an assignment target and an assignment source. Annotations
  with fields are further checked for value compatibility by checking that the values on a
- target annotation match those of a source annotation.</div>
+ target annotation match those of a source annotation.
+ 
+ <p>It is valid to pass <code>null</code> as an annotation type to the builder methods. A
+ <code>null</code> type annotation corresponds to an unannotated type, or an "unqualified" type. A
+ <code>null</code> type is considered to have the same structure as a non-<code>null</code> annotation
+ that has no methods.</div>
 </li>
 </ul>
 </div>
@@ -156,16 +161,38 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <tr id="i0" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/reflect/TypeAnnotationChecker.Builder.html" title="class in com.apriori.reflect">TypeAnnotationChecker.Builder</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeAnnotationChecker.Builder.html#assignable-java.lang.Class-java.lang.Class-">assignable</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;from,
-          <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;to)</code>&nbsp;</td>
+          <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;to)</code>
+<div class="block">Defines an assignability relationship (or subtype relationship) between the given two type
+ annotations.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code><a href="../../../com/apriori/reflect/TypeAnnotationChecker.Builder.html" title="class in com.apriori.reflect">TypeAnnotationChecker.Builder</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeAnnotationChecker.Builder.html#assignable-java.lang.Class-java.lang.Class-java.util.Map-">assignable</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;from,
+          <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;to,
+          <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;attributeMap)</code>
+<div class="block">Defines an assignability relationship (or subtype relationship) between the given two type
+ annotations.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="../../../com/apriori/reflect/TypeAnnotationChecker.html" title="interface in com.apriori.reflect">TypeAnnotationChecker</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeAnnotationChecker.Builder.html#build--">build</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/reflect/TypeAnnotationChecker.Builder.html" title="class in com.apriori.reflect">TypeAnnotationChecker.Builder</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeAnnotationChecker.Builder.html#equivalent-java.lang.Class-java.lang.Class-">equivalent</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;anno1,
-          <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;anno2)</code>&nbsp;</td>
+          <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;anno2)</code>
+<div class="block">Defines an equivalence relationship between the given two type annotations.</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code><a href="../../../com/apriori/reflect/TypeAnnotationChecker.Builder.html" title="class in com.apriori.reflect">TypeAnnotationChecker.Builder</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeAnnotationChecker.Builder.html#equivalent-java.lang.Class-java.lang.Class-java.util.Map-">equivalent</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;anno1,
+          <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;anno2,
+          <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;attributeMap)</code>
+<div class="block">Defines an equivalence relationship between the given two type annotations.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -214,6 +241,52 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <h4>equivalent</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/reflect/TypeAnnotationChecker.Builder.html" title="class in com.apriori.reflect">TypeAnnotationChecker.Builder</a>&nbsp;equivalent(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;anno1,
                                                 <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;anno2)</pre>
+<div class="block">Defines an equivalence relationship between the given two type annotations. The structure
+ of the annotations (method names and their return values) must be the same.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>anno1</code> - a type annotation</dd>
+<dd><code>anno2</code> - another type annotation</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>, for method chaining</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the two types do not have compatible structure or if
+       the two given types are the same type</dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if introducing the relationship would form a cycle in the
+       relationships already defined in this builder</dd>
+</dl>
+</li>
+</ul>
+<a name="equivalent-java.lang.Class-java.lang.Class-java.util.Map-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>equivalent</h4>
+<pre>public&nbsp;<a href="../../../com/apriori/reflect/TypeAnnotationChecker.Builder.html" title="class in com.apriori.reflect">TypeAnnotationChecker.Builder</a>&nbsp;equivalent(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;anno1,
+                                                <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;anno2,
+                                                <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;attributeMap)</pre>
+<div class="block">Defines an equivalence relationship between the given two type annotations. The signatures
+ of the annotations' methods must be the same, though the names can vary. The given map
+ defines the mapping in structure, from method names in the first annotation to
+ corresponding method names in the second. The map must be invertible -- e.g. the mappings
+ must be 1-to-1 (multiple keys with the same value are not permitted).</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>anno1</code> - a type annotation</dd>
+<dd><code>anno2</code> - another type annotation</dd>
+<dd><code>attributeMap</code> - a map of method names in <code>anno1</code> to their corresponding method
+       name in <code>anno2</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>, for method chaining</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the two types do not have compatible structure, if the
+       two given types are the same type, or if the given mapping is invalid (e.g. missing
+       a method, has keys and values that do not correspond to valid methods, or does not
+       have 1-to-1 mappings)</dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if introducing the relationship would form a cycle in the
+       relationships already defined in this builder</dd>
+</dl>
 </li>
 </ul>
 <a name="assignable-java.lang.Class-java.lang.Class-">
@@ -224,6 +297,60 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <h4>assignable</h4>
 <pre>public&nbsp;<a href="../../../com/apriori/reflect/TypeAnnotationChecker.Builder.html" title="class in com.apriori.reflect">TypeAnnotationChecker.Builder</a>&nbsp;assignable(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;from,
                                                 <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;to)</pre>
+<div class="block">Defines an assignability relationship (or subtype relationship) between the given two type
+ annotations. The first type (or source) is assignable to the second type (or target); it
+ can be interpreted as the first type being a subtype of the second type. The structure of
+ the annotations (method names and their return values) must be the compatible: all methods
+ present in the target type are present (with the same return type) in the source type. The
+ source type may have methods that do not appear in the target type, but not vice versa.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>from</code> - a source annotation</dd>
+<dd><code>to</code> - a target annotation</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>, for method chaining</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the two types do not have compatible structure or if
+       the two given types are the same type</dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if introducing the relationship would form a cycle in the
+       relationships already defined in this builder</dd>
+</dl>
+</li>
+</ul>
+<a name="assignable-java.lang.Class-java.lang.Class-java.util.Map-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>assignable</h4>
+<pre>public&nbsp;<a href="../../../com/apriori/reflect/TypeAnnotationChecker.Builder.html" title="class in com.apriori.reflect">TypeAnnotationChecker.Builder</a>&nbsp;assignable(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;from,
+                                                <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;to,
+                                                <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;attributeMap)</pre>
+<div class="block">Defines an assignability relationship (or subtype relationship) between the given two type
+ annotations. The first type (or source) is assignable to the second type (or target); it
+ can be interpreted as the first type being a subtype of the second type. The signatures of
+ the annotations' methods must be the compatible: all methods present in the target type
+ must have a corresponding method with the same return type in the source type. The
+ source type may have methods that do not appear in the target type, but not vice versa. The
+ given map defines the mapping in structure, from method names in the source annotation to
+ corresponding method names in the target. The map must be invertible -- e.g. the mappings
+ must be 1-to-1 (multiple keys with the same value are not permitted).</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>from</code> - a source annotation</dd>
+<dd><code>to</code> - a target annotation</dd>
+<dd><code>attributeMap</code> - a map of method names in <code>from</code> to their corresponding method
+       name in <code>to</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>, for method chaining</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the two types do not have compatible structure, if the
+       two given types are the same type, or if the given mapping is invalid (e.g. missing a
+       mapping for the target annotation, has keys and values that do not correspond to
+       valid methods, or does not have 1-to-1 mappings)</dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if introducing the relationship would form a cycle in the
+       relationships already defined in this builder</dd>
+</dl>
 </li>
 </ul>
 <a name="build--">

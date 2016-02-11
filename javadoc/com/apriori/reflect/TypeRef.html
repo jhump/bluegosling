@@ -338,7 +338,7 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/
 <tr id="i29" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#isSubtypeOf-com.apriori.reflect.TypeRef-">isSubtypeOf</a></span>(<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;?&gt;&nbsp;ref)</code>
-<div class="block">Determines if this is a <em>proper</em> sub-type of the specified type token.</div>
+<div class="block">Determines if this is a <em>proper</em> subtype of the specified type token.</div>
 </td>
 </tr>
 <tr id="i30" class="altColor">
@@ -347,15 +347,15 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/
 </tr>
 <tr id="i31" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;? super <a href="../../../com/apriori/reflect/TypeRef.html" title="type parameter in TypeRef">T</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#resolveSuperTypeRef-java.lang.Class-">resolveSuperTypeRef</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;superclass)</code>
-<div class="block">Returns a super type of the current type, as a <code>TypeRef</code>.</div>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#resolveSupertypeRef-java.lang.Class-">resolveSupertypeRef</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;superclass)</code>
+<div class="block">Returns a supertype of the current type, as a <code>TypeRef</code>.</div>
 </td>
 </tr>
 <tr id="i32" class="altColor">
 <td class="colFirst"><code>static &lt;S,T extends S&gt;<br><a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;S&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#resolveSuperTypeRef-com.apriori.reflect.TypeRef-java.lang.Class-">resolveSuperTypeRef</a></span>(<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;T&gt;&nbsp;subType,
-                   <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;S&gt;&nbsp;superType)</code>
-<div class="block">Returns a super-type of the given type, as a <a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect"><code>TypeRef</code></a>.</div>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/apriori/reflect/TypeRef.html#resolveSupertypeRef-com.apriori.reflect.TypeRef-java.lang.Class-">resolveSupertypeRef</a></span>(<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;T&gt;&nbsp;subtype,
+                   <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;S&gt;&nbsp;supertype)</code>
+<div class="block">Returns a supertype of the given type, as a <a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect"><code>TypeRef</code></a>.</div>
 </td>
 </tr>
 <tr id="i33" class="rowColor">
@@ -481,30 +481,30 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/
 </dl>
 </li>
 </ul>
-<a name="resolveSuperTypeRef-com.apriori.reflect.TypeRef-java.lang.Class-">
+<a name="resolveSupertypeRef-com.apriori.reflect.TypeRef-java.lang.Class-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>resolveSuperTypeRef</h4>
-<pre>public static&nbsp;&lt;S,T extends S&gt;&nbsp;<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;S&gt;&nbsp;resolveSuperTypeRef(<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;T&gt;&nbsp;subType,
-                                                             <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;S&gt;&nbsp;superType)</pre>
-<div class="block">Returns a super-type of the given type, as a <a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect"><code>TypeRef</code></a>. This could be an ancestor class
+<h4>resolveSupertypeRef</h4>
+<pre>public static&nbsp;&lt;S,T extends S&gt;&nbsp;<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;S&gt;&nbsp;resolveSupertypeRef(<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;T&gt;&nbsp;subtype,
+                                                             <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;S&gt;&nbsp;supertype)</pre>
+<div class="block">Returns a supertype of the given type, as a <a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect"><code>TypeRef</code></a>. This could be an ancestor class
  of the given type or an interface implemented by the given type.
  
- <p>This method is similar to <a href="../../../com/apriori/reflect/TypeRef.html#resolveSuperTypeRef-java.lang.Class-"><code>resolveSuperTypeRef(Class)</code></a> except that, being a static
+ <p>This method is similar to <a href="../../../com/apriori/reflect/TypeRef.html#resolveSupertypeRef-java.lang.Class-"><code>resolveSupertypeRef(Class)</code></a> except that, being a static
  method, can better express the relationships between the two types and provide a more precise
  return type.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>subType</code> - the type for whom a super-type is queried</dd>
-<dd><code>superType</code> - the super type</dd>
+<dd><code>subtype</code> - the type for whom a supertype is queried</dd>
+<dd><code>supertype</code> - the supertype</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a <code>TypeRef</code> representation of the specified super type</dd>
+<dd>a <code>TypeRef</code> representation of the specified supertype</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if either of the given types is <code>null</code></dd>
-<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the given super type is not actually a super type of the
-       given sub-type (which the compiler will only allow when using arguments with raw types)</dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the given supertype is not actually a supertype of the
+       given subtype (which the compiler will only allow when using arguments with raw types)</dd>
 </dl>
 </li>
 </ul>
@@ -824,7 +824,7 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/
 <pre>public&nbsp;<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;?&gt;&nbsp;getOwnerTypeRef()</pre>
 <div class="block">Gets the owner type, as a <a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect"><code>TypeRef</code></a>. The owner type is the declaring type of a nested
  or inner class. Array types will not have an owner type, but their component type might.
- Wildcard types and type variables also have no owner type, but super-types representing their
+ Wildcard types and type variables also have no owner type, but supertypes representing their
  upper bounds might. If this type has no owner type then <code>null</code> is returned.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -842,7 +842,7 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/
 <div class="block">Returns superclass of the current type, as a <code>TypeRef</code>.
  
  <p>If the super-class is a generic type, its type arguments will be resolved based on the
- context of the current type. For example, the super-type for a class <code>ListOfSomeType
+ context of the current type. For example, the supertype for a class <code>ListOfSomeType
  extends ArrayList&lt;SomeType&gt;</code> will be <code>ArrayList&lt;SomeType&gt;</code>, and the resulting type
  reference will have the type argument <code>E</code> resolved to <code>SomeType</code>.</div>
 <dl>
@@ -881,26 +881,26 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/
 </dl>
 </li>
 </ul>
-<a name="resolveSuperTypeRef-java.lang.Class-">
+<a name="resolveSupertypeRef-java.lang.Class-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>resolveSuperTypeRef</h4>
-<pre>public&nbsp;<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;? super <a href="../../../com/apriori/reflect/TypeRef.html" title="type parameter in TypeRef">T</a>&gt;&nbsp;resolveSuperTypeRef(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;superclass)</pre>
-<div class="block">Returns a super type of the current type, as a <code>TypeRef</code>. This could be an ancestor
+<h4>resolveSupertypeRef</h4>
+<pre>public&nbsp;<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;? super <a href="../../../com/apriori/reflect/TypeRef.html" title="type parameter in TypeRef">T</a>&gt;&nbsp;resolveSupertypeRef(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;superclass)</pre>
+<div class="block">Returns a supertype of the current type, as a <code>TypeRef</code>. This could be an ancestor
  class of the current type or an interface implemented by the current type.
  
  <p>Limitations on the expressiveness of method type variables prevent a more precise return
- type. Consider instead using the static version, <a href="../../../com/apriori/reflect/TypeRef.html#resolveSuperTypeRef-com.apriori.reflect.TypeRef-java.lang.Class-"><code>resolveSuperTypeRef(TypeRef, Class)</code></a>.</div>
+ type. Consider instead using the static version, <a href="../../../com/apriori/reflect/TypeRef.html#resolveSupertypeRef-com.apriori.reflect.TypeRef-java.lang.Class-"><code>resolveSupertypeRef(TypeRef, Class)</code></a>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>superclass</code> - the super type</dd>
+<dd><code>superclass</code> - the supertype</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a <code>TypeRef</code> representation of the specified super type</dd>
+<dd>a <code>TypeRef</code> representation of the specified supertype</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if the specified type is <code>null</code></dd>
-<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the specified type is not actually a super type of the
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the specified type is not actually a supertype of the
        current type</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../com/apriori/reflect/Types.html#resolveSupertype-java.lang.reflect.Type-java.lang.Class-"><code>Types.resolveSupertype(Type, Class)</code></a></dd>
@@ -914,12 +914,12 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/
 <li class="blockList">
 <h4>isSubtypeOf</h4>
 <pre>public&nbsp;boolean&nbsp;isSubtypeOf(<a href="../../../com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a>&lt;?&gt;&nbsp;ref)</pre>
-<div class="block">Determines if this is a <em>proper</em> sub-type of the specified type token.</div>
+<div class="block">Determines if this is a <em>proper</em> subtype of the specified type token.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>ref</code> - a <code>Type Ref</code></dd>
+<dd><code>ref</code> - a <code>TypeRef</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>true if this represents a sub-type of the given type</dd>
+<dd>true if this represents a subtype of the given type</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../com/apriori/reflect/Types.html#isSubtype-java.lang.reflect.Type-java.lang.reflect.Type-"><code>Types.isSubtype(Type, Type)</code></a></dd>
 </dl>

@@ -1908,7 +1908,15 @@
 <div class="block">Returns a view of the enum elements' values as a set.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeAnnotationChecker.Builder.html#assignable-java.lang.Class-java.lang.Class-">assignable(Class&lt;? extends Annotation&gt;, Class&lt;? extends Annotation&gt;)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/TypeAnnotationChecker.Builder.html" title="class in com.apriori.reflect">TypeAnnotationChecker.Builder</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Defines an assignability relationship (or subtype relationship) between the given two type
+ annotations.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeAnnotationChecker.Builder.html#assignable-java.lang.Class-java.lang.Class-java.util.Map-">assignable(Class&lt;? extends Annotation&gt;, Class&lt;? extends Annotation&gt;, Map&lt;String, String&gt;)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/TypeAnnotationChecker.Builder.html" title="class in com.apriori.reflect">TypeAnnotationChecker.Builder</a></dt>
+<dd>
+<div class="block">Defines an assignability relationship (or subtype relationship) between the given two type
+ annotations.</div>
+</dd>
 <dt><a href="com/apriori/collections/AssociativeArrayList.html" title="class in com.apriori.collections"><span class="typeNameLink">AssociativeArrayList</span></a>&lt;<a href="com/apriori/collections/AssociativeArrayList.html" title="type parameter in AssociativeArrayList">E</a>,<a href="com/apriori/collections/AssociativeArrayList.html" title="type parameter in AssociativeArrayList">K</a>&gt; - Class in <a href="com/apriori/collections/package-summary.html">com.apriori.collections</a></dt>
 <dd>
 <div class="block">An <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html?is-external=true" title="class or interface in java.util"><code>ArrayList</code></a> that is also an <a href="com/apriori/collections/AssociativeList.html" title="interface in com.apriori.collections"><code>AssociativeList</code></a>.</div>
@@ -2454,6 +2462,11 @@
 <dd>
 <div class="block">Builds a visitor using the actions defined so far.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/collections/MapBuilder.html#buildAndContinue--">buildAndContinue()</a></span> - Method in interface com.apriori.collections.<a href="com/apriori/collections/MapBuilder.html" title="interface in com.apriori.collections">MapBuilder</a></dt>
+<dd>
+<div class="block">Builds the map, but keeps this builder usable for adding other elements in addition to the
+ already added elements.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/ConcurrentSortedArraySet.Builder.html#Builder--">Builder()</a></span> - Constructor for class com.apriori.collections.<a href="com/apriori/collections/ConcurrentSortedArraySet.Builder.html" title="class in com.apriori.collections">ConcurrentSortedArraySet.Builder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/InterceptingExecutor.Decorator.html#builder--">builder()</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/InterceptingExecutor.Decorator.html" title="interface in com.apriori.concurrent">InterceptingExecutor.Decorator</a></dt>
@@ -2553,6 +2566,8 @@
 <dd>
 <div class="block">Cancels the activity.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/InterruptibleCompletableFuture.html#cancel-boolean-">cancel(boolean)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/InterruptibleCompletableFuture.html" title="class in com.apriori.concurrent">InterruptibleCompletableFuture</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/scheduler/ScheduledTaskDefinition.html#cancel-boolean-">cancel(boolean)</a></span> - Method in interface com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/ScheduledTaskDefinition.html" title="interface in com.apriori.concurrent.scheduler">ScheduledTaskDefinition</a></dt>
 <dd>
 <div class="block">Cancels this task definition.</div>
@@ -3570,9 +3585,27 @@
 <dd>
 <div class="block">Additional helper methods for creating and using instances of <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html?is-external=true" title="class or interface in java.util.concurrent"><code>CompletableFuture</code></a>.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ReadOnlyCompletableFuture.html#complete-T-">complete(T)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ReadOnlyCompletableFuture.html" title="class in com.apriori.concurrent">ReadOnlyCompletableFuture</a></dt>
+<dd>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="block"><span class="deprecationComment">This method should not be used. Sub-classes may use <a href="com/apriori/concurrent/ReadOnlyCompletableFuture.html#setValue-T-"><code>ReadOnlyCompletableFuture.setValue(Object)</code></a> to
+ complete the future.</span></div>
+</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableFuture.html#completedFuture-T-">completedFuture(T)</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a></dt>
 <dd>
 <div class="block">Returns a future that has already successfully completed with the specified value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ReadOnlyCompletableFuture.html#completeExceptionally-java.lang.Throwable-">completeExceptionally(Throwable)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ReadOnlyCompletableFuture.html" title="class in com.apriori.concurrent">ReadOnlyCompletableFuture</a></dt>
+<dd>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="block"><span class="deprecationComment">This method should not be used. Sub-classes may use <a href="com/apriori/concurrent/ReadOnlyCompletableFuture.html#setFailure-java.lang.Throwable-"><code>ReadOnlyCompletableFuture.setFailure(Throwable)</code></a>
+ to complete the future exceptionally.</span></div>
+</div>
+</dd>
+<dt><a href="com/apriori/concurrent/CompletionStageFuture.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">CompletionStageFuture</span></a>&lt;<a href="com/apriori/concurrent/CompletionStageFuture.html" title="type parameter in CompletionStageFuture">T</a>&gt; - Interface in <a href="com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
+<dd>
+<div class="block">A <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent"><code>Future</code></a> that also provides the fluent API of <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletionStage.html?is-external=true" title="class or interface in java.util.concurrent"><code>CompletionStage</code></a>.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/collections/ArrayMappedBitwiseTrie.html#componentComparator--">componentComparator()</a></span> - Method in class com.apriori.collections.<a href="com/apriori/collections/ArrayMappedBitwiseTrie.html" title="class in com.apriori.collections">ArrayMappedBitwiseTrie</a></dt>
 <dd>&nbsp;</dd>
@@ -4207,6 +4240,15 @@
 <dd>
 <div class="block">Constructs a new context propagating executor service.</div>
 </dd>
+<dt><a href="com/apriori/concurrent/ContextPropagatingScheduledExecutorService.html" title="class in com.apriori.concurrent"><span class="typeNameLink">ContextPropagatingScheduledExecutorService</span></a> - Class in <a href="com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
+<dd>
+<div class="block">A scheduled executor service that allows for propagation of context from submitting threads to
+ worker threads.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ContextPropagatingScheduledExecutorService.html#ContextPropagatingScheduledExecutorService-java.util.concurrent.ScheduledExecutorService-java.lang.Iterable-">ContextPropagatingScheduledExecutorService(ScheduledExecutorService, Iterable&lt;ContextPropagator&lt;?&gt;&gt;)</a></span> - Constructor for class com.apriori.concurrent.<a href="com/apriori/concurrent/ContextPropagatingScheduledExecutorService.html" title="class in com.apriori.concurrent">ContextPropagatingScheduledExecutorService</a></dt>
+<dd>
+<div class="block">Constructs a new context propagating scheduled executor service.</div>
+</dd>
 <dt><a href="com/apriori/concurrent/ContextPropagator.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ContextPropagator</span></a>&lt;<a href="com/apriori/concurrent/ContextPropagator.html" title="type parameter in ContextPropagator">T</a>&gt; - Interface in <a href="com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
 <dd>
 <div class="block">An object that helps propagate context from one thread to another.</div>
@@ -4735,11 +4777,23 @@
 <dd>
 <div class="block">Configures the bindings defined in this object.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ContextPropagatingScheduledExecutorService.html#delegate--">delegate()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ContextPropagatingScheduledExecutorService.html" title="class in com.apriori.concurrent">ContextPropagatingScheduledExecutorService</a></dt>
+<dd>
+<div class="block">Returns the underlying executor service.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/InterceptingScheduledExecutorService.html#delegate--">delegate()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/InterceptingScheduledExecutorService.html" title="class in com.apriori.concurrent">InterceptingScheduledExecutorService</a></dt>
+<dd>
+<div class="block">Returns the underlying executor service.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/WrappingExecutor.html#delegate--">delegate()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/WrappingExecutor.html" title="class in com.apriori.concurrent">WrappingExecutor</a></dt>
 <dd>
 <div class="block">Returns the underlying executor.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/WrappingExecutorService.html#delegate--">delegate()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/WrappingExecutorService.html" title="class in com.apriori.concurrent">WrappingExecutorService</a></dt>
+<dd>
+<div class="block">Returns the underlying executor service.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/WrappingScheduledExecutorService.html#delegate--">delegate()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/WrappingScheduledExecutorService.html" title="class in com.apriori.concurrent">WrappingScheduledExecutorService</a></dt>
 <dd>
 <div class="block">Returns the underlying executor service.</div>
 </dd>
@@ -5341,7 +5395,13 @@
 <dt><span class="memberNameLink"><a href="com/apriori/vars/VariableShort.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in class com.apriori.vars.<a href="com/apriori/vars/VariableShort.html" title="class in com.apriori.vars">VariableShort</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeAnnotationChecker.Builder.html#equivalent-java.lang.Class-java.lang.Class-">equivalent(Class&lt;? extends Annotation&gt;, Class&lt;? extends Annotation&gt;)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/TypeAnnotationChecker.Builder.html" title="class in com.apriori.reflect">TypeAnnotationChecker.Builder</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Defines an equivalence relationship between the given two type annotations.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeAnnotationChecker.Builder.html#equivalent-java.lang.Class-java.lang.Class-java.util.Map-">equivalent(Class&lt;? extends Annotation&gt;, Class&lt;? extends Annotation&gt;, Map&lt;String, String&gt;)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/TypeAnnotationChecker.Builder.html" title="class in com.apriori.reflect">TypeAnnotationChecker.Builder</a></dt>
+<dd>
+<div class="block">Defines an equivalence relationship between the given two type annotations.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/function/Predicates.html#every-int-">every(int)</a></span> - Static method in class com.apriori.function.<a href="com/apriori/function/Predicates.html" title="class in com.apriori.function">Predicates</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/function/Predicates.html#everyOther--">everyOther()</a></span> - Static method in class com.apriori.function.<a href="com/apriori/function/Predicates.html" title="class in com.apriori.function">Predicates</a></dt>
@@ -6526,6 +6586,10 @@
 <div class="block">Returns an object that verifies that the test object matches the reference object by using the
  specified <code>Comparator</code>.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/CompletionStageFuture.html#fromCompletableFuture-java.util.concurrent.CompletableFuture-">fromCompletableFuture(CompletableFuture&lt;T&gt;)</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/CompletionStageFuture.html" title="interface in com.apriori.concurrent">CompletionStageFuture</a></dt>
+<dd>
+<div class="block">Adapts a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html?is-external=true" title="class or interface in java.util.concurrent"><code>CompletableFuture</code></a> to this interface.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/choice/Choices.html#fromCompletedFuture-java.util.concurrent.Future-">fromCompletedFuture(Future&lt;T&gt;)</a></span> - Static method in class com.apriori.choice.<a href="com/apriori/choice/Choices.html" title="class in com.apriori.choice">Choices</a></dt>
 <dd>
 <div class="block">Returns a view of the given future as a <a href="com/apriori/choice/Variant2.html" title="class in com.apriori.choice"><code>Variant2</code></a>.</div>
@@ -6533,6 +6597,10 @@
 <dt><span class="memberNameLink"><a href="com/apriori/util/Immediate.html#fromCompletedFuture-java.util.concurrent.Future-">fromCompletedFuture(Future&lt;T&gt;)</a></span> - Static method in class com.apriori.util.<a href="com/apriori/util/Immediate.html" title="class in com.apriori.util">Immediate</a></dt>
 <dd>
 <div class="block">Returns an immediate value with the same disposition as the given completed future.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/CompletionStageFuture.html#fromCompletionStage-java.util.concurrent.CompletionStage-">fromCompletionStage(CompletionStage&lt;T&gt;)</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/CompletionStageFuture.html" title="interface in com.apriori.concurrent">CompletionStageFuture</a></dt>
+<dd>
+<div class="block">Adapts a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletionStage.html?is-external=true" title="class or interface in java.util.concurrent"><code>CompletionStage</code></a> to this broader interface.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableFuture.html#fromCompletionStage-java.util.concurrent.CompletionStage-">fromCompletionStage(CompletionStage&lt;T&gt;)</a></span> - Static method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a></dt>
 <dd>
@@ -9787,6 +9855,14 @@
 <dd>
 <div class="block">Builds a list of interceptors.</div>
 </dd>
+<dt><a href="com/apriori/concurrent/InterceptingScheduledExecutorService.html" title="class in com.apriori.concurrent"><span class="typeNameLink">InterceptingScheduledExecutorService</span></a> - Class in <a href="com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
+<dd>
+<div class="block">A <a href="com/apriori/concurrent/InterceptingExecutorService.html" title="class in com.apriori.concurrent"><code>InterceptingExecutorService</code></a> that provides the facility to schedule tasks.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/InterceptingScheduledExecutorService.html#InterceptingScheduledExecutorService-java.util.concurrent.ScheduledExecutorService-java.lang.Iterable-">InterceptingScheduledExecutorService(ScheduledExecutorService, Iterable&lt;? extends InterceptingExecutorService.Interceptor&gt;)</a></span> - Constructor for class com.apriori.concurrent.<a href="com/apriori/concurrent/InterceptingScheduledExecutorService.html" title="class in com.apriori.concurrent">InterceptingScheduledExecutorService</a></dt>
+<dd>
+<div class="block">Constructs a new intercepting scheduled executor service.</div>
+</dd>
 <dt><a href="com/apriori/testing/InterfaceVerifier.html" title="class in com.apriori.testing"><span class="typeNameLink">InterfaceVerifier</span></a>&lt;<a href="com/apriori/testing/InterfaceVerifier.html" title="type parameter in InterfaceVerifier">T</a>&gt; - Class in <a href="com/apriori/testing/package-summary.html">com.apriori.testing</a></dt>
 <dd>
 <div class="block">An object that can verify an implementation of an interface by comparing its behavior to that of
@@ -9898,7 +9974,28 @@
 <dd>
 <div class="block">Invoked when the task is cancelled and allowed to interrupt a running task.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/InterruptibleCompletableFuture.html#interrupt--">interrupt()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/InterruptibleCompletableFuture.html" title="class in com.apriori.concurrent">InterruptibleCompletableFuture</a></dt>
+<dd>
+<div class="block">Invoked when the task is cancelled and allowed to interrupt a running task.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/RunnableCompletableFuture.html#interrupt--">interrupt()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/RunnableCompletableFuture.html" title="class in com.apriori.concurrent">RunnableCompletableFuture</a></dt>
+<dd>
+<div class="block">Interrupts the thread running the task that this future represents, if it is currently
+ running.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/RunnableReadOnlyCompletableFuture.html#interrupt--">interrupt()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/RunnableReadOnlyCompletableFuture.html" title="class in com.apriori.concurrent">RunnableReadOnlyCompletableFuture</a></dt>
+<dd>
+<div class="block">Interrupts the thread running the task that this future represents, if it is currently
+ running.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/SettableRunnableFuture.html#interrupt--">interrupt()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/SettableRunnableFuture.html" title="class in com.apriori.concurrent">SettableRunnableFuture</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/apriori/concurrent/InterruptibleCompletableFuture.html" title="class in com.apriori.concurrent"><span class="typeNameLink">InterruptibleCompletableFuture</span></a>&lt;<a href="com/apriori/concurrent/InterruptibleCompletableFuture.html" title="type parameter in InterruptibleCompletableFuture">T</a>&gt; - Class in <a href="com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
+<dd>
+<div class="block">A <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html?is-external=true" title="class or interface in java.util.concurrent"><code>CompletableFuture</code></a> that provides a mechanism for interrupting an in-progress computation
+ when the future is cancelled.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/InterruptibleCompletableFuture.html#InterruptibleCompletableFuture--">InterruptibleCompletableFuture()</a></span> - Constructor for class com.apriori.concurrent.<a href="com/apriori/concurrent/InterruptibleCompletableFuture.html" title="class in com.apriori.concurrent">InterruptibleCompletableFuture</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/vars/VariableByte.html#intValue--">intValue()</a></span> - Method in class com.apriori.vars.<a href="com/apriori/vars/VariableByte.html" title="class in com.apriori.vars">VariableByte</a></dt>
 <dd>&nbsp;</dd>
@@ -10381,7 +10478,7 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeRef.html#isSubtypeOf-com.apriori.reflect.TypeRef-">isSubtypeOf(TypeRef&lt;?&gt;)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a></dt>
 <dd>
-<div class="block">Determines if this is a <em>proper</em> sub-type of the specified type token.</div>
+<div class="block">Determines if this is a <em>proper</em> subtype of the specified type token.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/Types.html#isSubtypeStrict-java.lang.reflect.Type-java.lang.reflect.Type-">isSubtypeStrict(Type, Type)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/Types.html" title="class in com.apriori.reflect">Types</a></dt>
 <dd>
@@ -12315,6 +12412,22 @@
 <dd>
 <div class="block">Utility methods and constants for using and creating <code>ObjectVerifier</code> instances.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ReadOnlyCompletableFuture.html#obtrudeException-java.lang.Throwable-">obtrudeException(Throwable)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ReadOnlyCompletableFuture.html" title="class in com.apriori.concurrent">ReadOnlyCompletableFuture</a></dt>
+<dd>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="block"><span class="deprecationComment">This method should not be used. Sub-classes may use <a href="com/apriori/concurrent/ReadOnlyCompletableFuture.html#setFailure-java.lang.Throwable-"><code>ReadOnlyCompletableFuture.setFailure(Throwable)</code></a>
+ to complete the future exceptionally. Once completed, it cannot be changed. Instead, create a
+ derived future using various <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletionStage.html?is-external=true" title="class or interface in java.util.concurrent"><code>CompletionStage</code></a> methods to define an alternate value.</span></div>
+</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ReadOnlyCompletableFuture.html#obtrudeValue-T-">obtrudeValue(T)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ReadOnlyCompletableFuture.html" title="class in com.apriori.concurrent">ReadOnlyCompletableFuture</a></dt>
+<dd>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="block"><span class="deprecationComment">This method should not be used. Sub-classes may use <a href="com/apriori/concurrent/ReadOnlyCompletableFuture.html#setValue-T-"><code>ReadOnlyCompletableFuture.setValue(Object)</code></a> to
+ complete the future. Once completed, it cannot be changed. Instead, create a derived future
+ using various <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletionStage.html?is-external=true" title="class or interface in java.util.concurrent"><code>CompletionStage</code></a> methods to define an alternate value.</span></div>
+</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/choice/AnyOfFive.html#of-A-B-C-D-E-">of(A, B, C, D, E)</a></span> - Static method in class com.apriori.choice.<a href="com/apriori/choice/AnyOfFive.html" title="class in com.apriori.choice">AnyOfFive</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/choice/AnyOfFour.html#of-A-B-C-D-">of(A, B, C, D)</a></span> - Static method in class com.apriori.choice.<a href="com/apriori/choice/AnyOfFour.html" title="class in com.apriori.choice">AnyOfFour</a></dt>
@@ -13796,6 +13909,17 @@
 <dd>
 <div class="block">Constructs a new read-only transforming set.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/CompletableFutures.html#readOnly-java.util.concurrent.CompletableFuture-">readOnly(CompletableFuture&lt;T&gt;)</a></span> - Static method in class com.apriori.concurrent.<a href="com/apriori/concurrent/CompletableFutures.html" title="class in com.apriori.concurrent">CompletableFutures</a></dt>
+<dd>
+<div class="block">Returns a copy of the given future that completes with the same result or failure as the given
+ completable future.</div>
+</dd>
+<dt><a href="com/apriori/concurrent/ReadOnlyCompletableFuture.html" title="class in com.apriori.concurrent"><span class="typeNameLink">ReadOnlyCompletableFuture</span></a>&lt;<a href="com/apriori/concurrent/ReadOnlyCompletableFuture.html" title="type parameter in ReadOnlyCompletableFuture">T</a>&gt; - Class in <a href="com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
+<dd>
+<div class="block">A completable future whose public API is read-only.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ReadOnlyCompletableFuture.html#ReadOnlyCompletableFuture--">ReadOnlyCompletableFuture()</a></span> - Constructor for class com.apriori.concurrent.<a href="com/apriori/concurrent/ReadOnlyCompletableFuture.html" title="class in com.apriori.concurrent">ReadOnlyCompletableFuture</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/DoubleInstanceLock.html#readWith-java.util.function.Consumer-">readWith(Consumer&lt;? super T&gt;)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/DoubleInstanceLock.html" title="class in com.apriori.concurrent">DoubleInstanceLock</a></dt>
 <dd>
 <div class="block">Performs a read operation that does not produce a result value.</div>
@@ -14601,13 +14725,13 @@
 <div class="block">For the given generic type, computes the generic supertype corresponding to the given raw
  class token.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeRef.html#resolveSuperTypeRef-com.apriori.reflect.TypeRef-java.lang.Class-">resolveSuperTypeRef(TypeRef&lt;T&gt;, Class&lt;S&gt;)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeRef.html#resolveSupertypeRef-com.apriori.reflect.TypeRef-java.lang.Class-">resolveSupertypeRef(TypeRef&lt;T&gt;, Class&lt;S&gt;)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a></dt>
 <dd>
-<div class="block">Returns a super-type of the given type, as a <a href="com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect"><code>TypeRef</code></a>.</div>
+<div class="block">Returns a supertype of the given type, as a <a href="com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect"><code>TypeRef</code></a>.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeRef.html#resolveSuperTypeRef-java.lang.Class-">resolveSuperTypeRef(Class&lt;?&gt;)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a></dt>
+<dt><span class="memberNameLink"><a href="com/apriori/reflect/TypeRef.html#resolveSupertypeRef-java.lang.Class-">resolveSupertypeRef(Class&lt;?&gt;)</a></span> - Method in class com.apriori.reflect.<a href="com/apriori/reflect/TypeRef.html" title="class in com.apriori.reflect">TypeRef</a></dt>
 <dd>
-<div class="block">Returns a super type of the current type, as a <code>TypeRef</code>.</div>
+<div class="block">Returns a supertype of the current type, as a <code>TypeRef</code>.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/reflect/AnnotatedTypes.html#resolveType-java.lang.reflect.AnnotatedType-java.lang.reflect.AnnotatedType-">resolveType(AnnotatedType, AnnotatedType)</a></span> - Static method in class com.apriori.reflect.<a href="com/apriori/reflect/AnnotatedTypes.html" title="class in com.apriori.reflect">AnnotatedTypes</a></dt>
 <dd>
@@ -14822,6 +14946,14 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableRepeatingFutureTask.html#run--">run()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableRepeatingFutureTask.html" title="class in com.apriori.concurrent">ListenableRepeatingFutureTask</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/RunnableCompletableFuture.html#run--">run()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/RunnableCompletableFuture.html" title="class in com.apriori.concurrent">RunnableCompletableFuture</a></dt>
+<dd>
+<div class="block">Runs the task associated with this future.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/RunnableReadOnlyCompletableFuture.html#run--">run()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/RunnableReadOnlyCompletableFuture.html" title="class in com.apriori.concurrent">RunnableReadOnlyCompletableFuture</a></dt>
+<dd>
+<div class="block">Runs the task associated with this future.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/SettableRunnableFuture.html#run--">run()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/SettableRunnableFuture.html" title="class in com.apriori.concurrent">SettableRunnableFuture</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/generator/Generator.html#run-U-com.apriori.generator.Generator.Output-">run(U, Generator.Output&lt;T, U&gt;)</a></span> - Method in class com.apriori.generator.<a href="com/apriori/generator/Generator.html" title="class in com.apriori.generator">Generator</a></dt>
@@ -14838,9 +14970,29 @@
 <dd>
 <div class="block">Returns a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html?is-external=true" title="class or interface in java.util.concurrent"><code>CompletableFuture</code></a> that completes when the given task completes.</div>
 </dd>
+<dt><a href="com/apriori/concurrent/RunnableCompletableFuture.html" title="class in com.apriori.concurrent"><span class="typeNameLink">RunnableCompletableFuture</span></a>&lt;<a href="com/apriori/concurrent/RunnableCompletableFuture.html" title="type parameter in RunnableCompletableFuture">T</a>&gt; - Class in <a href="com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
+<dd>
+<div class="block">A completable future that represents a task.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/RunnableCompletableFuture.html#RunnableCompletableFuture-java.util.concurrent.Callable-">RunnableCompletableFuture(Callable&lt;T&gt;)</a></span> - Constructor for class com.apriori.concurrent.<a href="com/apriori/concurrent/RunnableCompletableFuture.html" title="class in com.apriori.concurrent">RunnableCompletableFuture</a></dt>
+<dd>
+<div class="block">Creates a new future that represents the given task.</div>
+</dd>
+<dt><a href="com/apriori/concurrent/RunnableCompletionStageFuture.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">RunnableCompletionStageFuture</span></a>&lt;<a href="com/apriori/concurrent/RunnableCompletionStageFuture.html" title="type parameter in RunnableCompletionStageFuture">T</a>&gt; - Interface in <a href="com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
+<dd>
+<div class="block">A combination of <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/RunnableFuture.html?is-external=true" title="class or interface in java.util.concurrent"><code>RunnableFuture</code></a> and <a href="com/apriori/concurrent/CompletionStageFuture.html" title="interface in com.apriori.concurrent"><code>CompletionStageFuture</code></a>.</div>
+</dd>
 <dt><a href="com/apriori/concurrent/RunnableListenableFuture.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">RunnableListenableFuture</span></a>&lt;<a href="com/apriori/concurrent/RunnableListenableFuture.html" title="type parameter in RunnableListenableFuture">T</a>&gt; - Interface in <a href="com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
 <dd>
 <div class="block">A combination of <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/RunnableFuture.html?is-external=true" title="class or interface in java.util.concurrent"><code>RunnableFuture</code></a> and <a href="com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent"><code>ListenableFuture</code></a>.</div>
+</dd>
+<dt><a href="com/apriori/concurrent/RunnableReadOnlyCompletableFuture.html" title="class in com.apriori.concurrent"><span class="typeNameLink">RunnableReadOnlyCompletableFuture</span></a>&lt;<a href="com/apriori/concurrent/RunnableReadOnlyCompletableFuture.html" title="type parameter in RunnableReadOnlyCompletableFuture">T</a>&gt; - Class in <a href="com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
+<dd>
+<div class="block">A read-only completable future that represents a task.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/RunnableReadOnlyCompletableFuture.html#RunnableReadOnlyCompletableFuture-java.util.concurrent.Callable-">RunnableReadOnlyCompletableFuture(Callable&lt;T&gt;)</a></span> - Constructor for class com.apriori.concurrent.<a href="com/apriori/concurrent/RunnableReadOnlyCompletableFuture.html" title="class in com.apriori.concurrent">RunnableReadOnlyCompletableFuture</a></dt>
+<dd>
+<div class="block">Creates a new future that represents the given task.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/atoms/Transaction.Runner.html#Runner--">Runner()</a></span> - Constructor for class com.apriori.concurrent.atoms.<a href="com/apriori/concurrent/atoms/Transaction.Runner.html" title="class in com.apriori.concurrent.atoms">Transaction.Runner</a></dt>
 <dd>&nbsp;</dd>
@@ -14904,6 +15056,14 @@
 <dd>
 <div class="block">Scans the hierarchy of the specified type using the specified action.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ContextPropagatingScheduledExecutorService.html#schedule-java.lang.Runnable-long-java.util.concurrent.TimeUnit-">schedule(Runnable, long, TimeUnit)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ContextPropagatingScheduledExecutorService.html" title="class in com.apriori.concurrent">ContextPropagatingScheduledExecutorService</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ContextPropagatingScheduledExecutorService.html#schedule-java.util.concurrent.Callable-long-java.util.concurrent.TimeUnit-">schedule(Callable&lt;V&gt;, long, TimeUnit)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ContextPropagatingScheduledExecutorService.html" title="class in com.apriori.concurrent">ContextPropagatingScheduledExecutorService</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/InterceptingScheduledExecutorService.html#schedule-java.lang.Runnable-long-java.util.concurrent.TimeUnit-">schedule(Runnable, long, TimeUnit)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/InterceptingScheduledExecutorService.html" title="class in com.apriori.concurrent">InterceptingScheduledExecutorService</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/InterceptingScheduledExecutorService.html#schedule-java.util.concurrent.Callable-long-java.util.concurrent.TimeUnit-">schedule(Callable&lt;V&gt;, long, TimeUnit)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/InterceptingScheduledExecutorService.html" title="class in com.apriori.concurrent">InterceptingScheduledExecutorService</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableScheduledExecutorService.html#schedule-java.lang.Runnable-long-java.util.concurrent.TimeUnit-">schedule(Runnable, long, TimeUnit)</a></span> - Method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent">ListenableScheduledExecutorService</a></dt>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableScheduledExecutorService.html#schedule-java.util.concurrent.Callable-long-java.util.concurrent.TimeUnit-">schedule(Callable&lt;V&gt;, long, TimeUnit)</a></span> - Method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent">ListenableScheduledExecutorService</a></dt>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/scheduler/ScheduledTaskManager.html#schedule-java.util.concurrent.Callable-long-java.util.concurrent.TimeUnit-">schedule(Callable&lt;V&gt;, long, TimeUnit)</a></span> - Method in class com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/ScheduledTaskManager.html" title="class in com.apriori.concurrent.scheduler">ScheduledTaskManager</a></dt>
@@ -14918,12 +15078,22 @@
 <dd>
 <div class="block">Schedules the specified task definition for execution.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/WrappingScheduledExecutorService.html#schedule-java.lang.Runnable-long-java.util.concurrent.TimeUnit-">schedule(Runnable, long, TimeUnit)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/WrappingScheduledExecutorService.html" title="class in com.apriori.concurrent">WrappingScheduledExecutorService</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/WrappingScheduledExecutorService.html#schedule-java.util.concurrent.Callable-long-java.util.concurrent.TimeUnit-">schedule(Callable&lt;V&gt;, long, TimeUnit)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/WrappingScheduledExecutorService.html" title="class in com.apriori.concurrent">WrappingScheduledExecutorService</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ContextPropagatingScheduledExecutorService.html#scheduleAtFixedRate-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-">scheduleAtFixedRate(Runnable, long, long, TimeUnit)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ContextPropagatingScheduledExecutorService.html" title="class in com.apriori.concurrent">ContextPropagatingScheduledExecutorService</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/InterceptingScheduledExecutorService.html#scheduleAtFixedRate-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-">scheduleAtFixedRate(Runnable, long, long, TimeUnit)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/InterceptingScheduledExecutorService.html" title="class in com.apriori.concurrent">InterceptingScheduledExecutorService</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableScheduledExecutorService.html#scheduleAtFixedRate-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-">scheduleAtFixedRate(Runnable, long, long, TimeUnit)</a></span> - Method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent">ListenableScheduledExecutorService</a></dt>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/scheduler/ScheduledTaskManager.html#scheduleAtFixedRate-java.util.concurrent.Callable-long-long-java.util.concurrent.TimeUnit-">scheduleAtFixedRate(Callable&lt;V&gt;, long, long, TimeUnit)</a></span> - Method in class com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/ScheduledTaskManager.html" title="class in com.apriori.concurrent.scheduler">ScheduledTaskManager</a></dt>
 <dd>
 <div class="block">Schedules the specified task for periodic execution.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/scheduler/ScheduledTaskManager.html#scheduleAtFixedRate-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-">scheduleAtFixedRate(Runnable, long, long, TimeUnit)</a></span> - Method in class com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/ScheduledTaskManager.html" title="class in com.apriori.concurrent.scheduler">ScheduledTaskManager</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/WrappingScheduledExecutorService.html#scheduleAtFixedRate-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-">scheduleAtFixedRate(Runnable, long, long, TimeUnit)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/WrappingScheduledExecutorService.html" title="class in com.apriori.concurrent">WrappingScheduledExecutorService</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/apriori/concurrent/Scheduled.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">Scheduled</span></a> - Interface in <a href="com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
 <dd>
@@ -14991,12 +15161,18 @@
 <dd>
 <div class="block">Returns the <a href="com/apriori/concurrent/scheduler/ScheduleNextTaskPolicy.html" title="interface in com.apriori.concurrent.scheduler"><code>ScheduleNextTaskPolicy</code></a> for this repeating task.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ContextPropagatingScheduledExecutorService.html#scheduleWithFixedDelay-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-">scheduleWithFixedDelay(Runnable, long, long, TimeUnit)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ContextPropagatingScheduledExecutorService.html" title="class in com.apriori.concurrent">ContextPropagatingScheduledExecutorService</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/InterceptingScheduledExecutorService.html#scheduleWithFixedDelay-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-">scheduleWithFixedDelay(Runnable, long, long, TimeUnit)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/InterceptingScheduledExecutorService.html" title="class in com.apriori.concurrent">InterceptingScheduledExecutorService</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/ListenableScheduledExecutorService.html#scheduleWithFixedDelay-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-">scheduleWithFixedDelay(Runnable, long, long, TimeUnit)</a></span> - Method in interface com.apriori.concurrent.<a href="com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent">ListenableScheduledExecutorService</a></dt>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/scheduler/ScheduledTaskManager.html#scheduleWithFixedDelay-java.util.concurrent.Callable-long-long-java.util.concurrent.TimeUnit-">scheduleWithFixedDelay(Callable&lt;V&gt;, long, long, TimeUnit)</a></span> - Method in class com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/ScheduledTaskManager.html" title="class in com.apriori.concurrent.scheduler">ScheduledTaskManager</a></dt>
 <dd>
 <div class="block">Schedules the specified task for repeated execution.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/scheduler/ScheduledTaskManager.html#scheduleWithFixedDelay-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-">scheduleWithFixedDelay(Runnable, long, long, TimeUnit)</a></span> - Method in class com.apriori.concurrent.scheduler.<a href="com/apriori/concurrent/scheduler/ScheduledTaskManager.html" title="class in com.apriori.concurrent.scheduler">ScheduledTaskManager</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/WrappingScheduledExecutorService.html#scheduleWithFixedDelay-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-">scheduleWithFixedDelay(Runnable, long, long, TimeUnit)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/WrappingScheduledExecutorService.html" title="class in com.apriori.concurrent">WrappingScheduledExecutorService</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/di/Binding.Target.html#scope--">scope()</a></span> - Method in interface com.apriori.di.<a href="com/apriori/di/Binding.Target.html" title="interface in com.apriori.di">Binding.Target</a></dt>
 <dd>&nbsp;</dd>
@@ -15304,6 +15480,10 @@
 <dd>
 <div class="block">Sets the future as failed with the specified cause of failure.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ReadOnlyCompletableFuture.html#setFailure-java.lang.Throwable-">setFailure(Throwable)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ReadOnlyCompletableFuture.html" title="class in com.apriori.concurrent">ReadOnlyCompletableFuture</a></dt>
+<dd>
+<div class="block">Marks the future as failed due to the given cause.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/SettableFuture.html#setFailure-java.lang.Throwable-">setFailure(Throwable)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/SettableFuture.html" title="class in com.apriori.concurrent">SettableFuture</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/apriori/tuples/NTuple.html#setFifth-T-">setFifth(T)</a></span> - Method in class com.apriori.tuples.<a href="com/apriori/tuples/NTuple.html" title="class in com.apriori.tuples">NTuple</a></dt>
@@ -15515,6 +15695,10 @@
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/AbstractListenableFuture.html#setValue-T-">setValue(T)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/AbstractListenableFuture.html" title="class in com.apriori.concurrent">AbstractListenableFuture</a></dt>
 <dd>
 <div class="block">Sets the future as successfully completed with the specified result.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ReadOnlyCompletableFuture.html#setValue-T-">setValue(T)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ReadOnlyCompletableFuture.html" title="class in com.apriori.concurrent">ReadOnlyCompletableFuture</a></dt>
+<dd>
+<div class="block">Completes the future with the given value.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/SettableFuture.html#setValue-T-">setValue(T)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/SettableFuture.html" title="class in com.apriori.concurrent">SettableFuture</a></dt>
 <dd>&nbsp;</dd>
@@ -16919,6 +17103,11 @@
 <dt><span class="memberNameLink"><a href="com/apriori/collections/SizedIterable.html#toCollection-com.apriori.collections.SizedIterable-">toCollection(SizedIterable&lt;? extends E&gt;)</a></span> - Static method in interface com.apriori.collections.<a href="com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections">SizedIterable</a></dt>
 <dd>
 <div class="block">Adapts this <a href="com/apriori/collections/SizedIterable.html" title="interface in com.apriori.collections"><code>SizedIterable</code></a> interface to the standard <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util"><code>Collection</code></a> interface.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/ReadOnlyCompletableFuture.html#toCompletableFuture--">toCompletableFuture()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/ReadOnlyCompletableFuture.html" title="class in com.apriori.concurrent">ReadOnlyCompletableFuture</a></dt>
+<dd>
+<div class="block">Returns a new <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html?is-external=true" title="class or interface in java.util.concurrent"><code>CompletableFuture</code></a> that completes with the same value or cause of failure
+ as this future.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/Duration.html#toDays--">toDays()</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent">Duration</a></dt>
 <dd>
@@ -19298,6 +19487,15 @@ the order they are declared.</div>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/WrappingExecutorService.html#WrappingExecutorService-java.util.concurrent.ExecutorService-">WrappingExecutorService(ExecutorService)</a></span> - Constructor for class com.apriori.concurrent.<a href="com/apriori/concurrent/WrappingExecutorService.html" title="class in com.apriori.concurrent">WrappingExecutorService</a></dt>
 <dd>
 <div class="block">Constructs a new executor service that delegates to the given executor service.</div>
+</dd>
+<dt><a href="com/apriori/concurrent/WrappingScheduledExecutorService.html" title="class in com.apriori.concurrent"><span class="typeNameLink">WrappingScheduledExecutorService</span></a> - Class in <a href="com/apriori/concurrent/package-summary.html">com.apriori.concurrent</a></dt>
+<dd>
+<div class="block">A scheduled executor service that provides a way to wrap tasks that are executed.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/apriori/concurrent/WrappingScheduledExecutorService.html#WrappingScheduledExecutorService-java.util.concurrent.ScheduledExecutorService-">WrappingScheduledExecutorService(ScheduledExecutorService)</a></span> - Constructor for class com.apriori.concurrent.<a href="com/apriori/concurrent/WrappingScheduledExecutorService.html" title="class in com.apriori.concurrent">WrappingScheduledExecutorService</a></dt>
+<dd>
+<div class="block">Constructs a new scheduled executor service that delegates to the given scheduled executor
+ service.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/apriori/concurrent/DoubleInstanceLock.html#write-java.util.function.Function-">write(Function&lt;? super T, ? extends U&gt;)</a></span> - Method in class com.apriori.concurrent.<a href="com/apriori/concurrent/DoubleInstanceLock.html" title="class in com.apriori.concurrent">DoubleInstanceLock</a></dt>
 <dd>

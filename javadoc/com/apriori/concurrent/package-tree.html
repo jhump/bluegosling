@@ -110,6 +110,20 @@
 </li>
 <li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/ActorThreadPool.html" title="class in com.apriori.concurrent"><span class="typeNameLink">ActorThreadPool</span></a>&lt;T&gt; (implements com.apriori.concurrent.<a href="../../../com/apriori/concurrent/SerializingExecutor.html" title="interface in com.apriori.concurrent">SerializingExecutor</a>&lt;K&gt;)</li>
 <li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/ActorThreadPool.Builder.html" title="class in com.apriori.concurrent"><span class="typeNameLink">ActorThreadPool.Builder</span></a></li>
+<li type="circle">java.util.concurrent.<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html?is-external=true" title="class or interface in java.util.concurrent"><span class="typeNameLink">CompletableFuture</span></a>&lt;T&gt; (implements java.util.concurrent.<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletionStage.html?is-external=true" title="class or interface in java.util.concurrent">CompletionStage</a>&lt;T&gt;, java.util.concurrent.<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;V&gt;)
+<ul>
+<li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/InterruptibleCompletableFuture.html" title="class in com.apriori.concurrent"><span class="typeNameLink">InterruptibleCompletableFuture</span></a>&lt;T&gt; (implements com.apriori.concurrent.<a href="../../../com/apriori/concurrent/CompletionStageFuture.html" title="interface in com.apriori.concurrent">CompletionStageFuture</a>&lt;T&gt;)
+<ul>
+<li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/ReadOnlyCompletableFuture.html" title="class in com.apriori.concurrent"><span class="typeNameLink">ReadOnlyCompletableFuture</span></a>&lt;T&gt;
+<ul>
+<li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/RunnableReadOnlyCompletableFuture.html" title="class in com.apriori.concurrent"><span class="typeNameLink">RunnableReadOnlyCompletableFuture</span></a>&lt;T&gt; (implements com.apriori.concurrent.<a href="../../../com/apriori/concurrent/RunnableCompletionStageFuture.html" title="interface in com.apriori.concurrent">RunnableCompletionStageFuture</a>&lt;T&gt;)</li>
+</ul>
+</li>
+<li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/RunnableCompletableFuture.html" title="class in com.apriori.concurrent"><span class="typeNameLink">RunnableCompletableFuture</span></a>&lt;T&gt; (implements com.apriori.concurrent.<a href="../../../com/apriori/concurrent/RunnableCompletionStageFuture.html" title="interface in com.apriori.concurrent">RunnableCompletionStageFuture</a>&lt;T&gt;)</li>
+</ul>
+</li>
+</ul>
+</li>
 <li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/CompletableFutures.html" title="class in com.apriori.concurrent"><span class="typeNameLink">CompletableFutures</span></a></li>
 <li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/DoubleInstanceLock.html" title="class in com.apriori.concurrent"><span class="typeNameLink">DoubleInstanceLock</span></a>&lt;T&gt;</li>
 <li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/Duration.html" title="class in com.apriori.concurrent"><span class="typeNameLink">Duration</span></a> (implements java.lang.<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;T&gt;)</li>
@@ -163,8 +177,17 @@
 <li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/InterceptingExecutor.html" title="class in com.apriori.concurrent"><span class="typeNameLink">InterceptingExecutor</span></a></li>
 <li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/WrappingExecutorService.html" title="class in com.apriori.concurrent"><span class="typeNameLink">WrappingExecutorService</span></a> (implements com.apriori.concurrent.<a href="../../../com/apriori/concurrent/ListenableExecutorService.html" title="interface in com.apriori.concurrent">ListenableExecutorService</a>)
 <ul>
-<li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/ContextPropagatingExecutorService.html" title="class in com.apriori.concurrent"><span class="typeNameLink">ContextPropagatingExecutorService</span></a></li>
-<li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/InterceptingExecutorService.html" title="class in com.apriori.concurrent"><span class="typeNameLink">InterceptingExecutorService</span></a></li>
+<li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/ContextPropagatingExecutorService.html" title="class in com.apriori.concurrent"><span class="typeNameLink">ContextPropagatingExecutorService</span></a>
+<ul>
+<li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/ContextPropagatingScheduledExecutorService.html" title="class in com.apriori.concurrent"><span class="typeNameLink">ContextPropagatingScheduledExecutorService</span></a> (implements com.apriori.concurrent.<a href="../../../com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent">ListenableScheduledExecutorService</a>)</li>
+</ul>
+</li>
+<li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/InterceptingExecutorService.html" title="class in com.apriori.concurrent"><span class="typeNameLink">InterceptingExecutorService</span></a>
+<ul>
+<li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/InterceptingScheduledExecutorService.html" title="class in com.apriori.concurrent"><span class="typeNameLink">InterceptingScheduledExecutorService</span></a> (implements com.apriori.concurrent.<a href="../../../com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent">ListenableScheduledExecutorService</a>)</li>
+</ul>
+</li>
+<li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/WrappingScheduledExecutorService.html" title="class in com.apriori.concurrent"><span class="typeNameLink">WrappingScheduledExecutorService</span></a> (implements com.apriori.concurrent.<a href="../../../com/apriori/concurrent/ListenableScheduledExecutorService.html" title="interface in com.apriori.concurrent">ListenableScheduledExecutorService</a>)</li>
 </ul>
 </li>
 </ul>
@@ -220,6 +243,15 @@
 </li>
 </ul>
 </li>
+<li type="circle">java.util.concurrent.<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletionStage.html?is-external=true" title="class or interface in java.util.concurrent"><span class="typeNameLink">CompletionStage</span></a>&lt;T&gt;
+<ul>
+<li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/CompletionStageFuture.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">CompletionStageFuture</span></a>&lt;T&gt; (also extends java.util.concurrent.<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;V&gt;)
+<ul>
+<li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/RunnableCompletionStageFuture.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">RunnableCompletionStageFuture</span></a>&lt;T&gt; (also extends java.util.concurrent.<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/RunnableFuture.html?is-external=true" title="class or interface in java.util.concurrent">RunnableFuture</a>&lt;V&gt;)</li>
+</ul>
+</li>
+</ul>
+</li>
 <li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/ContextPropagator.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ContextPropagator</span></a>&lt;T&gt;</li>
 <li type="circle">java.util.concurrent.<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent"><span class="typeNameLink">Executor</span></a>
 <ul>
@@ -242,6 +274,11 @@
 </li>
 <li type="circle">java.util.concurrent.<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent"><span class="typeNameLink">Future</span></a>&lt;V&gt;
 <ul>
+<li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/CompletionStageFuture.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">CompletionStageFuture</span></a>&lt;T&gt; (also extends java.util.concurrent.<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletionStage.html?is-external=true" title="class or interface in java.util.concurrent">CompletionStage</a>&lt;T&gt;)
+<ul>
+<li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/RunnableCompletionStageFuture.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">RunnableCompletionStageFuture</span></a>&lt;T&gt; (also extends java.util.concurrent.<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/RunnableFuture.html?is-external=true" title="class or interface in java.util.concurrent">RunnableFuture</a>&lt;V&gt;)</li>
+</ul>
+</li>
 <li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ListenableFuture</span></a>&lt;T&gt; (also extends com.apriori.concurrent.<a href="../../../com/apriori/concurrent/Awaitable.html" title="interface in com.apriori.concurrent">Awaitable</a>, com.apriori.concurrent.<a href="../../../com/apriori/concurrent/Cancellable.html" title="interface in com.apriori.concurrent">Cancellable</a>)
 <ul>
 <li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/ListenableScheduledFuture.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">ListenableScheduledFuture</span></a>&lt;T&gt; (also extends java.util.concurrent.<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledFuture.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledFuture</a>&lt;V&gt;)
@@ -254,6 +291,7 @@
 </li>
 <li type="circle">java.util.concurrent.<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/RunnableFuture.html?is-external=true" title="class or interface in java.util.concurrent"><span class="typeNameLink">RunnableFuture</span></a>&lt;V&gt; (also extends java.lang.<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>)
 <ul>
+<li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/RunnableCompletionStageFuture.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">RunnableCompletionStageFuture</span></a>&lt;T&gt; (also extends com.apriori.concurrent.<a href="../../../com/apriori/concurrent/CompletionStageFuture.html" title="interface in com.apriori.concurrent">CompletionStageFuture</a>&lt;T&gt;)</li>
 <li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/RunnableListenableFuture.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">RunnableListenableFuture</span></a>&lt;T&gt; (also extends com.apriori.concurrent.<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;)</li>
 </ul>
 </li>
@@ -282,6 +320,7 @@
 <ul>
 <li type="circle">java.util.concurrent.<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/RunnableFuture.html?is-external=true" title="class or interface in java.util.concurrent"><span class="typeNameLink">RunnableFuture</span></a>&lt;V&gt; (also extends java.util.concurrent.<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;V&gt;)
 <ul>
+<li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/RunnableCompletionStageFuture.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">RunnableCompletionStageFuture</span></a>&lt;T&gt; (also extends com.apriori.concurrent.<a href="../../../com/apriori/concurrent/CompletionStageFuture.html" title="interface in com.apriori.concurrent">CompletionStageFuture</a>&lt;T&gt;)</li>
 <li type="circle">com.apriori.concurrent.<a href="../../../com/apriori/concurrent/RunnableListenableFuture.html" title="interface in com.apriori.concurrent"><span class="typeNameLink">RunnableListenableFuture</span></a>&lt;T&gt; (also extends com.apriori.concurrent.<a href="../../../com/apriori/concurrent/ListenableFuture.html" title="interface in com.apriori.concurrent">ListenableFuture</a>&lt;T&gt;)</li>
 </ul>
 </li>

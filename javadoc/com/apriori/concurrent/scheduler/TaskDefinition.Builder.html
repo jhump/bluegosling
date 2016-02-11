@@ -281,8 +281,9 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <h4>withUncaughtExceptionHandler</h4>
 <pre>public&nbsp;<a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.Builder.html" title="class in com.apriori.concurrent.scheduler">TaskDefinition.Builder</a>&lt;<a href="../../../../com/apriori/concurrent/scheduler/TaskDefinition.Builder.html" title="type parameter in TaskDefinition.Builder">V</a>&gt;&nbsp;withUncaughtExceptionHandler(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.UncaughtExceptionHandler.html?is-external=true" title="class or interface in java.lang">Thread.UncaughtExceptionHandler</a>&nbsp;handler)</pre>
 <div class="block">Configures the <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.UncaughtExceptionHandler.html?is-external=true" title="class or interface in java.lang"><code>Thread.UncaughtExceptionHandler</code></a> for this task. If this is set, it will
- be used instead of the thread's normal <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.UncaughtExceptionHandler.html?is-external=true" title="class or interface in java.lang"><code>Thread.UncaughtExceptionHandler</code></a> to handle any
- uncaught exceptions (including <code>Throwable</code>s) raised by an instance of the task.</div>
+ be invoked if an uncaught exception (including <code>Throwable</code>s) is raised by an instance
+ of the task. If unset, the exception is not handled, though will still be recorded as the
+ cause of failure for a <a href="../../../../com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><code>ScheduledTask</code></a>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>handler</code> - the <code>UncaughtExceptionHandler</code></dd>

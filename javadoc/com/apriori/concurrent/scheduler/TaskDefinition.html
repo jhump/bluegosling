@@ -463,8 +463,9 @@ var activeTableTab = "activeTableTab";
 <pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.UncaughtExceptionHandler.html?is-external=true" title="class or interface in java.lang">Thread.UncaughtExceptionHandler</a>&nbsp;uncaughtExceptionHandler()</pre>
 <div class="block">Returns the <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.UncaughtExceptionHandler.html?is-external=true" title="class or interface in java.lang"><code>Thread.UncaughtExceptionHandler</code></a> for this task. If any invocation
  throws an uncaught exception, this handler will be dispatched to handle it. If
- the tasks's handler is never assigned (i.e. <code>null</code>) then the thread's
- default handler is used.</div>
+ the tasks's handler is never assigned (i.e. <code>null</code>) then no action is taken,
+ other than recording the exception as the cause of failure for an instance of
+ <a href="../../../../com/apriori/concurrent/scheduler/ScheduledTask.html" title="interface in com.apriori.concurrent.scheduler"><code>ScheduledTask</code></a>.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the <code>UncaughtExceptionHandler</code> for this task</dd>
