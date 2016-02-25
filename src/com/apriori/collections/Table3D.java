@@ -54,15 +54,15 @@ public interface Table3D<P, R, C, V> {
    void clear();
 
    static <P, R, C, V> Table3D<P, R, C, V> newHashTable3D() {
-      return newCustomTable3D((Supplier<Map<Object, Object>>) HashMap::new);
+      return newCustomTable3D(() -> new HashMap<>());
    }
 
    static <P, R, C, V> Table3D<P, R, C, V> newLinkedHashTable3D() {
-      return newCustomTable3D((Supplier<Map<Object, Object>>) LinkedHashMap::new);
+      return newCustomTable3D(() -> new LinkedHashMap<>());
    }
 
    static <P, R, C, V> Table3D<P, R, C, V> newTreeTable3D() {
-      return newCustomTable3D(TreeMap::new);
+      return newCustomTable3D(() -> new TreeMap<>());
    }
 
    static <P, R, C, V> Table3D<P, R, C, V> newCustomTable3D(

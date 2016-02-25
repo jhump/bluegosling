@@ -394,8 +394,8 @@ public final class Immutables {
    }
 
    public static <E extends Comparable<E>> ImmutableSortedSet<E> emptyImmutableSortedSet() {
-      @SuppressWarnings("unchecked")
-      ImmutableSortedSet<E> ret = (ImmutableSortedSet<E>) EmptySortedSet.INSTANCE;
+      @SuppressWarnings({ "unchecked", "rawtypes" })
+      ImmutableSortedSet<E> ret = (ImmutableSortedSet) EmptySortedSet.INSTANCE;
       return ret;
    }
 

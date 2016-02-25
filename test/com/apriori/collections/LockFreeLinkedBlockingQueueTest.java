@@ -1,17 +1,13 @@
 package com.apriori.collections;
 
-import com.apriori.collections.LockFreeLinkedBlockingQueue;
+import com.apriori.testing.BulkTestRunner;
+
+import org.junit.runner.RunWith;
 
 import java.util.concurrent.BlockingQueue;
 
-import junit.framework.TestSuite;
-
-
+@RunWith(BulkTestRunner.class)
 public class LockFreeLinkedBlockingQueueTest extends AbstractTestBlockingQueue {
-
-   public static TestSuite suite() {
-      return makeSuite(LockFreeLinkedBlockingQueueTest.class);
-   }
    
    public LockFreeLinkedBlockingQueueTest(String testName) {
       super(testName);

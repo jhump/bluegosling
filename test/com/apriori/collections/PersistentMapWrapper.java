@@ -1,10 +1,23 @@
 package com.apriori.collections;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-//TODO: javadoc
-public class PersistentMapWrapper<K, V> extends ImmutableMapWrapper<K, V, Map<K, V>>
+/**
+ * A wrapper to adapt a {@link Map} to a {@link PersistentMap}. This is used to create "reference
+ * implementations" for a {@link PersistentMap}, against which the behavior of other implementations
+ * can be tested. For example, we wrap an {@link ArrayList} and use the resulting persistent list to
+ * verify behavior of other persistent lists. These wrapped persistent collections are for testing.
+ * They copy the entire wrapped collection during update operations, so they are not expected to
+ * perform well.
+ *
+ * @param <K> the type of keys in the map
+ * @param <V> the type of values in the map
+ * 
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
+class PersistentMapWrapper<K, V> extends ImmutableMapWrapper<K, V, Map<K, V>>
       implements PersistentMap<K, V> {
 
 
@@ -37,14 +50,14 @@ public class PersistentMapWrapper<K, V> extends ImmutableMapWrapper<K, V, Map<K,
    @Override
    public PersistentMap<K, V> removeAll(Iterable<?> keys) {
       Map<K, V> newMap = copy(map);
-      newMap.keySet().removeAll(ImmutableCollectionWrapper.fromIterable(keys));
+      newMap.keySet().removeAll(Iterables.snapshot(keys));
       return wrapPersistent(newMap);
    }
 
    @Override
    public PersistentMap<K, V> retainAll(Iterable<?> keys) {
       Map<K, V> newMap = copy(map);
-      newMap.keySet().retainAll(ImmutableCollectionWrapper.fromIterable(keys));
+      newMap.keySet().retainAll(Iterables.snapshot(keys));
       return wrapPersistent(newMap);
    }
 

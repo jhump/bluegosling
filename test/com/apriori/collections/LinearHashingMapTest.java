@@ -1,16 +1,14 @@
 package com.apriori.collections;
 
+import com.apriori.testing.BulkTestRunner;
+
 import org.apache.commons.collections.map.AbstractTestMap;
+import org.junit.runner.RunWith;
 
 import java.util.Map;
 
-import junit.framework.TestSuite;
-
+@RunWith(BulkTestRunner.class)
 public class LinearHashingMapTest extends AbstractTestMap {
-
-   public static TestSuite suite() {
-      return makeSuite(LinearHashingMapTest.class);
-   }
    
    public LinearHashingMapTest(String testName) {
       super(testName);

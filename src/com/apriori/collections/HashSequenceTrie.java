@@ -50,8 +50,17 @@ public class HashSequenceTrie<K, V>
 
       @Override
       public void clearValue() {
-         this.value = null;
-         this.present = false;
+         if (present) {
+            value = null;
+            present = false;
+            count--;
+         }
+      }
+      
+      @Override
+      public void clear() {
+         super.clear();
+         count = present ? 1 : 0;
       }
 
       @Override

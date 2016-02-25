@@ -58,21 +58,21 @@ abstract class PersistentCollectionWrapper<E, C extends Collection<E>,
    @Override
    public P removeAll(Iterable<?> items) {
       C newCollection = copy(collection);
-      newCollection.removeAll(fromIterable(items));
+      newCollection.removeAll(Iterables.snapshot(items));
       return wrapPersistent(newCollection);
    }
 
    @Override
    public P retainAll(Iterable<?> items) {
       C newCollection = copy(collection);
-      newCollection.retainAll(fromIterable(items));
+      newCollection.retainAll(Iterables.snapshot(items));
       return wrapPersistent(newCollection);
    }
 
    @Override
    public P addAll(Iterable<? extends E> items) {
       C newCollection = copy(collection);
-      newCollection.addAll(fromIterable(items));
+      newCollection.addAll(Iterables.snapshot(items));
       return wrapPersistent(newCollection);
    }
 }

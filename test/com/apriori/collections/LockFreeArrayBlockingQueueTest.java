@@ -1,5 +1,9 @@
 package com.apriori.collections;
 
+import com.apriori.testing.BulkTestRunner;
+
+import org.junit.runner.RunWith;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -7,14 +11,9 @@ import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 
-import junit.framework.TestSuite;
 
-
+@RunWith(BulkTestRunner.class)
 public class LockFreeArrayBlockingQueueTest extends AbstractTestBlockingQueue {
-
-   public static TestSuite suite() {
-      return makeSuite(LockFreeArrayBlockingQueueTest.class);
-   }
    
    public LockFreeArrayBlockingQueueTest(String testName) {
       super(testName);

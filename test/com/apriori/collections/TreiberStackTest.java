@@ -1,19 +1,16 @@
 package com.apriori.collections;
 
+import com.apriori.testing.BulkTestRunner;
+
 import org.apache.commons.collections.collection.AbstractTestCollection;
+import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-import junit.framework.TestSuite;
-
-
+@RunWith(BulkTestRunner.class)
 public class TreiberStackTest extends AbstractTestCollection {
-
-   public static TestSuite suite() {
-      return makeSuite(TreiberStackTest.class);
-   }
    
    public TreiberStackTest(String testName) {
       super(testName);

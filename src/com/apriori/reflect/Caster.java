@@ -1,5 +1,7 @@
 package com.apriori.reflect;
 
+import static java.util.Objects.requireNonNull;
+
 import com.apriori.reflect.DispatchSettings.Visibility;
 
 import java.lang.reflect.InvocationHandler;
@@ -380,7 +382,7 @@ public class Caster<T> {
       private boolean castArguments;
       private boolean expandVarArgs;
       private boolean ignoreAmbiguities;
-      private Visibility visibility;
+      private Visibility visibility = Visibility.PUBLIC;
       
       /**
        * Constructs a new builder.
@@ -500,7 +502,7 @@ public class Caster<T> {
       
       // TODO: doc!
       public Builder<T> withVisibility(Visibility visibility) {
-         this.visibility = visibility;
+         this.visibility = requireNonNull(visibility);
          return this;
       }
       

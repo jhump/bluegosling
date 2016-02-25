@@ -29,7 +29,7 @@ public class ImmutableMapWrapper<K, V, M extends Map<K, V>> implements Immutable
 
    @Override
    public boolean containsAllKeys(Iterable<?> keys) {
-      return map.keySet().containsAll(ImmutableCollectionWrapper.fromIterable(keys));
+      return map.keySet().containsAll(Iterables.snapshot(keys));
    }
 
    @Override
@@ -49,7 +49,7 @@ public class ImmutableMapWrapper<K, V, M extends Map<K, V>> implements Immutable
 
    @Override
    public boolean containsAllValues(Iterable<?> values) {
-      return map.values().containsAll(ImmutableCollectionWrapper.fromIterable(values));
+      return map.values().containsAll(Iterables.snapshot(values));
    }
 
    @Override

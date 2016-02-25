@@ -1,5 +1,9 @@
 package com.apriori.collections;
 
+import com.apriori.testing.BulkTestRunner;
+
+import org.junit.runner.RunWith;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -8,14 +12,8 @@ import java.util.Queue;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.BlockingQueue;
 
-import junit.framework.TestSuite;
-
-
+@RunWith(BulkTestRunner.class)
 public class ArrayBlockingDequeTest extends AbstractTestBlockingDeque {
-
-   public static TestSuite suite() {
-      return makeSuite(ArrayBlockingDequeTest.class);
-   }
    
    public ArrayBlockingDequeTest(String testName) {
       super(testName);

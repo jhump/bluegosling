@@ -1,15 +1,13 @@
 package com.apriori.collections;
 
+import com.apriori.testing.BulkTestRunner;
+
+import org.junit.runner.RunWith;
+
 import java.util.Map;
 
-import junit.framework.TestSuite;
-
-
+@RunWith(BulkTestRunner.class)
 public class SortedArrayMapTest extends AbstractTestNavigableMap {
-
-   public static TestSuite suite() {
-      return makeSuite(SortedArrayMapTest.class);
-   }
 
    public SortedArrayMapTest(String testName) {
       super(testName);

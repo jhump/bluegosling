@@ -1,13 +1,12 @@
 package com.apriori.collections;
 
-import junit.framework.TestSuite;
+import com.apriori.testing.BulkTestRunner;
 
+import org.junit.runner.RunWith;
+
+@RunWith(BulkTestRunner.class)
 public class HashSequenceTrieTest extends AbstractTestSequenceTrie {
 
-   public static TestSuite suite() {
-      return makeSuite(HashSequenceTrieTest.class);
-   }
-   
    public HashSequenceTrieTest(String testName) {
       super(testName);
    }

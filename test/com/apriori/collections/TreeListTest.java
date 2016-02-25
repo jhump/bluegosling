@@ -1,9 +1,11 @@
 package com.apriori.collections;
 
+import com.apriori.testing.BulkTestRunner;
+
+import org.junit.runner.RunWith;
+
 import java.util.Arrays;
 import java.util.List;
-
-import junit.framework.TestSuite;
 
 /**
  * Tests the {@code TreeList} class using the list tests provided in the Apache Commons Collections
@@ -11,16 +13,8 @@ import junit.framework.TestSuite;
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
+@RunWith(BulkTestRunner.class)
 public class TreeListTest extends AbstractTestList {
-   /**
-    * Creates a new test suite that includes all test cases (including Apache {@code BulkTest}s,
-    * which recursively include cases for sub-lists, iterators, etc.).
-    *
-    * @return a test suite that includes all test cases for {@code TreeList}
-    */
-   public static TestSuite suite() {
-      return makeSuite(TreeListTest.class);
-   }
    
    /**
     * Constructs a new test case.

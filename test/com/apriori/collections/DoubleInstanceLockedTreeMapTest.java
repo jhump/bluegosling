@@ -1,15 +1,14 @@
 package com.apriori.collections;
 
+import com.apriori.testing.BulkTestRunner;
+
+import org.junit.runner.RunWith;
+
 import java.util.Map;
 
-import junit.framework.TestSuite;
-
 // TODO: ConcurrentMap test cases
+@RunWith(BulkTestRunner.class)
 public class DoubleInstanceLockedTreeMapTest extends AbstractTestNavigableMap {
-
-   public static TestSuite suite() {
-      return makeSuite(DoubleInstanceLockedTreeMapTest.class);
-   }
 
    public DoubleInstanceLockedTreeMapTest(String testName) {
       super(testName);

@@ -1,15 +1,13 @@
 package com.apriori.collections;
 
+import com.apriori.testing.BulkTestRunner;
+
+import org.junit.runner.RunWith;
+
 import java.util.concurrent.BlockingDeque;
 
-import junit.framework.TestSuite;
-
-
+@RunWith(BulkTestRunner.class)
 public class LockFreeLinkedBlockingDequeTest extends AbstractTestBlockingDeque {
-
-   public static TestSuite suite() {
-      return makeSuite(LockFreeLinkedBlockingDequeTest.class);
-   }
    
    public LockFreeLinkedBlockingDequeTest(String testName) {
       super(testName);

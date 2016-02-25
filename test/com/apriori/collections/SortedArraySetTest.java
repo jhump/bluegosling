@@ -1,9 +1,11 @@
 // Copyright (C) 2012 - Apriori Enterprises - All Rights Reserved
 package com.apriori.collections;
 
-import java.util.NavigableSet;
+import com.apriori.testing.BulkTestRunner;
 
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+
+import java.util.NavigableSet;
 
 /**
  * Tests the {@code SortedArraySet} class using the sorted set tests provided in the Apache Commons
@@ -11,17 +13,8 @@ import junit.framework.TestSuite;
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
+@RunWith(BulkTestRunner.class)
 public class SortedArraySetTest extends AbstractTestNavigableSet {
-   
-   /**
-    * Creates a new test suite that includes all test cases (including Apache {@code BulkTest}s,
-    * which recursively include cases for sub-sets, etc.).
-    *
-    * @return a test suite that includes all test cases for {@code SortedArraySet}
-    */
-   public static TestSuite suite() {
-      return makeSuite(SortedArraySetTest.class);
-   }
    
    /**
     * Constructs a new test case.

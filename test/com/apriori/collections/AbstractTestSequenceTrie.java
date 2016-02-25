@@ -13,7 +13,11 @@ public abstract class AbstractTestSequenceTrie extends AbstractTestMap {
    public AbstractTestSequenceTrie(String testName) {
       super(testName);
    }
- 
+
+   @Override public boolean isAllowNullKey() {
+      return false;
+   }
+   
    @Override public abstract SequenceTrie<Object, Object> makeEmptyMap();
    
    @SuppressWarnings("unchecked")
@@ -31,6 +35,7 @@ public abstract class AbstractTestSequenceTrie extends AbstractTestMap {
             Arrays.asList(1, 2, 3, 9),
             Arrays.asList(1, 2, 3, 9, 9),
             Arrays.asList(1, 2, 3, 9, 9, 9),
+            Arrays.asList(1, 2, 3, 9, 9, 8),
             Arrays.asList(5, 4, 3, 2, 1),
             Arrays.asList("a", "b", "c"),
             Arrays.asList("a", "b", "c", "d"),
@@ -57,7 +62,8 @@ public abstract class AbstractTestSequenceTrie extends AbstractTestMap {
             "11",
             "0xc",
             "015",
-            14
+            14,
+            15.0f
       };
    }
 
@@ -77,7 +83,8 @@ public abstract class AbstractTestSequenceTrie extends AbstractTestMap {
             "013",
             "twelve",
             "13",
-            14L
+            14L,
+            15.0
       };
    }
    
@@ -106,7 +113,7 @@ public abstract class AbstractTestSequenceTrie extends AbstractTestMap {
    }
 
    public BulkTest bulkTestPrefixMap() {
-      return new BulkTestPrefixMap(this);
+      return new BulkTestPrefixMap(this) {};
    }
    
    public void testPrefixMaps() {
@@ -122,7 +129,9 @@ public abstract class AbstractTestSequenceTrie extends AbstractTestMap {
       assertEquals(prefix2a, prefix2b);
    }
 
-   public static class BulkTestPrefixMap extends AbstractTestSequenceTrie {
+   // NB: Marked abstract to prevent JUnit test runner from thinking it can run this class. It is
+   // only runnable when instantiated by enclosing test.
+   public abstract static class BulkTestPrefixMap extends AbstractTestSequenceTrie {
       private final AbstractTestSequenceTrie outer;
       
       public BulkTestPrefixMap(AbstractTestSequenceTrie outer) {
@@ -146,7 +155,8 @@ public abstract class AbstractTestSequenceTrie extends AbstractTestMap {
                Arrays.asList(4, 5, 6),
                Arrays.asList(9),
                Arrays.asList(9, 9),
-               Arrays.asList(9, 9, 9)
+               Arrays.asList(9, 9, 9),
+               Arrays.asList(9, 9, 8)
          };
       }
 
@@ -158,7 +168,8 @@ public abstract class AbstractTestSequenceTrie extends AbstractTestMap {
                4L,
                "five",
                BigInteger.valueOf(6),
-               BigDecimal.valueOf(7)
+               BigDecimal.valueOf(7),
+               (byte) 8
          };
       }
 
@@ -170,22 +181,29 @@ public abstract class AbstractTestSequenceTrie extends AbstractTestMap {
                (byte) 4,
                (short) 5,
                (char) 6,
-               7.0
+               7.0,
+               8
          };
       }
       
       @Override
       public BulkTest bulkTestPrefixMap() {
-         return new BulkTestRecursivePrefixMap(this);
+         return new BulkTestRecursivePrefixMap(this) {};
       }
    }
    
-   public static class BulkTestRecursivePrefixMap extends AbstractTestMap {
+   // NB: Marked abstract to prevent JUnit test runner from thinking it can run this class. It is
+   // only runnable when instantiated by enclosing test.
+   public abstract static class BulkTestRecursivePrefixMap extends AbstractTestMap {
       private final BulkTestPrefixMap outer;
       
       public BulkTestRecursivePrefixMap(BulkTestPrefixMap outer) {
          super("");
          this.outer = outer;
+      }
+      
+      @Override public boolean isAllowNullKey() {
+         return false;
       }
       
       @Override public SequenceTrie<Object, Object> makeEmptyMap() {
@@ -200,7 +218,8 @@ public abstract class AbstractTestSequenceTrie extends AbstractTestMap {
          return new Object[] {
                Arrays.asList(),
                Arrays.asList(9),
-               Arrays.asList(9, 9)
+               Arrays.asList(9, 9),
+               Arrays.asList(9, 8)
          };
       }
 
@@ -208,7 +227,8 @@ public abstract class AbstractTestSequenceTrie extends AbstractTestMap {
          return new Object[] {
                "five",
                BigInteger.valueOf(6),
-               BigDecimal.valueOf(7)
+               BigDecimal.valueOf(7),
+               (byte) 8
          };
       }
 
@@ -216,7 +236,8 @@ public abstract class AbstractTestSequenceTrie extends AbstractTestMap {
          return new Object[] {
                (short) 5,
                (char) 6,
-               7.0
+               7.0,
+               8
          };
       }
    }      

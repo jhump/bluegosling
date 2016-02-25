@@ -1,8 +1,11 @@
 // Copyright (C) 2012 - Apriori Enterprises - All Rights Reserved
 package com.apriori.collections;
 
+import com.apriori.testing.BulkTestRunner;
+
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.set.AbstractTestSet;
+import org.junit.runner.RunWith;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -13,25 +16,14 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import junit.framework.TestSuite;
-
 /**
  * Tests the implementation of concurrent {@link Set}s returned from
  * {@link ShardedConcurrentSets#withSet}.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
+@RunWith(BulkTestRunner.class)
 public class ShardedConcurrentSetTest extends AbstractTestSet {
-
-   /**
-    * Creates a new test suite that includes all test cases (including Apache {@code BulkTest}s,
-    * which recursively include cases for sub-sets, etc.).
-    *
-    * @return a test suite that includes all test cases
-    */
-   public static TestSuite suite() {
-      return makeSuite(ShardedConcurrentSetTest.class);
-   }
    
    /**
     * Constructs a new test.
@@ -89,7 +81,7 @@ public class ShardedConcurrentSetTest extends AbstractTestSet {
     */
    public static class BulkTestConcurrentAccess extends BulkTest {
       
-      private AbstractTestSet setTest;
+      private final AbstractTestSet setTest;
       
       BulkTestConcurrentAccess(AbstractTestSet setTest) {
          super("");

@@ -1,17 +1,16 @@
 package com.apriori.collections;
 
-import junit.framework.TestSuite;
+import com.apriori.testing.BulkTestRunner;
+
+import org.junit.runner.RunWith;
 
 /**
  * Test cases for {@link FibonacciHeapOrderedQueue}.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
+@RunWith(BulkTestRunner.class)
 public class FibonacciHeapOrderedQueueTest extends AbstractTestMeldableOrderedQueue {
-
-   public static TestSuite suite() {
-      return makeSuite(FibonacciHeapOrderedQueueTest.class);
-   }
    
    public FibonacciHeapOrderedQueueTest(String testName) {
       super(testName);

@@ -3,6 +3,7 @@ package com.apriori.concurrent;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -22,6 +23,7 @@ import java.util.function.Consumer;
 import java.util.function.ToLongFunction;
 import java.util.stream.Collectors;
 
+@Ignore
 public class SerializingExecutorPerformanceTest {
    
    private static final ToLongFunction<ActorThreadPool<?>> ACTOR_THREAD_POOL_SHUTDOWN = e -> {

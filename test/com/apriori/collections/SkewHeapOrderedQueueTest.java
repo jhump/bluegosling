@@ -1,12 +1,11 @@
 package com.apriori.collections;
 
-import junit.framework.TestSuite;
+import com.apriori.testing.BulkTestRunner;
 
+import org.junit.runner.RunWith;
 
+@RunWith(BulkTestRunner.class)
 public class SkewHeapOrderedQueueTest extends AbstractTestMeldableOrderedQueue {
-   public static TestSuite suite() {
-      return makeSuite(SkewHeapOrderedQueueTest.class);
-   }
    
    public SkewHeapOrderedQueueTest(String testName) {
       super(testName);

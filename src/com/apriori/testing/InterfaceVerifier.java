@@ -12,10 +12,11 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -29,29 +30,25 @@ import java.util.regex.Pattern;
  * comparing their behavior against known good implementations (e.g. {@code ArrayList},
  * {@code HashMap}, etc.).
  * 
- * <p>
- * When writing tests, create an {@code InterfaceVerifier} and configure the way it verifies method
- * invocations as appropriate. Then use it to create an interface proxy. When a method is called on
- * the proxy object, it is dispatched to both the implementation under test and the reference
- * implementation. The proxy will assert that the test implementation behaves correctly, per the
- * configuration for that method.
+ * <p>When writing tests, create an {@code InterfaceVerifier} and configure the way it verifies
+ * method invocations as appropriate. Then use it to create an interface proxy. When a method is
+ * called on the proxy object, it is dispatched to both the implementation under test and the
+ * reference implementation. The proxy will assert that the test implementation behaves correctly,
+ * per the configuration for that method.
  * 
- * <p>
- * By default, methods are verified per the following rules:
+ * <p>By default, methods are verified per the following rules:
  * <ul>
  * <li>If the interface method is a <em>mutator</em> method then both objects must <em>match</em>
  * after the method is called. By default, the objects will be compared against one another using
  * {@link Object#equals(Object)}. But you can supply an alternative {@link ObjectVerifier} that can
  * determine if the test object has correctly mutated in the same way as the reference object.
- * <p>
- * By default, mutator methods are assumed to be all methods on the interface that return
+ * <p>By default, mutator methods are assumed to be all methods on the interface that return
  * {@code void}, but this can be overridden by configuring methods to be mutator methods (see
  * {@link #configureMethod(MethodSignature)} and {@link MethodConfiguration#mutator()} for more
  * details).
- * <p>
- * Also, if the two implementations implement {@link Object#hashCode()} using the same scheme, their
- * hash codes can be compared after a mutator method is called to ensure that they match, too (see
- * {@link #setCheckHashCodesAfterMutation(boolean)} for more details).</li>
+ * <p>Also, if the two implementations implement {@link Object#hashCode()} using the same scheme,
+ * their hash codes can be compared after a mutator method is called to ensure that they match, too
+ * (see {@link #setCheckHashCodesAfterMutation(boolean)} for more details).</li>
  * <li>If the interface method has a non-{@code void} return type then the return values of both the
  * test and reference implementation will be compared to make sure the method behaved correctly. By
  * default, there are a few options for how the invocation handler will perform that check:
@@ -70,8 +67,7 @@ import java.util.regex.Pattern;
  * {@link MethodConfiguration#returnVerifier(ObjectVerifier)} for more details).</li>
  * <li>If the method on the reference implementation throws an exception then the method under test
  * should also throw a similar exception.
- * <p>
- * By default, the proxy will use strict checking of the exception: the test implementation must
+ * <p>By default, the proxy will use strict checking of the exception: the test implementation must
  * throw an exception whose class is the same as the exception thrown by the reference
  * implementation. You can configure the proxy to use relaxed exception checking, in which case the
  * test implementation must throw either a sub-class (descendant class) of the exception thrown by
@@ -80,16 +76,14 @@ import java.util.regex.Pattern;
  * be one of the checked exceptions in the interface method's signature (see
  * {@link #setDefaultExceptionVerifier(ObjectVerifier)} and
  * {@link MethodConfiguration#exceptionVerifier(ObjectVerifier)} for more details).
- * <p>
- * In the event that both implementations throw {@code RuntimeException}s, but not precisely the
+ * <p>In the event that both implementations throw {@code RuntimeException}s, but not precisely the
  * same concrete exception class, then you can still use the relaxed exception handling, but you
  * must define the ancestor exceptions that can be thrown since {@code RuntimeException}s are not
  * generally included in the method's signature (see
  * {@link MethodConfiguration#uncheckedExceptions(Set)} for more details).</li>
  * </ul>
  * 
- * <p>
- * The behavior that is configured <em>per method</em> is actually defined using
+ * <p>The behavior that is configured <em>per method</em> is actually defined using
  * {@code MethodSignature}s. In cases where multiple interfaces for a test object are being
  * verified, it is possible more than one interface have methods with the same signature. Such a
  * method's configuration will be the same, regardless of which of the interfaces was used to invoke
@@ -109,8 +103,7 @@ public class InterfaceVerifier<T> {
    /**
     * Configures how one or more methods are executed and verified during interface verification.
     * 
-    * <p>
-    * This interface uses a builder pattern. All methods return the {@code MethodConfigurator} to
+    * <p>This interface uses a builder pattern. All methods return the {@code MethodConfigurator} to
     * simplify usage and enhance readability through method chaining.
     * 
     * @author Joshua Humphries (jhumphries131@gmail.com)
@@ -216,8 +209,9 @@ public class InterfaceVerifier<T> {
        * 
        * @see #uncheckedExceptions(Set)
        */
-      // @SafeVararg
-      MethodConfigurator<T> uncheckedExceptions(Class<? extends Throwable>... throwables);
+      //@SafeVarargs -- can't use SafeVarargs on non-final instance methods (and thus interfaces)
+      MethodConfigurator<T> uncheckedExceptions(
+            @SuppressWarnings("unchecked") Class<? extends Throwable>... throwables);
 
       /**
        * Indicates the set of unchecked exceptoins thrown by a method. These include
@@ -229,7 +223,7 @@ public class InterfaceVerifier<T> {
        * @throws NullPointerException If the specified set or any of the specified types therein are
        *            null
        */
-      MethodConfigurator<T> uncheckedExceptions(Set<Class<? extends Throwable>> throwables);
+      MethodConfigurator<T> uncheckedExceptions(Collection<Class<? extends Throwable>> throwables);
 
       /**
        * Indicates that arguments should be cloned prior to method execution and then verified. This
@@ -516,9 +510,10 @@ public class InterfaceVerifier<T> {
        * {@code MethodConfiguration} in order to maintain the more specific type information with
        * method chaining.
        */
-      // @SafeVararg
+      //@SafeVarargs -- can't use SafeVarargs on non-final instance methods (and thus interfaces)
       @Override
-      MethodConfiguration<T> uncheckedExceptions(Class<? extends Throwable>... throwables);
+      MethodConfiguration<T> uncheckedExceptions(
+            @SuppressWarnings("unchecked") Class<? extends Throwable>... throwables);
 
       /**
        * {@inheritDoc}
@@ -529,7 +524,7 @@ public class InterfaceVerifier<T> {
        * method chaining.
        */
       @Override
-      MethodConfiguration<T> uncheckedExceptions(Set<Class<? extends Throwable>> throwables);
+      MethodConfiguration<T> uncheckedExceptions(Collection<Class<? extends Throwable>> throwables);
 
       /**
        * {@inheritDoc}
@@ -783,7 +778,7 @@ public class InterfaceVerifier<T> {
    private class MethodConfigurationImpl implements MethodConfiguration<T>, Cloneable {
 
       // fields
-      private MethodSignature sig;
+      private final MethodSignature sig;
       private Set<Method> confMethods;
       // default access so they can be accessed from MethodInvocationHandler below
       Class<?> returnType;
@@ -806,10 +801,10 @@ public class InterfaceVerifier<T> {
          assert m != null;
 
          // init collections
-         confMethods = new HashSet<Method>();
+         confMethods = new LinkedHashSet<Method>();
          checkedExceptions =
-               new HashSet<Class<? extends Throwable>>(m.getExceptionTypes().length);
-         uncheckedExceptions = new HashSet<Class<? extends Throwable>>();
+               new LinkedHashSet<Class<? extends Throwable>>(m.getExceptionTypes().length);
+         uncheckedExceptions = new LinkedHashSet<Class<? extends Throwable>>();
 
          // get info from method
          sig = new MethodSignature(m);
@@ -842,10 +837,8 @@ public class InterfaceVerifier<T> {
          isRelaxedExceptions = false;
          uncheckedExceptions.clear();
          int numArgs = sig.getParameterTypes().size();
-         argumentCloners = new ArrayList<Cloner<?>>(
-               Collections.<Cloner<?>> nCopies(numArgs, null));
-         argumentVerifiers = new ArrayList<ObjectVerifier<?>>(
-               Collections.<ObjectVerifier<?>> nCopies(numArgs, null));
+         argumentCloners = new ArrayList<>(Collections.nCopies(numArgs, null));
+         argumentVerifiers = new ArrayList<>(Collections.nCopies(numArgs, null));
       }
 
       @Override
@@ -854,13 +847,11 @@ public class InterfaceVerifier<T> {
             @SuppressWarnings("unchecked")
             MethodConfigurationImpl clone = (MethodConfigurationImpl) super.clone();
             // deep copy the collection fields
-            clone.confMethods = new HashSet<Method>(this.confMethods);
-            clone.checkedExceptions = new HashSet<Class<? extends Throwable>>(
-                  this.checkedExceptions);
-            clone.uncheckedExceptions = new HashSet<Class<? extends Throwable>>(
-                  this.uncheckedExceptions);
-            clone.argumentCloners = new ArrayList<Cloner<?>>(this.argumentCloners);
-            clone.argumentVerifiers = new ArrayList<ObjectVerifier<?>>(this.argumentVerifiers);
+            clone.confMethods = new LinkedHashSet<>(this.confMethods);
+            clone.checkedExceptions = new LinkedHashSet<>(this.checkedExceptions);
+            clone.uncheckedExceptions = new LinkedHashSet<>(this.uncheckedExceptions);
+            clone.argumentCloners = new ArrayList<>(this.argumentCloners);
+            clone.argumentVerifiers = new ArrayList<>(this.argumentVerifiers);
             return clone;
          }
          catch (CloneNotSupportedException e) {
@@ -901,7 +892,8 @@ public class InterfaceVerifier<T> {
          }
 
          @SuppressWarnings("unchecked")
-         Class<? extends Throwable> exceptions[] = (Class<? extends Throwable>[]) m.getExceptionTypes();
+         Class<? extends Throwable> exceptions[] =
+               (Class<? extends Throwable>[]) m.getExceptionTypes();
          Collections.addAll(checkedExceptions, exceptions);
 
          confMethods.add(m);
@@ -929,9 +921,8 @@ public class InterfaceVerifier<T> {
 
       @Override
       public Set<Class<? extends Throwable>> getAllExceptions() {
-         Set<Class<? extends Throwable>> ret =
-               new HashSet<Class<? extends Throwable>>(checkedExceptions.size()
-                     + uncheckedExceptions.size());
+         Set<Class<? extends Throwable>> ret = new LinkedHashSet<>(
+               (checkedExceptions.size() + uncheckedExceptions.size()) * 4 / 3);
          ret.addAll(checkedExceptions);
          ret.addAll(uncheckedExceptions);
          return Collections.unmodifiableSet(ret);
@@ -1038,25 +1029,24 @@ public class InterfaceVerifier<T> {
          }
       }
 
-      // @SafeVararg
+      @SafeVarargs
       @Override
-      public MethodConfiguration<T> uncheckedExceptions(Class<? extends Throwable>... throwables) {
-         return uncheckedExceptions(new HashSet<Class<? extends Throwable>>(
-               Arrays.asList(throwables)));
+      public final MethodConfiguration<T> uncheckedExceptions(
+            Class<? extends Throwable>... throwables) {
+         return uncheckedExceptions(Arrays.asList(throwables));
       }
 
       @Override
-      public MethodConfiguration<T> uncheckedExceptions(Set<Class<? extends Throwable>> throwables) {
-         if (throwables == null) {
-            throw new NullPointerException();
-         }
-         for (Class<? extends Throwable> t : throwables) {
+      public MethodConfiguration<T> uncheckedExceptions(
+            Collection<Class<? extends Throwable>> throwables) {
+         Set<Class<? extends Throwable>> copy =
+               new LinkedHashSet<Class<? extends Throwable>>(throwables);
+         for (Class<? extends Throwable> t : copy) {
             if (t == null) {
                throw new NullPointerException();
             }
          }
-         // defensive copy
-         uncheckedExceptions = new HashSet<Class<? extends Throwable>>(throwables);
+         uncheckedExceptions = copy;
          return this;
       }
 
@@ -1238,7 +1228,7 @@ public class InterfaceVerifier<T> {
     */
    private class MultiMethodConfigurator implements MethodConfigurator<T> {
 
-      private Set<MethodConfigurationImpl> configs;
+      private final Set<MethodConfigurationImpl> configs;
 
       public MultiMethodConfigurator(Set<MethodConfigurationImpl> configs) {
          this.configs = configs;
@@ -1311,9 +1301,10 @@ public class InterfaceVerifier<T> {
          return this;
       }
 
-      // @SafeVararg
+      @SafeVarargs
       @Override
-      public MethodConfigurator<T> uncheckedExceptions(Class<? extends Throwable>... throwables) {
+      public final MethodConfigurator<T> uncheckedExceptions(
+            Class<? extends Throwable>... throwables) {
          for (MethodConfigurationImpl conf : configs) {
             conf.uncheckedExceptions(throwables);
          }
@@ -1321,7 +1312,8 @@ public class InterfaceVerifier<T> {
       }
 
       @Override
-      public MethodConfigurator<T> uncheckedExceptions(Set<Class<? extends Throwable>> throwables) {
+      public MethodConfigurator<T> uncheckedExceptions(
+            Collection<Class<? extends Throwable>> throwables) {
          for (MethodConfigurationImpl conf : configs) {
             conf.uncheckedExceptions(throwables);
          }
@@ -1429,12 +1421,12 @@ public class InterfaceVerifier<T> {
       /**
        * The implementation under test.
        */
-      private T testImpl;
+      private final T testImpl;
 
       /**
        * The reference implementation.
        */
-      private T referenceImpl;
+      private final T referenceImpl;
 
       /**
        * Constructs a new invocation handler. The two implementations are each used during method
@@ -1558,12 +1550,12 @@ public class InterfaceVerifier<T> {
    /**
     * The set of interfaces to test.
     */
-   private HashSet<Class<? extends T>> interfaces;
+   private Set<Class<? extends T>> interfaces;
 
    /**
     * A set of all supported methods.
     */
-   private HashSet<Method> methods;
+   private Set<Method> methods;
 
    /**
     * A structure for querying for method signatures. The keys are method names, and the values are
@@ -1571,13 +1563,13 @@ public class InterfaceVerifier<T> {
     * signatures composed of the two keys -- method signature = name (first key) and parameter types
     * (second key).
     */
-   private HashMap<String, HashMap<List<Class<?>>, MethodSignature>> methodSigMap;
+   private Map<String, Map<List<Class<?>>, MethodSignature>> methodSigMap;
 
    /**
     * A map of all supported method signatures to their configuration. The keys form the set of all
     * supported method signatures.
     */
-   HashMap<MethodSignature, MethodConfigurationImpl> methodConfig;
+   Map<MethodSignature, MethodConfigurationImpl> methodConfig;
 
    /**
     * The default verifier used to make sure mutation operations change the test object in the same
@@ -1639,9 +1631,9 @@ public class InterfaceVerifier<T> {
     *            have a method with the same signature but different and incompatible return types)
     * @throws NullPointerException If any of the specified interfaces are {@code null}
     */
-   // @SafeVararg
+   @SafeVarargs
    public InterfaceVerifier(Class<? extends T>... interfaces) {
-      this(new HashSet<Class<? extends T>>(Arrays.asList(interfaces)));
+      this(Arrays.asList(interfaces));
    }
 
    /**
@@ -1654,14 +1646,15 @@ public class InterfaceVerifier<T> {
     * @throws NullPointerException If the set of interfaces is {@code null} or if any of the
     *            specified interfaces therein are {@code null}
     */
-   public InterfaceVerifier(Set<Class<? extends T>> interfaces) {
+   public InterfaceVerifier(Collection<Class<? extends T>> interfaces) {
       if (interfaces == null) {
          throw new NullPointerException();
       }
-      if (interfaces.isEmpty()) {
+      this.interfaces = new LinkedHashSet<Class<? extends T>>(interfaces); // defensive copy
+      if (this.interfaces.isEmpty()) {
          throw new IllegalArgumentException();
       }
-      for (Class<?> iface : interfaces) {
+      for (Class<?> iface : this.interfaces) {
          if (iface == null) {
             throw new NullPointerException();
          }
@@ -1669,14 +1662,13 @@ public class InterfaceVerifier<T> {
             throw new IllegalArgumentException();
          }
       }
-      this.interfaces = new HashSet<Class<? extends T>>(interfaces); // defensive copy
 
-      methods = new HashSet<Method>();
-      methodSigMap = new HashMap<String, HashMap<List<Class<?>>, MethodSignature>>();
-      methodConfig = new HashMap<MethodSignature, MethodConfigurationImpl>();
+      methods = new LinkedHashSet<Method>();
+      methodSigMap = new LinkedHashMap<String, Map<List<Class<?>>, MethodSignature>>();
+      methodConfig = new LinkedHashMap<MethodSignature, MethodConfigurationImpl>();
 
       // accumulate all methods
-      for (Class<?> iface : interfaces) {
+      for (Class<?> iface : this.interfaces) {
          for (Method m : iface.getMethods()) {
             methods.add(m);
             MethodSignature sig = new MethodSignature(m);
@@ -1686,12 +1678,12 @@ public class InterfaceVerifier<T> {
                methodConfig.put(sig, new MethodConfigurationImpl(m));
                // store signature in searchable structure
                String name = sig.getName();
-               HashMap<List<Class<?>>, MethodSignature> sigs;
+               Map<List<Class<?>>, MethodSignature> sigs;
                if (methodSigMap.containsKey(name)) {
                   sigs = methodSigMap.get(name);
                }
                else {
-                  sigs = new HashMap<List<Class<?>>, MethodSignature>();
+                  sigs = new LinkedHashMap<List<Class<?>>, MethodSignature>();
                   methodSigMap.put(name, sigs);
                }
                sigs.put(sig.getParameterTypes(), sig);
@@ -1886,8 +1878,8 @@ public class InterfaceVerifier<T> {
     * @return The set of supported methods with the specified name
     */
    public Set<MethodSignature> getMethodsNamed(String methodName) {
-      HashMap<List<Class<?>>, MethodSignature> matches = methodSigMap.get(methodName);
-      HashSet<MethodSignature> results = new HashSet<MethodSignature>();
+      Map<List<Class<?>>, MethodSignature> matches = methodSigMap.get(methodName);
+      Set<MethodSignature> results = new LinkedHashSet<MethodSignature>();
       if (matches != null) {
          results.addAll(matches.values());
       }
@@ -1908,11 +1900,9 @@ public class InterfaceVerifier<T> {
       int numMatches = matches.size();
       if (numMatches > 1) {
          throw new TooManyMatchesException(methodNamePattern, numMatches);
-      }
-      else if (numMatches == 0) {
+      } else if (numMatches == 0) {
          return null;
-      }
-      else {
+      } else {
          return matches.iterator().next();
       }
    }
@@ -1927,7 +1917,7 @@ public class InterfaceVerifier<T> {
     */
    public Set<MethodSignature> findMethods(String methodNamePattern) {
       Pattern p = createRegExPattern(methodNamePattern);
-      HashSet<MethodSignature> results = new HashSet<MethodSignature>();
+      Set<MethodSignature> results = new LinkedHashSet<MethodSignature>();
       for (String name : methodSigMap.keySet()) {
          if (p.matcher(name).matches()) {
             results.addAll(methodSigMap.get(name).values());
@@ -1972,7 +1962,7 @@ public class InterfaceVerifier<T> {
     * @return The method signature matching the specified name and parameter types or {@code null}
     */
    public MethodSignature getMethod(String methodName, Class<?>... args) {
-      HashMap<List<Class<?>>, MethodSignature> matches = methodSigMap.get(methodName);
+      Map<List<Class<?>>, MethodSignature> matches = methodSigMap.get(methodName);
       if (matches != null) {
          return matches.get(Arrays.asList(args));
       }
@@ -2068,7 +2058,8 @@ public class InterfaceVerifier<T> {
          throw new IllegalArgumentException("No method signatures specified");
       }
       verifyMethods(sigs);
-      HashSet<MethodConfigurationImpl> configs = new HashSet<MethodConfigurationImpl>(sigs.length);
+      Set<MethodConfigurationImpl> configs =
+            new LinkedHashSet<MethodConfigurationImpl>(sigs.length);
       for (MethodSignature sig : sigs) {
          configs.add(methodConfig.get(sig));
       }

@@ -6,6 +6,7 @@ import com.apriori.possible.Reference;
 
 import java.util.AbstractCollection;
 import java.util.AbstractSet;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -278,6 +279,16 @@ abstract class AbstractSequenceTrie<K, V, N extends AbstractTrie.Node<K, Void, V
 
       @Override
       protected N newNode(K key, N p) {
+         if (parent == null) {
+            // This can only happen during initialization. Super-class constructor invokes newNode
+            // to initialize root, but we haven't yet had the chance to initialize parent.
+            assert Arrays.stream(Thread.currentThread().getStackTrace())
+                  .anyMatch(ste -> {
+                     return ste.getClassName().equals(getClass().getName())
+                           && ste.getMethodName().equals("<init>");
+                  });
+            return null;
+         }
          return parent.newNode(key, p);
       }
       

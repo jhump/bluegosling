@@ -50,15 +50,15 @@ public interface Table2D<R, C, V> {
    void clear();
    
    static <R, C, V> Table2D<R, C, V> newHashTable2D() {
-      return newCustomTable2D((Supplier<Map<Object, Object>>) HashMap::new);
+      return newCustomTable2D(() -> new HashMap<>());
    }
 
    static <R, C, V> Table2D<R, C, V> newLinkedHashTable2D() {
-      return newCustomTable2D((Supplier<Map<Object, Object>>) LinkedHashMap::new);
+      return newCustomTable2D(() -> new LinkedHashMap<>());
    }
 
    static <R, C, V> Table2D<R, C, V> newTreeTable2D() {
-      return newCustomTable2D(TreeMap::new);
+      return newCustomTable2D(() -> new TreeMap<>());
    }
 
    static <R, C, V> Table2D<R, C, V> newCustomTable2D(Supplier<Map<Object, Object>> mapMaker) {

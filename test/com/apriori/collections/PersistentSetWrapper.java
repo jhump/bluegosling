@@ -3,7 +3,14 @@ package com.apriori.collections;
 import java.util.HashSet;
 import java.util.Set;
 
-// TODO: javadoc
+/**
+ * A wrapper that adapts a {@link Set} to the {@link PersistentSet} interface.
+ * 
+ * @param <E> the type of element in the set
+ * 
+ * @see PersistentCollectionWrapper
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 class PersistentSetWrapper<E>
       extends PersistentCollectionWrapper<E, Set<E>, PersistentSetWrapper<E>>
       implements PersistentSet<E> {

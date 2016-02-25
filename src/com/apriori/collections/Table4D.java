@@ -57,15 +57,15 @@ public interface Table4D<S, P, R, C, V> {
    void clear();
 
    static <S, P, R, C, V> Table4D<S, P, R, C, V> newHashTable4D() {
-      return newCustomTable4D((Supplier<Map<Object, Object>>) HashMap::new);
+      return newCustomTable4D(() -> new HashMap<>());
    }
 
    static <S, P, R, C, V> Table4D<S, P, R, C, V> newLinkedHashTable4D() {
-      return newCustomTable4D((Supplier<Map<Object, Object>>) LinkedHashMap::new);
+      return newCustomTable4D(() -> new LinkedHashMap<>());
    }
 
    static <S, P, R, C, V> Table4D<S, P, R, C, V> newTreeTable4D() {
-      return newCustomTable4D(TreeMap::new);
+      return newCustomTable4D(() -> new TreeMap<>());
    }
 
    static <S, P, R, C, V> Table4D<S, P, R, C, V> newCustomTable4D(

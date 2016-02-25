@@ -1,14 +1,15 @@
 // Copyright (C) 2012 - Apriori Enterprises - All Rights Reserved
 package com.apriori.collections;
 
+import com.apriori.testing.BulkTestRunner;
+
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.set.AbstractTestSortedSet;
+import org.junit.runner.RunWith;
 
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
-import junit.framework.TestSuite;
 
 /**
  * Tests the implementation of concurrent {@link SortedSet}s returned from
@@ -16,18 +17,9 @@ import junit.framework.TestSuite;
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
+@RunWith(BulkTestRunner.class)
 public class ShardedConcurrentSortedSetTest extends AbstractTestSortedSet {
 
-   /**
-    * Creates a new test suite that includes all test cases (including Apache {@code BulkTest}s,
-    * which recursively include cases for sub-sets, etc.).
-    *
-    * @return a test suite that includes all test cases
-    */
-   public static TestSuite suite() {
-      return makeSuite(ShardedConcurrentSortedSetTest.class);
-   }
-   
    /**
     * Constructs a new test.
     *

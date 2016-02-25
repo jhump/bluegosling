@@ -3,8 +3,6 @@ package com.apriori.collections;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * A wrapper to adapt a {@link Collection} to an {@link ImmutableCollection}. This is used to create
@@ -19,14 +17,6 @@ import java.util.List;
  */
 class ImmutableCollectionWrapper<E, C extends Collection<E>>
       implements ImmutableCollection<E> {
-   
-   static <E> Collection<E> fromIterable(Iterable<E> iter) {
-      List<E> list = new LinkedList<E>();
-      for (E item : iter) {
-         list.add(item);
-      }
-      return list;
-   }
    
    protected final C collection;
 
@@ -77,7 +67,7 @@ class ImmutableCollectionWrapper<E, C extends Collection<E>>
 
    @Override
    public boolean containsAll(Iterable<?> items) {
-      return collection.containsAll(fromIterable(items));
+      return collection.containsAll(Iterables.snapshot(items));
    }
 
    @Override

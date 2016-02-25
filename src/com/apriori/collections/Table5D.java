@@ -66,15 +66,15 @@ public interface Table5D<L, S, P, R, C, V> {
    void clear();
    
    static <L, S, P, R, C, V> Table5D<L, S, P, R, C, V> newHashTable5D() {
-      return newCustomTable5D((Supplier<Map<Object, Object>>) HashMap::new);
+      return newCustomTable5D(() -> new HashMap<>());
    }
 
    static <L, S, P, R, C, V> Table5D<L, S, P, R, C, V> newLinkedHashTable5D() {
-      return newCustomTable5D((Supplier<Map<Object, Object>>) LinkedHashMap::new);
+      return newCustomTable5D(() -> new LinkedHashMap<>());
    }
 
    static <L, S, P, R, C, V> Table5D<L, S, P, R, C, V> newTreeTable5D() {
-      return newCustomTable5D(TreeMap::new);
+      return newCustomTable5D(() -> new TreeMap<>());
    }
 
    static <L, S, P, R, C, V> Table5D<L, S, P, R, C, V> newCustomTable5D(

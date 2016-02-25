@@ -1,6 +1,9 @@
 package com.apriori.collections;
 
+import com.apriori.testing.BulkTestRunner;
+
 import org.apache.commons.collections.map.AbstractTestMap;
+import org.junit.runner.RunWith;
 
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
@@ -11,13 +14,8 @@ import java.util.Random;
 import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
 
-import junit.framework.TestSuite;
-
+@RunWith(BulkTestRunner.class)
 public class HamtMapTest extends AbstractTestMap {
-
-   public static TestSuite suite() {
-      return makeSuite(HamtMapTest.class);
-   }
    
    public HamtMapTest(String testName) {
       super(testName);

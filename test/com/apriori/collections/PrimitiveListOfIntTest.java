@@ -1,15 +1,13 @@
 package com.apriori.collections;
 
+import com.apriori.testing.BulkTestRunner;
+
+import org.junit.runner.RunWith;
+
 import java.util.List;
 
-import junit.framework.TestSuite;
-
-
+@RunWith(BulkTestRunner.class)
 public class PrimitiveListOfIntTest extends AbstractTestList {
-   
-   public static TestSuite suite() {
-      return makeSuite(PrimitiveListOfIntTest.class);
-   }
 
    public PrimitiveListOfIntTest(String testName) {
       super(testName);

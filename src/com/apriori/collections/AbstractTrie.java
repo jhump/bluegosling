@@ -205,7 +205,7 @@ abstract class AbstractTrie<K, X, V, N extends AbstractTrie.Node<K, X, V, N>> {
       /**
        * Removes all children from this node.
        */
-      void clear();
+      void clear();      
    }
    
    /**
@@ -365,7 +365,7 @@ abstract class AbstractTrie<K, X, V, N extends AbstractTrie.Node<K, X, V, N>> {
    protected void remove(N node) {
       assert node.valuePresent();
       node.clearValue();
-      for (N n = node; n != null; n = n.getParent()) {
+      for (N n = node.getParent(); n != null; n = n.getParent()) {
          n.decrementCount();
       }
       while (node != null && !node.valuePresent() && node.isEmpty()) {
@@ -396,6 +396,9 @@ abstract class AbstractTrie<K, X, V, N extends AbstractTrie.Node<K, X, V, N>> {
    public boolean containsValue(Object value) {
       ArrayDeque<Iterator<N>> stack = new ArrayDeque<>();
       N node = root;
+      if (node == null) {
+         return false;
+      }
       while (true) {
          if (node.valuePresent() && Objects.equals(node.getValue(), value)) {
             return true;
@@ -689,12 +692,13 @@ abstract class AbstractTrie<K, X, V, N extends AbstractTrie.Node<K, X, V, N>> {
          boolean isFirst = true;
          for (Iterator<StackFrame<K, X, V, N>> iter = frames.descendingIterator();
                iter.hasNext(); ) {
+            StackFrame<K, X, V, N> frame = iter.next();
             if (isFirst) {
                // skip the first
                isFirst = false;
                continue;
             }
-            ret.add(iter.next().node.getKey());
+            ret.add(frame.node.getKey());
          }
          return Collections.unmodifiableList(ret);
       }
@@ -708,22 +712,21 @@ abstract class AbstractTrie<K, X, V, N extends AbstractTrie.Node<K, X, V, N>> {
             throw new ConcurrentModificationException();
          }
          lastFetched.clearValue();
-         for (N n = lastFetched; n != null; n = n.getParent()) {
+         for (N n = lastFetched.getParent(); n != null; n = n.getParent()) {
             n.decrementCount();
          }
          if (lastFetched.isEmpty()) {
             // Remove dead sub-tries. Must use iterators' remove() method so we don't accidentally
             // cause ConcurrentModificationExceptions on subsequent use of this iterator
             boolean isFirst = true;
-            for (Iterator<StackFrame<K, X, V, N>> iter = frames.descendingIterator();
-                  iter.hasNext(); ) {
+            for (Iterator<StackFrame<K, X, V, N>> iter = frames.iterator(); iter.hasNext(); ) {
                StackFrame<K, X, V, N> frame = iter.next();
                if (isFirst) {
                   assert !frame.iter.hasNext();
                   isFirst = false;
                } else {
                   frame.iter.remove();
-                  if (!frame.node.isEmpty()) {
+                  if (!frame.node.isEmpty() || frame.node.valuePresent()) {
                      // the rest of the ancestors have other content, so we're done pruning
                      break;
                   }

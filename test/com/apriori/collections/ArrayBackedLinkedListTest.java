@@ -1,11 +1,12 @@
 package com.apriori.collections;
 
+import com.apriori.testing.BulkTestRunner;
+
 import org.apache.commons.collections.BulkTest;
+import org.junit.runner.RunWith;
 
 import java.util.Arrays;
 import java.util.List;
-
-import junit.framework.TestSuite;
 
 /**
  * Tests the {@code ArrayBackedLinkedList} class using the list tests provided in the Apache Commons
@@ -13,17 +14,8 @@ import junit.framework.TestSuite;
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
+@RunWith(BulkTestRunner.class)
 public class ArrayBackedLinkedListTest extends AbstractTestList {
-
-   /**
-    * Creates a new test suite that includes all test cases (including Apache {@code BulkTest}s,
-    * which recursively include cases for sub-lists, iterators, etc.).
-    *
-    * @return a test suite that includes all test cases for {@code ArrayBackedLinkedList}
-    */
-   public static TestSuite suite() {
-      return makeSuite(ArrayBackedLinkedListTest.class);
-   }
    
    /**
     * Constructs a new test case.
@@ -41,7 +33,7 @@ public class ArrayBackedLinkedListTest extends AbstractTestList {
     * @return a bulk test that includes all list test cases
     */
    public BulkTest bulkTestAsRandomAccess() {
-      return new BulkTestAsRandomAccess(this);
+      return new BulkTestAsRandomAccess(this) {};
    }
    
    // TODO: add additional tests for methods specific to ArrayBackedLinkedList (like trimToSize(),
@@ -74,7 +66,9 @@ public class ArrayBackedLinkedListTest extends AbstractTestList {
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   public static class BulkTestAsRandomAccess extends AbstractTestList {
+   // NB: Marked abstract to prevent JUnit test runner from thinking it can run this class. It is
+   // only runnable when instantiated by enclosing test.
+   public abstract static class BulkTestAsRandomAccess extends AbstractTestList {
 
       private final ArrayBackedLinkedListTest outer;
 
@@ -162,12 +156,12 @@ public class ArrayBackedLinkedListTest extends AbstractTestList {
       public BulkTest bulkTestSubList() {
          // overridden to return sub list test that makes exceptions for testUnsupportedAdd and
          // testUnsupportedRemove to work around odd constraints on this list
-         return new BulkTestAsRandomAccessSubList(this);
+         return new BulkTestAsRandomAccessSubList(this) {};
       }
       
       @Override
       public BulkTest bulkTestListIterator() {
-         return new BulkTestAsRandomAccessListIterator();
+         return new BulkTestAsRandomAccessListIterator() {};
       }
 
       /**
@@ -176,7 +170,10 @@ public class ArrayBackedLinkedListTest extends AbstractTestList {
        *
        * @author Joshua Humphries (jhumphries131@gmail.com)
        */
-      public class BulkTestAsRandomAccessListIterator extends AbstractTestList.TestListIterator {
+      // NB: Marked abstract to prevent JUnit test runner from thinking it can run this class. It is
+      // only runnable when instantiated by enclosing test.
+      public abstract class BulkTestAsRandomAccessListIterator
+      extends AbstractTestList.TestListIterator {
          @Override
          public void testRemove() {
             // skip this test - doesn't pass due to atypical constraints on remove()
@@ -190,7 +187,10 @@ public class ArrayBackedLinkedListTest extends AbstractTestList {
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   public static class BulkTestAsRandomAccessSubList extends AbstractTestList.BulkTestSubList {
+   // NB: Marked abstract to prevent JUnit test runner from thinking it can run this class. It is
+   // only runnable when instantiated by enclosing test.
+   public abstract static class BulkTestAsRandomAccessSubList
+   extends AbstractTestList.BulkTestSubList {
 
       /**
        * Constructs a new test.
@@ -213,7 +213,7 @@ public class ArrayBackedLinkedListTest extends AbstractTestList {
       
       @Override
       public BulkTest bulkTestListIterator() {
-         return new BulkTestAsRandomAccessSubListIterator();
+         return new BulkTestAsRandomAccessSubListIterator() {};
       }
 
       /**
@@ -222,7 +222,10 @@ public class ArrayBackedLinkedListTest extends AbstractTestList {
        *
        * @author Joshua Humphries (jhumphries131@gmail.com)
        */
-      public class BulkTestAsRandomAccessSubListIterator extends AbstractTestList.TestListIterator {
+      // NB: Marked abstract to prevent JUnit test runner from thinking it can run this class. It is
+      // only runnable when instantiated by enclosing test.
+      public abstract class BulkTestAsRandomAccessSubListIterator
+      extends AbstractTestList.TestListIterator {
          @Override
          public void testRemove() {
             // skip this test - doesn't pass due to atypical constraints on remove()

@@ -1,6 +1,7 @@
 package com.apriori.collections;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -18,6 +19,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
+@Ignore
 public class MapPerformanceTest {
    
    // These weights define the ratio of operations.

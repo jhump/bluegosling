@@ -74,11 +74,11 @@ public abstract class AbstractTestNavigableSet extends AbstractTestSortedSet {
    }
    
    BulkTest makeSubSetBulkTest(int bound, boolean head) {
-      return new BulkTestSubSet(bound, head);
+      return new BulkTestSubSet(bound, head) {};
    }
 
    BulkTest makeSubSetBulkTest(int lobound, int hibound) {
-      return new BulkTestSubSet(lobound, hibound);
+      return new BulkTestSubSet(lobound, hibound) {};
    }
    
    @Override
@@ -110,7 +110,7 @@ public abstract class AbstractTestNavigableSet extends AbstractTestSortedSet {
     * @return a bulk test
     */
    public BulkTest bulkTestNavigableSet() {
-      return new BulkTestNavigableSet(this, false, false);
+      return new BulkTestNavigableSet(this, false, false) {};
    }
    
    /**
@@ -162,7 +162,9 @@ public abstract class AbstractTestNavigableSet extends AbstractTestSortedSet {
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   public static class BulkTestNavigableSet extends BulkTest {
+   // NB: Marked abstract to prevent JUnit test runner from thinking it can run this class. It is
+   // only runnable when instantiated by enclosing test.
+   public abstract static class BulkTestNavigableSet extends BulkTest {
 
       private final AbstractTestSortedSet test;
       private final boolean forSubSet;
@@ -192,7 +194,7 @@ public abstract class AbstractTestNavigableSet extends AbstractTestSortedSet {
          if (forDescendingSet) {
             return null; // prevent infinite recursion
          }
-         return new BulkTestDescendingSet(test, forSubSet);
+         return new BulkTestDescendingSet(test, forSubSet) {};
       }
 
       /**
@@ -201,7 +203,7 @@ public abstract class AbstractTestNavigableSet extends AbstractTestSortedSet {
        * @return tests
        */
       public BulkTest bulkTestIterator() {
-         return new BulkTestIterator(test);
+         return new BulkTestIterator(test) {};
       }
       
       /**
@@ -210,7 +212,7 @@ public abstract class AbstractTestNavigableSet extends AbstractTestSortedSet {
        * @return tests
        */
       public BulkTest bulkTestDescendingIterator() {
-         return new BulkTestDescendingIterator(test);
+         return new BulkTestDescendingIterator(test) {};
       }
       
       /**
@@ -266,7 +268,9 @@ public abstract class AbstractTestNavigableSet extends AbstractTestSortedSet {
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   public class BulkTestSubSet extends AbstractTestSortedSet.TestSortedSetSubSet {
+   // NB: Marked abstract to prevent JUnit test runner from thinking it can run this class. It is
+   // only runnable when instantiated by enclosing test.
+   public abstract class BulkTestSubSet extends AbstractTestSortedSet.TestSortedSetSubSet {
       
       SubSetType type;
       
@@ -293,7 +297,7 @@ public abstract class AbstractTestNavigableSet extends AbstractTestSortedSet {
       }
       
       BulkTest makeNavigableSetBulkTest() {
-         return new BulkTestNavigableSet(this, true, false);
+         return new BulkTestNavigableSet(this, true, false) {};
       }
       
       /**
@@ -312,7 +316,9 @@ public abstract class AbstractTestNavigableSet extends AbstractTestSortedSet {
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   public static class BulkTestDescendingSet extends AbstractTestNavigableSet {
+   // NB: Marked abstract to prevent JUnit test runner from thinking it can run this class. It is
+   // only runnable when instantiated by enclosing test.
+   public abstract static class BulkTestDescendingSet extends AbstractTestNavigableSet {
       
       AbstractTestSortedSet outer;
       boolean forSubSet;
@@ -331,7 +337,7 @@ public abstract class AbstractTestNavigableSet extends AbstractTestSortedSet {
       
       @Override
       public BulkTest bulkTestNavigableSet() {
-         return new BulkTestNavigableSet(this, forSubSet, true);
+         return new BulkTestNavigableSet(this, forSubSet, true) {};
       }
       
       /**
@@ -355,7 +361,7 @@ public abstract class AbstractTestNavigableSet extends AbstractTestSortedSet {
          if (forSubSet) {
             return null; // prevent infinite recursion
          }
-         return new BulkTestDescendingSubSet(bound, head);
+         return new BulkTestDescendingSubSet(bound, head) {};
       }
 
       @Override
@@ -363,7 +369,7 @@ public abstract class AbstractTestNavigableSet extends AbstractTestSortedSet {
          if (forSubSet) {
             return null; // prevent infinite recursion
          }
-         return new BulkTestDescendingSubSet(lobound, hibound);
+         return new BulkTestDescendingSubSet(lobound, hibound) {};
       }
       
       @Override
@@ -432,7 +438,9 @@ public abstract class AbstractTestNavigableSet extends AbstractTestSortedSet {
        *
        * @author Joshua Humphries (jhumphries131@gmail.com)
        */
-      public class BulkTestDescendingSubSet extends BulkTestSubSet {
+      // NB: Marked abstract to prevent JUnit test runner from thinking it can run this class. It is
+      // only runnable when instantiated by enclosing test.
+      public abstract class BulkTestDescendingSubSet extends BulkTestSubSet {
 
          /**
           * Constructs a new test.
@@ -456,7 +464,7 @@ public abstract class AbstractTestNavigableSet extends AbstractTestSortedSet {
          
          @Override
          BulkTest makeNavigableSetBulkTest() {
-            return new BulkTestNavigableSet(this, true, true);
+            return new BulkTestNavigableSet(this, true, true) {};
          }
          
          @Override
@@ -492,7 +500,9 @@ public abstract class AbstractTestNavigableSet extends AbstractTestSortedSet {
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   public static class BulkTestIterator extends AbstractTestIterator {
+   // NB: Marked abstract to prevent JUnit test runner from thinking it can run this class. It is
+   // only runnable when instantiated by enclosing test.
+   public abstract static class BulkTestIterator extends AbstractTestIterator {
       AbstractTestSortedSet outer;
       Iterator<?> testIter;
       Iterator<?> confirmedIter;
@@ -601,7 +611,9 @@ public abstract class AbstractTestNavigableSet extends AbstractTestSortedSet {
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   public static class BulkTestDescendingIterator extends BulkTestIterator {
+   // NB: Marked abstract to prevent JUnit test runner from thinking it can run this class. It is
+   // only runnable when instantiated by enclosing test.
+   public abstract static class BulkTestDescendingIterator extends BulkTestIterator {
       
       /**
        * Constructs a new test.

@@ -27,9 +27,19 @@ final class CollectionUtils {
     * whose type is unknown. The comparator will throw a {@link ClassCastException} if presented
     * with arguments that aren't mutually {@linkplain Comparable comparable}. 
     */
-   @SuppressWarnings("unchecked")
+   @SuppressWarnings({"rawtypes", "unchecked"})
    public static Comparator<Object> naturalOrder() {
-      return (Comparator<Object>) Comparator.naturalOrder();
+      // Use raw type to eliminate the lower bound of Comparable on argument type.
+      Comparator ret = Comparator.naturalOrder();
+      // This implicitly does an unchecked cast. In this case, it's okay, because we explicitly
+      // document this comparator as throwing ClassCastException when given objects that are not
+      // Comparable.
+      // NB: We do not have our own naturalOrder Comparator, to avoid these type gymnastics and
+      // compiler warnings, because it is very convenient for code to test whether a given
+      // comparator is a natural ordering:
+      //  comparator == Comparator.naturalOrder()
+      // We preserve that ability by using the same comparator and doing casts to make javac let us.
+      return ret;
    }
 
    /**

@@ -4,7 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-// TODO: javadoc
+/**
+ * A wrapper that adapts a {@link List} to the {@link PersistentList} interface.
+ *
+ * @param <E> the type of element in the list
+ * 
+ * @see PersistentCollectionWrapper
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 class PersistentListWrapper<E>
       extends PersistentCollectionWrapper<E, List<E>, PersistentListWrapper<E>>
       implements PersistentList<E> {
@@ -82,7 +89,7 @@ class PersistentListWrapper<E>
    @Override
    public PersistentListWrapper<E> addAll(int i, Iterable<? extends E> items) {
       List<E> newList = new ArrayList<E>(collection);
-      newList.addAll(i, fromIterable(items));
+      newList.addAll(i, Iterables.snapshot(items));
       return new PersistentListWrapper<E>(addLast, newList);
    }
 

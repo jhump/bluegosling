@@ -1,19 +1,17 @@
 package com.apriori.collections;
 
+import com.apriori.testing.BulkTestRunner;
+
 import org.apache.commons.collections.map.AbstractTestMap;
+import org.junit.runner.RunWith;
 
 import java.util.Iterator;
 import java.util.Map;
 
-import junit.framework.TestSuite;
-
 // TODO: use a test for ImmutableMaps/PersistentMaps? as is, we wrap the persistent map into a
 // mutable implementation and then run that through the existing Apache map test
+@RunWith(BulkTestRunner.class)
 public class HamtPersistentMapTest extends AbstractTestMap {
-
-   public static TestSuite suite() {
-      return makeSuite(HamtPersistentMapTest.class);
-   }
    
    public HamtPersistentMapTest(String testName) {
       super(testName);

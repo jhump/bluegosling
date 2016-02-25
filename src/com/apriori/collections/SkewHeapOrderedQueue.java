@@ -21,7 +21,7 @@ import java.util.NoSuchElementException;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 // TODO: javadoc
-// TODO: tests
+// TODO: improve serialization?
 public class SkewHeapOrderedQueue<E> extends AbstractQueue<E>
       implements MeldableOrderedQueue<E, SkewHeapOrderedQueue<? extends E>>,
             Serializable, Cloneable {
@@ -35,7 +35,9 @@ public class SkewHeapOrderedQueue<E> extends AbstractQueue<E>
     * 
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   private static class Node<E> {
+   private static class Node<E> implements Serializable {
+      private static final long serialVersionUID = 3951492299454994729L;
+      
       Node<E> left;
       Node<E> right;
       E value;
@@ -206,7 +208,6 @@ public class SkewHeapOrderedQueue<E> extends AbstractQueue<E>
       
       @SuppressWarnings("unchecked") // we're taking ownership of roots
       Node<E> otherRoot = (Node<E>) other.root;
-      other.clear(); // we're taking all elements
       if (root == null) {
          assert size == 0;
          root = otherRoot;
@@ -215,6 +216,7 @@ public class SkewHeapOrderedQueue<E> extends AbstractQueue<E>
          size += other.size;
          root = merge(root, otherRoot);
       }
+      other.clear(); // we're taking all elements
       modCount++;
       return true;
    }
@@ -234,6 +236,10 @@ public class SkewHeapOrderedQueue<E> extends AbstractQueue<E>
       for (Node<E> n = p; n != null; count++, n = n.right);
       for (Node<E> n = q; n != null; count++, n = n.right);
       
+      if (count == 0) {
+         return null;
+      }
+      
       // now split tree by cutting each right-most path
       @SuppressWarnings("unchecked")
       Node<E> roots[] = new Node[count];
@@ -248,7 +254,7 @@ public class SkewHeapOrderedQueue<E> extends AbstractQueue<E>
          roots[i++] = q;
          Node<E> tmp = q.right;
          q.right = null;
-         p = tmp;
+         q = tmp;
       }
       
       // now we sort the trees and merge them, right-to-left
@@ -256,7 +262,7 @@ public class SkewHeapOrderedQueue<E> extends AbstractQueue<E>
       while (--i > 0) {
          Node<E> n1 = roots[i];
          Node<E> n2 = roots[i - 1];
-         assert n1.right == null;
+         assert i < roots.length - 1 || n1.right == null;
          assert n2.right == null;
          if (n2.left != null) {
             n2.right = n2.left;
@@ -373,28 +379,35 @@ public class SkewHeapOrderedQueue<E> extends AbstractQueue<E>
          Node<E> parent = parentStack == null ? null : parentStack.peek();
          // remove n by replacing it, sifting up values from child node
          while (n != null) {
-            if (n.left == null) {
-               if (n.right == null) {
-                  // node has no children, so we completely remove it
-                  if (parent != null) {
-                     if (parent.left == n) {
-                        parent.left = null;
-                     } else {
-                        assert parent.right == n;
-                        parent.right = n;
-                     }
+            if (n.left == null && n.right == null) {
+               // reached a leaf node, so we completely remove it
+               if (parent != null) {
+                  if (parent.left == n) {
+                     parent.left = null;
                   } else {
-                     assert root == n;
-                     assert size == 1;
-                     root = null;
+                     assert parent.right == n;
+                     parent.right = null;
                   }
                } else {
-                  // node has only a right child; sift it up
-                  n.value = n.right.value;
-                  parent = n;
-                  n = n.right;
+                  assert root == n;
+                  assert size == 1;
+                  root = null;
                }
-            } else if (n.right != null) {
+               break;
+            }
+            // reset iteration stack to revisit this node since we're sifting up a child into it
+            stack = lastFetched;
+            if (n.left == null) {
+               // node has only a right child; sift it up
+               n.value = n.right.value;
+               parent = n;
+               n = n.right;
+            } else if (n.right == null) {
+               // node has only a left child; sift it up
+               n.value = n.left.value;
+               parent = n;
+               n = n.left;
+            } else {
                // node has both children; sift up the smaller value
                if (comp.compare(n.left.value, n.right.value) < 0) {
                   // left is smaller
@@ -407,11 +420,6 @@ public class SkewHeapOrderedQueue<E> extends AbstractQueue<E>
                   parent = n;
                   n = n.right;
                }
-            } else {
-               // node has only a left child; sift it up
-               n.value = n.left.value;
-               parent = n;
-               n = n.left;
             }
          }
          lastFetched = null;
