@@ -25,7 +25,7 @@ public class ListenableRepeatingFutureTask<T> extends ListenableScheduledFutureT
          }
       };
       lastCreatedResultHolder.set(latestResult);
-      return  wrapped;
+      return wrapped;
    }
    
    private final Rescheduler<? super T> rescheduler;

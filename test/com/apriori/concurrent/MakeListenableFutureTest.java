@@ -8,7 +8,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import java.util.concurrent.Callable;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.RunnableFuture;
@@ -69,13 +68,10 @@ public class MakeListenableFutureTest extends AbstractListenableRunnableFutureTe
       // that blocks on the underlying one. We need to give that thread time to act on the
       // underlying future's completion to make sure the wrapper is also done. We can't
       // simply await the wrapper, because it could signal that the future is complete
-      // before listeners have been executed. And we also want to wait for listeners to
-      // run, too. So we'll add a listener and wait for it to be invoked.
-      CountDownLatch latch = new CountDownLatch(1);
-      future.addListener(FutureListener.forRunnable(() -> { latch.countDown(); }),
-            SameThreadExecutor.get());
+      // before listeners have been executed. So we also want to wait for listeners to
+      // run, too.
       try {
-         assertTrue(latch.await(100,  TimeUnit.MILLISECONDS));
+         assertTrue(futureChecker.listenerCompletion.await(100,  TimeUnit.MILLISECONDS));
       } catch (InterruptedException e) {
          throw new RuntimeException(e);
       }

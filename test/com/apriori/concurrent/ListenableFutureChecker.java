@@ -9,6 +9,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.concurrent.CancellationException;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -25,6 +26,7 @@ public class ListenableFutureChecker {
    
    private final ListenableFuture<?> future;
    private final boolean cancelReturnsTrueAfterFutureIsCancelled;
+   final CountDownLatch listenerCompletion;
    final AtomicInteger listenCount;
    
    public ListenableFutureChecker(ListenableFuture<?> future) {
@@ -36,10 +38,12 @@ public class ListenableFutureChecker {
       this.future = future;
       this.listenCount = listenCount;
       this.cancelReturnsTrueAfterFutureIsCancelled = cancelReturnsTrueAfterFutureIsCancelled;
+      this.listenerCompletion = new CountDownLatch(1);
       // go ahead and add listener
       future.addListener(forRunnable(new Runnable() {
          @Override public void run() {
             listenCount.incrementAndGet();
+            listenerCompletion.countDown();
          }
       }), SameThreadExecutor.get());
    }
@@ -194,6 +198,8 @@ public class ListenableFutureChecker {
    private void assertDone(boolean cancelled) throws Exception {
       assertTrue(future.isDone());
       assertTrue(future.await(0, TimeUnit.NANOSECONDS));
+      // listener could be executing concurrently after future completed, so we give it some time
+      assertTrue(listenerCompletion.await(100, TimeUnit.MILLISECONDS));
       assertEquals(1, listenCount.get());
       if (cancelReturnsTrueAfterFutureIsCancelled && cancelled) {
          assertTrue(future.cancel(false));

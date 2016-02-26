@@ -1,6 +1,7 @@
 package com.apriori.concurrent;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -26,6 +27,11 @@ public abstract class AbstractListenableRunnableFutureTest extends AbstractListe
    int completionDelay;
    
    /**
+    * A latch that is counted down when the task starts.
+    */
+   CountDownLatch startedLatch;
+   
+   /**
     * A latch that is counted down when the task completes.
     */
    CountDownLatch completedLatch;
@@ -49,6 +55,7 @@ public abstract class AbstractListenableRunnableFutureTest extends AbstractListe
    protected Callable<String> underlyingTask() {
       return new Callable<String>() {
          @Override public String call() throws Exception {
+            startedLatch.countDown();
             runCount.incrementAndGet();
             try {
                if (completionDelay > 0) {
@@ -109,11 +116,16 @@ public abstract class AbstractListenableRunnableFutureTest extends AbstractListe
    
    @Override
    protected TaskState cancelMayInterruptIfRunning() throws Exception {
-      completionDelay = 1000;
-      new Thread(future()).start();
-      Thread.sleep(200); // make sure thread has begun executing
+      completionDelay = 5000;
+      Thread th = new Thread(future());
+      th.start();
+      startedLatch.await();
       assertTrue(future.cancel(true));
-      return TaskState.RUNNING;
+      // we want to make sure actual thread sees cancellation and returns so we can safely
+      // make some more assertions
+      th.join(300);
+      assertFalse(th.isAlive());
+      return TaskState.FINISHED;
    }
    
    @Override
@@ -121,6 +133,7 @@ public abstract class AbstractListenableRunnableFutureTest extends AbstractListe
       super.setUp();
       completionDelay = 0;
       completedLatch = new CountDownLatch(1);
+      startedLatch = new CountDownLatch(1);
       runCount = new AtomicInteger();
    }
 
