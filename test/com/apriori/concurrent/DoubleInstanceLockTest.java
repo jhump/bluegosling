@@ -101,7 +101,7 @@ public class DoubleInstanceLockTest {
       Variable<Throwable> failed = new Variable<>();
       AtomicInteger active = new AtomicInteger();
       AtomicInteger count = new AtomicInteger();
-      // spin 100 threads to trying to write
+      // spin up 100 threads trying to write
       for (int i = 0; i < 100; i++) { 
          executor.execute(() -> {
             ready.countDown();
@@ -175,8 +175,7 @@ public class DoubleInstanceLockTest {
       assertNull(failed.get());
       // ensure writes took expected duration of time (since they were serialized)
       long duration = end - start;
-      assertTrue(duration > 1500); // this one's a bit tight, could be flaky w/ strange scheduling
-      assertTrue(duration < 3000);
+      assertTrue(duration >= 2000);
       assertEquals(200, count.get()); // each writer is used 2x (to apply write to both sides)
       List<Integer> l = lock.read(Function.identity());
       assertSame(list, l); // swapped even number of times, so back to the same
