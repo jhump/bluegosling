@@ -1,28 +1,46 @@
 # bluegosling
 
-Experiments in Java.
+[![Build Status](https://travis-ci.org/jhump/bluegosling.svg?branch=master)](https://travis-ci.org/jhump/bluegosling/branches)
 
-The experiments are broken up into the following categories:
+## What is this project?
+
+This project started off as a place for me to experiment with ideas in the Java programming language. Over the years, this dumping ground has grown and grown. And now there are numerous things herein, many of which may actually be useful for others.
+
+A lot of the contents of this library heavily overlap with Google's [Guava](https://github.com/google/guava). I am a huge fan of Guava, and wanted to reproduce parts of it. Some of my interest was exploring alternate APIs, for better usability than what is already present in Guava -- largely thanks to new Java 8 language features. But most of my motivation was self-education. While going through the motions of implementing numerous [collections](https://docs.oracle.com/javase/8/docs/technotes/guides/collections/overview.html), [synchronizers](http://gee.cs.oswego.edu/dl/papers/aqs.pdf), and reflection and annotation tools from scratch, I've intimately learned a large swatch of the JRE and Guava. Not just the APIs -- by reading a a lot of the code that powers these libraries, I've also become quite familiar with their implementations, too.
+
+## What's the status?
+
+This has been a random dumping ground for lots of ideas, many half-baked (or less). I created the project when I was working at Google, so felt that [Google Code](https://code.google.com) was the place to do it. On 3/21/2015, I moved it to [Github](https://github.com/jhump/bluegosling) (from http://code.google.com/p/bluegosling).
+
+I'm in the process of cleaning it up, breaking it up into smaller and more usable modules and moving the cruft out of the way. The cruft takes the form of incomplete ideas -- classes/APIs/data structures that I never finished implementing. Some of them are very close to done and just need tests (and thus fixes). Some are mere skeletons, serving only as placeholders for what they might eventually become.
+
+The first step in this clean-up was picking a build tool. For the longest time, I just created an ad-hoc Eclipse project, and added the small handful of JARs that comprise the 3rd party dependencies, and just ran code and tests from the IDE. Now, this repo uses [Pants](https://pantsbuild.github.io/). If you clone this repo and `cd` into it, just run `./pants test ::` to compile everything and run all of the tests.
+
+The second step was to integrate the repo with [Travis CI](https://travis-ci.org/) so it can become stable (no more commits that accidentally break large portions of the project).
+
+Subsequent steps will involve breaking the project up into smaller, independent libraries. Before we have a stable "1.0" of anything, we'll also need to move everything into a `com.bluegosling` Java package.
+
+Currently, it's all in `com.apriori` (a reference to a not-really-existing [eponymous enterprise](http://apriori.bluegosling.com/)). But we don't own the `apriori.com` domain; a completely unrelated company name aPriori does. When the original project was created, "apriori" was already taken on Google Code, too. So we used the name "bluegosling" since we *do* own the `bluegosling.com` domain. Eventually the code will refer to that name, too.
+
+
+## What's in here?
+
+The experiments are numerous. At a high-level, here are some of the things you'll find here:
 
 * New Collection implementations (tries & trie-based structures, a fibonacci heap, filtering & transforming collections,
 persistent and immutable data structures, sharded concurrent sets, and numerous new implementations of standard collection
 interfaces).
 * Tuples, similar to small, heterogeneous, type-safe collections.
-* Reflection utilities, ranging from API for operating with generic types (`Types` and `TypeRef`) to a proxy tool for dynamically
-casting an object to an interface it does not implement and even dynamically dispatching method calls (`Caster`).
-* Unit testing tools (`InterfaceVerifier`)
-* Annotation processor tools. These include reflection APIs that make querying source elements feel more natural by mimicing the
-API in `java.lang.reflect`. They also include unit testing tools in the form of a JUnit4 test runner and accompanying APIs and
-annotations. (Implementation is mostly complete and has been used ad hoc and tested in a limited way, but it still needs tests.)
-* Static dependency injection tools, to generate code to satisfy dependencies. (Mostly a thought experiment at this point --
-very, very far from complete.)
+* Vast reflection utilities, including utilities for working with generic types, annotations, and annotated types.
+* Numerous APIs for working with annotations and annotation processors.
+* Computation graphs, for expressing a computation as a graph of related phases, and then executing the computation with maximum parallelism afforded by the graph.
+* Lots of concurrency utilities, including new executors and synchronizers and a reimagined `Future` API.
 
-Please note that all of this code is in a Java package named `com.apriori`, however our domain is not `apriori.com` but rather
-`apriori.bluegosling.com` (which also probably helps to explain how we landed on this project name). Apologies to the actual
-owners of `apriori.com` (aPriori, a completely unrelated software company in Massachusetts). One of these days we'll do a
-refactor to rename/move everything into `com.bluegosling.apriori`...
+## How can I learn more?
 
-# Docs
-Java Doc can be found here: https://rawgit.com/jhump/bluegosling/master/javadoc/index.html
+You can peruse the complete java doc here: https://rawgit.com/jhump/bluegosling/master/javadoc/index.html
 
-*(Exported from http://code.google.com/p/bluegosling on 3/21/2015)*
+## Who are you?
+
+My name is [Joshua](https://github.com/jhump) [Humphries](https://www.linkedin.com/in/jhumphries131). I am currently a software engineering manager at [Square](https://squareup.com/), a [Xoogler](http://google.about.com/od/wx/g/xooglers.htm), and (admittedly irrelevant) a [home brewer](http://www.humpsbrewing.bluegosling.com/).
+
