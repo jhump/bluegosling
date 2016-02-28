@@ -18,10 +18,7 @@ The first step in this clean-up was picking a build tool. For the longest time, 
 
 The second step was to integrate the repo with [Travis CI](https://travis-ci.org/) so it can become stable (no more commits that accidentally break large portions of the project).
 
-Subsequent steps will involve breaking the project up into smaller, independent libraries. Before we have a stable "1.0" of anything, we'll also need to move everything into a `com.bluegosling` Java package.
-
-Currently, it's all in `com.apriori` (a reference to a not-really-existing [eponymous enterprise](http://apriori.bluegosling.com/)). But we don't own the `apriori.com` domain; a completely unrelated company name aPriori does. When the original project was created, "apriori" was already taken on Google Code, too. So we used the name "bluegosling" since we *do* own the `bluegosling.com` domain. Eventually the code will refer to that name, too.
-
+Subsequent steps will involve breaking the project up into smaller, independent libraries.
 
 ## What's in here?
 
@@ -42,5 +39,5 @@ You can peruse the complete java doc here: https://rawgit.com/jhump/bluegosling/
 
 ## Who are you?
 
-My name is [Joshua](https://github.com/jhump) [Humphries](https://www.linkedin.com/in/jhumphries131). I am currently a software engineering manager at [Square](https://squareup.com/), a [Xoogler](http://google.about.com/od/wx/g/xooglers.htm), and (admittedly irrelevant) a [home brewer](http://www.humpsbrewing.bluegosling.com/).
+Ostensibly, we are [Apriori Enterprises](http://apriori.bluegosling.com). Really, it's just me. My name is [Joshua](https://github.com/jhump) [Humphries](https://www.linkedin.com/in/jhumphries131). I am currently a software engineering manager at [Square](https://squareup.com/), a [Xoogler](http://google.about.com/od/wx/g/xooglers.htm), and (admittedly irrelevant) a [home brewer](http://www.humpsbrewing.bluegosling.com/).
 

@@ -16,5 +16,5 @@ tmp-out/
 .pids/
 
 # TODO: clean these directories out, or flesh them out and add to git...
-src/com/apriori/apt/util/
-test/com/apriori/apt/reflect/
+src/com/bluegosling/apt/util/
+test/com/bluegosling/apt/reflect/
