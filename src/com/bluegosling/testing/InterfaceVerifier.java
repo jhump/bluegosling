@@ -80,7 +80,7 @@ import java.util.regex.Pattern;
  * same concrete exception class, then you can still use the relaxed exception handling, but you
  * must define the ancestor exceptions that can be thrown since {@code RuntimeException}s are not
  * generally included in the method's signature (see
- * {@link MethodConfiguration#uncheckedExceptions(Set)} for more details).</li>
+ * {@link MethodConfiguration#uncheckedExceptions(Collection)} for more details).</li>
  * </ul>
  * 
  * <p>The behavior that is configured <em>per method</em> is actually defined using
@@ -184,7 +184,7 @@ public class InterfaceVerifier<T> {
        * Specifies that exceptions should be verified using relaxed checking. Exceptions thrown will
        * be verified using {@link ObjectVerifiers#relaxedExceptions(Set)}, created with the method's
        * declared (checked) exceptions <em>and</em> any unchecked exceptions defined (see
-       * {@link #uncheckedExceptions(Set)}.
+       * {@link #uncheckedExceptions(Collection)}.
        * 
        * @return this
        */
@@ -207,7 +207,7 @@ public class InterfaceVerifier<T> {
        * @return this
        * @throws NullPointerException If any of the specified types are null
        * 
-       * @see #uncheckedExceptions(Set)
+       * @see #uncheckedExceptions(Collection)
        */
       //@SafeVarargs -- can't use SafeVarargs on non-final instance methods (and thus interfaces)
       MethodConfigurator<T> uncheckedExceptions(
