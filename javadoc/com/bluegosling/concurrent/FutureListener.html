@@ -109,7 +109,7 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/FunctionalInterface.html?is-external=true" title="class or interface in java.lang">@FunctionalInterface</a>
 public interface <span class="typeNameLabel">FutureListener&lt;T&gt;</span></pre>
-<div class="block">A listener for the completion of a future. When <a href="../../../com/bluegosling/concurrent/ListenableFuture.html#addListener-com.bluegosling.concurrent.FutureListener-java.util.concurrent.Executor-">registered with a
+<div class="block">A listener for the completion of a future. When <a href="../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html#addListener-com.bluegosling.concurrent.FutureListener-java.util.concurrent.Executor-">registered with a
  future</a>, the listener will be called once the future completes.</div>
 </li>
 </ul>
@@ -131,7 +131,7 @@ public interface <span class="typeNameLabel">FutureListener&lt;T&gt;</span></pre
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../com/bluegosling/concurrent/FutureListener.html" title="interface in com.bluegosling.concurrent">FutureListener</a>&lt;T&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/bluegosling/concurrent/FutureListener.html#forConsumer-java.util.function.Consumer-">forConsumer</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;? super <a href="../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent">ListenableFuture</a>&lt;T&gt;&gt;&nbsp;consumer)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/bluegosling/concurrent/FutureListener.html#forConsumer-java.util.function.Consumer-">forConsumer</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;? super <a href="../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent">FluentFuture</a>&lt;T&gt;&gt;&nbsp;consumer)</code>
 <div class="block">Adapts a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function"><code>Consumer</code></a> to the <a href="../../../com/bluegosling/concurrent/FutureListener.html" title="interface in com.bluegosling.concurrent"><code>FutureListener</code></a> interface.</div>
 </td>
 </tr>
@@ -149,7 +149,7 @@ public interface <span class="typeNameLabel">FutureListener&lt;T&gt;</span></pre
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/bluegosling/concurrent/FutureListener.html#onCompletion-com.bluegosling.concurrent.ListenableFuture-">onCompletion</a></span>(<a href="../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent">ListenableFuture</a>&lt;? extends <a href="../../../com/bluegosling/concurrent/FutureListener.html" title="type parameter in FutureListener">T</a>&gt;&nbsp;completedFuture)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/bluegosling/concurrent/FutureListener.html#onCompletion-com.bluegosling.concurrent.futures.fluent.FluentFuture-">onCompletion</a></span>(<a href="../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent">FluentFuture</a>&lt;? extends <a href="../../../com/bluegosling/concurrent/FutureListener.html" title="type parameter in FutureListener">T</a>&gt;&nbsp;completedFuture)</code>
 <div class="block">Invoked when a future completes.</div>
 </td>
 </tr>
@@ -168,13 +168,13 @@ public interface <span class="typeNameLabel">FutureListener&lt;T&gt;</span></pre
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="onCompletion-com.bluegosling.concurrent.ListenableFuture-">
+<a name="onCompletion-com.bluegosling.concurrent.futures.fluent.FluentFuture-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>onCompletion</h4>
-<pre>void&nbsp;onCompletion(<a href="../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent">ListenableFuture</a>&lt;? extends <a href="../../../com/bluegosling/concurrent/FutureListener.html" title="type parameter in FutureListener">T</a>&gt;&nbsp;completedFuture)</pre>
+<pre>void&nbsp;onCompletion(<a href="../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent">FluentFuture</a>&lt;? extends <a href="../../../com/bluegosling/concurrent/FutureListener.html" title="type parameter in FutureListener">T</a>&gt;&nbsp;completedFuture)</pre>
 <div class="block">Invoked when a future completes.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -221,7 +221,7 @@ public interface <span class="typeNameLabel">FutureListener&lt;T&gt;</span></pre
 <ul class="blockListLast">
 <li class="blockList">
 <h4>forConsumer</h4>
-<pre>static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/bluegosling/concurrent/FutureListener.html" title="interface in com.bluegosling.concurrent">FutureListener</a>&lt;T&gt;&nbsp;forConsumer(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;? super <a href="../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent">ListenableFuture</a>&lt;T&gt;&gt;&nbsp;consumer)</pre>
+<pre>static&nbsp;&lt;T&gt;&nbsp;<a href="../../../com/bluegosling/concurrent/FutureListener.html" title="interface in com.bluegosling.concurrent">FutureListener</a>&lt;T&gt;&nbsp;forConsumer(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;? super <a href="../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent">FluentFuture</a>&lt;T&gt;&gt;&nbsp;consumer)</pre>
 <div class="block">Adapts a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function"><code>Consumer</code></a> to the <a href="../../../com/bluegosling/concurrent/FutureListener.html" title="interface in com.bluegosling.concurrent"><code>FutureListener</code></a> interface.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>

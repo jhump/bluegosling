@@ -141,22 +141,22 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>&lt;U&gt;&nbsp;<a href="../../../com/bluegosling/graph/Computation.html" title="class in com.bluegosling.graph">Computation</a>&lt;<a href="../../../com/bluegosling/graph/Computation.html" title="type parameter in Computation">T</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/bluegosling/graph/Computation.html#bindAsyncInput-java.lang.Class-com.bluegosling.concurrent.ListenableFuture-">bindAsyncInput</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;U&gt;&nbsp;type,
-              <a href="../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent">ListenableFuture</a>&lt;U&gt;&nbsp;input)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/bluegosling/graph/Computation.html#bindAsyncInput-java.lang.Class-com.bluegosling.concurrent.futures.fluent.FluentFuture-">bindAsyncInput</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;U&gt;&nbsp;type,
+              <a href="../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent">FluentFuture</a>&lt;U&gt;&nbsp;input)</code>
 <div class="block">Binds an async input to the computation.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>&lt;U&gt;&nbsp;<a href="../../../com/bluegosling/graph/Computation.html" title="class in com.bluegosling.graph">Computation</a>&lt;<a href="../../../com/bluegosling/graph/Computation.html" title="type parameter in Computation">T</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/bluegosling/graph/Computation.html#bindAsyncInput-com.bluegosling.graph.Key-com.bluegosling.concurrent.ListenableFuture-">bindAsyncInput</a></span>(<a href="../../../com/bluegosling/graph/Key.html" title="class in com.bluegosling.graph">Key</a>&lt;U&gt;&nbsp;type,
-              <a href="../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent">ListenableFuture</a>&lt;U&gt;&nbsp;input)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/bluegosling/graph/Computation.html#bindAsyncInput-com.bluegosling.graph.Key-com.bluegosling.concurrent.futures.fluent.FluentFuture-">bindAsyncInput</a></span>(<a href="../../../com/bluegosling/graph/Key.html" title="class in com.bluegosling.graph">Key</a>&lt;U&gt;&nbsp;type,
+              <a href="../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent">FluentFuture</a>&lt;U&gt;&nbsp;input)</code>
 <div class="block">Binds an async input to the computation.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>&lt;U&gt;&nbsp;<a href="../../../com/bluegosling/graph/Computation.html" title="class in com.bluegosling.graph">Computation</a>&lt;<a href="../../../com/bluegosling/graph/Computation.html" title="type parameter in Computation">T</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/bluegosling/graph/Computation.html#bindAsyncInput-com.bluegosling.reflect.TypeRef-com.bluegosling.concurrent.ListenableFuture-">bindAsyncInput</a></span>(<a href="../../../com/bluegosling/reflect/TypeRef.html" title="class in com.bluegosling.reflect">TypeRef</a>&lt;U&gt;&nbsp;type,
-              <a href="../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent">ListenableFuture</a>&lt;U&gt;&nbsp;input)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/bluegosling/graph/Computation.html#bindAsyncInput-com.bluegosling.reflect.TypeRef-com.bluegosling.concurrent.futures.fluent.FluentFuture-">bindAsyncInput</a></span>(<a href="../../../com/bluegosling/reflect/TypeRef.html" title="class in com.bluegosling.reflect">TypeRef</a>&lt;U&gt;&nbsp;type,
+              <a href="../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent">FluentFuture</a>&lt;U&gt;&nbsp;input)</code>
 <div class="block">Binds an async input to the computation.</div>
 </td>
 </tr>
@@ -182,7 +182,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code><a href="../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent">ListenableFuture</a>&lt;<a href="../../../com/bluegosling/graph/Computation.html" title="type parameter in Computation">T</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent">FluentFuture</a>&lt;<a href="../../../com/bluegosling/graph/Computation.html" title="type parameter in Computation">T</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/bluegosling/graph/Computation.html#compute--">compute</a></span>()</code>
 <div class="block">Executes the computation.</div>
 </td>
@@ -321,17 +321,17 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </dl>
 </li>
 </ul>
-<a name="bindAsyncInput-java.lang.Class-com.bluegosling.concurrent.ListenableFuture-">
+<a name="bindAsyncInput-java.lang.Class-com.bluegosling.concurrent.futures.fluent.FluentFuture-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>bindAsyncInput</h4>
 <pre>public&nbsp;&lt;U&gt;&nbsp;<a href="../../../com/bluegosling/graph/Computation.html" title="class in com.bluegosling.graph">Computation</a>&lt;<a href="../../../com/bluegosling/graph/Computation.html" title="type parameter in Computation">T</a>&gt;&nbsp;bindAsyncInput(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;U&gt;&nbsp;type,
-                                         <a href="../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent">ListenableFuture</a>&lt;U&gt;&nbsp;input)</pre>
+                                         <a href="../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent">FluentFuture</a>&lt;U&gt;&nbsp;input)</pre>
 <div class="block">Binds an async input to the computation. All inputs must be bound before the computation
  can execute. If the input key has a <a href="../../../com/bluegosling/graph/Key.html#qualifier--">qualifier</a>, you must use
- <a href="../../../com/bluegosling/graph/Computation.html#bindAsyncInput-com.bluegosling.graph.Key-com.bluegosling.concurrent.ListenableFuture-"><code>bindAsyncInput(Key, ListenableFuture)</code></a> instead.
+ <a href="../../../com/bluegosling/graph/Computation.html#bindAsyncInput-com.bluegosling.graph.Key-com.bluegosling.concurrent.futures.fluent.FluentFuture-"><code>bindAsyncInput(Key, FluentFuture)</code></a> instead.
  
  <p>This is shorthand for the following:<br>
  <code>computation.bindAsyncInput(Key.of(type), input);</code></div>
@@ -351,17 +351,17 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </dl>
 </li>
 </ul>
-<a name="bindAsyncInput-com.bluegosling.reflect.TypeRef-com.bluegosling.concurrent.ListenableFuture-">
+<a name="bindAsyncInput-com.bluegosling.reflect.TypeRef-com.bluegosling.concurrent.futures.fluent.FluentFuture-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>bindAsyncInput</h4>
 <pre>public&nbsp;&lt;U&gt;&nbsp;<a href="../../../com/bluegosling/graph/Computation.html" title="class in com.bluegosling.graph">Computation</a>&lt;<a href="../../../com/bluegosling/graph/Computation.html" title="type parameter in Computation">T</a>&gt;&nbsp;bindAsyncInput(<a href="../../../com/bluegosling/reflect/TypeRef.html" title="class in com.bluegosling.reflect">TypeRef</a>&lt;U&gt;&nbsp;type,
-                                         <a href="../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent">ListenableFuture</a>&lt;U&gt;&nbsp;input)</pre>
+                                         <a href="../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent">FluentFuture</a>&lt;U&gt;&nbsp;input)</pre>
 <div class="block">Binds an async input to the computation. All inputs must be bound before the computation
  can execute. If the input key has a <a href="../../../com/bluegosling/graph/Key.html#qualifier--">qualifier</a>, you must use
- <a href="../../../com/bluegosling/graph/Computation.html#bindAsyncInput-com.bluegosling.graph.Key-com.bluegosling.concurrent.ListenableFuture-"><code>bindAsyncInput(Key, ListenableFuture)</code></a> instead.
+ <a href="../../../com/bluegosling/graph/Computation.html#bindAsyncInput-com.bluegosling.graph.Key-com.bluegosling.concurrent.futures.fluent.FluentFuture-"><code>bindAsyncInput(Key, FluentFuture)</code></a> instead.
  
  <p>This is shorthand for the following:<br>
  <code>computation.bindAsyncInput(Key.of(type), input);</code></div>
@@ -381,14 +381,14 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </dl>
 </li>
 </ul>
-<a name="bindAsyncInput-com.bluegosling.graph.Key-com.bluegosling.concurrent.ListenableFuture-">
+<a name="bindAsyncInput-com.bluegosling.graph.Key-com.bluegosling.concurrent.futures.fluent.FluentFuture-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>bindAsyncInput</h4>
 <pre>public&nbsp;&lt;U&gt;&nbsp;<a href="../../../com/bluegosling/graph/Computation.html" title="class in com.bluegosling.graph">Computation</a>&lt;<a href="../../../com/bluegosling/graph/Computation.html" title="type parameter in Computation">T</a>&gt;&nbsp;bindAsyncInput(<a href="../../../com/bluegosling/graph/Key.html" title="class in com.bluegosling.graph">Key</a>&lt;U&gt;&nbsp;type,
-                                         <a href="../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent">ListenableFuture</a>&lt;U&gt;&nbsp;input)</pre>
+                                         <a href="../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent">FluentFuture</a>&lt;U&gt;&nbsp;input)</pre>
 <div class="block">Binds an async input to the computation. All inputs must be bound before the computation
  can execute.</div>
 <dl>
@@ -413,7 +413,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockListLast">
 <li class="blockList">
 <h4>compute</h4>
-<pre>public&nbsp;<a href="../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent">ListenableFuture</a>&lt;<a href="../../../com/bluegosling/graph/Computation.html" title="type parameter in Computation">T</a>&gt;&nbsp;compute()</pre>
+<pre>public&nbsp;<a href="../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent">FluentFuture</a>&lt;<a href="../../../com/bluegosling/graph/Computation.html" title="type parameter in Computation">T</a>&gt;&nbsp;compute()</pre>
 <div class="block">Executes the computation. The returned future will complete when the computation is done.
  The future will then yield the result of the computation.
  

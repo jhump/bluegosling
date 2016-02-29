@@ -116,7 +116,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <div class="block">Like a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent"><code>Future</code></a>, except it represents a result that is available immediately. Unlike a
  <a href="../../../com/bluegosling/vars/Variable.html" title="class in com.bluegosling.vars"><code>Variable</code></a>, it can represent either a successful result value or a cause of failure.
  
- <p>Its API closely resembles that of <a href="../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent"><code>ListenableFuture</code></a> except that, since the value is
+ <p>Its API closely resembles that of <a href="../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent"><code>FluentFuture</code></a> except that, since the value is
  immediately available, no methods ever block. So methods such as <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true#isDone--" title="class or interface in java.util.concurrent"><code>isDone()</code></a> or <a href="../../../com/bluegosling/concurrent/Awaitable.html#await--"><code>await()</code></a> are unnecessary and thus absent.</div>
 </li>
 </ul>
@@ -154,7 +154,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent">ListenableFuture</a>&lt;<a href="../../../com/bluegosling/util/Immediate.html" title="type parameter in Immediate">T</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent">FluentFuture</a>&lt;<a href="../../../com/bluegosling/util/Immediate.html" title="type parameter in Immediate">T</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/bluegosling/util/Immediate.html#asFuture--">asFuture</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
@@ -363,7 +363,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if this object is cancelled or failed</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../com/bluegosling/concurrent/ListenableFuture.html#getResult--"><code>ListenableFuture.getResult()</code></a></dd>
+<dd><a href="../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html#getResult--"><code>FluentFuture.getResult()</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -381,7 +381,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if this object is successful or cancelled</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../com/bluegosling/concurrent/ListenableFuture.html#getResult--"><code>ListenableFuture.getResult()</code></a></dd>
+<dd><a href="../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html#getResult--"><code>FluentFuture.getResult()</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -413,7 +413,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>true if this object is successful</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../com/bluegosling/concurrent/ListenableFuture.html#isSuccessful--"><code>ListenableFuture.isSuccessful()</code></a></dd>
+<dd><a href="../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html#isSuccessful--"><code>FluentFuture.isSuccessful()</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -429,7 +429,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>true if this object failed</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../com/bluegosling/concurrent/ListenableFuture.html#isFailed--"><code>ListenableFuture.isFailed()</code></a></dd>
+<dd><a href="../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html#isFailed--"><code>FluentFuture.isFailed()</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -454,7 +454,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockListLast">
 <li class="blockList">
 <h4>asFuture</h4>
-<pre>public&nbsp;<a href="../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent">ListenableFuture</a>&lt;<a href="../../../com/bluegosling/util/Immediate.html" title="type parameter in Immediate">T</a>&gt;&nbsp;asFuture()</pre>
+<pre>public&nbsp;<a href="../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent">FluentFuture</a>&lt;<a href="../../../com/bluegosling/util/Immediate.html" title="type parameter in Immediate">T</a>&gt;&nbsp;asFuture()</pre>
 </li>
 </ul>
 </li>

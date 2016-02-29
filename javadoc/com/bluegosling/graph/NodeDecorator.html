@@ -123,10 +123,10 @@ var activeTableTab = "activeTableTab";
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;<a href="../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent">ListenableFuture</a>&lt;T&gt;&gt;</code></td>
+<td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;<a href="../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent">FluentFuture</a>&lt;T&gt;&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/bluegosling/graph/NodeDecorator.html#decorate-com.bluegosling.graph.Graph-com.bluegosling.graph.Node-java.util.concurrent.Callable-">decorate</a></span>(<a href="../../../com/bluegosling/graph/Graph.html" title="class in com.bluegosling.graph">Graph</a>&lt;?&gt;&nbsp;graph,
         <a href="../../../com/bluegosling/graph/Node.html" title="class in com.bluegosling.graph">Node</a>&lt;T&gt;&nbsp;node,
-        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;<a href="../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent">ListenableFuture</a>&lt;T&gt;&gt;&nbsp;operation)</code>
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;<a href="../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent">FluentFuture</a>&lt;T&gt;&gt;&nbsp;operation)</code>
 <div class="block">Decorates the given callable, which is the operation (possibly already decorated) for the
  given graph and node.</div>
 </td>
@@ -152,9 +152,9 @@ var activeTableTab = "activeTableTab";
 <ul class="blockListLast">
 <li class="blockList">
 <h4>decorate</h4>
-<pre>&lt;T&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;<a href="../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent">ListenableFuture</a>&lt;T&gt;&gt;&nbsp;decorate(<a href="../../../com/bluegosling/graph/Graph.html" title="class in com.bluegosling.graph">Graph</a>&lt;?&gt;&nbsp;graph,
-                                           <a href="../../../com/bluegosling/graph/Node.html" title="class in com.bluegosling.graph">Node</a>&lt;T&gt;&nbsp;node,
-                                           <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;<a href="../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent">ListenableFuture</a>&lt;T&gt;&gt;&nbsp;operation)</pre>
+<pre>&lt;T&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;<a href="../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent">FluentFuture</a>&lt;T&gt;&gt;&nbsp;decorate(<a href="../../../com/bluegosling/graph/Graph.html" title="class in com.bluegosling.graph">Graph</a>&lt;?&gt;&nbsp;graph,
+                                       <a href="../../../com/bluegosling/graph/Node.html" title="class in com.bluegosling.graph">Node</a>&lt;T&gt;&nbsp;node,
+                                       <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;<a href="../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent">FluentFuture</a>&lt;T&gt;&gt;&nbsp;operation)</pre>
 <div class="block">Decorates the given callable, which is the operation (possibly already decorated) for the
  given graph and node. The returned callable is a wrapper that can perform additional logic
  before passing control to the given operation.</div>

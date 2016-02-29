@@ -717,10 +717,38 @@
 <dd>810179938753238669L</dd>
 </dl>
 </li>
-<li class="blockList"><a name="com.bluegosling.concurrent.HierarchicalLock">
+<li class="blockList"><a name="com.bluegosling.concurrent.ReentranceException">
 <!--   -->
 </a>
-<h3>Class <a href="com/bluegosling/concurrent/HierarchicalLock.html" title="class in com.bluegosling.concurrent">com.bluegosling.concurrent.HierarchicalLock</a> extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a> implements Serializable</h3>
+<h3>Class <a href="com/bluegosling/concurrent/ReentranceException.html" title="class in com.bluegosling.concurrent">com.bluegosling.concurrent.ReentranceException</a> extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>6514106228938676699L</dd>
+</dl>
+</li>
+</ul>
+</li>
+<li class="blockList">
+<h2 title="Package">Package&nbsp;com.bluegosling.concurrent.atoms</h2>
+<ul class="blockList">
+<li class="blockList"><a name="com.bluegosling.concurrent.atoms.TransactionIsolationException">
+<!--   -->
+</a>
+<h3>Class <a href="com/bluegosling/concurrent/atoms/TransactionIsolationException.html" title="class in com.bluegosling.concurrent.atoms">com.bluegosling.concurrent.atoms.TransactionIsolationException</a> extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>3957146576789743305L</dd>
+</dl>
+</li>
+</ul>
+</li>
+<li class="blockList">
+<h2 title="Package">Package&nbsp;com.bluegosling.concurrent.locks</h2>
+<ul class="blockList">
+<li class="blockList"><a name="com.bluegosling.concurrent.locks.HierarchicalLock">
+<!--   -->
+</a>
+<h3>Class <a href="com/bluegosling/concurrent/locks/HierarchicalLock.html" title="class in com.bluegosling.concurrent.locks">com.bluegosling.concurrent.locks.HierarchicalLock</a> extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a> implements Serializable</h3>
 <dl class="nameValue">
 <dt>serialVersionUID:</dt>
 <dd>997443573217210719L</dd>
@@ -731,26 +759,17 @@
 <ul class="blockList">
 <li class="blockListLast">
 <h4>sync</h4>
-<pre>com.bluegosling.concurrent.HierarchicalLock.Sync sync</pre>
+<pre>com.bluegosling.concurrent.locks.HierarchicalLock.Sync sync</pre>
 <div class="block">The lock's synchronizer.</div>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="blockList"><a name="com.bluegosling.concurrent.ReentranceException">
+<li class="blockList"><a name="com.bluegosling.concurrent.locks.SpinLock">
 <!--   -->
 </a>
-<h3>Class <a href="com/bluegosling/concurrent/ReentranceException.html" title="class in com.bluegosling.concurrent">com.bluegosling.concurrent.ReentranceException</a> extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a> implements Serializable</h3>
-<dl class="nameValue">
-<dt>serialVersionUID:</dt>
-<dd>6514106228938676699L</dd>
-</dl>
-</li>
-<li class="blockList"><a name="com.bluegosling.concurrent.SpinLock">
-<!--   -->
-</a>
-<h3>Class <a href="com/bluegosling/concurrent/SpinLock.html" title="class in com.bluegosling.concurrent">com.bluegosling.concurrent.SpinLock</a> extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a> implements Serializable</h3>
+<h3>Class <a href="com/bluegosling/concurrent/locks/SpinLock.html" title="class in com.bluegosling.concurrent.locks">com.bluegosling.concurrent.locks.SpinLock</a> extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a> implements Serializable</h3>
 <dl class="nameValue">
 <dt>serialVersionUID:</dt>
 <dd>736917527438719039L</dd>
@@ -766,20 +785,6 @@
 </ul>
 </li>
 </ul>
-</li>
-</ul>
-</li>
-<li class="blockList">
-<h2 title="Package">Package&nbsp;com.bluegosling.concurrent.atoms</h2>
-<ul class="blockList">
-<li class="blockList"><a name="com.bluegosling.concurrent.atoms.TransactionIsolationException">
-<!--   -->
-</a>
-<h3>Class <a href="com/bluegosling/concurrent/atoms/TransactionIsolationException.html" title="class in com.bluegosling.concurrent.atoms">com.bluegosling.concurrent.atoms.TransactionIsolationException</a> extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a> implements Serializable</h3>
-<dl class="nameValue">
-<dt>serialVersionUID:</dt>
-<dd>3957146576789743305L</dd>
-</dl>
 </li>
 </ul>
 </li>

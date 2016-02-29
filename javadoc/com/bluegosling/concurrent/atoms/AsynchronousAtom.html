@@ -228,7 +228,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="../../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent">ListenableFuture</a>&lt;<a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent">FluentFuture</a>&lt;<a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html#accumulateAndGet-T-java.util.function.BiFunction-">accumulateAndGet</a></span>(<a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&nbsp;t,
                 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/BiFunction.html?is-external=true" title="class or interface in java.util.function">BiFunction</a>&lt;? super <a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>,? super <a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>,? extends <a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;function)</code>
 <div class="block">Submits a mutation that will combine the atom's value with the given value, using the given
@@ -248,12 +248,12 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="../../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent">ListenableFuture</a>&lt;<a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent">FluentFuture</a>&lt;<a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html#getAndAccumulate-T-java.util.function.BiFunction-">getAndAccumulate</a></span>(<a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&nbsp;t,
                 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/BiFunction.html?is-external=true" title="class or interface in java.util.function">BiFunction</a>&lt;? super <a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>,? super <a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>,? extends <a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;function)</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="../../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent">ListenableFuture</a>&lt;<a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent">FluentFuture</a>&lt;<a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html#getAndUpdate-java.util.function.Function-">getAndUpdate</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>,? extends <a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;function)</code>
 <div class="block">Applies a function to the atom's value.</div>
 </td>
@@ -265,7 +265,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code><a href="../../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent">ListenableFuture</a>&lt;<a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent">FluentFuture</a>&lt;<a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html#getPending--">getPending</a></span>()</code>
 <div class="block">Returns a future that completes with the atom's value once all currently pending operations
  complete.</div>
@@ -322,7 +322,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </td>
 </tr>
 <tr id="i15" class="rowColor">
-<td class="colFirst"><code><a href="../../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent">ListenableFuture</a>&lt;<a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent">FluentFuture</a>&lt;<a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html#set-T-">set</a></span>(<a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&nbsp;newValue)</code>
 <div class="block">Submits a mutation that will set the atom to the specified value.</div>
 </td>
@@ -334,7 +334,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </td>
 </tr>
 <tr id="i17" class="rowColor">
-<td class="colFirst"><code><a href="../../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent">ListenableFuture</a>&lt;<a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent">FluentFuture</a>&lt;<a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html#updateAndGet-java.util.function.Function-">updateAndGet</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>,? extends <a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;function)</code>
 <div class="block">Applies a function to the atom's value.</div>
 </td>
@@ -551,7 +551,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockList">
 <li class="blockList">
 <h4>getPending</h4>
-<pre>public&nbsp;<a href="../../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent">ListenableFuture</a>&lt;<a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;getPending()</pre>
+<pre>public&nbsp;<a href="../../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent">FluentFuture</a>&lt;<a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;getPending()</pre>
 <div class="block">Returns a future that completes with the atom's value once all currently pending operations
  complete. If this atom is blocked or becomes blocked while processing currently pending
  operations, the returned future will not complete until the atom is unblocked. If the atom is
@@ -572,7 +572,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockList">
 <li class="blockList">
 <h4>set</h4>
-<pre>public&nbsp;<a href="../../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent">ListenableFuture</a>&lt;<a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;set(<a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&nbsp;newValue)</pre>
+<pre>public&nbsp;<a href="../../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent">FluentFuture</a>&lt;<a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;set(<a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&nbsp;newValue)</pre>
 <div class="block">Submits a mutation that will set the atom to the specified value. The value will be validated
  immediately, before it is submitted.</div>
 <dl>
@@ -592,7 +592,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockList">
 <li class="blockList">
 <h4>updateAndGet</h4>
-<pre>public&nbsp;<a href="../../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent">ListenableFuture</a>&lt;<a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;updateAndGet(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>,? extends <a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;function)</pre>
+<pre>public&nbsp;<a href="../../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent">FluentFuture</a>&lt;<a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;updateAndGet(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>,? extends <a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;function)</pre>
 <div class="block">Applies a function to the atom's value. The atom's new value will be the result of applying
  the specified function to the atom's current value. Watchers are notified when the value is
  changed.
@@ -614,7 +614,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockList">
 <li class="blockList">
 <h4>getAndUpdate</h4>
-<pre>public&nbsp;<a href="../../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent">ListenableFuture</a>&lt;<a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;getAndUpdate(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>,? extends <a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;function)</pre>
+<pre>public&nbsp;<a href="../../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent">FluentFuture</a>&lt;<a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;getAndUpdate(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>,? extends <a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;function)</pre>
 <div class="block">Applies a function to the atom's value. The atom's new value will be the result of applying
  the specified function to the atom's current value. Watchers are notified when the value is
  changed.
@@ -639,8 +639,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockList">
 <li class="blockList">
 <h4>accumulateAndGet</h4>
-<pre>public&nbsp;<a href="../../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent">ListenableFuture</a>&lt;<a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;accumulateAndGet(<a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&nbsp;t,
-                                            <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/BiFunction.html?is-external=true" title="class or interface in java.util.function">BiFunction</a>&lt;? super <a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>,? super <a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>,? extends <a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;function)</pre>
+<pre>public&nbsp;<a href="../../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent">FluentFuture</a>&lt;<a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;accumulateAndGet(<a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&nbsp;t,
+                                        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/BiFunction.html?is-external=true" title="class or interface in java.util.function">BiFunction</a>&lt;? super <a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>,? super <a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>,? extends <a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;function)</pre>
 <div class="block">Submits a mutation that will combine the atom's value with the given value, using the given
  function, and set the atom's value to the result. Validation cannot be done immediately, so a
  validation failure manifests as a failed future. Depending on the atom's
@@ -663,8 +663,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockList">
 <li class="blockList">
 <h4>getAndAccumulate</h4>
-<pre>public&nbsp;<a href="../../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent">ListenableFuture</a>&lt;<a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;getAndAccumulate(<a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&nbsp;t,
-                                            <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/BiFunction.html?is-external=true" title="class or interface in java.util.function">BiFunction</a>&lt;? super <a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>,? super <a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>,? extends <a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;function)</pre>
+<pre>public&nbsp;<a href="../../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent">FluentFuture</a>&lt;<a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;getAndAccumulate(<a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&nbsp;t,
+                                        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/BiFunction.html?is-external=true" title="class or interface in java.util.function">BiFunction</a>&lt;? super <a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>,? super <a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>,? extends <a href="../../../../com/bluegosling/concurrent/atoms/AsynchronousAtom.html" title="type parameter in AsynchronousAtom">T</a>&gt;&nbsp;function)</pre>
 </li>
 </ul>
 <a name="validate-java.lang.Object-">

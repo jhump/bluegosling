@@ -107,13 +107,13 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../../com/bluegosling/concurrent/ListenableExecutorService.html" title="interface in com.bluegosling.concurrent">ListenableExecutorService</a>, <a href="../../../../com/bluegosling/concurrent/ListenableScheduledExecutorService.html" title="interface in com.bluegosling.concurrent">ListenableScheduledExecutorService</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledExecutorService</a></dd>
+<dd><a href="../../../../com/bluegosling/concurrent/executors/FluentExecutorService.html" title="interface in com.bluegosling.concurrent.executors">FluentExecutorService</a>, <a href="../../../../com/bluegosling/concurrent/executors/FluentScheduledExecutorService.html" title="interface in com.bluegosling.concurrent.executors">FluentScheduledExecutorService</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledExecutorService</a></dd>
 </dl>
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">ScheduledTaskManager</span>
 extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
-implements <a href="../../../../com/bluegosling/concurrent/ListenableScheduledExecutorService.html" title="interface in com.bluegosling.concurrent">ListenableScheduledExecutorService</a></pre>
+implements <a href="../../../../com/bluegosling/concurrent/executors/FluentScheduledExecutorService.html" title="interface in com.bluegosling.concurrent.executors">FluentScheduledExecutorService</a></pre>
 <div class="block">An extension and enhancement to the API provided by <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true" title="class or interface in java.util.concurrent"><code>ScheduledExecutorService</code></a>.
  
  <p>This implementation provides greater configurability over scheduled tasks and greater
@@ -126,7 +126,7 @@ implements <a href="../../../../com/bluegosling/concurrent/ListenableScheduledEx
  follow:
  <ul>
     <li>Asynchronous processing using <a href="../../../../com/bluegosling/concurrent/FutureListener.html" title="interface in com.bluegosling.concurrent"><code>FutureListener</code></a>s. All of the futures returned by
-    this service are instances of <a href="../../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent"><code>ListenableFuture</code></a>, which has a broader and more usable
+    this service are instances of <a href="../../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent"><code>FluentFuture</code></a>, which has a broader and more usable
     API than the standard <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent"><code>Future</code></a>, including the ability to add listeners to process
     results asynchronously.</li>
     <li>Greater control over repeated occurrences and how they are scheduled. Instead of a task
@@ -331,11 +331,11 @@ implements <a href="../../../../com/bluegosling/concurrent/ListenableScheduledEx
 <code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.com.bluegosling.concurrent.ListenableExecutorService">
+<li class="blockList"><a name="methods.inherited.from.class.com.bluegosling.concurrent.executors.FluentExecutorService">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;com.bluegosling.concurrent.<a href="../../../../com/bluegosling/concurrent/ListenableExecutorService.html" title="interface in com.bluegosling.concurrent">ListenableExecutorService</a></h3>
-<code><a href="../../../../com/bluegosling/concurrent/ListenableExecutorService.html#makeListenable-java.util.concurrent.ExecutorService-">makeListenable</a>, <a href="../../../../com/bluegosling/concurrent/ListenableExecutorService.html#makeListenable-java.util.concurrent.ScheduledExecutorService-">makeListenable</a>, <a href="../../../../com/bluegosling/concurrent/ListenableExecutorService.html#makeListenableScheduled-java.util.concurrent.ExecutorService-">makeListenableScheduled</a>, <a href="../../../../com/bluegosling/concurrent/ListenableExecutorService.html#makeListenableScheduled-java.util.concurrent.ExecutorService-boolean-">makeListenableScheduled</a>, <a href="../../../../com/bluegosling/concurrent/ListenableExecutorService.html#sameThreadExecutorService--">sameThreadExecutorService</a></code></li>
+<h3>Methods inherited from interface&nbsp;com.bluegosling.concurrent.executors.<a href="../../../../com/bluegosling/concurrent/executors/FluentExecutorService.html" title="interface in com.bluegosling.concurrent.executors">FluentExecutorService</a></h3>
+<code><a href="../../../../com/bluegosling/concurrent/executors/FluentExecutorService.html#makeFluent-java.util.concurrent.ExecutorService-">makeFluent</a>, <a href="../../../../com/bluegosling/concurrent/executors/FluentExecutorService.html#makeFluent-java.util.concurrent.ScheduledExecutorService-">makeFluent</a>, <a href="../../../../com/bluegosling/concurrent/executors/FluentExecutorService.html#makeFluentScheduled-java.util.concurrent.ExecutorService-">makeFluentScheduled</a>, <a href="../../../../com/bluegosling/concurrent/executors/FluentExecutorService.html#makeFluentScheduled-java.util.concurrent.ExecutorService-boolean-">makeFluentScheduled</a>, <a href="../../../../com/bluegosling/concurrent/executors/FluentExecutorService.html#sameThreadExecutorService--">sameThreadExecutorService</a></code></li>
 </ul>
 </li>
 </ul>
@@ -438,11 +438,11 @@ implements <a href="../../../../com/bluegosling/concurrent/ListenableScheduledEx
                                      long&nbsp;delay,
                                      <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</pre>
 <div class="block">Schedules the specified task for execution. If the specified delay is zero or negative, it is
- scheduled for immediate execution. The returned object will not only be a listenable future,
+ scheduled for immediate execution. The returned object will not only be a fluent future,
  it will be a <a href="../../../../com/bluegosling/concurrent/scheduler/ScheduledTask.html" title="interface in com.bluegosling.concurrent.scheduler"><code>ScheduledTask</code></a>.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../com/bluegosling/concurrent/ListenableScheduledExecutorService.html#schedule-java.util.concurrent.Callable-long-java.util.concurrent.TimeUnit-">schedule</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/bluegosling/concurrent/ListenableScheduledExecutorService.html" title="interface in com.bluegosling.concurrent">ListenableScheduledExecutorService</a></code></dd>
+<dd><code><a href="../../../../com/bluegosling/concurrent/executors/FluentScheduledExecutorService.html#schedule-java.util.concurrent.Callable-long-java.util.concurrent.TimeUnit-">schedule</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/bluegosling/concurrent/executors/FluentScheduledExecutorService.html" title="interface in com.bluegosling.concurrent.executors">FluentScheduledExecutorService</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true#schedule-java.util.concurrent.Callable-long-java.util.concurrent.TimeUnit-" title="class or interface in java.util.concurrent">schedule</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledExecutorService</a></code></dd>
 </dl>
@@ -458,11 +458,11 @@ implements <a href="../../../../com/bluegosling/concurrent/ListenableScheduledEx
                                     long&nbsp;delay,
                                     <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</pre>
 <div class="block">Schedules the specified task for execution. If the specified delay is zero or negative, it is
- scheduled for immediate execution. The returned object will not only be a listenable future,
+ scheduled for immediate execution. The returned object will not only be a fluent future,
  it will be a <a href="../../../../com/bluegosling/concurrent/scheduler/ScheduledTask.html" title="interface in com.bluegosling.concurrent.scheduler"><code>ScheduledTask</code></a>.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../com/bluegosling/concurrent/ListenableScheduledExecutorService.html#schedule-java.lang.Runnable-long-java.util.concurrent.TimeUnit-">schedule</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/bluegosling/concurrent/ListenableScheduledExecutorService.html" title="interface in com.bluegosling.concurrent">ListenableScheduledExecutorService</a></code></dd>
+<dd><code><a href="../../../../com/bluegosling/concurrent/executors/FluentScheduledExecutorService.html#schedule-java.lang.Runnable-long-java.util.concurrent.TimeUnit-">schedule</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/bluegosling/concurrent/executors/FluentScheduledExecutorService.html" title="interface in com.bluegosling.concurrent.executors">FluentScheduledExecutorService</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true#schedule-java.lang.Runnable-long-java.util.concurrent.TimeUnit-" title="class or interface in java.util.concurrent">schedule</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledExecutorService</a></code></dd>
 </dl>
@@ -496,7 +496,7 @@ implements <a href="../../../../com/bluegosling/concurrent/ListenableScheduledEx
 <dd><code>period</code> - the period of time between occurrences</dd>
 <dd><code>unit</code> - the unit for <code>initialDelay</code> and <code>period</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a listenable scheduled future that can be used to inspect the task's state and past
+<dd>a fluent scheduled future that can be used to inspect the task's state and past
        results</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if <code>task</code> or <code>unit</code> is <code>null</code></dd>
@@ -516,13 +516,13 @@ implements <a href="../../../../com/bluegosling/concurrent/ListenableScheduledEx
                                                         long&nbsp;initialDelay,
                                                         long&nbsp;period,
                                                         <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/bluegosling/concurrent/ListenableScheduledExecutorService.html#scheduleAtFixedRate-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-">ListenableScheduledExecutorService</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/bluegosling/concurrent/executors/FluentScheduledExecutorService.html#scheduleAtFixedRate-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-">FluentScheduledExecutorService</a></code></span></div>
 <div class="block">
  
- <p>Overrides the return type to be listenable.</div>
+ <p>Overrides the return type to be fluent.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../com/bluegosling/concurrent/ListenableScheduledExecutorService.html#scheduleAtFixedRate-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-">scheduleAtFixedRate</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/bluegosling/concurrent/ListenableScheduledExecutorService.html" title="interface in com.bluegosling.concurrent">ListenableScheduledExecutorService</a></code></dd>
+<dd><code><a href="../../../../com/bluegosling/concurrent/executors/FluentScheduledExecutorService.html#scheduleAtFixedRate-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-">scheduleAtFixedRate</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/bluegosling/concurrent/executors/FluentScheduledExecutorService.html" title="interface in com.bluegosling.concurrent.executors">FluentScheduledExecutorService</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true#scheduleAtFixedRate-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-" title="class or interface in java.util.concurrent">scheduleAtFixedRate</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledExecutorService</a></code></dd>
 </dl>
@@ -553,7 +553,7 @@ implements <a href="../../../../com/bluegosling/concurrent/ListenableScheduledEx
 <dd><code>delay</code> - the delay between occurrences</dd>
 <dd><code>unit</code> - the unit for <code>initialDelay</code> and <code>delay</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a listenable scheduled future that can be used to inspect the task's state and past
+<dd>a fluent scheduled future that can be used to inspect the task's state and past
        results</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if <code>task</code> or <code>unit</code> is <code>null</code></dd>
@@ -573,13 +573,13 @@ implements <a href="../../../../com/bluegosling/concurrent/ListenableScheduledEx
                                                            long&nbsp;initialDelay,
                                                            long&nbsp;delay,
                                                            <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/bluegosling/concurrent/ListenableScheduledExecutorService.html#scheduleWithFixedDelay-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-">ListenableScheduledExecutorService</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/bluegosling/concurrent/executors/FluentScheduledExecutorService.html#scheduleWithFixedDelay-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-">FluentScheduledExecutorService</a></code></span></div>
 <div class="block">
  
- <p>Overrides the return type to be listenable.</div>
+ <p>Overrides the return type to be fluent.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../com/bluegosling/concurrent/ListenableScheduledExecutorService.html#scheduleWithFixedDelay-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-">scheduleWithFixedDelay</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/bluegosling/concurrent/ListenableScheduledExecutorService.html" title="interface in com.bluegosling.concurrent">ListenableScheduledExecutorService</a></code></dd>
+<dd><code><a href="../../../../com/bluegosling/concurrent/executors/FluentScheduledExecutorService.html#scheduleWithFixedDelay-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-">scheduleWithFixedDelay</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/bluegosling/concurrent/executors/FluentScheduledExecutorService.html" title="interface in com.bluegosling.concurrent.executors">FluentScheduledExecutorService</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true#scheduleWithFixedDelay-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-" title="class or interface in java.util.concurrent">scheduleWithFixedDelay</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledExecutorService</a></code></dd>
 </dl>
@@ -620,14 +620,14 @@ implements <a href="../../../../com/bluegosling/concurrent/ListenableScheduledEx
 <pre>public&nbsp;&lt;V&gt;&nbsp;<a href="../../../../com/bluegosling/concurrent/scheduler/ScheduledTask.html" title="interface in com.bluegosling.concurrent.scheduler">ScheduledTask</a>&lt;V&gt;&nbsp;submit(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;V&gt;&nbsp;task)</pre>
 <div class="block">
  
- <p>Overrides the return type to be listenable.
+ <p>Overrides the return type to be fluent.
  
  <p>This implementation is the same as using the <a href="../../../../com/bluegosling/concurrent/scheduler/ScheduledTaskManager.html#schedule-java.util.concurrent.Callable-long-java.util.concurrent.TimeUnit-"><code>schedule(Callable, long, TimeUnit)</code></a>
  method but indicating a zero delay so the task is scheduled for immediate execution. The
- returned future is not just a listenable future, but is a <a href="../../../../com/bluegosling/concurrent/scheduler/ScheduledTask.html" title="interface in com.bluegosling.concurrent.scheduler"><code>ScheduledTask</code></a>.</div>
+ returned future is not just a fluent future, but is a <a href="../../../../com/bluegosling/concurrent/scheduler/ScheduledTask.html" title="interface in com.bluegosling.concurrent.scheduler"><code>ScheduledTask</code></a>.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../com/bluegosling/concurrent/ListenableExecutorService.html#submit-java.util.concurrent.Callable-">submit</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/bluegosling/concurrent/ListenableExecutorService.html" title="interface in com.bluegosling.concurrent">ListenableExecutorService</a></code></dd>
+<dd><code><a href="../../../../com/bluegosling/concurrent/executors/FluentExecutorService.html#submit-java.util.concurrent.Callable-">submit</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/bluegosling/concurrent/executors/FluentExecutorService.html" title="interface in com.bluegosling.concurrent.executors">FluentExecutorService</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true#submit-java.util.concurrent.Callable-" title="class or interface in java.util.concurrent">submit</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a></code></dd>
 </dl>
@@ -642,14 +642,14 @@ implements <a href="../../../../com/bluegosling/concurrent/ListenableScheduledEx
 <pre>public&nbsp;<a href="../../../../com/bluegosling/concurrent/scheduler/ScheduledTask.html" title="interface in com.bluegosling.concurrent.scheduler">ScheduledTask</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Void.html?is-external=true" title="class or interface in java.lang">Void</a>&gt;&nbsp;submit(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</pre>
 <div class="block">
  
- <p>Overrides the return type to be listenable.
+ <p>Overrides the return type to be fluent.
  
  <p>This implementation is the same as using the <a href="../../../../com/bluegosling/concurrent/scheduler/ScheduledTaskManager.html#schedule-java.lang.Runnable-long-java.util.concurrent.TimeUnit-"><code>schedule(Runnable, long, TimeUnit)</code></a>
  method but indicating a zero delay so the task is scheduled for immediate execution. The
- returned future is not just a listenable future, but is a <a href="../../../../com/bluegosling/concurrent/scheduler/ScheduledTask.html" title="interface in com.bluegosling.concurrent.scheduler"><code>ScheduledTask</code></a>.</div>
+ returned future is not just a fluent future, but is a <a href="../../../../com/bluegosling/concurrent/scheduler/ScheduledTask.html" title="interface in com.bluegosling.concurrent.scheduler"><code>ScheduledTask</code></a>.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../com/bluegosling/concurrent/ListenableExecutorService.html#submit-java.lang.Runnable-">submit</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/bluegosling/concurrent/ListenableExecutorService.html" title="interface in com.bluegosling.concurrent">ListenableExecutorService</a></code></dd>
+<dd><code><a href="../../../../com/bluegosling/concurrent/executors/FluentExecutorService.html#submit-java.lang.Runnable-">submit</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/bluegosling/concurrent/executors/FluentExecutorService.html" title="interface in com.bluegosling.concurrent.executors">FluentExecutorService</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true#submit-java.lang.Runnable-" title="class or interface in java.util.concurrent">submit</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a></code></dd>
 </dl>
@@ -667,15 +667,15 @@ implements <a href="../../../../com/bluegosling/concurrent/ListenableScheduledEx
                                    V&nbsp;result)</pre>
 <div class="block">
  
- <p>Overrides the return type to be listenable.
+ <p>Overrides the return type to be fluent.
  
  <p>This implementation is similar to using the <a href="../../../../com/bluegosling/concurrent/scheduler/ScheduledTaskManager.html#schedule-java.lang.Runnable-long-java.util.concurrent.TimeUnit-"><code>schedule(Runnable, long, TimeUnit)</code></a>
  method with a zero delay so the task is scheduled for immediate execution. The key difference
  being that this form allows a non-null value to be used as the result. The returned future is
- not just a listenable future, but is a <a href="../../../../com/bluegosling/concurrent/scheduler/ScheduledTask.html" title="interface in com.bluegosling.concurrent.scheduler"><code>ScheduledTask</code></a>.</div>
+ not just a fluent future, but is a <a href="../../../../com/bluegosling/concurrent/scheduler/ScheduledTask.html" title="interface in com.bluegosling.concurrent.scheduler"><code>ScheduledTask</code></a>.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../com/bluegosling/concurrent/ListenableExecutorService.html#submit-java.lang.Runnable-T-">submit</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/bluegosling/concurrent/ListenableExecutorService.html" title="interface in com.bluegosling.concurrent">ListenableExecutorService</a></code></dd>
+<dd><code><a href="../../../../com/bluegosling/concurrent/executors/FluentExecutorService.html#submit-java.lang.Runnable-T-">submit</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/bluegosling/concurrent/executors/FluentExecutorService.html" title="interface in com.bluegosling.concurrent.executors">FluentExecutorService</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true#submit-java.lang.Runnable-T-" title="class or interface in java.util.concurrent">submit</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a></code></dd>
 </dl>
@@ -719,13 +719,13 @@ implements <a href="../../../../com/bluegosling/concurrent/ListenableScheduledEx
 <h4>invokeAll</h4>
 <pre>public&nbsp;&lt;T&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;T&gt;&gt;&nbsp;invokeAll(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;T&gt;&gt;&nbsp;tasks)
                               throws <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/bluegosling/concurrent/ListenableExecutorService.html#invokeAll-java.util.Collection-">ListenableExecutorService</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/bluegosling/concurrent/executors/FluentExecutorService.html#invokeAll-java.util.Collection-">FluentExecutorService</a></code></span></div>
 <div class="block">
  
- <p>Every instance in the returned list will implement <a href="../../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent"><code>ListenableFuture</code></a>.</div>
+ <p>Every instance in the returned list will implement <a href="../../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent"><code>FluentFuture</code></a>.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../com/bluegosling/concurrent/ListenableExecutorService.html#invokeAll-java.util.Collection-">invokeAll</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/bluegosling/concurrent/ListenableExecutorService.html" title="interface in com.bluegosling.concurrent">ListenableExecutorService</a></code></dd>
+<dd><code><a href="../../../../com/bluegosling/concurrent/executors/FluentExecutorService.html#invokeAll-java.util.Collection-">invokeAll</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/bluegosling/concurrent/executors/FluentExecutorService.html" title="interface in com.bluegosling.concurrent.executors">FluentExecutorService</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true#invokeAll-java.util.Collection-" title="class or interface in java.util.concurrent">invokeAll</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -743,13 +743,13 @@ implements <a href="../../../../com/bluegosling/concurrent/ListenableScheduledEx
                                      long&nbsp;timeout,
                                      <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)
                               throws <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/bluegosling/concurrent/ListenableExecutorService.html#invokeAll-java.util.Collection-long-java.util.concurrent.TimeUnit-">ListenableExecutorService</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/bluegosling/concurrent/executors/FluentExecutorService.html#invokeAll-java.util.Collection-long-java.util.concurrent.TimeUnit-">FluentExecutorService</a></code></span></div>
 <div class="block">
  
- <p>Every instance in the returned list will implement <a href="../../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent"><code>ListenableFuture</code></a>.</div>
+ <p>Every instance in the returned list will implement <a href="../../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent"><code>FluentFuture</code></a>.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../com/bluegosling/concurrent/ListenableExecutorService.html#invokeAll-java.util.Collection-long-java.util.concurrent.TimeUnit-">invokeAll</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/bluegosling/concurrent/ListenableExecutorService.html" title="interface in com.bluegosling.concurrent">ListenableExecutorService</a></code></dd>
+<dd><code><a href="../../../../com/bluegosling/concurrent/executors/FluentExecutorService.html#invokeAll-java.util.Collection-long-java.util.concurrent.TimeUnit-">invokeAll</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/bluegosling/concurrent/executors/FluentExecutorService.html" title="interface in com.bluegosling.concurrent.executors">FluentExecutorService</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true#invokeAll-java.util.Collection-long-java.util.concurrent.TimeUnit-" title="class or interface in java.util.concurrent">invokeAll</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
