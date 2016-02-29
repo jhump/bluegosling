@@ -1,6 +1,6 @@
 package com.bluegosling.graph;
 
-import com.bluegosling.concurrent.ListenableFuture;
+import com.bluegosling.concurrent.futures.fluent.FluentFuture;
 
 import java.util.concurrent.Callable;
 
@@ -24,6 +24,6 @@ public interface NodeDecorator {
     *       decorator
     * @return a new callable that decorates the given one
     */
-   <T> Callable<ListenableFuture<T>> decorate(Graph<?> graph, Node<T> node,
-         Callable<ListenableFuture<T>> operation);
+   <T> Callable<FluentFuture<T>> decorate(Graph<?> graph, Node<T> node,
+         Callable<FluentFuture<T>> operation);
 }

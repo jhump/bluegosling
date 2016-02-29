@@ -120,7 +120,7 @@ var activeTableTab = "activeTableTab";
 extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
 implements <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentMap.html?is-external=true" title="class or interface in java.util.concurrent">ConcurrentMap</a>&lt;K,V&gt;, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;K,V&gt;</pre>
 <div class="block">A concurrent navigable map backed by a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/TreeMap.html?is-external=true" title="class or interface in java.util"><code>TreeMap</code></a> and made thread-safe via a
- <a href="../../../com/bluegosling/concurrent/DoubleInstanceLock.html" title="class in com.bluegosling.concurrent"><code>DoubleInstanceLock</code></a>.
+ <a href="../../../com/bluegosling/concurrent/locks/DoubleInstanceLock.html" title="class in com.bluegosling.concurrent.locks"><code>DoubleInstanceLock</code></a>.
  
  <p>This map, its collection views, and iterators support all operations. Iteration will never
  throw <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ConcurrentModificationException.html?is-external=true" title="class or interface in java.util"><code>ConcurrentModificationException</code></a>. One thing that can throw this, however, is trying

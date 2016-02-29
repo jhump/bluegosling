@@ -217,7 +217,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
  
  <p>The actual type of the returned key depends on whether it is asynchronous or optional.
  If it is asynchronous or optional, then this input's type will be
- <code>ListenableFuture&lt;V&gt;</code> where the key's type will be <code>V</code>. But if the input is
+ <code>FluentFuture&lt;V&gt;</code> where the key's type will be <code>V</code>. But if the input is
  synchronous and required, the type of the key is the same as the type of the input.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -239,7 +239,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
  
  <p>The actual type of the returned node depends on whether it is asynchronous or optional.
  If it is asynchronous or optional, then this input's type will be
- <code>ListenableFuture&lt;V&gt;</code> where the node's type will be <code>V</code>. But if the input is
+ <code>FluentFuture&lt;V&gt;</code> where the node's type will be <code>V</code>. But if the input is
  synchronous and required, the type of the node is the same as the type of the input.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -257,7 +257,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <h4>isAsync</h4>
 <pre>public abstract&nbsp;boolean&nbsp;isAsync()</pre>
 <div class="block">Returns true if this is an asynchronous input or not. An asynchronous input's type is
- <a href="../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent"><code>ListenableFuture</code></a>.</div>
+ <a href="../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent"><code>FluentFuture</code></a>.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>true if this is an asynchronous input or not</dd>

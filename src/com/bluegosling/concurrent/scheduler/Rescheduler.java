@@ -1,6 +1,6 @@
 package com.bluegosling.concurrent.scheduler;
 
-import com.bluegosling.concurrent.ListenableRepeatingFuture;
+import com.bluegosling.concurrent.futures.fluent.FluentRepeatingFuture;
 
 import java.util.concurrent.TimeUnit;
 
@@ -24,7 +24,7 @@ public interface Rescheduler<T> {
     * @return the new start time, in {@linkplain System#nanoTime() nano-time}, for the next
     *       scheduled occurrence of the task
     */
-   long computeNextStartTime(ListenableRepeatingFuture<? extends T> future,
+   long computeNextStartTime(FluentRepeatingFuture<? extends T> future,
          long priorStartTimeNanos);
 
    /**

@@ -1,7 +1,7 @@
 package com.bluegosling.collections;
 
-import com.bluegosling.concurrent.ListenableExecutorService;
-import com.bluegosling.concurrent.ListenableFuture;
+import com.bluegosling.concurrent.executors.FluentExecutorService;
+import com.bluegosling.concurrent.futures.fluent.FluentFuture;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -85,28 +85,28 @@ public class ParallelSort2 {
          threshold = remaining / numThreads;
       }
 
-      final ListenableExecutorService executor =
-            ListenableExecutorService.makeListenable(Executors.newFixedThreadPool(numThreads - 1));
+      final FluentExecutorService executor =
+            FluentExecutorService.makeFluent(Executors.newFixedThreadPool(numThreads - 1));
       try {
          @SuppressWarnings("unchecked") // we only deal with Ts in the array
          final T array[] = (T[]) list.toArray();
          final int hi = array.length;
          final int mid = hi >>> 1;
-         ListenableFuture<?> loHalf = ListenableFuture.dereference(executor.submit(
-               new Callable<ListenableFuture<Void>>() {
+         FluentFuture<?> loHalf = FluentFuture.dereference(executor.submit(
+               new Callable<FluentFuture<Void>>() {
                   @SuppressWarnings("synthetic-access") // invokes private member of enclosing class
-                  @Override public ListenableFuture<Void> call() {
+                  @Override public FluentFuture<Void> call() {
                      return recursiveSort(array, 0, mid, threshold, comparator, executor);
                   }
                }));
-         ListenableFuture<?> hiHalf = ListenableFuture.dereference(executor.submit(
-               new Callable<ListenableFuture<Void>>() {
+         FluentFuture<?> hiHalf = FluentFuture.dereference(executor.submit(
+               new Callable<FluentFuture<Void>>() {
                   @SuppressWarnings("synthetic-access") // invokes private member of enclosing class
-                  @Override public ListenableFuture<Void> call() {
+                  @Override public FluentFuture<Void> call() {
                      return recursiveSort(array, mid, hi, threshold, comparator, executor);
                   }
                }));
-         ListenableFuture<?> result = loHalf.combineWith(hiHalf,
+         FluentFuture<?> result = loHalf.combineWith(hiHalf,
                (o1, o2) -> {
                   // once two halves are sorted, merge them into list
                   ListIterator<T> iter = list.listIterator();
@@ -154,24 +154,24 @@ public class ParallelSort2 {
       }
    }
 
-   private static <T> ListenableFuture<Void> recursiveSort(final T array[], final int lo,
+   private static <T> FluentFuture<Void> recursiveSort(final T array[], final int lo,
          final int hi, final int threshold, final Comparator<? super T> comparator,
-         final ListenableExecutorService executor) {
+         final FluentExecutorService executor) {
       if (hi - lo <= threshold) {
          Arrays.sort(array, lo, hi, comparator);
-         return ListenableFuture.completedFuture(null);
+         return FluentFuture.completedFuture(null);
       }
       final int mid = lo + ((hi - lo) >>> 1);
       // submit task to sort lower half in parallel
-      ListenableFuture<Void> loHalf = ListenableFuture.dereference(executor.submit(
-            new Callable<ListenableFuture<Void>>() {
+      FluentFuture<Void> loHalf = FluentFuture.dereference(executor.submit(
+            new Callable<FluentFuture<Void>>() {
                @SuppressWarnings("synthetic-access") // invokes private member of enclosing class
-               @Override public ListenableFuture<Void> call() {
+               @Override public FluentFuture<Void> call() {
                   return recursiveSort(array, lo, mid, threshold, comparator, executor);
                }
             }));
       // sort high half in this thread
-      ListenableFuture<Void> hiHalf =
+      FluentFuture<Void> hiHalf =
             recursiveSort(array, mid, hi, threshold, comparator, executor);
       // once two halves are sorted, merge them into list
       return loHalf.combineWith(hiHalf, 

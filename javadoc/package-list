@@ -6,6 +6,10 @@ com.bluegosling.collections
 com.bluegosling.concurrent
 com.bluegosling.concurrent.atoms
 com.bluegosling.concurrent.contended
+com.bluegosling.concurrent.executors
+com.bluegosling.concurrent.futures
+com.bluegosling.concurrent.futures.fluent
+com.bluegosling.concurrent.locks
 com.bluegosling.concurrent.scheduler
 com.bluegosling.concurrent.unsafe
 com.bluegosling.di

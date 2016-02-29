@@ -1,6 +1,6 @@
 package com.bluegosling.concurrent.scheduler;
 
-import com.bluegosling.concurrent.ListenableScheduledFuture;
+import com.bluegosling.concurrent.futures.fluent.FluentScheduledFuture;
 
 import java.util.concurrent.ScheduledFuture;
 
@@ -17,7 +17,7 @@ import java.util.concurrent.ScheduledFuture;
  *
  * @param <V> the type of value returned upon completion of the task
  */
-public interface ScheduledTask<V> extends ListenableScheduledFuture<V> {
+public interface ScheduledTask<V> extends FluentScheduledFuture<V> {
    /**
     * Returns the task definition for which this task was created.
     * 

@@ -6,7 +6,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
-import com.bluegosling.concurrent.ListenableFuture;
+import com.bluegosling.concurrent.futures.fluent.FluentFuture;
 
 import org.junit.Test;
 
@@ -69,7 +69,7 @@ public class GraphTest {
    
    private <T> void checkComputation(Computation<T> computation, T expectedResult)
          throws Exception {
-      ListenableFuture<T> value = computation.compute();
+      FluentFuture<T> value = computation.compute();
       assertEquals(expectedResult, value.get());
       
       // result is memoized and not recomputed

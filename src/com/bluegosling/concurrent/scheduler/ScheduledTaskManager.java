@@ -2,9 +2,9 @@ package com.bluegosling.concurrent.scheduler;
 
 import com.bluegosling.collections.TransformingList;
 import com.bluegosling.concurrent.FutureListener;
-import com.bluegosling.concurrent.ListenableFuture;
-import com.bluegosling.concurrent.ListenableScheduledExecutorService;
 import com.bluegosling.concurrent.Scheduled;
+import com.bluegosling.concurrent.executors.FluentScheduledExecutorService;
+import com.bluegosling.concurrent.futures.fluent.FluentFuture;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * follow:
  * <ul>
  *    <li>Asynchronous processing using {@link FutureListener}s. All of the futures returned by
- *    this service are instances of {@link ListenableFuture}, which has a broader and more usable
+ *    this service are instances of {@link FluentFuture}, which has a broader and more usable
  *    API than the standard {@link Future}, including the ability to add listeners to process
  *    results asynchronously.</li>
  *    <li>Greater control over repeated occurrences and how they are scheduled. Instead of a task
@@ -69,7 +69,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 // TODO: tests!
-public class ScheduledTaskManager implements ListenableScheduledExecutorService {
+public class ScheduledTaskManager implements FluentScheduledExecutorService {
    
    private final ThreadPoolExecutor executor;
    
@@ -131,7 +131,7 @@ public class ScheduledTaskManager implements ListenableScheduledExecutorService 
    
    /**
     * Schedules the specified task for execution. If the specified delay is zero or negative, it is
-    * scheduled for immediate execution. The returned object will not only be a listenable future,
+    * scheduled for immediate execution. The returned object will not only be a fluent future,
     * it will be a {@link ScheduledTask}.
     */
    @Override
@@ -143,7 +143,7 @@ public class ScheduledTaskManager implements ListenableScheduledExecutorService 
    
    /**
     * Schedules the specified task for execution. If the specified delay is zero or negative, it is
-    * scheduled for immediate execution. The returned object will not only be a listenable future,
+    * scheduled for immediate execution. The returned object will not only be a fluent future,
     * it will be a {@link ScheduledTask}.
     */
    @Override
@@ -170,7 +170,7 @@ public class ScheduledTaskManager implements ListenableScheduledExecutorService 
     * @param initialDelay the delay from submission time when the first occurrence should execute
     * @param period the period of time between occurrences
     * @param unit the unit for {@code initialDelay} and {@code period}
-    * @return a listenable scheduled future that can be used to inspect the task's state and past
+    * @return a fluent scheduled future that can be used to inspect the task's state and past
     *       results
     * @throws NullPointerException if {@code task} or {@code unit} is {@code null}
     * @throws IllegalArgumentException if {@code period} is non-positive
@@ -220,7 +220,7 @@ public class ScheduledTaskManager implements ListenableScheduledExecutorService 
     * @param initialDelay the delay from submission time when the first occurrence should execute
     * @param delay the delay between occurrences
     * @param unit the unit for {@code initialDelay} and {@code delay}
-    * @return a listenable scheduled future that can be used to inspect the task's state and past
+    * @return a fluent scheduled future that can be used to inspect the task's state and past
     *       results
     * @throws NullPointerException if {@code task} or {@code unit} is {@code null}
     * @throws IllegalArgumentException if {@code delay} is non-positive
@@ -283,7 +283,7 @@ public class ScheduledTaskManager implements ListenableScheduledExecutorService 
     * 
     * <p>This implementation is the same as using the {@link #schedule(Callable, long, TimeUnit)}
     * method but indicating a zero delay so the task is scheduled for immediate execution. The
-    * returned future is not just a listenable future, but is a {@link ScheduledTask}.
+    * returned future is not just a fluent future, but is a {@link ScheduledTask}.
     */
    @Override
    public <V> ScheduledTask<V> submit(Callable<V> task) {
@@ -296,7 +296,7 @@ public class ScheduledTaskManager implements ListenableScheduledExecutorService 
     * 
     * <p>This implementation is the same as using the {@link #schedule(Runnable, long, TimeUnit)}
     * method but indicating a zero delay so the task is scheduled for immediate execution. The
-    * returned future is not just a listenable future, but is a {@link ScheduledTask}.
+    * returned future is not just a fluent future, but is a {@link ScheduledTask}.
     */
    @Override
    public ScheduledTask<Void> submit(Runnable task) {
@@ -310,7 +310,7 @@ public class ScheduledTaskManager implements ListenableScheduledExecutorService 
     * <p>This implementation is similar to using the {@link #schedule(Runnable, long, TimeUnit)}
     * method with a zero delay so the task is scheduled for immediate execution. The key difference
     * being that this form allows a non-null value to be used as the result. The returned future is
-    * not just a listenable future, but is a {@link ScheduledTask}.
+    * not just a fluent future, but is a {@link ScheduledTask}.
     */
    @Override
    public <V> ScheduledTask<V> submit(Runnable task, V result) {
@@ -480,7 +480,7 @@ public class ScheduledTaskManager implements ListenableScheduledExecutorService 
          results.add(submit(task));
       }
       for (Future<T> future : results) {
-         ((ListenableFuture<T>) future).await();
+         ((FluentFuture<T>) future).await();
       }
       return results;
    }
@@ -494,7 +494,7 @@ public class ScheduledTaskManager implements ListenableScheduledExecutorService 
          long remainingNanos = deadline - System.nanoTime();
          if (remainingNanos < 0) {
             // don't bother submitting a task for execution if deadline has already expired
-            results.add(ListenableFuture.cancelledFuture());
+            results.add(FluentFuture.cancelledFuture());
          } else {
             results.add(submit(task));
          }
@@ -502,7 +502,7 @@ public class ScheduledTaskManager implements ListenableScheduledExecutorService 
       for (Future<T> future : results) {
          long remainingNanos = deadline - System.nanoTime();
          if (remainingNanos < 0
-               || !((ListenableFuture<T>) future).await(remainingNanos, TimeUnit.NANOSECONDS)) {
+               || !((FluentFuture<T>) future).await(remainingNanos, TimeUnit.NANOSECONDS)) {
             future.cancel(false);
          }
       }

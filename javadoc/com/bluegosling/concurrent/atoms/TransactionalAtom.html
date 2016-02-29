@@ -123,7 +123,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
  <p>When a transaction is rolled back, all futures corresponding to rolled back commute operations
  are cancelled.
  
- <p>Every transactional atom uses a <a href="../../../../com/bluegosling/concurrent/HierarchicalLock.html" title="class in com.bluegosling.concurrent"><code>HierarchicalLock</code></a> for synchronizing access from
+ <p>Every transactional atom uses a <a href="../../../../com/bluegosling/concurrent/locks/HierarchicalLock.html" title="class in com.bluegosling.concurrent.locks"><code>HierarchicalLock</code></a> for synchronizing access from
  potentially multiple concurrent transactions. Transactions that pin the atom's value acquire
  shared locks; those that modify atom's value acquire exclusive locks. Transactions are restarted
  if a deadlock is detected when acquiring atoms' locks.</div>
@@ -197,7 +197,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="../../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent">ListenableFuture</a>&lt;<a href="../../../../com/bluegosling/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent">FluentFuture</a>&lt;<a href="../../../../com/bluegosling/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/bluegosling/concurrent/atoms/TransactionalAtom.html#commute-java.util.function.Function-">commute</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../../com/bluegosling/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>,? extends <a href="../../../../com/bluegosling/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;&nbsp;function)</code>
 <div class="block">Enqueues a commutative transform operation.</div>
 </td>
@@ -368,7 +368,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
  affect any of this atom's components (or their components, i.e. descendants).
  
  <p>More precisely, the component is protected by a lock that is a child of this atom's lock
- (see <a href="../../../../com/bluegosling/concurrent/HierarchicalLock.html" title="class in com.bluegosling.concurrent"><code>HierarchicalLock</code></a>).</div>
+ (see <a href="../../../../com/bluegosling/concurrent/locks/HierarchicalLock.html" title="class in com.bluegosling.concurrent.locks"><code>HierarchicalLock</code></a>).</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a new atom that is a component of this atom</dd>
@@ -525,7 +525,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockList">
 <li class="blockList">
 <h4>commute</h4>
-<pre>public&nbsp;<a href="../../../../com/bluegosling/concurrent/ListenableFuture.html" title="interface in com.bluegosling.concurrent">ListenableFuture</a>&lt;<a href="../../../../com/bluegosling/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;&nbsp;commute(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../../com/bluegosling/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>,? extends <a href="../../../../com/bluegosling/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;&nbsp;function)</pre>
+<pre>public&nbsp;<a href="../../../../com/bluegosling/concurrent/futures/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.futures.fluent">FluentFuture</a>&lt;<a href="../../../../com/bluegosling/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;&nbsp;commute(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html?is-external=true" title="class or interface in java.util.function">Function</a>&lt;? super <a href="../../../../com/bluegosling/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>,? extends <a href="../../../../com/bluegosling/concurrent/atoms/TransactionalAtom.html" title="type parameter in TransactionalAtom">T</a>&gt;&nbsp;function)</pre>
 <div class="block">Enqueues a commutative transform operation. This differs from <a href="../../../../com/bluegosling/concurrent/atoms/TransactionalAtom.html#updateAndGet-java.util.function.Function-"><code>updateAndGet(Function)</code></a>
  in that commutes do not eagerly acquire an exclusive lock on the atom. This allows for
  concurrent transactions to also be modifying the same atom. But since the function must be

@@ -1,10 +1,12 @@
 package com.bluegosling.concurrent;
 
+import com.bluegosling.concurrent.futures.fluent.FluentFuture;
+
 import java.util.function.Consumer;
 
 /**
  * A listener for the completion of a future. When {@linkplain
- * ListenableFuture#addListener(FutureListener, java.util.concurrent.Executor) registered with a
+ * FluentFuture#addListener(FutureListener, java.util.concurrent.Executor) registered with a
  * future}, the listener will be called once the future completes.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
@@ -19,7 +21,7 @@ public interface FutureListener<T> {
     * 
     * @param completedFuture the completed future
     */
-   void onCompletion(ListenableFuture<? extends T> completedFuture);
+   void onCompletion(FluentFuture<? extends T> completedFuture);
 
    /**
     * Creates a listener that will visit the completed future. When the listener is called from a
@@ -48,7 +50,7 @@ public interface FutureListener<T> {
     * @param consumer a consumer
     * @return a listener that calls {@code consumer.accept(completedFuture)} when invoked
     */
-   static <T> FutureListener<T> forConsumer(Consumer<? super ListenableFuture<T>> consumer) {
-      return f -> consumer.accept(ListenableFuture.cast(f));
+   static <T> FutureListener<T> forConsumer(Consumer<? super FluentFuture<T>> consumer) {
+      return f -> consumer.accept(FluentFuture.cast(f));
    }
 }

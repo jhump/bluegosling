@@ -1,11 +1,11 @@
 package com.bluegosling.graph;
 
-import static com.bluegosling.concurrent.ListenableFuture.dereference;
-import static com.bluegosling.concurrent.ListenableFuture.join;
+import static com.bluegosling.concurrent.futures.fluent.FluentFuture.dereference;
+import static com.bluegosling.concurrent.futures.fluent.FluentFuture.join;
 
 import com.bluegosling.concurrent.FutureListener;
-import com.bluegosling.concurrent.ListenableFuture;
-import com.bluegosling.concurrent.SettableRunnableFuture;
+import com.bluegosling.concurrent.futures.fluent.FluentFuture;
+import com.bluegosling.concurrent.futures.fluent.SettableRunnableFluentFuture;
 import com.bluegosling.reflect.TypeRef;
 import com.bluegosling.util.Immediate;
 
@@ -36,8 +36,8 @@ public class Computation<T> {
    private final Graph<T> graph;
    private final Executor executor;
    private final Iterable<NodeDecorator> decorators;
-   private final Map<Key<?>, ListenableFuture<?>> inputs;
-   private ListenableFuture<T> result;
+   private final Map<Key<?>, FluentFuture<?>> inputs;
+   private FluentFuture<T> result;
    
    Computation(Graph<T> graph, Executor executor, Iterable<NodeDecorator> decorators) {
       this.graph = graph;
@@ -114,14 +114,14 @@ public class Computation<T> {
     * @see Graph#inputKeys()
     */
    public <U> Computation<T> bindInput(Key<U> key, U input) {
-      bind(key, ListenableFuture.completedFuture(input));
+      bind(key, FluentFuture.completedFuture(input));
       return this;
    }
    
    /**
     * Binds an async input to the computation. All inputs must be bound before the computation
     * can execute. If the input key has a {@linkplain Key#qualifier() qualifier}, you must use
-    * {@link #bindAsyncInput(Key, ListenableFuture)} instead.
+    * {@link #bindAsyncInput(Key, FluentFuture)} instead.
     * 
     * <p>This is shorthand for the following:<br>
     * {@code computation.bindAsyncInput(Key.of(type), input);}
@@ -136,14 +136,14 @@ public class Computation<T> {
     *       
     * @see Graph#inputKeys()
     */
-   public <U> Computation<T> bindAsyncInput(Class<U> type, ListenableFuture<U> input) {
+   public <U> Computation<T> bindAsyncInput(Class<U> type, FluentFuture<U> input) {
       return bindAsyncInput(Key.of(type), input);
    }
    
    /**
     * Binds an async input to the computation. All inputs must be bound before the computation
     * can execute. If the input key has a {@linkplain Key#qualifier() qualifier}, you must use
-    * {@link #bindAsyncInput(Key, ListenableFuture)} instead.
+    * {@link #bindAsyncInput(Key, FluentFuture)} instead.
     * 
     * <p>This is shorthand for the following:<br>
     * {@code computation.bindAsyncInput(Key.of(type), input);}
@@ -158,7 +158,7 @@ public class Computation<T> {
     *       
     * @see Graph#inputKeys()
     */
-   public <U> Computation<T> bindAsyncInput(TypeRef<U> type, ListenableFuture<U> input) {
+   public <U> Computation<T> bindAsyncInput(TypeRef<U> type, FluentFuture<U> input) {
       return bindAsyncInput(Key.of(type), input);
    }
    
@@ -176,12 +176,12 @@ public class Computation<T> {
     *       
     * @see Graph#inputKeys()
     */
-   public <U> Computation<T> bindAsyncInput(Key<U> type, ListenableFuture<U> input) {
+   public <U> Computation<T> bindAsyncInput(Key<U> type, FluentFuture<U> input) {
       bind(type, input);
       return this;
    }
    
-   private <U> void bind(Key<U> key, ListenableFuture<U> future) {
+   private <U> void bind(Key<U> key, FluentFuture<U> future) {
       if (result != null) {
          throw new IllegalStateException("This computation has already been started. "
                + "Use a new computation to define different inputs and run it again.");
@@ -201,7 +201,7 @@ public class Computation<T> {
     *
     * @return a future that produces the result of the computation
     */
-   public ListenableFuture<T> compute() {
+   public FluentFuture<T> compute() {
       if (result != null) {
          return result;
       }
@@ -215,7 +215,7 @@ public class Computation<T> {
          throw new IllegalStateException(message);
       }
       
-      Map<Node<?>, ListenableFuture<?>> resolved = new HashMap<>();
+      Map<Node<?>, FluentFuture<?>> resolved = new HashMap<>();
       return result = resolveFuture(graph.resultNode(), resolved);
    }
    
@@ -228,20 +228,20 @@ public class Computation<T> {
     * @param resolved cache of resolved nodes
     * @return the resolved future value of the given node
     */
-   private <U> ListenableFuture<U> resolveFuture(Node<U> node,
-         Map<Node<?>, ListenableFuture<?>> resolved) {
+   private <U> FluentFuture<U> resolveFuture(Node<U> node,
+         Map<Node<?>, FluentFuture<?>> resolved) {
       @SuppressWarnings("unchecked") // we put the correct type into map, so trust what comes out
-      ListenableFuture<U> alreadyResolved = (ListenableFuture<U>) resolved.get(node);
+      FluentFuture<U> alreadyResolved = (FluentFuture<U>) resolved.get(node);
       if (alreadyResolved != null) {
          return alreadyResolved;
       }
       List<Node.Input<?>> nodeInputs = node.inputs();
       int len = nodeInputs.size();
-      ListenableFuture<?> deps[] = new ListenableFuture<?>[len];
-      List<ListenableFuture<?>> synchronousDeps = new ArrayList<>(len);
+      FluentFuture<?> deps[] = new FluentFuture<?>[len];
+      List<FluentFuture<?>> synchronousDeps = new ArrayList<>(len);
       for (int i = 0; i < len; i++) {
          Node.Input<?> in = nodeInputs.get(i);
-         ListenableFuture<?> future;
+         FluentFuture<?> future;
          if (in.node() != null) {
             future = resolveFuture(in.node(), resolved);
          } else {
@@ -252,21 +252,21 @@ public class Computation<T> {
             synchronousDeps.add(future);
          }
       }
-      ListenableFuture<U> ret = dereference(chain(join(synchronousDeps),
+      FluentFuture<U> ret = dereference(chain(join(synchronousDeps),
             decorate(node, decorators.iterator(), () -> node.apply(buildArgs(node, deps))),
             executor));
       resolved.put(node, ret);
       return ret;
    }
    
-   private <U> Callable<ListenableFuture<U>> decorate(Node<U> node, Iterator<NodeDecorator> iter,
-         Callable<ListenableFuture<U>> operation) {
+   private <U> Callable<FluentFuture<U>> decorate(Node<U> node, Iterator<NodeDecorator> iter,
+         Callable<FluentFuture<U>> operation) {
       return iter.hasNext()
             ? iter.next().decorate(graph, node, decorate(node, iter, operation))
             : operation;
    }
    
-   private Object[] buildArgs(Node<?> node, ListenableFuture<?> deps[]) {
+   private Object[] buildArgs(Node<?> node, FluentFuture<?> deps[]) {
       int len = deps.length;
       List<Node.Input<?>> nodeInputs = node.inputs();
       Object args[] = new Object[len];
@@ -295,7 +295,7 @@ public class Computation<T> {
 
    /**
     * Chains the given operation to run once the source future completes. This is kind of like
-    * {@link ListenableFuture#chainTo(Callable, Executor)} with a couple of exceptions:
+    * {@link FluentFuture#chainTo(Callable, Executor)} with a couple of exceptions:
     * <ul>
     * <li>The cancellation status of the returned future is kept in sync with the source. So
     * cancelling the returned future will cancel the source and vice versa.</li>
@@ -308,9 +308,9 @@ public class Computation<T> {
     * @param executor the executed used to run the operation
     * @return a future that represents the future result of the given operation
     */
-   static <T, U> ListenableFuture<U> chain(ListenableFuture<T> src, Callable<U> op,
+   static <T, U> FluentFuture<U> chain(FluentFuture<T> src, Callable<U> op,
          Executor executor) {
-      SettableRunnableFuture<U> result = new SettableRunnableFuture<U>(op) {
+      SettableRunnableFluentFuture<U> result = new SettableRunnableFluentFuture<U>(op) {
          // keep cancellation status in sync
          @Override public boolean cancel(boolean mayInterrupt) {
             if (super.cancel(mayInterrupt)) {

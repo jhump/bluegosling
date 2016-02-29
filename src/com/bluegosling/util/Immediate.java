@@ -3,7 +3,7 @@ package com.bluegosling.util;
 import static java.util.Objects.requireNonNull;
 
 import com.bluegosling.concurrent.FutureVisitor;
-import com.bluegosling.concurrent.ListenableFuture;
+import com.bluegosling.concurrent.futures.fluent.FluentFuture;
 import com.bluegosling.vars.Variable;
 
 import java.util.concurrent.CancellationException;
@@ -14,9 +14,9 @@ import java.util.concurrent.Future;
  * Like a {@link Future}, except it represents a result that is available immediately. Unlike a
  * {@link Variable}, it can represent either a successful result value or a cause of failure.
  * 
- * <p>Its API closely resembles that of {@link ListenableFuture} except that, since the value is
- * immediately available, no methods ever block. So methods such as {@link ListenableFuture#isDone()
- * isDone()} or {@link ListenableFuture#await() await()} are unnecessary and thus absent.
+ * <p>Its API closely resembles that of {@link FluentFuture} except that, since the value is
+ * immediately available, no methods ever block. So methods such as {@link FluentFuture#isDone()
+ * isDone()} or {@link FluentFuture#await() await()} are unnecessary and thus absent.
  * 
  * @param <T> the type of value
  */
@@ -63,8 +63,8 @@ public abstract class Immediate<T> {
       if (!f.isDone()) {
          throw new IllegalStateException();
       }
-      if (f instanceof ListenableFuture) {
-         ListenableFuture<T> lf = (ListenableFuture<T>) f;
+      if (f instanceof FluentFuture) {
+         FluentFuture<T> lf = (FluentFuture<T>) f;
          if (lf.isSuccessful()) {
             return successful(lf.getResult());
          } else if (lf.isCancelled()) {
@@ -111,7 +111,7 @@ public abstract class Immediate<T> {
     *
     * @return this object's successful result
     * @throws IllegalStateException if this object is cancelled or failed
-    * @see ListenableFuture#getResult()
+    * @see FluentFuture#getResult()
     */
    public abstract T getResult();
    
@@ -120,7 +120,7 @@ public abstract class Immediate<T> {
     *
     * @return this object's cause of failure.
     * @throws IllegalStateException if this object is successful or cancelled
-    * @see ListenableFuture#getResult()
+    * @see FluentFuture#getResult()
     */
    public abstract Throwable getFailure();
    
@@ -136,7 +136,7 @@ public abstract class Immediate<T> {
     * Determines if this object is successful or not.
     *
     * @return true if this object is successful
-    * @see ListenableFuture#isSuccessful()
+    * @see FluentFuture#isSuccessful()
     */
    public abstract boolean isSuccessful();
    
@@ -144,7 +144,7 @@ public abstract class Immediate<T> {
     * Determines if this object failed or not.
     *
     * @return true if this object failed
-    * @see ListenableFuture#isFailed()
+    * @see FluentFuture#isFailed()
     */
    public abstract boolean isFailed();
    
@@ -307,9 +307,9 @@ public abstract class Immediate<T> {
       }
    }
    
-   public ListenableFuture<T> asFuture() {
+   public FluentFuture<T> asFuture() {
       return isFailed()
-            ? ListenableFuture.failedFuture(getFailure())
-            : ListenableFuture.completedFuture(getResult());
+            ? FluentFuture.failedFuture(getFailure())
+            : FluentFuture.completedFuture(getResult());
    }
 }

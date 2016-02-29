@@ -1,7 +1,7 @@
 package com.bluegosling.collections;
 
-import com.bluegosling.concurrent.ListenableExecutorService;
-import com.bluegosling.concurrent.ListenableFuture;
+import com.bluegosling.concurrent.executors.FluentExecutorService;
+import com.bluegosling.concurrent.futures.fluent.FluentFuture;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -155,9 +155,9 @@ public class SlowParallelSort {
       BlockingQueue<Supplier<T>> sources = new ArrayBlockingQueue<Supplier<T>>(numThreads);
       AtomicInteger chunksSorted = new AtomicInteger();
       AtomicInteger mergersStarted = new AtomicInteger();
-      ListenableFuture<?> results[] = new ListenableFuture<?>[numThreads];
-      ListenableExecutorService svc =
-            ListenableExecutorService.makeListenable(Executors.newFixedThreadPool(numThreads));
+      FluentFuture<?> results[] = new FluentFuture<?>[numThreads];
+      FluentExecutorService svc =
+            FluentExecutorService.makeFluent(Executors.newFixedThreadPool(numThreads));
       
       try {
          for (int i = 0; i < numThreads; i++) {
@@ -165,7 +165,7 @@ public class SlowParallelSort {
                   chunksSorted, mergersStarted, ret));
          }
          // wait for them all to finish
-         ListenableFuture.join(results).get();
+         FluentFuture.join(results).get();
       
       } catch (Exception e) {
          // on failure, make sure all tasks are cancelled

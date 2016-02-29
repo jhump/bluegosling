@@ -1,6 +1,6 @@
 package com.bluegosling.concurrent.scheduler;
 
-import com.bluegosling.concurrent.ListenableRepeatingFuture;
+import com.bluegosling.concurrent.futures.fluent.FluentRepeatingFuture;
 
 /**
  * Utility class with typical {@link Rescheduler} implementations.
@@ -33,7 +33,7 @@ final class Reschedulers {
       }
       
       @Override
-      public long computeNextStartTime(ListenableRepeatingFuture<? extends Object> future,
+      public long computeNextStartTime(FluentRepeatingFuture<? extends Object> future,
             long priorStartTimeNanos) {
          return computeNextStartTime(priorStartTimeNanos, System.nanoTime());
       }
@@ -69,7 +69,7 @@ final class Reschedulers {
       }
       
       @Override
-      public long computeNextStartTime(ListenableRepeatingFuture<? extends Object> future,
+      public long computeNextStartTime(FluentRepeatingFuture<? extends Object> future,
             long priorStartTimeNanos) {
          return System.nanoTime() + delayNanos;
       }

@@ -2,7 +2,7 @@ package com.bluegosling.concurrent.scheduler;
 
 import com.bluegosling.concurrent.FutureListener;
 import com.bluegosling.concurrent.FutureVisitor;
-import com.bluegosling.concurrent.ListenableFuture;
+import com.bluegosling.concurrent.futures.fluent.FluentFuture;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Delayed;
@@ -127,7 +127,7 @@ class RepeatingScheduledTaskImpl<V> implements RepeatingScheduledTask<V> {
    @Override
    public void addListenerForEachInstance(final FutureListener<? super V> listener,
          Executor executor) {
-      final ListenableFuture<V> self = this; 
+      final FluentFuture<V> self = this; 
       taskDef.addListener(new ScheduledTaskListener<V>() {
          @Override
          public void taskCompleted(ScheduledTask<? extends V> task) {
@@ -173,7 +173,7 @@ class RepeatingScheduledTaskImpl<V> implements RepeatingScheduledTask<V> {
 
    @Override
    public void addListener(final FutureListener<? super V> listener, Executor executor) {
-      final ListenableFuture<V> self = this; 
+      final FluentFuture<V> self = this; 
       taskDef.addListener(new ScheduledTaskListener<V>() {
          @Override
          public void taskCompleted(ScheduledTask<? extends V> task) {
