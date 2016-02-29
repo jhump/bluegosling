@@ -1,6 +1,6 @@
 package com.bluegosling.collections;
 
-import com.bluegosling.concurrent.DoubleInstanceLock;
+import com.bluegosling.concurrent.locks.DoubleInstanceLock;
 
 import java.util.AbstractCollection;
 import java.util.AbstractSet;

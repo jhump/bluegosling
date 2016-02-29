@@ -1,6 +1,6 @@
 package com.bluegosling.concurrent.scheduler;
 
-import com.bluegosling.concurrent.ListenableScheduledFutureTaskTest;
+import com.bluegosling.concurrent.futures.fluent.FluentScheduledFutureTaskTest;
 import com.bluegosling.util.Clock;
 
 import java.util.concurrent.Callable;
@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 // TODO: more test cases, specific to ScheduledTask API
-public class ScheduledTaskImplTest extends ListenableScheduledFutureTaskTest {
+public class ScheduledTaskImplTest extends FluentScheduledFutureTaskTest {
 
    private ScheduledTaskManager taskManager;
    

@@ -1,7 +1,7 @@
 package com.bluegosling.concurrent.scheduler;
 
-import com.bluegosling.concurrent.ListenableRepeatingFuture;
-import com.bluegosling.concurrent.ListenableScheduledFutureTask;
+import com.bluegosling.concurrent.futures.fluent.FluentRepeatingFuture;
+import com.bluegosling.concurrent.futures.fluent.FluentScheduledFutureTask;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.ArrayDeque;
@@ -378,16 +378,16 @@ class ScheduledTaskDefinitionImpl<V> implements ScheduledTaskDefinition<V> {
       return true;
    }
    
-   ListenableRepeatingFuture<V> asRepeatingFuture() {
+   FluentRepeatingFuture<V> asRepeatingFuture() {
       return new RepeatingScheduledTaskImpl<V>(this);
    }
    
    /**
-    * Implementation of {@link ScheduledTask} based on {@link ListenableScheduledFutureTask}.
+    * Implementation of {@link ScheduledTask} based on {@link FluentScheduledFutureTask}.
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   class ScheduledTaskImpl extends ListenableScheduledFutureTask<V> implements ScheduledTask<V> {
+   class ScheduledTaskImpl extends FluentScheduledFutureTask<V> implements ScheduledTask<V> {
       
       private final long taskScheduledStartMillis;
       private final AtomicLong taskStartMillis;

@@ -1,8 +1,8 @@
 package com.bluegosling.possible;
 
-import com.bluegosling.concurrent.ListenableFuture;
+import com.bluegosling.concurrent.futures.fluent.FluentFuture;
 import com.bluegosling.possible.Possibles.FuturePossible;
-import com.bluegosling.possible.Possibles.ListenableFuturePossible;
+import com.bluegosling.possible.Possibles.FluentFuturePossible;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -187,8 +187,8 @@ public interface Possible<T> {
     * @return a view of the future as a {@link Possible}
     */
    static <T> Possible<T> fromFuture(Future<? extends T> future) {
-      if (future instanceof ListenableFuture) {
-         return new ListenableFuturePossible<T>((ListenableFuture<? extends T>) future);
+      if (future instanceof FluentFuture) {
+         return new FluentFuturePossible<T>((FluentFuture<? extends T>) future);
       } else {
          return new FuturePossible<T>(future);
       }

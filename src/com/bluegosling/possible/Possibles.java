@@ -1,6 +1,6 @@
 package com.bluegosling.possible;
 
-import com.bluegosling.concurrent.ListenableFuture;
+import com.bluegosling.concurrent.futures.fluent.FluentFuture;
 
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
@@ -11,10 +11,10 @@ final class Possibles {
    private Possibles() {
    }
 
-   static class ListenableFuturePossible<T> extends AbstractDynamicPossible<T> {
-      private final ListenableFuture<? extends T> future;
+   static class FluentFuturePossible<T> extends AbstractDynamicPossible<T> {
+      private final FluentFuture<? extends T> future;
       
-      ListenableFuturePossible(ListenableFuture<? extends T> future) {
+      FluentFuturePossible(FluentFuture<? extends T> future) {
          this.future = future;
       }
       

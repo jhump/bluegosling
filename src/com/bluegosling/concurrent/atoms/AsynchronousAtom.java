@@ -2,13 +2,13 @@ package com.bluegosling.concurrent.atoms;
 
 import static com.bluegosling.concurrent.ThreadFactories.newGroupingDaemonThreadFactory;
 
-import com.bluegosling.concurrent.ActorThreadPool;
 import com.bluegosling.concurrent.FutureListener;
 import com.bluegosling.concurrent.FutureVisitor;
-import com.bluegosling.concurrent.ListenableFuture;
-import com.bluegosling.concurrent.ListenableFutureTask;
-import com.bluegosling.concurrent.RunnableListenableFuture;
-import com.bluegosling.concurrent.SerializingExecutor;
+import com.bluegosling.concurrent.executors.ActorThreadPool;
+import com.bluegosling.concurrent.executors.SerializingExecutor;
+import com.bluegosling.concurrent.futures.fluent.FluentFuture;
+import com.bluegosling.concurrent.futures.fluent.FluentFutureTask;
+import com.bluegosling.concurrent.futures.fluent.RunnableFluentFuture;
 import com.bluegosling.function.TriFunction;
 import com.bluegosling.possible.Reference;
 
@@ -149,8 +149,8 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
     * sequentially with respect to other tasks for this same atom. So it need not be thread-safe.
 
     */
-   private final LinkedList<RunnableListenableFuture<T>> queued =
-         new LinkedList<RunnableListenableFuture<T>>();
+   private final LinkedList<RunnableFluentFuture<T>> queued =
+         new LinkedList<RunnableFluentFuture<T>>();
    
    /**
     * The size of the queue of operations; zero unless the atom is blocked due to prior error. This
@@ -337,7 +337,7 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
     */
    private void processQueued() {
       while (!queued.isEmpty() && !blocked) {
-         RunnableListenableFuture<T> task = queued.remove();
+         RunnableFluentFuture<T> task = queued.remove();
          queueSize = queued.size();
          runSingleTask(task);
       }
@@ -376,7 +376,7 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
     * @return a future that completes with the atom's value once all currently pending operations
     *       complete
     */
-   public ListenableFuture<T> getPending() {
+   public FluentFuture<T> getPending() {
       return submit(() -> value);
    }
    
@@ -390,7 +390,7 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
     * @throws IllegalArgumentException if the specified value is not valid for this atom
     * 
     */
-   public ListenableFuture<T> set(T newValue) {
+   public FluentFuture<T> set(T newValue) {
       validate(newValue);
       return submit(() -> {
          T oldValue = value;
@@ -412,7 +412,7 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
     * @param function the function to apply
     * @return a future result that will be the atom's new value after the function is applied
     */
-   public ListenableFuture<T> updateAndGet(Function<? super T, ? extends T> function) {
+   public FluentFuture<T> updateAndGet(Function<? super T, ? extends T> function) {
       return doUpdate(function, true);
    }
 
@@ -429,7 +429,7 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
     * @return a future result that will be the atom's initial value (before function is applied) but
     *       that won't complete until after the function is applied
     */
-   public ListenableFuture<T> getAndUpdate(Function<? super T, ? extends T> function) {
+   public FluentFuture<T> getAndUpdate(Function<? super T, ? extends T> function) {
       return doUpdate(function, false);
    }
 
@@ -442,7 +442,7 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
     *       function is applied; otherwise returns the atom's initial value
     * @return a future that completes once the function has been applied
     */
-   private ListenableFuture<T> doUpdate(Function<? super T, ? extends T> function,
+   private FluentFuture<T> doUpdate(Function<? super T, ? extends T> function,
          boolean returnNew) {
       return submit(() -> {
          T oldValue = value;
@@ -467,12 +467,12 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
     * @param function the function to apply
     * @return a future result that will be the atom's new value after the function is applied
     */
-   public ListenableFuture<T> accumulateAndGet(T t,
+   public FluentFuture<T> accumulateAndGet(T t,
          BiFunction<? super T, ? super T, ? extends T> function) {
       return updateAndGet(v -> function.apply(v, t));
    }
 
-   public ListenableFuture<T> getAndAccumulate(T t,
+   public FluentFuture<T> getAndAccumulate(T t,
          BiFunction<? super T, ? super T, ? extends T> function) {
       return getAndUpdate(v -> function.apply(v, t));
    }
@@ -486,8 +486,8 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
     * @param task the operation to execute asynchronously
     * @return a future that completes when the specified operation completes
     */
-   private ListenableFuture<T> submit(Callable<T> task) {
-      ListenableFutureTask<T> future = new ListenableFutureTask<T>(task);
+   private FluentFuture<T> submit(Callable<T> task) {
+      FluentFutureTask<T> future = new FluentFutureTask<T>(task);
       Transaction transaction = Transaction.current();
       if (transaction != null) {
          // play nice with transactions -- queue up actions so that they are only submitted
@@ -508,7 +508,7 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
     * @param atom the atom which this operation affects
     * @param future a future task that will perform an operation on the specified atom when executed
     */
-   static <T> void submitFuture(AsynchronousAtom<T> atom, RunnableListenableFuture<T> future) {
+   static <T> void submitFuture(AsynchronousAtom<T> atom, RunnableFluentFuture<T> future) {
       if (future instanceof TransactionalFutureTask) {
          ((TransactionalFutureTask<T>) future).markCommitted();
       }
@@ -524,7 +524,7 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
     *
     * @param task a future task that will perform an operation on this atom when executed
     */
-   private void runSingleTask(RunnableListenableFuture<T> task) {
+   private void runSingleTask(RunnableFluentFuture<T> task) {
       if (blocked) {
          queued.add(task);
          queueSize = queued.size();
@@ -564,12 +564,12 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
     * 
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   private static class TransactionalFutureTask<T> implements RunnableListenableFuture<T> {
+   private static class TransactionalFutureTask<T> implements RunnableFluentFuture<T> {
 
       /**
        * The actual task that will run once submitted for execution.
        */
-      private final RunnableListenableFuture<T> delegate;
+      private final RunnableFluentFuture<T> delegate;
       
       /**
        * The thread that created/submitted this task inside a transaction.
@@ -582,7 +582,7 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
        */
       private volatile boolean pending = true;
       
-      TransactionalFutureTask(RunnableListenableFuture<T> delegate) {
+      TransactionalFutureTask(RunnableFluentFuture<T> delegate) {
          this.delegate = delegate;
       }
       
@@ -704,63 +704,63 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
       }
 
       @Override
-      public <U> ListenableFuture<U> chainTo(Callable<U> task, Executor executor) {
+      public <U> FluentFuture<U> chainTo(Callable<U> task, Executor executor) {
          return delegate.chainTo(task, executor);
       }
 
       @Override
-      public <U> ListenableFuture<U> chainTo(Runnable task, U result, Executor executor) {
+      public <U> FluentFuture<U> chainTo(Runnable task, U result, Executor executor) {
          return delegate.chainTo(task, result, executor);
       }
 
       @Override
-      public ListenableFuture<Void> chainTo(Runnable task, Executor executor) {
+      public FluentFuture<Void> chainTo(Runnable task, Executor executor) {
          return delegate.chainTo(task, executor);
       }
 
       @Override
-      public <U> ListenableFuture<U> chainTo(Function<? super T, ? extends U> task,
+      public <U> FluentFuture<U> chainTo(Function<? super T, ? extends U> task,
             Executor executor) {
          return delegate.chainTo(task, executor);
       }
 
       @Override
-      public <U> ListenableFuture<U> map(Function<? super T, ? extends U> function) {
+      public <U> FluentFuture<U> map(Function<? super T, ? extends U> function) {
          return delegate.map(function);
       }
 
       @Override
-      public <U> ListenableFuture<U> flatMap(
-            Function<? super T, ? extends ListenableFuture<U>> function) {
+      public <U> FluentFuture<U> flatMap(
+            Function<? super T, ? extends FluentFuture<U>> function) {
          return delegate.flatMap(function);
       }
 
       @Override
-      public <U> ListenableFuture<U> mapFuture(
-            Function<? super ListenableFuture<T>, ? extends U> function) {
+      public <U> FluentFuture<U> mapFuture(
+            Function<? super FluentFuture<T>, ? extends U> function) {
          return delegate.mapFuture(function);
       }
 
       @Override
-      public ListenableFuture<T> mapException(
+      public FluentFuture<T> mapException(
             Function<Throwable, ? extends Throwable> function) {
          return delegate.mapException(function);
       }
 
       @Override
-      public ListenableFuture<T> recover(Function<Throwable, ? extends T> function) {
+      public FluentFuture<T> recover(Function<Throwable, ? extends T> function) {
          return delegate.recover(function);
       }
 
       @Override
-      public <U, V> ListenableFuture<V> combineWith(ListenableFuture<U> other,
+      public <U, V> FluentFuture<V> combineWith(FluentFuture<U> other,
             BiFunction<? super T, ? super U, ? extends V> function) {
          return delegate.combineWith(other, function);
       }
 
       @Override
-      public <U, V, W> ListenableFuture<W> combineWith(ListenableFuture<U> other1,
-            ListenableFuture<V> other2,
+      public <U, V, W> FluentFuture<W> combineWith(FluentFuture<U> other1,
+            FluentFuture<V> other2,
             TriFunction<? super T, ? super U, ? super V, ? extends W> function) {
          return delegate.combineWith(other1, other2, function);
       }

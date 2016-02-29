@@ -1,10 +1,10 @@
 package com.bluegosling.concurrent.atoms;
 
 import com.bluegosling.concurrent.DeadlockException;
-import com.bluegosling.concurrent.HierarchicalLock;
-import com.bluegosling.concurrent.HierarchicalLock.ExclusiveLock;
-import com.bluegosling.concurrent.HierarchicalLock.SharedLock;
-import com.bluegosling.concurrent.ListenableFuture;
+import com.bluegosling.concurrent.futures.fluent.FluentFuture;
+import com.bluegosling.concurrent.locks.HierarchicalLock;
+import com.bluegosling.concurrent.locks.HierarchicalLock.ExclusiveLock;
+import com.bluegosling.concurrent.locks.HierarchicalLock.SharedLock;
 
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
@@ -368,7 +368,7 @@ public class TransactionalAtom<T> extends AbstractSynchronousAtom<T> {
     *       transaction has updated the atom since the current transaction's version was established
     *       (only when a transaction is in progress with serializable isolation) 
     */
-   public ListenableFuture<T> commute(Function<? super T, ? extends T> function) {
+   public FluentFuture<T> commute(Function<? super T, ? extends T> function) {
       Transaction current = Transaction.current();
       if (current == null) {
          T oldValue, newValue;
@@ -377,7 +377,7 @@ public class TransactionalAtom<T> extends AbstractSynchronousAtom<T> {
             oldValue = latest.value;
             newValue = function.apply(oldValue);
             if (newValue == oldValue) {
-               return ListenableFuture.completedFuture(oldValue);
+               return FluentFuture.completedFuture(oldValue);
             }
             validate(newValue);
             long version = Transaction.pinNewVersion();
@@ -390,7 +390,7 @@ public class TransactionalAtom<T> extends AbstractSynchronousAtom<T> {
             exclusive.unlock();
          }
          notify(oldValue, newValue);
-         return ListenableFuture.completedFuture(newValue);
+         return FluentFuture.completedFuture(newValue);
       } else {
          return current.enqueueCommute(this, function);
       }

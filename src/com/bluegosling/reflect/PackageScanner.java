@@ -3,11 +3,11 @@ package com.bluegosling.reflect;
 import static java.util.Objects.requireNonNull;
 
 import com.bluegosling.concurrent.Awaitable;
-import com.bluegosling.concurrent.ListenableExecutorService;
-import com.bluegosling.concurrent.ListenableFuture;
-import com.bluegosling.concurrent.SameThreadExecutor;
-import com.bluegosling.concurrent.SettableFuture;
 import com.bluegosling.concurrent.ThreadFactories;
+import com.bluegosling.concurrent.executors.FluentExecutorService;
+import com.bluegosling.concurrent.executors.SameThreadExecutor;
+import com.bluegosling.concurrent.futures.fluent.FluentFuture;
+import com.bluegosling.concurrent.futures.fluent.SettableFluentFuture;
 import com.bluegosling.util.Stopwatch;
 
 import java.io.File;
@@ -644,14 +644,14 @@ public class PackageScanner {
     */
    public static class ScanResult implements Awaitable {
       private final Stopwatch elapsed = new Stopwatch();
-      private final Map<String, ListenableFuture<PathResult>> results = new HashMap<>();
-      private final ListenableFuture<Map<String, Set<ClassInfo>>> operation;
+      private final Map<String, FluentFuture<PathResult>> results = new HashMap<>();
+      private final FluentFuture<Map<String, Set<ClassInfo>>> operation;
       
       ScanResult(int parallelism, Map<String, ClassLoader> pathsToScan,
             CustomClassLoader customLoader) {
          elapsed.start();
-         ListenableExecutorService ex =
-               ListenableExecutorService.makeListenable(Executors.newFixedThreadPool(parallelism,
+         FluentExecutorService ex =
+               FluentExecutorService.makeFluent(Executors.newFixedThreadPool(parallelism,
                      ThreadFactories.newGroupingThreadFactory("package scanner")));
          Set<URL> urls = new HashSet<>();
          for (Entry<String, ClassLoader> entry : pathsToScan.entrySet()) {
@@ -668,7 +668,7 @@ public class PackageScanner {
             if (results.containsKey(path)) {
                continue;
             }
-            ListenableFuture<PathResult> future;
+            FluentFuture<PathResult> future;
             Stopwatch fileElapsed = new Stopwatch();
             if (file.isDirectory()) {
                future = ex.submit(() -> scanDirectory(file, cl, fileElapsed));
@@ -693,7 +693,7 @@ public class PackageScanner {
          
          customLoader.setURLs(urls);
          
-         operation = ListenableFuture.join(results.values()).chainTo(r -> {
+         operation = FluentFuture.join(results.values()).chainTo(r -> {
             Map<String, Set<ClassInfo>> map = new HashMap<>();
             for (PathResult result : r) {
                for (String packageName : result.getPackagesFound()) {
@@ -735,7 +735,7 @@ public class PackageScanner {
        *       part of this scan
        */
       public PathResult getPathResult(String path) {
-         ListenableFuture<PathResult> futureResult = results.get(path);
+         FluentFuture<PathResult> futureResult = results.get(path);
          if (futureResult == null) {
             return null;
          }
@@ -752,7 +752,7 @@ public class PackageScanner {
        * @return true if the given package name was encountered in this scan
        */
       public boolean includesPackage(String packageName) {
-         for (ListenableFuture<PathResult> future : results.values()) {
+         for (FluentFuture<PathResult> future : results.values()) {
             future.awaitUninterruptibly();
             if (future.getResult().includesPackage(packageName)) {
                return true;
@@ -769,7 +769,7 @@ public class PackageScanner {
        * @return
        */
       public Package getPackage(String packageName) {
-         for (ListenableFuture<PathResult> future : results.values()) {
+         for (FluentFuture<PathResult> future : results.values()) {
             future.awaitUninterruptibly();
             for (ClassInfo classInfo : future.getResult().getClassesFound(packageName)) {
                try {
@@ -857,7 +857,7 @@ public class PackageScanner {
    }
    
    private static class CustomClassLoader extends ClassLoader {
-      private final SettableFuture<URLClassLoader> futureLoader = new SettableFuture<>();
+      private final SettableFluentFuture<URLClassLoader> futureLoader = new SettableFluentFuture<>();
       
       CustomClassLoader() {
          super(PackageScanner.class.getClassLoader());

@@ -1,6 +1,6 @@
 package com.bluegosling.collections;
 
-import com.bluegosling.concurrent.NonReentrantLock;
+import com.bluegosling.concurrent.locks.NonReentrantLock;
 
 import java.util.Collection;
 import java.util.Iterator;

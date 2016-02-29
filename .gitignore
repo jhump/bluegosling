@@ -17,4 +17,3 @@ tmp-out/
 
 # TODO: clean these directories out, or flesh them out and add to git...
 src/com/bluegosling/apt/util/
-test/com/bluegosling/apt/reflect/

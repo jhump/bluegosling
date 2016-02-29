@@ -6,7 +6,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import com.bluegosling.concurrent.ListenableFuture;
+import com.bluegosling.concurrent.futures.fluent.FluentFuture;
 import com.bluegosling.possible.Holder;
 import com.bluegosling.tuples.Trio;
 
@@ -48,7 +48,7 @@ public class TransactionalAtomTest extends AbstractSynchronousAtomTest {
       TransactionalAtom<String> atom = create("abc", i -> i.length() < 10);
       
       // simple
-      ListenableFuture<String> result = atom.commute(String::toUpperCase);
+      FluentFuture<String> result = atom.commute(String::toUpperCase);
       assertTrue(result.isDone());
       assertEquals("ABC", result.get());
       assertEquals("ABC", atom.get());
@@ -165,7 +165,7 @@ public class TransactionalAtomTest extends AbstractSynchronousAtomTest {
       Function<Integer, Integer> twice = i -> i << 1;
       
       // explicit rollback cancels the future
-      Holder<ListenableFuture<Integer>> commuteResult = Holder.create();
+      Holder<FluentFuture<Integer>> commuteResult = Holder.create();
       Transaction.execute(t -> {
          commuteResult.set(atom.commute(twice));
          t.rollback();
@@ -186,7 +186,7 @@ public class TransactionalAtomTest extends AbstractSynchronousAtomTest {
 
       // commit completes the future
       commuteResult.clear();
-      Holder<ListenableFuture<Integer>> commuteResultTwo = Holder.create();
+      Holder<FluentFuture<Integer>> commuteResultTwo = Holder.create();
       Transaction.execute(t -> {
          commuteResult.set(atom.commute(twice));
          assertFalse(commuteResult.get().isDone());

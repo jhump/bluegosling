@@ -4,7 +4,7 @@ import com.bluegosling.choice.Choice.OfFive;
 import com.bluegosling.choice.Choice.OfFour;
 import com.bluegosling.choice.Choice.OfThree;
 import com.bluegosling.choice.Choice.OfTwo;
-import com.bluegosling.concurrent.ListenableFuture;
+import com.bluegosling.concurrent.futures.fluent.FluentFuture;
 
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
@@ -95,8 +95,8 @@ public class Choices {
       if (!future.isDone()) {
          throw new IllegalArgumentException("The given future has not yet completed.");
       }
-      if (future instanceof ListenableFuture) {
-         ListenableFuture<T> lFuture = (ListenableFuture<T>) future;
+      if (future instanceof FluentFuture) {
+         FluentFuture<T> lFuture = (FluentFuture<T>) future;
          if (lFuture.isSuccessful()) {
             return Variant2.withFirst(lFuture.getResult());
          } else if (lFuture.isFailed()) {

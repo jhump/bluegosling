@@ -1,11 +1,11 @@
 package com.bluegosling.graph;
 
-import static com.bluegosling.concurrent.ListenableFuture.completedFuture;
+import static com.bluegosling.concurrent.futures.fluent.FluentFuture.completedFuture;
 
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toSet;
 
-import com.bluegosling.concurrent.ListenableFuture;
+import com.bluegosling.concurrent.futures.fluent.FluentFuture;
 import com.bluegosling.graph.NodeOperations.Operation1;
 import com.bluegosling.graph.NodeOperations.Operation10;
 import com.bluegosling.graph.NodeOperations.Operation2;
@@ -113,7 +113,7 @@ public abstract class Node<T> {
     * @param args input values
     * @return the result of this node's operation with the given inputs
     */
-   abstract ListenableFuture<T> apply(Object args[]) throws Exception;
+   abstract FluentFuture<T> apply(Object args[]) throws Exception;
 
    /**
     * Returns a new node builder.
@@ -162,7 +162,7 @@ public abstract class Node<T> {
        * 
        * <p>The actual type of the returned key depends on whether it is asynchronous or optional.
        * If it is asynchronous or optional, then this input's type will be
-       * {@code ListenableFuture<V>} where the key's type will be {@code V}. But if the input is
+       * {@code FluentFuture<V>} where the key's type will be {@code V}. But if the input is
        * synchronous and required, the type of the key is the same as the type of the input.
        *
        * @return the key associated with this input or {@code null} if not associated with a key
@@ -178,7 +178,7 @@ public abstract class Node<T> {
        * 
        * <p>The actual type of the returned node depends on whether it is asynchronous or optional.
        * If it is asynchronous or optional, then this input's type will be
-       * {@code ListenableFuture<V>} where the node's type will be {@code V}. But if the input is
+       * {@code FluentFuture<V>} where the node's type will be {@code V}. But if the input is
        * synchronous and required, the type of the node is the same as the type of the input.
        *
        * @return the node associated with this input or {@code null} if not associated with a node
@@ -190,7 +190,7 @@ public abstract class Node<T> {
       
       /**
        * Returns true if this is an asynchronous input or not. An asynchronous input's type is
-       * {@link ListenableFuture}.
+       * {@link FluentFuture}.
        *
        * @return true if this is an asynchronous input or not
        */
@@ -267,7 +267,7 @@ public abstract class Node<T> {
     * 
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   static class AsyncInput<T> extends Input<ListenableFuture<T>> {
+   static class AsyncInput<T> extends Input<FluentFuture<T>> {
 
       AsyncInput(Key<T> key) {
          super(key);
@@ -332,7 +332,7 @@ public abstract class Node<T> {
       }
 
       @Override
-      ListenableFuture<T> apply(Object args[]) throws Exception {
+      FluentFuture<T> apply(Object args[]) throws Exception {
          assert args.length == 0;
          return completedFuture(op.call());
       }
@@ -346,15 +346,15 @@ public abstract class Node<T> {
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    static class AsyncNode0<T> extends Node<T> {
-      private final Callable<ListenableFuture<T>> op;
+      private final Callable<FluentFuture<T>> op;
       
-      AsyncNode0(Callable<ListenableFuture<T>> op) {
+      AsyncNode0(Callable<FluentFuture<T>> op) {
          super(Collections.emptyList());
          this.op = op;
       }
 
       @Override
-      ListenableFuture<T> apply(Object args[]) throws Exception {
+      FluentFuture<T> apply(Object args[]) throws Exception {
          assert args.length == 0;
          return op.call();
       }
@@ -378,7 +378,7 @@ public abstract class Node<T> {
 
       @SuppressWarnings("unchecked") // trust caller, in Graph, to pass correct args
       @Override
-      ListenableFuture<T> apply(Object args[]) throws Exception {
+      FluentFuture<T> apply(Object args[]) throws Exception {
          assert args.length == 1;
          return completedFuture(op.execute((A) args[0]));
       }
@@ -393,16 +393,16 @@ public abstract class Node<T> {
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    static class AsyncNode1<A, T> extends Node<T> {
-      private final Operation1<A, ListenableFuture<T>> op;
+      private final Operation1<A, FluentFuture<T>> op;
       
-      AsyncNode1(Input<?> input, Operation1<A, ListenableFuture<T>> op) {
+      AsyncNode1(Input<?> input, Operation1<A, FluentFuture<T>> op) {
          super(Collections.singletonList(input));
          this.op = op;
       }
 
       @SuppressWarnings("unchecked") // trust caller, in Graph, to pass correct args
       @Override
-      ListenableFuture<T> apply(Object args[]) throws Exception {
+      FluentFuture<T> apply(Object args[]) throws Exception {
          assert args.length == 1;
          return op.execute((A) args[0]);
       }
@@ -427,7 +427,7 @@ public abstract class Node<T> {
 
       @SuppressWarnings("unchecked") // trust caller, in Graph, to pass correct args
       @Override
-      ListenableFuture<T> apply(Object args[]) throws Exception {
+      FluentFuture<T> apply(Object args[]) throws Exception {
          assert args.length == 2;
          return completedFuture(op.execute((A) args[0], (B) args[1]));
       }
@@ -443,16 +443,16 @@ public abstract class Node<T> {
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    static class AsyncNode2<A, B, T> extends Node<T> {
-      private final Operation2<A, B, ListenableFuture<T>> op;
+      private final Operation2<A, B, FluentFuture<T>> op;
       
-      AsyncNode2(Input<?> input1, Input<?> input2, Operation2<A, B, ListenableFuture<T>> op) {
+      AsyncNode2(Input<?> input1, Input<?> input2, Operation2<A, B, FluentFuture<T>> op) {
          super(Arrays.asList(input1, input2));
          this.op = op;
       }
 
       @SuppressWarnings("unchecked") // trust caller, in Graph, to pass correct args
       @Override
-      ListenableFuture<T> apply(Object args[]) throws Exception {
+      FluentFuture<T> apply(Object args[]) throws Exception {
          assert args.length == 2;
          return op.execute((A) args[0], (B) args[1]);
       }
@@ -478,7 +478,7 @@ public abstract class Node<T> {
 
       @SuppressWarnings("unchecked") // trust caller, in Graph, to pass correct args
       @Override
-      ListenableFuture<T> apply(Object args[]) throws Exception {
+      FluentFuture<T> apply(Object args[]) throws Exception {
          assert args.length == 3;
          return completedFuture(op.execute((A) args[0], (B) args[1], (C) args[2]));
       }
@@ -495,17 +495,17 @@ public abstract class Node<T> {
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    static class AsyncNode3<A, B, C, T> extends Node<T> {
-      private final Operation3<A, B, C, ListenableFuture<T>> op;
+      private final Operation3<A, B, C, FluentFuture<T>> op;
       
       AsyncNode3(Input<?> input1, Input<?> input2, Input<?> input3,
-            Operation3<A, B, C, ListenableFuture<T>> op) {
+            Operation3<A, B, C, FluentFuture<T>> op) {
          super(Arrays.asList(input1, input2, input3));
          this.op = op;
       }
 
       @SuppressWarnings("unchecked") // trust caller, in Graph, to pass correct args
       @Override
-      ListenableFuture<T> apply(Object args[]) throws Exception {
+      FluentFuture<T> apply(Object args[]) throws Exception {
          assert args.length == 3;
          return op.execute((A) args[0], (B) args[1], (C) args[2]);
       }
@@ -533,7 +533,7 @@ public abstract class Node<T> {
 
       @SuppressWarnings("unchecked") // trust caller, in Graph, to pass correct args
       @Override
-      ListenableFuture<T> apply(Object args[]) throws Exception {
+      FluentFuture<T> apply(Object args[]) throws Exception {
          assert args.length == 4;
          return completedFuture(op.execute((A) args[0], (B) args[1], (C) args[2], (D) args[3]));
       }
@@ -551,17 +551,17 @@ public abstract class Node<T> {
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    static class AsyncNode4<A, B, C, D, T> extends Node<T> {
-      private final Operation4<A, B, C, D, ListenableFuture<T>> op;
+      private final Operation4<A, B, C, D, FluentFuture<T>> op;
       
       AsyncNode4(Input<?> input1, Input<?> input2, Input<?> input3, Input<?> input4,
-            Operation4<A, B, C, D, ListenableFuture<T>> op) {
+            Operation4<A, B, C, D, FluentFuture<T>> op) {
          super(Arrays.asList(input1, input2, input3, input4));
          this.op = op;
       }
 
       @SuppressWarnings("unchecked") // trust caller, in Graph, to pass correct args
       @Override
-      ListenableFuture<T> apply(Object args[]) throws Exception {
+      FluentFuture<T> apply(Object args[]) throws Exception {
          assert args.length == 4;
          return op.execute((A) args[0], (B) args[1], (C) args[2], (D) args[3]);
       }
@@ -590,7 +590,7 @@ public abstract class Node<T> {
 
       @SuppressWarnings("unchecked") // trust caller, in Graph, to pass correct args
       @Override
-      ListenableFuture<T> apply(Object args[]) throws Exception {
+      FluentFuture<T> apply(Object args[]) throws Exception {
          assert args.length == 5;
          return completedFuture(op.execute((A) args[0], (B) args[1], (C) args[2], (D) args[3],
                (E) args[4]));
@@ -610,17 +610,17 @@ public abstract class Node<T> {
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    static class AsyncNode5<A, B, C, D, E, T> extends Node<T> {
-      private final Operation5<A, B, C, D, E, ListenableFuture<T>> op;
+      private final Operation5<A, B, C, D, E, FluentFuture<T>> op;
       
       AsyncNode5(Input<?> input1, Input<?> input2, Input<?> input3,
-            Input<?> input4, Input<?> input5, Operation5<A, B, C, D, E, ListenableFuture<T>> op) {
+            Input<?> input4, Input<?> input5, Operation5<A, B, C, D, E, FluentFuture<T>> op) {
          super(Arrays.asList(input1, input2, input3, input4, input5));
          this.op = op;
       }
 
       @SuppressWarnings("unchecked") // trust caller, in Graph, to pass correct args
       @Override
-      ListenableFuture<T> apply(Object args[]) throws Exception {
+      FluentFuture<T> apply(Object args[]) throws Exception {
          assert args.length == 5;
          return op.execute((A) args[0], (B) args[1], (C) args[2], (D) args[3], (E) args[4]);
       }
@@ -650,7 +650,7 @@ public abstract class Node<T> {
 
       @SuppressWarnings("unchecked") // trust caller, in Graph, to pass correct args
       @Override
-      ListenableFuture<T> apply(Object args[]) throws Exception {
+      FluentFuture<T> apply(Object args[]) throws Exception {
          assert args.length == 6;
          return completedFuture(op.execute((A) args[0], (B) args[1], (C) args[2], (D) args[3],
                (E) args[4], (F) args[5]));
@@ -671,18 +671,18 @@ public abstract class Node<T> {
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    static class AsyncNode6<A, B, C, D, E, F, T> extends Node<T> {
-      private final Operation6<A, B, C, D, E, F, ListenableFuture<T>> op;
+      private final Operation6<A, B, C, D, E, F, FluentFuture<T>> op;
       
       AsyncNode6(Input<?> input1, Input<?> input2, Input<?> input3, Input<?> input4,
             Input<?> input5, Input<?> input6,
-            Operation6<A, B, C, D, E, F, ListenableFuture<T>> op) {
+            Operation6<A, B, C, D, E, F, FluentFuture<T>> op) {
          super(Arrays.asList(input1, input2, input3, input4, input5, input6));
          this.op = op;
       }
 
       @SuppressWarnings("unchecked") // trust caller, in Graph, to pass correct args
       @Override
-      ListenableFuture<T> apply(Object args[]) throws Exception {
+      FluentFuture<T> apply(Object args[]) throws Exception {
          assert args.length == 6;
          return op.execute((A) args[0], (B) args[1], (C) args[2], (D) args[3], (E) args[4],
                (F) args[5]);
@@ -714,7 +714,7 @@ public abstract class Node<T> {
 
       @SuppressWarnings("unchecked") // trust caller, in Graph, to pass correct args
       @Override
-      ListenableFuture<T> apply(Object args[]) throws Exception {
+      FluentFuture<T> apply(Object args[]) throws Exception {
          assert args.length == 7;
          return completedFuture(op.execute((A) args[0], (B) args[1], (C) args[2], (D) args[3],
                (E) args[4], (F) args[5], (G) args[6]));
@@ -736,18 +736,18 @@ public abstract class Node<T> {
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    static class AsyncNode7<A, B, C, D, E, F, G, T> extends Node<T> {
-      private final Operation7<A, B, C, D, E, F, G, ListenableFuture<T>> op;
+      private final Operation7<A, B, C, D, E, F, G, FluentFuture<T>> op;
       
       AsyncNode7(Input<?> input1, Input<?> input2, Input<?> input3, Input<?> input4,
             Input<?> input5, Input<?> input6, Input<?> input7,
-            Operation7<A, B, C, D, E, F, G, ListenableFuture<T>> op) {
+            Operation7<A, B, C, D, E, F, G, FluentFuture<T>> op) {
          super(Arrays.asList(input1, input2, input3, input4, input5, input6, input7));
          this.op = op;
       }
 
       @SuppressWarnings("unchecked") // trust caller, in Graph, to pass correct args
       @Override
-      ListenableFuture<T> apply(Object args[]) throws Exception {
+      FluentFuture<T> apply(Object args[]) throws Exception {
          assert args.length == 7;
          return op.execute((A) args[0], (B) args[1], (C) args[2], (D) args[3], (E) args[4],
                (F) args[5], (G) args[6]);
@@ -782,7 +782,7 @@ public abstract class Node<T> {
 
       @SuppressWarnings("unchecked") // trust caller, in Graph, to pass correct args
       @Override
-      ListenableFuture<T> apply(Object args[]) throws Exception {
+      FluentFuture<T> apply(Object args[]) throws Exception {
          assert args.length == 8;
          return completedFuture(op.execute((A) args[0], (B) args[1], (C) args[2], (D) args[3],
                (E) args[4], (F) args[5], (G) args[6], (H) args[7]));
@@ -805,18 +805,18 @@ public abstract class Node<T> {
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    static class AsyncNode8<A, B, C, D, E, F, G, H, T> extends Node<T> {
-      private final Operation8<A, B, C, D, E, F, G, H, ListenableFuture<T>> op;
+      private final Operation8<A, B, C, D, E, F, G, H, FluentFuture<T>> op;
       
       AsyncNode8(Input<?> input1, Input<?> input2, Input<?> input3, Input<?> input4,
             Input<?> input5, Input<?> input6, Input<?> input7, Input<?> input8,
-            Operation8<A, B, C, D, E, F, G, H, ListenableFuture<T>> op) {
+            Operation8<A, B, C, D, E, F, G, H, FluentFuture<T>> op) {
          super(Arrays.asList(input1, input2, input3, input4, input5, input6, input7, input8));
          this.op = op;
       }
 
       @SuppressWarnings("unchecked") // trust caller, in Graph, to pass correct args
       @Override
-      ListenableFuture<T> apply(Object args[]) throws Exception {
+      FluentFuture<T> apply(Object args[]) throws Exception {
          assert args.length == 8;
          return op.execute((A) args[0], (B) args[1], (C) args[2], (D) args[3], (E) args[4],
                (F) args[5], (G) args[6], (H) args[7]);
@@ -852,7 +852,7 @@ public abstract class Node<T> {
 
       @SuppressWarnings("unchecked") // trust caller, in Graph, to pass correct args
       @Override
-      ListenableFuture<T> apply(Object args[]) throws Exception {
+      FluentFuture<T> apply(Object args[]) throws Exception {
          assert args.length == 9;
          return completedFuture(op.execute((A) args[0], (B) args[1], (C) args[2], (D) args[3],
                (E) args[4], (F) args[5], (G) args[6], (H) args[7], (I) args[8]));
@@ -876,11 +876,11 @@ public abstract class Node<T> {
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    static class AsyncNode9<A, B, C, D, E, F, G, H, I, T> extends Node<T> {
-      private final Operation9<A, B, C, D, E, F, G, H, I, ListenableFuture<T>> op;
+      private final Operation9<A, B, C, D, E, F, G, H, I, FluentFuture<T>> op;
       
       AsyncNode9(Input<?> input1, Input<?> input2, Input<?> input3, Input<?> input4,
             Input<?> input5, Input<?> input6, Input<?> input7, Input<?> input8, Input<?> input9,
-            Operation9<A, B, C, D, E, F, G, H, I, ListenableFuture<T>> op) {
+            Operation9<A, B, C, D, E, F, G, H, I, FluentFuture<T>> op) {
          super(Arrays.asList(input1, input2, input3, input4, input5, input6, input7, input8,
                input9));
          this.op = op;
@@ -888,7 +888,7 @@ public abstract class Node<T> {
 
       @SuppressWarnings("unchecked") // trust caller, in Graph, to pass correct args
       @Override
-      ListenableFuture<T> apply(Object args[]) throws Exception {
+      FluentFuture<T> apply(Object args[]) throws Exception {
          assert args.length == 9;
          return op.execute((A) args[0], (B) args[1], (C) args[2], (D) args[3], (E) args[4],
                (F) args[5], (G) args[6], (H) args[7], (I) args[8]);
@@ -925,7 +925,7 @@ public abstract class Node<T> {
 
       @SuppressWarnings("unchecked") // trust caller, in Graph, to pass correct args
       @Override
-      ListenableFuture<T> apply(Object args[]) throws Exception {
+      FluentFuture<T> apply(Object args[]) throws Exception {
          assert args.length == 10;
          return completedFuture(op.execute((A) args[0], (B) args[1], (C) args[2], (D) args[3],
                (E) args[4], (F) args[5], (G) args[6], (H) args[7], (I) args[8], (J) args[9]));
@@ -950,11 +950,11 @@ public abstract class Node<T> {
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    static class AsyncNode10<A, B, C, D, E, F, G, H, I, J, T> extends Node<T> {
-      private final Operation10<A, B, C, D, E, F, G, H, I, J, ListenableFuture<T>> op;
+      private final Operation10<A, B, C, D, E, F, G, H, I, J, FluentFuture<T>> op;
       
       AsyncNode10(Input<?> input1, Input<?> input2, Input<?> input3, Input<?> input4,
             Input<?> input5, Input<?> input6, Input<?> input7, Input<?> input8, Input<?> input9,
-            Input<?> input10, Operation10<A, B, C, D, E, F, G, H, I, J, ListenableFuture<T>> op) {
+            Input<?> input10, Operation10<A, B, C, D, E, F, G, H, I, J, FluentFuture<T>> op) {
          super(Arrays.asList(input1, input2, input3, input4, input5, input6, input7, input8, input9,
                input10));
          this.op = op;
@@ -962,7 +962,7 @@ public abstract class Node<T> {
 
       @SuppressWarnings("unchecked") // trust caller, in Graph, to pass correct args
       @Override
-      ListenableFuture<T> apply(Object args[]) throws Exception {
+      FluentFuture<T> apply(Object args[]) throws Exception {
          assert args.length == 10;
          return op.execute((A) args[0], (B) args[1], (C) args[2], (D) args[3], (E) args[4],
                (F) args[5], (G) args[6], (H) args[7], (I) args[8], (J) args[9]);
@@ -993,7 +993,7 @@ public abstract class Node<T> {
        * @param op the node's operation
        * @return the newly constructed node
        */
-      public <T> Node<T> defineAsync(Callable<ListenableFuture<T>> op) {
+      public <T> Node<T> defineAsync(Callable<FluentFuture<T>> op) {
          return new AsyncNode0<>(op);
       }
 
@@ -1053,19 +1053,19 @@ public abstract class Node<T> {
          return new NodeBuilder1<>(new RequiredInput<>(input));
       }
       
-      public <T> NodeBuilder1<ListenableFuture<T>> withAsyncInput(Class<T> input) {
+      public <T> NodeBuilder1<FluentFuture<T>> withAsyncInput(Class<T> input) {
          return new NodeBuilder1<>(new AsyncInput<>(Key.of(input)));
       }
       
-      public <T> NodeBuilder1<ListenableFuture<T>> withAsyncInput(TypeRef<T> input) {
+      public <T> NodeBuilder1<FluentFuture<T>> withAsyncInput(TypeRef<T> input) {
          return new NodeBuilder1<>(new AsyncInput<>(Key.of(input)));
       }
       
-      public <T> NodeBuilder1<ListenableFuture<T>> withAsyncInput(Key<T> input) {
+      public <T> NodeBuilder1<FluentFuture<T>> withAsyncInput(Key<T> input) {
          return new NodeBuilder1<>(new AsyncInput<>(input));
       }
       
-      public <T> NodeBuilder1<ListenableFuture<T>> dependingAsyncOn(Node<T> input) {
+      public <T> NodeBuilder1<FluentFuture<T>> dependingAsyncOn(Node<T> input) {
          return new NodeBuilder1<>(new AsyncInput<>(input));
       }
 
@@ -1118,7 +1118,7 @@ public abstract class Node<T> {
        * @param op the node's operation
        * @return the newly constructed node
        */
-      public <T> Node<T> defineAsync(Operation1<A, ListenableFuture<T>> op) {
+      public <T> Node<T> defineAsync(Operation1<A, FluentFuture<T>> op) {
          return new AsyncNode1<>(input, op);
       }
 
@@ -1178,19 +1178,19 @@ public abstract class Node<T> {
          return new NodeBuilder2<>(input, new RequiredInput<>(in));
       }
       
-      public <B> NodeBuilder2<A, ListenableFuture<B>> withAsyncInput(Class<B> in) {
+      public <B> NodeBuilder2<A, FluentFuture<B>> withAsyncInput(Class<B> in) {
          return new NodeBuilder2<>(input, new AsyncInput<>(Key.of(in)));
       }
       
-      public <B> NodeBuilder2<A, ListenableFuture<B>> withAsyncInput(TypeRef<B> in) {
+      public <B> NodeBuilder2<A, FluentFuture<B>> withAsyncInput(TypeRef<B> in) {
          return new NodeBuilder2<>(input, new AsyncInput<>(Key.of(in)));
       }
       
-      public <B> NodeBuilder2<A, ListenableFuture<B>> withAsyncInput(Key<B> in) {
+      public <B> NodeBuilder2<A, FluentFuture<B>> withAsyncInput(Key<B> in) {
          return new NodeBuilder2<>(input, new AsyncInput<>(in));
       }
       
-      public <B> NodeBuilder2<A, ListenableFuture<B>> dependingAsyncOn(Node<B> in) {
+      public <B> NodeBuilder2<A, FluentFuture<B>> dependingAsyncOn(Node<B> in) {
          return new NodeBuilder2<>(input, new AsyncInput<>(in));
       }
 
@@ -1246,7 +1246,7 @@ public abstract class Node<T> {
        * @param op the node's operation
        * @return the newly constructed node
        */
-      public <T> Node<T> defineAsync(Operation2<A, B, ListenableFuture<T>> op) {
+      public <T> Node<T> defineAsync(Operation2<A, B, FluentFuture<T>> op) {
          return new AsyncNode2<>(input1, input2, op);
       }
 
@@ -1306,19 +1306,19 @@ public abstract class Node<T> {
          return new NodeBuilder3<>(input1, input2, new RequiredInput<>(input));
       }
 
-      public <C> NodeBuilder3<A, B, ListenableFuture<C>> withAsyncInput(Class<C> input) {
+      public <C> NodeBuilder3<A, B, FluentFuture<C>> withAsyncInput(Class<C> input) {
          return new NodeBuilder3<>(input1, input2, new AsyncInput<>(Key.of(input)));
       }
       
-      public <C> NodeBuilder3<A, B, ListenableFuture<C>> withAsyncInput(TypeRef<C> input) {
+      public <C> NodeBuilder3<A, B, FluentFuture<C>> withAsyncInput(TypeRef<C> input) {
          return new NodeBuilder3<>(input1, input2, new AsyncInput<>(Key.of(input)));
       }
       
-      public <C> NodeBuilder3<A, B, ListenableFuture<C>> withAsyncInput(Key<C> input) {
+      public <C> NodeBuilder3<A, B, FluentFuture<C>> withAsyncInput(Key<C> input) {
          return new NodeBuilder3<>(input1, input2, new AsyncInput<>(input));
       }
       
-      public <C> NodeBuilder3<A, B, ListenableFuture<C>> dependingAsyncOn(Node<C> input) {
+      public <C> NodeBuilder3<A, B, FluentFuture<C>> dependingAsyncOn(Node<C> input) {
          return new NodeBuilder3<>(input1, input2, new AsyncInput<>(input));
       }
 
@@ -1377,7 +1377,7 @@ public abstract class Node<T> {
        * @param op the node's operation
        * @return the newly constructed node
        */
-      public <T> Node<T> defineAsync(Operation3<A, B, C, ListenableFuture<T>> op) {
+      public <T> Node<T> defineAsync(Operation3<A, B, C, FluentFuture<T>> op) {
          return new AsyncNode3<>(input1, input2, input3, op);
       }
 
@@ -1437,19 +1437,19 @@ public abstract class Node<T> {
          return new NodeBuilder4<>(input1, input2, input3, new RequiredInput<>(input));
       }
 
-      public <D> NodeBuilder4<A, B, C, ListenableFuture<D>> withAsyncInput(Class<D> input) {
+      public <D> NodeBuilder4<A, B, C, FluentFuture<D>> withAsyncInput(Class<D> input) {
          return new NodeBuilder4<>(input1, input2, input3, new AsyncInput<>(Key.of(input)));
       }
 
-      public <D> NodeBuilder4<A, B, C, ListenableFuture<D>> withAsyncInput(TypeRef<D> input) {
+      public <D> NodeBuilder4<A, B, C, FluentFuture<D>> withAsyncInput(TypeRef<D> input) {
          return new NodeBuilder4<>(input1, input2, input3, new AsyncInput<>(Key.of(input)));
       }
 
-      public <D> NodeBuilder4<A, B, C, ListenableFuture<D>> withAsyncInput(Key<D> input) {
+      public <D> NodeBuilder4<A, B, C, FluentFuture<D>> withAsyncInput(Key<D> input) {
          return new NodeBuilder4<>(input1, input2, input3, new AsyncInput<>(input));
       }
 
-      public <D> NodeBuilder4<A, B, C, ListenableFuture<D>> dependingAsyncOn(Node<D> input) {
+      public <D> NodeBuilder4<A, B, C, FluentFuture<D>> dependingAsyncOn(Node<D> input) {
          return new NodeBuilder4<>(input1, input2, input3, new AsyncInput<>(input));
       }
 
@@ -1511,7 +1511,7 @@ public abstract class Node<T> {
        * @param op the node's operation
        * @return the newly constructed node
        */
-      public <T> Node<T> defineAsync(Operation4<A, B, C, D, ListenableFuture<T>> op) {
+      public <T> Node<T> defineAsync(Operation4<A, B, C, D, FluentFuture<T>> op) {
          return new AsyncNode4<>(input1, input2, input3, input4, op);
       }
 
@@ -1573,19 +1573,19 @@ public abstract class Node<T> {
          return new NodeBuilder5<>(input1, input2, input3, input4, new RequiredInput<>(input));
       }
 
-      public <E> NodeBuilder5<A, B, C, D, ListenableFuture<E>> withAsyncInput(Class<E> input) {
+      public <E> NodeBuilder5<A, B, C, D, FluentFuture<E>> withAsyncInput(Class<E> input) {
          return new NodeBuilder5<>(input1, input2, input3, input4, new AsyncInput<>(Key.of(input)));
       }
 
-      public <E> NodeBuilder5<A, B, C, D, ListenableFuture<E>> withAsyncInput(TypeRef<E> input) {
+      public <E> NodeBuilder5<A, B, C, D, FluentFuture<E>> withAsyncInput(TypeRef<E> input) {
          return new NodeBuilder5<>(input1, input2, input3, input4, new AsyncInput<>(Key.of(input)));
       }
 
-      public <E> NodeBuilder5<A, B, C, D, ListenableFuture<E>> withAsyncInput(Key<E> input) {
+      public <E> NodeBuilder5<A, B, C, D, FluentFuture<E>> withAsyncInput(Key<E> input) {
          return new NodeBuilder5<>(input1, input2, input3, input4, new AsyncInput<>(input));
       }
 
-      public <E> NodeBuilder5<A, B, C, D, ListenableFuture<E>> dependingAsyncOn(Node<E> input) {
+      public <E> NodeBuilder5<A, B, C, D, FluentFuture<E>> dependingAsyncOn(Node<E> input) {
          return new NodeBuilder5<>(input1, input2, input3, input4, new AsyncInput<>(input));
       } 
 
@@ -1651,7 +1651,7 @@ public abstract class Node<T> {
        * @param op the node's operation
        * @return the newly constructed node
        */
-      public <T> Node<T> defineAsync(Operation5<A, B, C, D, E, ListenableFuture<T>> op) {
+      public <T> Node<T> defineAsync(Operation5<A, B, C, D, E, FluentFuture<T>> op) {
          return new AsyncNode5<>(input1, input2, input3, input4, input5, op);
       }
 
@@ -1715,21 +1715,21 @@ public abstract class Node<T> {
                new RequiredInput<>(input));
       }
 
-      public <F> NodeBuilder6<A, B, C, D, E, ListenableFuture<F>> withAsyncInput(Class<F> input) {
+      public <F> NodeBuilder6<A, B, C, D, E, FluentFuture<F>> withAsyncInput(Class<F> input) {
          return new NodeBuilder6<>(input1, input2, input3, input4, input5,
                new AsyncInput<>(Key.of(input)));
       }
 
-      public <F> NodeBuilder6<A, B, C, D, E, ListenableFuture<F>> withAsyncInput(TypeRef<F> input) {
+      public <F> NodeBuilder6<A, B, C, D, E, FluentFuture<F>> withAsyncInput(TypeRef<F> input) {
          return new NodeBuilder6<>(input1, input2, input3, input4, input5,
                new AsyncInput<>(Key.of(input)));
       }
 
-      public <F> NodeBuilder6<A, B, C, D, E, ListenableFuture<F>> withAsyncInput(Key<F> input) {
+      public <F> NodeBuilder6<A, B, C, D, E, FluentFuture<F>> withAsyncInput(Key<F> input) {
          return new NodeBuilder6<>(input1, input2, input3, input4, input5, new AsyncInput<>(input));
       }
 
-      public <F> NodeBuilder6<A, B, C, D, E, ListenableFuture<F>> dependingAsyncOn(Node<F> input) {
+      public <F> NodeBuilder6<A, B, C, D, E, FluentFuture<F>> dependingAsyncOn(Node<F> input) {
          return new NodeBuilder6<>(input1, input2, input3, input4, input5, new AsyncInput<>(input));
       }
 
@@ -1802,7 +1802,7 @@ public abstract class Node<T> {
        * @param op the node's operation
        * @return the newly constructed node
        */
-      public <T> Node<T> defineAsync(Operation6<A, B, C, D, E, F, ListenableFuture<T>> op) {
+      public <T> Node<T> defineAsync(Operation6<A, B, C, D, E, F, FluentFuture<T>> op) {
          return new AsyncNode6<>(input1, input2, input3, input4, input5, input6, op);
       }
 
@@ -1866,25 +1866,25 @@ public abstract class Node<T> {
                new RequiredInput<>(input));
       }
 
-      public <G> NodeBuilder7<A, B, C, D, E, F, ListenableFuture<G>> withAsyncInput(
+      public <G> NodeBuilder7<A, B, C, D, E, F, FluentFuture<G>> withAsyncInput(
             Class<G> input) {
          return new NodeBuilder7<>(input1, input2, input3, input4, input5, input6,
                new AsyncInput<>(Key.of(input)));
       }
 
-      public <G> NodeBuilder7<A, B, C, D, E, F, ListenableFuture<G>> withAsyncInput(
+      public <G> NodeBuilder7<A, B, C, D, E, F, FluentFuture<G>> withAsyncInput(
             TypeRef<G> input) {
          return new NodeBuilder7<>(input1, input2, input3, input4, input5, input6,
                new AsyncInput<>(Key.of(input)));
       }
 
-      public <G> NodeBuilder7<A, B, C, D, E, F, ListenableFuture<G>> withAsyncInput(
+      public <G> NodeBuilder7<A, B, C, D, E, F, FluentFuture<G>> withAsyncInput(
             Key<G> input) {
          return new NodeBuilder7<>(input1, input2, input3, input4, input5, input6,
                new AsyncInput<>(input));
       }
 
-      public <G> NodeBuilder7<A, B, C, D, E, F, ListenableFuture<G>> dependingAsyncOn(
+      public <G> NodeBuilder7<A, B, C, D, E, F, FluentFuture<G>> dependingAsyncOn(
             Node<G> input) {
          return new NodeBuilder7<>(input1, input2, input3, input4, input5, input6,
                new AsyncInput<>(input));
@@ -1962,7 +1962,7 @@ public abstract class Node<T> {
        * @param op the node's operation
        * @return the newly constructed node
        */
-      public <T> Node<T> defineAsync(Operation7<A, B, C, D, E, F, G, ListenableFuture<T>> op) {
+      public <T> Node<T> defineAsync(Operation7<A, B, C, D, E, F, G, FluentFuture<T>> op) {
          return new AsyncNode7<>(input1, input2, input3, input4, input5, input6, input7, op);
       }
 
@@ -2026,25 +2026,25 @@ public abstract class Node<T> {
                new RequiredInput<>(input));
       }
 
-      public <H> NodeBuilder8<A, B, C, D, E, F, G, ListenableFuture<H>> withAsyncInput(
+      public <H> NodeBuilder8<A, B, C, D, E, F, G, FluentFuture<H>> withAsyncInput(
             Class<H> input) {
          return new NodeBuilder8<>(input1, input2, input3, input4, input5, input6, input7,
                new AsyncInput<>(Key.of(input)));
       }
 
-      public <H> NodeBuilder8<A, B, C, D, E, F, G, ListenableFuture<H>> withAsyncInput(
+      public <H> NodeBuilder8<A, B, C, D, E, F, G, FluentFuture<H>> withAsyncInput(
             TypeRef<H> input) {
          return new NodeBuilder8<>(input1, input2, input3, input4, input5, input6, input7,
                new AsyncInput<>(Key.of(input)));
       }
 
-      public <H> NodeBuilder8<A, B, C, D, E, F, G, ListenableFuture<H>> withAsyncInput(
+      public <H> NodeBuilder8<A, B, C, D, E, F, G, FluentFuture<H>> withAsyncInput(
             Key<H> input) {
          return new NodeBuilder8<>(input1, input2, input3, input4, input5, input6, input7,
                new AsyncInput<>(input));
       }
 
-      public <H> NodeBuilder8<A, B, C, D, E, F, G, ListenableFuture<H>> dependingAsyncOn(
+      public <H> NodeBuilder8<A, B, C, D, E, F, G, FluentFuture<H>> dependingAsyncOn(
             Node<H> input) {
          return new NodeBuilder8<>(input1, input2, input3, input4, input5, input6, input7,
                new AsyncInput<>(input));
@@ -2127,7 +2127,7 @@ public abstract class Node<T> {
        * @param op the node's operation
        * @return the newly constructed node
        */
-      public <T> Node<T> defineAsync(Operation8<A, B, C, D, E, F, G, H, ListenableFuture<T>> op) {
+      public <T> Node<T> defineAsync(Operation8<A, B, C, D, E, F, G, H, FluentFuture<T>> op) {
          return new AsyncNode8<>(input1, input2, input3, input4, input5, input6, input7, input8,
                op);
       }
@@ -2192,25 +2192,25 @@ public abstract class Node<T> {
                new RequiredInput<>(input));
       }
 
-      public <I> NodeBuilder9<A, B, C, D, E, F, G, H, ListenableFuture<I>> withAsyncInput(
+      public <I> NodeBuilder9<A, B, C, D, E, F, G, H, FluentFuture<I>> withAsyncInput(
             Class<I> input) {
          return new NodeBuilder9<>(input1, input2, input3, input4, input5, input6, input7, input8,
                new AsyncInput<>(Key.of(input)));
       }
 
-      public <I> NodeBuilder9<A, B, C, D, E, F, G, H, ListenableFuture<I>> withAsyncInput(
+      public <I> NodeBuilder9<A, B, C, D, E, F, G, H, FluentFuture<I>> withAsyncInput(
             TypeRef<I> input) {
          return new NodeBuilder9<>(input1, input2, input3, input4, input5, input6, input7, input8,
                new AsyncInput<>(Key.of(input)));
       }
 
-      public <I> NodeBuilder9<A, B, C, D, E, F, G, H, ListenableFuture<I>> withAsyncInput(
+      public <I> NodeBuilder9<A, B, C, D, E, F, G, H, FluentFuture<I>> withAsyncInput(
             Key<I> input) {
          return new NodeBuilder9<>(input1, input2, input3, input4, input5, input6, input7, input8,
                new AsyncInput<>(input));
       }
 
-      public <I> NodeBuilder9<A, B, C, D, E, F, G, H, ListenableFuture<I>> dependingAsyncOn(
+      public <I> NodeBuilder9<A, B, C, D, E, F, G, H, FluentFuture<I>> dependingAsyncOn(
             Node<I> input) {
          return new NodeBuilder9<>(input1, input2, input3, input4, input5, input6, input7, input8,
                new AsyncInput<>(input));
@@ -2300,7 +2300,7 @@ public abstract class Node<T> {
        * @return the newly constructed node
        */
       public <T> Node<T> defineAsync(
-            Operation9<A, B, C, D, E, F, G, H, I, ListenableFuture<T>> op) {
+            Operation9<A, B, C, D, E, F, G, H, I, FluentFuture<T>> op) {
          return new AsyncNode9<>(input1, input2, input3, input4, input5, input6, input7, input8,
                input9, op);
       }
@@ -2365,25 +2365,25 @@ public abstract class Node<T> {
                input9, new RequiredInput<>(input));
       }
 
-      public <J> NodeBuilder10<A, B, C, D, E, F, G, H, I, ListenableFuture<J>> withAsyncInput(
+      public <J> NodeBuilder10<A, B, C, D, E, F, G, H, I, FluentFuture<J>> withAsyncInput(
             Class<J> input) {
          return new NodeBuilder10<>(input1, input2, input3, input4, input5, input6, input7, input8,
                input9, new AsyncInput<>(Key.of(input)));
       }
 
-      public <J> NodeBuilder10<A, B, C, D, E, F, G, H, I, ListenableFuture<J>> withAsyncInput(
+      public <J> NodeBuilder10<A, B, C, D, E, F, G, H, I, FluentFuture<J>> withAsyncInput(
             TypeRef<J> input) {
          return new NodeBuilder10<>(input1, input2, input3, input4, input5, input6, input7, input8,
                input9, new AsyncInput<>(Key.of(input)));
       }
 
-      public <J> NodeBuilder10<A, B, C, D, E, F, G, H, I, ListenableFuture<J>> withAsyncInput(
+      public <J> NodeBuilder10<A, B, C, D, E, F, G, H, I, FluentFuture<J>> withAsyncInput(
             Key<J> input) {
          return new NodeBuilder10<>(input1, input2, input3, input4, input5, input6, input7, input8,
                input9, new AsyncInput<>(input));
       }
 
-      public <J> NodeBuilder10<A, B, C, D, E, F, G, H, I, ListenableFuture<J>> dependingAsyncOn(
+      public <J> NodeBuilder10<A, B, C, D, E, F, G, H, I, FluentFuture<J>> dependingAsyncOn(
             Node<J> input) {
          return new NodeBuilder10<>(input1, input2, input3, input4, input5, input6, input7, input8,
                input9, new AsyncInput<>(input));
@@ -2477,7 +2477,7 @@ public abstract class Node<T> {
        * @return the newly constructed node
        */
       public <T> Node<T> defineAsync(
-            Operation10<A, B, C, D, E, F, G, H, I, J, ListenableFuture<T>> op) {
+            Operation10<A, B, C, D, E, F, G, H, I, J, FluentFuture<T>> op) {
          return new AsyncNode10<>(input1, input2, input3, input4, input5, input6, input7, input8,
                input9, input10, op);
       }

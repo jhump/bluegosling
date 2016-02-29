@@ -1,6 +1,6 @@
 package com.bluegosling.concurrent.scheduler;
 
-import com.bluegosling.concurrent.ListenableRepeatingFuture;
+import com.bluegosling.concurrent.futures.fluent.FluentRepeatingFuture;
 
 
 /**
@@ -13,7 +13,7 @@ import com.bluegosling.concurrent.ListenableRepeatingFuture;
  *
  * @param <V> the type of value returned upon completion of the task
  */
-public interface RepeatingScheduledTask<V> extends ListenableRepeatingFuture<V> {
+public interface RepeatingScheduledTask<V> extends FluentRepeatingFuture<V> {
    /**
     * Returns the task definition for which this task was created.
     * 

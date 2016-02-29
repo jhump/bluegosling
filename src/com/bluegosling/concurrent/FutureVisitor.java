@@ -1,10 +1,12 @@
 package com.bluegosling.concurrent;
 
+import com.bluegosling.concurrent.futures.fluent.FluentFuture;
+
 import java.util.function.Consumer;
 
 /**
- * Interface for the visitor pattern with {@link ListenableFuture}s. When a visitor is passed to
- * {@link ListenableFuture#visit(FutureVisitor)}, the future calls one of these methods, depending
+ * Interface for the visitor pattern with {@link FluentFuture}s. When a visitor is passed to
+ * {@link FluentFuture#visit(FutureVisitor)}, the future calls one of these methods, depending
  * on the actual disposition of the future.
  * 
  * <p>This is particularly handy, when combined with {@link
