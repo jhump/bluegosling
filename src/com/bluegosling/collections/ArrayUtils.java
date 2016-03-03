@@ -11,7 +11,7 @@ import java.util.Arrays;
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-final class ArrayUtils {
+public final class ArrayUtils {
    
    private static final int MIN_GROWN_SIZE = 8;
 

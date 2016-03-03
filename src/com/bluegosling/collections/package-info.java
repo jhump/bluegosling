@@ -22,20 +22,20 @@
  *    {@link java.util.List} interface, but has a narrower API more like arrays. Implementations can
  *    be used to back lists, queues, hash tables, and other structures that use arrays as their
  *    backing stores.</dd>
- * <dt>{@link com.bluegosling.collections.SequenceTrie}</dt>
+ * <dt>{@link com.bluegosling.collections.tries.SequenceTrie}</dt>
  *    <dd>A {@link java.util.Map} that organizes keys that represent sequences and provides views of
  *    sub-maps that all share a common prefix. This data structure is typically known as a prefix
  *    tree or <a href="#trie">trie</a>.</dd>
- * <dt>{@link com.bluegosling.collections.CompositeTrie}</dt>
- *    <dd>Like a {@link com.bluegosling.collections.SequenceTrie} but supports keys that are composite
+ * <dt>{@link com.bluegosling.collections.tries.CompositeTrie}</dt>
+ *    <dd>Like a {@link com.bluegosling.collections.tries.SequenceTrie} but supports keys that are composite
  *    objects (which must be "componentized" into a sequence of sub-objects for search and storage).
  *    This provides a more convenient API for things like {@link java.lang.String}s, whose
  *    components are a sequence of {@code char}s. The {@link java.util.Map} interface is in terms of
  *    the composite type, instead of being in terms of {@link java.lang.Iterable}s.</dd>
- * <dt>{@link com.bluegosling.collections.ImmutableCollection}</dt>
+ * <dt>{@link com.bluegosling.collections.immutable.ImmutableCollection}</dt>
  *    <dd>This interface is the root of a hierarchy of <a href="#immutable-persistent">immutable
  *    collections</a>, parallel to the normal mutable interfaces in the JCF.</dd>
- * <dt>{@link com.bluegosling.collections.PersistentCollection}</dt>
+ * <dt>{@link com.bluegosling.collections.persistent.PersistentCollection}</dt>
  *    <dd>The root interface of a hierarchy of fully <a href="#immutable-persistent">persistent
  *    collections</a>. They also happen to extend their immutable counter-parts since a persistent
  *    data structure is also immutable.</dd>
@@ -56,22 +56,22 @@
  * <h3>Concurrent Collections</h3>
  * This package contains additional implementations of concurrent data structures.
  * 
- * <p>One such class is a factory for {@linkplain com.bluegosling.collections.ShardedConcurrentSets
+ * <p>One such class is a factory for {@linkplain com.bluegosling.collections.concurrent.ShardedConcurrentSets
  * concurrent sets}. It operates using normal not-thread-safe set implementations and makes them
  * thread-safe using sharding, for parallelism, and read-write locks, for thread-safety.
  * 
- * <p>Also present is a {@link com.bluegosling.collections.ConcurrentList} interface, along with a
+ * <p>Also present is a {@link com.bluegosling.collections.concurrent.ConcurrentList} interface, along with a
  * single implementation that is backed by a persistent list:
- * {@link com.bluegosling.collections.PersistentListBackedConcurrentList}.
+ * {@link com.bluegosling.collections.concurrent.PersistentListBackedConcurrentList}.
  * 
  * <p>Another concurrent structure is a map that is backed by a persistent map:
- * {@link com.bluegosling.collections.PersistentMapBackedConcurrentMap}.
+ * {@link com.bluegosling.collections.concurrent.PersistentMapBackedConcurrentMap}.
  * 
  * <h3><a name="immutable-persistent"></a>Immutable and Persistent Collections</h3>
  * This package contains a family of interfaces to represent immutable collections, and their close
  * cousins, persistent collections. Also present are interfaces for immutable and persistent maps.
  * 
- * <p>The utility class {@link com.bluegosling.collections.Immutables} provides numerous methods for
+ * <p>The utility class {@link com.bluegosling.collections.immutable.Immutables} provides numerous methods for
  * creating immutable collections or adapting them to standard collection and map interfaces. Also
  * present are abstract base classes for implementing new immutable collection implementations.
  * 
@@ -143,8 +143,8 @@
  *    unset, the requested key is not in the map. The array of children only has as many elements as
  *    there are bits set in the bitmask. To determine the index of a child in that array, just count
  *    the number of set bits in the bitmask that are less significant than the one of interest.
- *    (Also see {@link com.bluegosling.collections.AmtPersistentList}, {@link
- *    com.bluegosling.collections.HamtMap}, and {@link com.bluegosling.collections.HamtPersistentMap}.)</li>
+ *    (Also see {@link com.bluegosling.collections.persistent.AmtPersistentList}, {@link
+ *    com.bluegosling.collections.HamtMap}, and {@link com.bluegosling.collections.persistent.HamtPersistentMap}.)</li>
  * </ol>
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)

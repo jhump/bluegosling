@@ -1,5 +1,7 @@
 package com.bluegosling.collections;
 
+import com.bluegosling.collections.primitive.BooleanIterator;
+
 import java.util.PrimitiveIterator;
 import java.util.Spliterators;
 import java.util.stream.LongStream;

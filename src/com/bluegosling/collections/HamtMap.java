@@ -2,6 +2,8 @@ package com.bluegosling.collections;
 
 import static java.util.Objects.requireNonNull;
 
+import com.bluegosling.collections.tries.ArrayMappedBitwiseTrie;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;

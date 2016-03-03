@@ -14,11 +14,11 @@ import java.util.RandomAccess;
  * 
  * @param <E> the type of element in the list
  */
-class RandomAccessSetList<E> implements List<E>, RandomAccess {
+public class RandomAccessSetList<E> implements List<E>, RandomAccess {
    
    private final RandomAccessSet<E> set;
    
-   RandomAccessSetList(RandomAccessSet<E> set) {
+   public RandomAccessSetList(RandomAccessSet<E> set) {
       this.set = set;
    }
 

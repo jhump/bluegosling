@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import com.bluegosling.collections.Iterables;
 import com.bluegosling.collections.MapBuilder;
-import com.bluegosling.collections.TransformingCollection;
+import com.bluegosling.collections.views.TransformingCollection;
 
 import java.io.Serializable;
 import java.lang.annotation.Annotation;

@@ -1,5 +1,7 @@
 package com.bluegosling.collections;
 
+import com.bluegosling.collections.views.TransformingIterator;
+
 import java.util.AbstractQueue;
 import java.util.Comparator;
 import java.util.Iterator;

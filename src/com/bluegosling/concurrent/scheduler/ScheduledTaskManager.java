@@ -1,6 +1,6 @@
 package com.bluegosling.concurrent.scheduler;
 
-import com.bluegosling.collections.TransformingList;
+import com.bluegosling.collections.views.TransformingList;
 import com.bluegosling.concurrent.FutureListener;
 import com.bluegosling.concurrent.Scheduled;
 import com.bluegosling.concurrent.executors.FluentScheduledExecutorService;

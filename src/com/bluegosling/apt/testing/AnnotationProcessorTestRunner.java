@@ -1,6 +1,6 @@
 package com.bluegosling.apt.testing;
 
-import com.bluegosling.collections.TransformingList;
+import com.bluegosling.collections.views.TransformingList;
 import com.bluegosling.util.IoStreams;
 
 import org.junit.After;

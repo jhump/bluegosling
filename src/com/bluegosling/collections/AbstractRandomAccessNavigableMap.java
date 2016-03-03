@@ -1,5 +1,8 @@
 package com.bluegosling.collections;
 
+import com.bluegosling.collections.views.DescendingRandomAccessMap;
+import com.bluegosling.collections.views.DescendingRandomAccessSet;
+
 import java.util.AbstractList;
 import java.util.Comparator;
 import java.util.ConcurrentModificationException;
@@ -1052,10 +1055,10 @@ public abstract class AbstractRandomAccessNavigableMap<K, V> extends AbstractNav
        * Constructs a new sub-map view with the given bounds.
        * 
        * @param lowerBound the lower bound, ignored when
-       *       {@code lowerBoundType == }{@link AbstractNavigableMap.BoundType#NO_BOUND NO_BOUND}
+       *       {@code lowerBoundType == }{@link BoundType#NO_BOUND NO_BOUND}
        * @param lowerBoundType the lower bound type
        * @param upperBound the upper bound, ignored when
-       *       {@code upperBoundType == }{@link AbstractNavigableMap.BoundType#NO_BOUND NO_BOUND}
+       *       {@code upperBoundType == }{@link BoundType#NO_BOUND NO_BOUND}
        * @param upperBoundType the upper bound type
        */
       protected RandomAccessSubMap(K lowerBound, BoundType lowerBoundType, K upperBound,

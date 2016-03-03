@@ -1,5 +1,8 @@
 package com.bluegosling.collections;
 
+import com.bluegosling.collections.views.DescendingMap;
+import com.bluegosling.collections.views.DescendingSet;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -534,29 +537,6 @@ public abstract class AbstractNavigableMap<K, V> implements NavigableMap<K, V> {
       out.writeObject(comparator());
    }
    
-   /**
-    * The type of bound for a {@link AbstractNavigableMap.SubMap}. Sub-map views have both lower and
-    * upper bounds. These bounds are optional and, if present, can be inclusive or exclusive.
-    *
-    * @author Joshua Humphries (jhumphries131@gmail.com)
-    */
-   protected enum BoundType {
-      /**
-       * Indicates that a given bound is inclusive.
-       */
-      INCLUSIVE,
-
-      /**
-       * Indicates that a given bound is exclusive.
-       */
-      EXCLUSIVE,
-      
-      /**
-       * Indicates that a given bound is absent.
-       */
-      NO_BOUND
-   }
-
    /**
     * A sub-map view, with bounds on the range of included keys. This implementation defines its
     * operations in terms of operations on the main map. Sub-classes rarely need to extend this

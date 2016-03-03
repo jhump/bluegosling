@@ -1,6 +1,6 @@
 package com.bluegosling.apt.reflect;
 
-import com.bluegosling.collections.TransformingList;
+import com.bluegosling.collections.views.TransformingList;
 import com.bluegosling.reflect.ProxyUtils;
 
 import java.lang.annotation.Annotation;

@@ -3,6 +3,7 @@ package com.bluegosling.collections;
 import static org.junit.Assert.assertEquals;
 
 import com.bluegosling.collections.BitSequence.BitOrder;
+import com.bluegosling.collections.primitive.BooleanIterator;
 
 import org.junit.Test;
 

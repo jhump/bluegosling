@@ -1,5 +1,7 @@
 package com.bluegosling.collections;
 
+import com.bluegosling.collections.views.TransformingSet;
+
 import java.util.AbstractCollection;
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.Collection;

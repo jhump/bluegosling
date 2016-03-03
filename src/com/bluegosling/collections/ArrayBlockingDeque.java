@@ -1,5 +1,7 @@
 package com.bluegosling.collections;
 
+import com.bluegosling.collections.concurrent.AbstractLockFreeBlockingDeque;
+import com.bluegosling.collections.concurrent.LockFreeArrayBlockingQueue;
 import com.bluegosling.concurrent.locks.NonReentrantLock;
 
 import java.util.Collection;

@@ -1,5 +1,8 @@
 package com.bluegosling.collections;
 
+import com.bluegosling.collections.immutable.ImmutableCollection;
+import com.bluegosling.collections.immutable.Immutables;
+
 import java.util.AbstractCollection;
 import java.util.Collection;
 import java.util.Iterator;

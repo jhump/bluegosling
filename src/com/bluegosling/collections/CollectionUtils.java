@@ -1,6 +1,9 @@
 // Copyright (C) 2012 - Apriori Enterprises - All Rights Reserved
 package com.bluegosling.collections;
 
+import com.bluegosling.collections.immutable.ImmutableList;
+import com.bluegosling.collections.immutable.ImmutableSet;
+
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -17,7 +20,7 @@ import java.util.Set;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 // TODO: update Transforming*/Filtering* to use methods in this class
-final class CollectionUtils {
+public final class CollectionUtils {
    /** Prevents instantiation. */
    private CollectionUtils() {
    }

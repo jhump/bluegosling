@@ -1,9 +1,11 @@
 package com.bluegosling.collections;
 
+import com.bluegosling.collections.immutable.ImmutableMap;
+
 import java.util.Map;
 
 // TODO: javadoc
-final class MapUtils {
+public final class MapUtils {
    /** Prevents instantiation. */
    private MapUtils() {
    }

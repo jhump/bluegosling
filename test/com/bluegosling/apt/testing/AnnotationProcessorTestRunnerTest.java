@@ -3,7 +3,7 @@ package com.bluegosling.apt.testing;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
-import com.bluegosling.collections.TransformingList;
+import com.bluegosling.collections.views.TransformingList;
 
 import org.junit.Before;
 import org.junit.Test;

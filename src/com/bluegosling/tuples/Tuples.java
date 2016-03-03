@@ -1,7 +1,7 @@
 package com.bluegosling.tuples;
 
-import com.bluegosling.collections.ImmutableMap;
 import com.bluegosling.collections.PriorityQueue;
+import com.bluegosling.collections.immutable.ImmutableMap;
 
 import java.util.Collection;
 import java.util.Comparator;

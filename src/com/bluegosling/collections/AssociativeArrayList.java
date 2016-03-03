@@ -1,5 +1,8 @@
 package com.bluegosling.collections;
 
+import com.bluegosling.collections.views.TransformingCollection;
+import com.bluegosling.collections.views.TransformingSet;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
