@@ -1,6 +1,6 @@
 package com.bluegosling.util;
 
-import com.bluegosling.collections.TransformingList;
+import com.bluegosling.collections.views.TransformingList;
 
 import java.util.Arrays;
 import java.util.List;

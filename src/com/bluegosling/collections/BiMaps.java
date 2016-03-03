@@ -1,6 +1,7 @@
 package com.bluegosling.collections;
 
 import com.bluegosling.collections.BiMap.BiEntry;
+import com.bluegosling.collections.views.TransformingSet;
 import com.bluegosling.tuples.Pair;
 
 import java.util.Map;

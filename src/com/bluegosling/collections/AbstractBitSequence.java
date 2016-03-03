@@ -1,5 +1,7 @@
 package com.bluegosling.collections;
 
+import com.bluegosling.collections.primitive.BooleanIterator;
+
 import java.util.NoSuchElementException;
 import java.util.PrimitiveIterator;
 

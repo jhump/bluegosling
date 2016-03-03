@@ -1,5 +1,7 @@
 package com.bluegosling.collections;
 
+import com.bluegosling.collections.tries.Componentizer;
+
 /**
  * Decomposes objects into a sequence of bits.
  *

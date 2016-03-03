@@ -1,5 +1,12 @@
 package com.bluegosling.collections;
 
+import com.bluegosling.collections.immutable.ImmutableCollection;
+import com.bluegosling.collections.immutable.ImmutableList;
+import com.bluegosling.collections.immutable.ImmutableMap;
+import com.bluegosling.collections.immutable.ImmutableSortedSet;
+import com.bluegosling.collections.immutable.Immutables;
+import com.bluegosling.collections.views.FilteringIterator;
+
 import java.lang.reflect.Array;
 import java.util.AbstractCollection;
 import java.util.ArrayDeque;
@@ -30,6 +37,8 @@ import java.util.function.IntSupplier;
 public final class Iterables {
    private Iterables() {
    }
+   
+   static final Object EMPTY[] = new Object[0];
    
    /**
     * Returns a view of the given iterable as a collection. If the given iterable already implements
@@ -441,7 +450,7 @@ public final class Iterables {
    public static Object[] toArray(Iterable<?> iterable) {
       Iterator<?> iter = iterable.iterator();
       if (!iter.hasNext()) {
-         return Immutables.EMPTY;
+         return EMPTY;
       } else if (iterable instanceof Collection) {
          return ((Collection<?>) iterable).toArray();
       } else if (iterable instanceof ImmutableCollection) {

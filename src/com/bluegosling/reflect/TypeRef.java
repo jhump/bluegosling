@@ -2,8 +2,8 @@ package com.bluegosling.reflect;
 
 import static java.util.Objects.requireNonNull;
 
-import com.bluegosling.collections.TransformingCollection;
-import com.bluegosling.collections.TransformingList;
+import com.bluegosling.collections.views.TransformingCollection;
+import com.bluegosling.collections.views.TransformingList;
 
 import java.io.Serializable;
 import java.lang.annotation.Annotation;

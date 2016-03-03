@@ -1,5 +1,8 @@
 package com.bluegosling.collections;
 
+import com.bluegosling.collections.views.ReversedBidiIterator;
+import com.bluegosling.collections.views.ReversedCycle;
+
 import java.util.Collection;
 import java.util.Deque;
 import java.util.Iterator;

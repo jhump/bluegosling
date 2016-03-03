@@ -4,7 +4,7 @@ import static com.bluegosling.concurrent.futures.fluent.FluentFuture.cancelledFu
 import static com.bluegosling.concurrent.futures.fluent.FluentFuture.completedFuture;
 import static com.bluegosling.concurrent.futures.fluent.FluentFuture.failedFuture;
 
-import com.bluegosling.collections.TransformingList;
+import com.bluegosling.collections.views.TransformingList;
 import com.bluegosling.concurrent.FutureListener;
 import com.bluegosling.concurrent.Scheduled;
 import com.bluegosling.concurrent.futures.fluent.FluentFuture;

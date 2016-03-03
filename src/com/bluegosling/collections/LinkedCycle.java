@@ -1,5 +1,7 @@
 package com.bluegosling.collections;
 
+import com.bluegosling.collections.views.ReversedCycle;
+
 import java.util.AbstractCollection;
 import java.util.Collection;
 import java.util.Iterator;

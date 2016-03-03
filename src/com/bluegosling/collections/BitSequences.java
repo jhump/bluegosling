@@ -1,6 +1,9 @@
 package com.bluegosling.collections;
 
 import com.bluegosling.collections.BitSequence.BitOrder;
+import com.bluegosling.collections.primitive.AbstractPrimitiveList;
+import com.bluegosling.collections.primitive.BooleanIterator;
+import com.bluegosling.collections.primitive.PrimitiveList;
 
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;

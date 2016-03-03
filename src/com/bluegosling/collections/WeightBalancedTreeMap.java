@@ -1,5 +1,11 @@
 package com.bluegosling.collections;
 
+import com.bluegosling.collections.views.DescendingRandomAccessMap;
+import com.bluegosling.collections.views.DescendingRandomAccessSet;
+import com.bluegosling.collections.views.TransformingIterator;
+import com.bluegosling.collections.views.TransformingList;
+import com.bluegosling.collections.views.TransformingListIterator;
+
 import java.io.Serializable;
 import java.util.ArrayDeque;
 import java.util.Collection;

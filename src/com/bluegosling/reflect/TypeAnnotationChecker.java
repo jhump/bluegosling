@@ -2,7 +2,7 @@ package com.bluegosling.reflect;
 
 import static java.util.Objects.requireNonNull;
 
-import com.bluegosling.collections.FilteringCollection;
+import com.bluegosling.collections.views.FilteringCollection;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;

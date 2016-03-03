@@ -1,5 +1,7 @@
 package com.bluegosling.collections;
 
+import com.bluegosling.collections.views.TransformingSet;
+
 import java.util.AbstractMap;
 import java.util.Collection;
 import java.util.Iterator;

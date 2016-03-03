@@ -1,7 +1,7 @@
 package com.bluegosling.reflect;
 
-import com.bluegosling.collections.AbstractPrimitiveList;
-import com.bluegosling.collections.PrimitiveList;
+import com.bluegosling.collections.primitive.AbstractPrimitiveList;
+import com.bluegosling.collections.primitive.PrimitiveList;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
