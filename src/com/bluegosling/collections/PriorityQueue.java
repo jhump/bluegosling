@@ -1,5 +1,7 @@
 package com.bluegosling.collections;
 
+import com.bluegosling.collections.views.TransformingCollection;
+
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -41,7 +43,8 @@ import java.util.Queue;
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public interface PriorityQueue<E, P> extends SizedIterable<PriorityQueue.Entry<E, P>> {
+// TODO: finish doc
+public interface PriorityQueue<E, P> {
 
    /**
     * An entry in a priority queue. This represents an element in the queue and its associated
@@ -123,31 +126,21 @@ public interface PriorityQueue<E, P> extends SizedIterable<PriorityQueue.Entry<E
     */
    Comparator<? super P> comparator();
    
-   /**
-    * Returns an array with the same entries as this queue. The order of entries in the returned
-    * array is the same as the order that entries are returned by the queue's {@link #iterator()}.
-    * 
-    * @return an array with the same entries as this queue
-    * 
-    * @see Collection#toArray()
-    */
-   Entry<E, P>[] toArray();
+   int size();
    
-   /**
-    * Returns an array with the same entries as this queue, filling the specified array if it has
-    * sufficient capacity. If the array has sufficient capacity, the entries are copied there
-    * and a {@code null} terminator is stored after the entries if the array can hold more.
-    * Otherwise, a new array is allocated, and the elements are copied into it.
-    *
-    * @param array an array 
-    * @return an array with the same entries as this queue (possibly the same instance as the one
-    *       specified)
-    * @throws ArrayStoreException if any of the entries are not assignable to the runtime component
-    *       type of the specified array
-    *       
-    * @see Collection#toArray(Object[])
-    */
-   Entry<E, P>[] toArray(Entry<E, P>[] array);
+   default boolean isEmpty() {
+      return size() == 0;
+   }
+
+   Collection<Entry<E, P>> entries();
+
+   default Collection<P> priorities() {
+      return new TransformingCollection<>(entries(), Entry::getPriority);
+   }
+   
+   default Collection<E> elements() {
+      return new TransformingCollection<>(entries(), Entry::getElement);
+   }
    
    /**
     * Determines if the specified object is an element in this queue.
@@ -165,22 +158,6 @@ public interface PriorityQueue<E, P> extends SizedIterable<PriorityQueue.Entry<E
     *       otherwise
     */
    boolean containsPriority(Object o);
-   
-   /**
-    * Determines if this queue contains all of the specified items.
-    *
-    * @param items a sequence of items
-    * @return true if all of the specified items are elements in this queue
-    */
-   boolean containsAll(Iterable<?> items);
-   
-   /**
-    * Determines if this queue contains any one of the specified items.
-    *
-    * @param items a sequence of items
-    * @return true if any one of the specified items is an element in this queue
-    */
-   boolean containsAny(Iterable<?> items);
    
    /**
     * Offers an element for insertion into this queue with the specified priority.
@@ -212,19 +189,12 @@ public interface PriorityQueue<E, P> extends SizedIterable<PriorityQueue.Entry<E
     * be associated with this queue. Instead, new entries will be created and added to this queue
     * that have the same elements and corresponding priorities.
     *
-    * @param entries the entries whose elements and priorities are to be added to this queue
+    * @param others a queue with entries to add to this queue
+    * @throws IllegalStateException if an entry could not be added to the queue (like due to
+    *       capacity constraints)
     */
-   void addAll(Iterable<Entry<E, P>> entries);
-   
-   /**
-    * Finds an entry for the specified element.
-    *
-    * @param element the element to find
-    * @return an entry in this queue whose element equals the one specified or {@code null} if no
-    *       such element exists in this queue
-    */
-   Entry<E, P> getEntry(E element);
-   
+   void addAll(PriorityQueue<? extends E, ? extends P> others);
+
    /**
     * Queries for the minimum entry. The returned entry's priority will be less than or equal to
     * the priority of every other element in the queue.
@@ -268,42 +238,13 @@ public interface PriorityQueue<E, P> extends SizedIterable<PriorityQueue.Entry<E
    Entry<E, P> remove();
    
    /**
-    * Finds and removes an entry from this queue that matches the given element.
-    *
-    * @param element the element to find
-    * @return an entry in this queue whose element is equal to the specified one or {@code null} if
-    *       the given element is not in this queue
-    */
-   Entry<E, P> removeEntry(E element);
-   
-   /**
-    * Finds and removes all entries from this queue whose elements match the given elements.
-    *
-    * @param objects elements to find
-    * @return true if any of the specified objects were found and removed; otherwise false
-    */
-   boolean removeAll(Iterable<?> objects);
-
-   /**
-    * Removes all entries from this queue whose elements do not match the given objects. This
-    * mutates this queue into the intersection of its current contents and the specified objects.
-    *
-    * @param objects elements to find
-    * @return true if any of the specified objects were found and removed; otherwise false
-    */
-   boolean retainAll(Iterable<?> objects);
-   
-   /**
     * Removes all entries from this queue. On return, the queue will be empty.
     */
    void clear();
    
-   /**
-    * Finds all entries with the given priority.
-    *
-    * @param priority the priority to find
-    * @return all entries whose elements have the give priority; an empty list if no such entries
-    *       are present in the queue
-    */
-   Collection<Entry<E, P>> getAll(P priority);
+   @Override
+   boolean equals(Object o);
+   
+   @Override
+   int hashCode();
 }

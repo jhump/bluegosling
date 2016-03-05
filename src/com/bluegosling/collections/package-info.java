@@ -32,15 +32,13 @@
  *    This provides a more convenient API for things like {@link java.lang.String}s, whose
  *    components are a sequence of {@code char}s. The {@link java.util.Map} interface is in terms of
  *    the composite type, instead of being in terms of {@link java.lang.Iterable}s.</dd>
- * <dt>{@link com.bluegosling.collections.immutable.ImmutableCollection}</dt>
+ * <dt>{@link com.bluegosling.collections.persistent.ImmutableCollection}</dt>
  *    <dd>This interface is the root of a hierarchy of <a href="#immutable-persistent">immutable
  *    collections</a>, parallel to the normal mutable interfaces in the JCF.</dd>
  * <dt>{@link com.bluegosling.collections.persistent.PersistentCollection}</dt>
  *    <dd>The root interface of a hierarchy of fully <a href="#immutable-persistent">persistent
  *    collections</a>. They also happen to extend their immutable counter-parts since a persistent
  *    data structure is also immutable.</dd>
- * <dt>{@link com.bluegosling.collections.Cycle}</dt>
- *    <dd>A collection that represents a finite cycle.</dd>
  * <dt>{@link com.bluegosling.collections.PriorityQueue}</dt>
  *    <dd>A priority queue. This interface is a little different than the JRE's class of the same
  *    name in that it exposes additional operations of a classical priority-queue ADT, mainly
@@ -71,7 +69,7 @@
  * This package contains a family of interfaces to represent immutable collections, and their close
  * cousins, persistent collections. Also present are interfaces for immutable and persistent maps.
  * 
- * <p>The utility class {@link com.bluegosling.collections.immutable.Immutables} provides numerous methods for
+ * <p>The utility class {@link com.bluegosling.collections.persistent.Immutables} provides numerous methods for
  * creating immutable collections or adapting them to standard collection and map interfaces. Also
  * present are abstract base classes for implementing new immutable collection implementations.
  * 

@@ -1,10 +1,11 @@
 package com.bluegosling.collections.persistent;
 
-import com.bluegosling.collections.Iterables;
+import com.bluegosling.collections.MoreIterables;
+import com.bluegosling.collections.persistent.PersistentList;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.ListIterator;
 
 /**
  * A wrapper that adapts a {@link List} to the {@link PersistentList} interface.
@@ -15,8 +16,8 @@ import java.util.NoSuchElementException;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 public class PersistentListWrapper<E>
-      extends PersistentCollectionWrapper<E, List<E>, PersistentListWrapper<E>>
-      implements PersistentList<E> {
+extends PersistentCollectionWrapper<E, List<E>, PersistentListWrapper<E>>
+implements PersistentList<E> {
    
    private final boolean addLast;
 
@@ -40,6 +41,16 @@ public class PersistentListWrapper<E>
    }
 
    @Override
+   public ListIterator<E> listIterator() {
+      return MoreIterables.unmodifiableIterator(collection.listIterator());
+   }
+
+   @Override
+   public ListIterator<E> listIterator(int index) {
+      return MoreIterables.unmodifiableIterator(collection.listIterator(index));
+   }
+
+   @Override
    public E get(int i) {
       return collection.get(i);
    }
@@ -55,69 +66,60 @@ public class PersistentListWrapper<E>
    }
 
    @Override
-   public E first() {
-      try {
-         return collection.get(0);
-      } catch (IndexOutOfBoundsException e) {
-         throw new NoSuchElementException();
-      }
-   }
-
-   @Override
-   public PersistentListWrapper<E> add(E e) {
+   public PersistentListWrapper<E> with(E e) {
       if (addLast) {
-         return super.add(e);
+         return withTail(e);
       } else {
-         return addFirst(e);
+         return withHead(e);
       }
    }
 
    @Override
-   public PersistentListWrapper<E> addAll(Iterable<? extends E> items) {
+   public PersistentListWrapper<E> withAll(Iterable<? extends E> items) {
       if (addLast) {
-         return super.addAll(items);
+         return super.withAll(items);
       } else {
-         return addAll(0, items);
+         return withAll(0, items);
       }
    }
 
    @Override
-   public PersistentListWrapper<E> add(int i, E e) {
+   public PersistentListWrapper<E> with(int i, E e) {
       List<E> newList = new ArrayList<E>(collection);
       newList.add(i, e);
       return new PersistentListWrapper<E>(addLast, newList);
    }
 
    @Override
-   public PersistentListWrapper<E> addAll(int i, Iterable<? extends E> items) {
+   public PersistentListWrapper<E> withAll(int i, Iterable<? extends E> items) {
       List<E> newList = new ArrayList<E>(collection);
-      newList.addAll(i, Iterables.snapshot(items));
+      newList.addAll(i, MoreIterables.snapshot(items));
       return new PersistentListWrapper<E>(addLast, newList);
    }
 
    @Override
-   public PersistentListWrapper<E> addFirst(E e) {
+   public PersistentListWrapper<E> withHead(E e) {
       List<E> newList = new ArrayList<E>(collection);
       newList.add(0, e);
       return new PersistentListWrapper<E>(addLast, newList);
    }
 
    @Override
-   public PersistentListWrapper<E> addLast(E e) {
+   public PersistentListWrapper<E> withTail(E e) {
       List<E> newList = new ArrayList<E>(collection);
       newList.add(e);
       return new PersistentListWrapper<E>(addLast, newList);
    }
 
    @Override
-   public PersistentListWrapper<E> set(int i, E e) {
+   public PersistentListWrapper<E> replace(int i, E e) {
       List<E> newList = new ArrayList<E>(collection);
       newList.set(i, e);
       return new PersistentListWrapper<E>(addLast, newList);
    }
 
    @Override
-   public PersistentListWrapper<E> remove(int i) {
+   public PersistentListWrapper<E> without(int i) {
       List<E> newList = new ArrayList<E>(collection);
       newList.remove(i);
       return new PersistentListWrapper<E>(addLast, newList);
@@ -129,12 +131,7 @@ public class PersistentListWrapper<E>
    }
 
    @Override
-   public PersistentListWrapper<E> rest() {
-      return isEmpty() ? this : new PersistentListWrapper<E>(addLast, collection.subList(1, size()));
-   }
-
-   @Override
-   public PersistentList<E> clear() {
+   public PersistentList<E> removeAll() {
       return new PersistentListWrapper<>(new ArrayList<>(0));
    }
 }

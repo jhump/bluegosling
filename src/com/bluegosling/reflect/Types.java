@@ -2,7 +2,7 @@ package com.bluegosling.reflect;
 
 import static java.util.Objects.requireNonNull;
 
-import com.bluegosling.collections.Iterables;
+import com.bluegosling.collections.MoreIterables;
 
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
@@ -1447,7 +1447,7 @@ public final class Types {
       
       // Move the types into a set to de-dup. Even if given iterable is a set, we still do this so
       // we have a defensive copy of the set for all subsequent operations.
-      OptionalInt numTypes = Iterables.trySize(types);
+      OptionalInt numTypes = MoreIterables.trySize(types);
       Set<Type> typesSet = new LinkedHashSet<>(numTypes.orElse(6) * 4 / 3);
       typesSet.add(wrap(first));
       while (iter.hasNext()) {

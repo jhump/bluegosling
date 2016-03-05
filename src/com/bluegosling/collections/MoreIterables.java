@@ -1,11 +1,11 @@
 package com.bluegosling.collections;
 
-import com.bluegosling.collections.immutable.ImmutableCollection;
-import com.bluegosling.collections.immutable.ImmutableList;
-import com.bluegosling.collections.immutable.ImmutableMap;
-import com.bluegosling.collections.immutable.ImmutableSortedSet;
-import com.bluegosling.collections.immutable.Immutables;
 import com.bluegosling.collections.views.FilteringIterator;
+import com.google.common.collect.ImmutableCollection;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Iterators;
 
 import java.lang.reflect.Array;
 import java.util.AbstractCollection;
@@ -19,11 +19,10 @@ import java.util.Deque;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.NavigableSet;
 import java.util.NoSuchElementException;
-import java.util.Objects;
 import java.util.OptionalInt;
-import java.util.RandomAccess;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.IntSupplier;
@@ -34,8 +33,8 @@ import java.util.function.IntSupplier;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 // TODO: tests
-public final class Iterables {
-   private Iterables() {
+public final class MoreIterables {
+   private MoreIterables() {
    }
    
    static final Object EMPTY[] = new Object[0];
@@ -100,126 +99,8 @@ public final class Iterables {
       };
    }
    
-   /**
-    * Adds the elements from the given iterator to the given collection. On return, the iterator
-    * will have been exhausted and {@link Iterator#hasNext()} will return false.
-    *
-    * @param <E> the type of elements retrieved from the given iterator
-    * @param iter an iterator
-    * @param coll a collection
-    * @return true if the collection was modified; false if the iterator yielded no elements or if
-    *       the collection was not modified by the additions (e.g. {@link Collection#add(Object)}
-    *       returns false for all elements)
-    * @see #addTo(Iterable, Collection)
-    */
-   public static <E> boolean addTo(Iterator<E> iter, Collection<? super E> coll) {
-      boolean ret = false;
-      while (iter.hasNext()) {
-         if (coll.add(iter.next())) {
-            ret = true;
-         }
-      }
-      return ret;
-   }
-   
-   /**
-    * Adds the elements from the given iterable to the given collection.
-    *
-    * @param <E> the type of elements in the given iterable
-    * @param iter an iterable
-    * @param coll a collection
-    * @return true if the collection was modified; false if the iterable contained no elements or if
-    *       the collection was not modified by the additions (e.g. {@link Collection#add(Object)}
-    *       returns false for all elements)
-    * @see #addTo(Iterator, Collection)
-    */
-   public static <E> boolean addTo(Iterable<E> iter, Collection<? super E> coll) {
-      if (iter instanceof Collection) {
-         return coll.addAll((Collection<E>) iter);
-      } else if (iter instanceof SizedIterable) {
-         return coll.addAll(SizedIterable.toCollection((SizedIterable<E>) iter));
-      } else {
-         return addTo(iter.iterator(), coll);
-      }
-   }
-
-   /**
-    * Returns true if the given iterable contains the given object.
-    *
-    * @param iter an iterable
-    * @param o an object
-    * @return true if the given object was found in the given iterable
-    * 
-    * @see Collection#contains(Object)
-    * @see #contains(Iterator, Object)
-    */
-   public static boolean contains(Iterable<?> iter, Object o) {
-      if (iter instanceof Collection) {
-         return ((Collection<?>) iter).contains(o);
-      } else if (iter instanceof ImmutableCollection) {
-         return ((ImmutableCollection<?>) iter).contains(o);
-      } else if (iter instanceof ImmutableMap) {
-         return ((ImmutableMap<?, ?>) iter).entrySet().contains(o);
-      } else {
-         return contains(iter.iterator(), o);
-      }
-   }
-
-   /**
-    * Returns true if the given iterator contains the given object. On return, the iterator will
-    * have been exhausted and {@link Iterator#hasNext()} will return false.
-    *
-    * @param iter an iterator
-    * @param o an object
-    * @return true if the given object was found in the given iterator
-    * 
-    * @see Collection#contains(Object)
-    * @see #contains(Iterable, Object)
-    */
-   public static boolean contains(Iterator<?> iter, Object o) {
-      while (iter.hasNext()) {
-         Object obj= iter.next();
-         if (Objects.equals(obj, o)) {
-            return true;
-         }
-      }
-      return false;
-   }
-   
-   /**
-    * Returns an iterator that yields the given single element and then no more. An attempt to
-    * remove the element using the iterator's {@link Iterator#remove() remove} method will throw
-    * {@link UnsupportedOperationException}.
-    *
-    * @param <E> the type of the element
-    * @param element an element
-    * @return an iterator that yields only the one element
-    */
-   public static <E> Iterator<E> singletonIterator(E element) {
-      return new SingletonIterator<E>(element, null);
-   }
-
-   /**
-    * Returns an iterator that yields the given single element and then no more. An attempt to
-    * remove the element using the iterator's {@link Iterator#remove() remove} method will invoke
-    * the given removal handler.
-    *
-    * @param <E> the type of the element
-    * @param element an element
-    * @param onRemove a removal handler, invoked when the iterator's
-    *       {@link Iterator#remove() remove} method is called
-    * @return an iterator that yields only the one element
-    */
-   public static <E> Iterator<E> singletonIterator(E element, Runnable onRemove) {
-      return new SingletonIterator<E>(element, onRemove);
-   }
-   
-   public static <E> Iterable<E> readOnly(Iterable<? extends E> iter) {
-      return () -> readOnly(iter.iterator());
-   }
-   
-   public static <E> Iterator<E> readOnly(Iterator<? extends E> iter) {
-      return new Iterator<E>() {
+   public static <E> ListIterator<E> unmodifiableIterator(ListIterator<? extends E> iter) {
+      return new ListIterator<E>() {
          @Override
          public boolean hasNext() {
             return iter.hasNext();
@@ -229,11 +110,44 @@ public final class Iterables {
          public E next() {
             return iter.next();
          }
-         
-         // default remove() throws UnsupportedOperationException, hence making this read-only
+
+         @Override
+         public boolean hasPrevious() {
+            return iter.hasPrevious();
+         }
+
+         @Override
+         public E previous() {
+            return iter.previous();
+         }
+
+         @Override
+         public int nextIndex() {
+            return iter.nextIndex();
+         }
+
+         @Override
+         public int previousIndex() {
+            return iter.previousIndex();
+         }
+
+         @Override
+         public void set(E e) {
+            throw new UnsupportedOperationException();
+         }
+
+         @Override
+         public void add(E e) {
+            throw new UnsupportedOperationException();
+         }
+
+         @Override
+         public void remove() {
+            throw new UnsupportedOperationException();
+         }
       };
    }
-
+   
    /**
     * Returns an iterator that omits duplicates from the given iterator. Note that the tracking of
     * duplicates requires state that can use <em>O(n)</em> amount of memory.
@@ -279,28 +193,10 @@ public final class Iterables {
       if (iterable instanceof List) {
          List<E> list = (List<E>) iterable;
          return CollectionUtils.reverseIterator(list.listIterator(list.size()));
-      } else if (iterable instanceof ImmutableList && iterable instanceof RandomAccess) {
-         final ImmutableList<E> list = (ImmutableList<E>) iterable;
-         return new Iterator<E>() {
-            int nextIndex = list.size() - 1;
-            
-            @Override public boolean hasNext() {
-               return nextIndex >= 0;
-            }
-
-            @Override public E next() {
-               if (nextIndex < 0) {
-                  throw new NoSuchElementException();
-               }
-               return list.get(nextIndex--);
-            }
-         };
       } else if (iterable instanceof Deque) {
          return ((Deque<E>) iterable).descendingIterator();
       } else if (iterable instanceof NavigableSet) {
          return ((NavigableSet<E>) iterable).descendingIterator();
-      } else if (iterable instanceof ImmutableSortedSet) {
-         return Immutables.descendingIterator((ImmutableSortedSet<E>) iterable);
       } else {
          // No way that we know of to efficiently reverse the given iterable. So we push all of its
          // contents into a stack, so we can then trivially iterate the stack to reverse order
@@ -328,9 +224,6 @@ public final class Iterables {
       if (iterable instanceof Collection) {
          Collection<?> coll = (Collection<?>) iterable; 
          return coll::size;
-      } else if (iterable instanceof SizedIterable) {
-         SizedIterable<?> szd = (SizedIterable<?>) iterable; 
-         return szd::size;
       } else {
          return null;
       }
@@ -338,58 +231,21 @@ public final class Iterables {
    
    /**
     * Queries for the size of the given iterable, if known. If the given iterable implements
-    * {@link Collection} or {@link SizedIterable} then the size is returned. Otherwise, an absent
-    * value is returned, indicating that the size is not known.
+    * {@link Collection} then the size is returned. Otherwise, an absent value is returned,
+    * indicating that the size is not known.
     *
     * @param iterable an iterable
     * @return the size of the given iterable if known
-    * @see #size(Iterable)
+    * 
+    * @see Iterables#size(Iterable)
+    * @see Iterators#size(Iterator)
     */
    public static OptionalInt trySize(Iterable<?> iterable) {
       if (iterable instanceof Collection) {
          return OptionalInt.of(((Collection<?>) iterable).size());
-      } else if (iterable instanceof SizedIterable) {
-         return OptionalInt.of(((SizedIterable<?>) iterable).size());
       } else {
          return OptionalInt.empty();
       }
-   }
-   
-   /**
-    * Queries for the size of the given iterable, iterating and counting if necessary. If the given
-    * iterable implements {@link Collection} or {@link SizedIterable} then its size method is
-    * interrogated. Otherwise, an iteration is made and the elements are counted.
-    *
-    * @param iterable an iterable
-    * @return the size of the given iterable
-    * @see #trySize(Iterable)
-    * @see #size(Iterator)
-    */
-   public static int size(Iterable<?> iterable) {
-      if (iterable instanceof Collection) {
-         return ((Collection<?>) iterable).size();
-      } else if (iterable instanceof SizedIterable) {
-         return ((SizedIterable<?>) iterable).size();
-      } else {
-         return size(iterable.iterator());
-      }
-   }
-
-   /**
-    * Counts the number of elements in the given iterator. On return, the iterator will have been
-    * exhausted and {@link Iterator#hasNext()} will return false.
-    *
-    * @param iterator an iterator
-    * @return the size of the given iterator
-    * @see #size(Iterable)
-    */
-   public static int size(Iterator<?> iterator) {
-      int sz = 0;
-      while (iterator.hasNext()) {
-         iterator.next();
-         sz++;
-      }
-      return sz;
    }
 
    /**
@@ -399,11 +255,16 @@ public final class Iterables {
     * <p>The snapshot is created with as little overhead as possible using a strategy like used by
     * {@link ArrayList}, except using linked nodes of arrays (each larger than the previous) instead
     * of resizing a single array (so no copies need be made when the initial array gets full). The
-    * initial array is sized based on the given iterable's {@linkplain #trySize(Iterable) size} (16
-    * if the size is unknown).
+    * initial array is sized based on the given iterable's {@linkplain #trySize(Iterable) size} or
+    * 16 if the size is unknown.
+    * 
+    * <p>The returned snapshot is just a collection. If you need a snapshot that implements the
+    * {@link List} or {@link Set} interface, use {@link ImmutableList#copyOf(Iterable)} or
+    * {@link ImmutableSet#copyOf(Iterable)}.
     *
     * @param iterable an iterable
     * @return a snapshot of the iterable's contents in an unmodifiable collection
+    * 
     * @see #snapshot(Iterator)
     */
    public static <E> Collection<E> snapshot(Iterable<? extends E> iterable) {
@@ -436,16 +297,18 @@ public final class Iterables {
     * {@code toArray} method, like {@link Collection} and {@link ImmutableCollection}, will just use
     * that existing implementation.
     * 
-    * <p>Iterables that do not provide such a method must resort to a custom mechanism. A
+    * <p>MoreIterables that do not provide such a method must resort to a custom mechanism. A
     * {@linkplain #snapshot(Iterable) snapshot} of the iterable is captured, and then a new array is
     * created from the contents of that snapshot. So there is <em>O(n)</em> memory overhead, in
     * addition to the <em>O(n)</em> memory needed by the returned array.
     *
     * @param iterable an iterable
     * @return a snapshot of the iterable's contents in an array
+    * 
     * @see Collection#toArray()
     * @see #toArray(Iterator)
     * @see #toArray(Iterable, Object[])
+    * @see Iterables#toArray(Iterable, Class)
     */
    public static Object[] toArray(Iterable<?> iterable) {
       Iterator<?> iter = iterable.iterator();
@@ -453,12 +316,6 @@ public final class Iterables {
          return EMPTY;
       } else if (iterable instanceof Collection) {
          return ((Collection<?>) iterable).toArray();
-      } else if (iterable instanceof ImmutableCollection) {
-         return ((ImmutableCollection<?>) iterable).toArray();
-      } else if (iterable instanceof ImmutableMap) {
-         return ((ImmutableMap<?, ?>) iterable).entrySet().toArray();
-      } else if (iterable instanceof PriorityQueue) {
-         return ((PriorityQueue<?, ?>) iterable).toArray();
       } else {
          return toArrayInternal(iter, sizer(iterable));
       }
@@ -473,26 +330,25 @@ public final class Iterables {
     * @param iterable an iterable
     * @param array an array
     * @return a snapshot of the iterable's contents in an array
+    * 
     * @see Collection#toArray(Object[])
     * @see #toArray(Iterator, Object[])
     * @see #toArray(Iterable)
+    * @see Iterables#toArray(Iterable, Class)
     */
    public static <T> T[] toArray(Iterable<?> iterable, T[] array) {
+      if (iterable instanceof Collection) {
+         return ((Collection<?>) iterable).toArray(array);
+      }
+      
       Iterator<?> iter = iterable.iterator();
       if (!iter.hasNext()) {
          if (array.length > 0) {
             array[0] = null;
          }
          return array;
-      } else if (iterable instanceof Collection) {
-         return ((Collection<?>) iterable).toArray(array);
-      } else if (iterable instanceof ImmutableCollection) {
-         return ((ImmutableCollection<?>) iterable).toArray(array);
-      } else if (iterable instanceof ImmutableMap) {
-         return ((ImmutableMap<?, ?>) iterable).entrySet().toArray(array);
-      } else {
-         return toArrayInternal(iter, array, sizer(iterable));
       }
+      return toArrayInternal(iter, array, sizer(iterable));
    }
    
    /**
@@ -504,9 +360,11 @@ public final class Iterables {
     *
     * @param iter an iterator
     * @return a snapshot of the iterator's contents in an array
+    * 
     * @see Collection#toArray()
     * @see #toArray(Iterator, Object[])
     * @see #toArray(Iterable)
+    * @see Iterators#toArray(Iterator, Class)
     */
    public static Object[] toArray(Iterator<?> iter) {
       return toArrayInternal(iter, null);
@@ -546,9 +404,11 @@ public final class Iterables {
     * @param iter an iterator
     * @param array an array
     * @return a snapshot of the iterable's contents in an array
+    * 
     * @see Collection#toArray(Object[])
     * @see #toArray(Iterator)
     * @see #toArray(Iterable, Object[])
+    * @see Iterators#toArray(Iterator, Class)
     */
    public static <T> T[] toArray(Iterator<?> iter, T[] array) {
       return toArrayInternal(iter, array, null);
@@ -656,8 +516,8 @@ public final class Iterables {
     * resembles an unrolled linked list, but the array in each node can vary in size from one node
     * to the next (generally getting larger and larger as the chunks are traversed).
     * 
-    * @see Iterables#toChunks(Iterator, IntSupplier)
-    * @see Iterables#toChunks(Iterator, Object[], IntSupplier)
+    * @see MoreIterables#toChunks(Iterator, IntSupplier)
+    * @see MoreIterables#toChunks(Iterator, Object[], IntSupplier)
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
@@ -771,17 +631,6 @@ public final class Iterables {
    @SuppressWarnings("unchecked")
    public static <E> Iterable<E> cast(Iterable<? extends E> iterable) {
       return (Iterable<E>) iterable;
-   }
-
-   /**
-    * Casts the given sized iterable to one whose elements are a super-type.
-    *
-    * @param iterable an sized iterable
-    * @return the given iterable, but with a generic type that is a super-type of the one given
-    */
-   @SuppressWarnings("unchecked")
-   public static <E> SizedIterable<E> cast(SizedIterable<? extends E> iterable) {
-      return (SizedIterable<E>) iterable;
    }
 
    /**

@@ -4,13 +4,14 @@ import static com.bluegosling.concurrent.FutureTuples.asPair;
 import static com.bluegosling.concurrent.futures.fluent.FluentFuture.cast;
 import static com.bluegosling.concurrent.futures.fluent.FluentFuture.makeFluent;
 
-import com.bluegosling.collections.Iterables;
+import com.bluegosling.collections.MoreIterables;
 import com.bluegosling.concurrent.FutureListener;
 import com.bluegosling.concurrent.FutureVisitor;
 import com.bluegosling.concurrent.executors.SameThreadExecutor;
 import com.bluegosling.concurrent.futures.CompletionStageFuture;
 import com.bluegosling.concurrent.unsafe.UnsafeReferenceFieldUpdater;
 import com.bluegosling.tuples.Pair;
+import com.google.common.collect.Iterables;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -145,8 +146,8 @@ final class FluentFutures {
     * @return a snapshot of the given iterable, as a list
     */
    static <T> List<T> snapshot(Iterable<? extends T> values) {
-      ArrayList<T> ret = new ArrayList<T>(Iterables.trySize(values).orElse(16));
-      Iterables.addTo(values, ret);
+      ArrayList<T> ret = new ArrayList<T>(MoreIterables.trySize(values).orElse(16));
+      Iterables.addAll(ret, values);
       return Collections.unmodifiableList(ret);
    }
    

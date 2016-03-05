@@ -1,6 +1,6 @@
 package com.bluegosling.collections.tables;
 
-import com.bluegosling.collections.Iterables;
+import com.bluegosling.collections.MoreIterables;
 import com.bluegosling.collections.tables.Table2D.Cell2D;
 import com.bluegosling.collections.tables.Tables.ImmutableCell2D;
 import com.bluegosling.collections.tables.Tables.MapWithoutPut;
@@ -19,6 +19,7 @@ import com.bluegosling.collections.tables.Tables4D.Table4DImpl;
 import com.bluegosling.collections.views.TransformingIterator;
 import com.bluegosling.collections.views.TransformingMap;
 import com.bluegosling.collections.views.TransformingSet;
+import com.google.common.collect.Iterators;
 
 import java.util.AbstractCollection;
 import java.util.AbstractMap;
@@ -313,14 +314,14 @@ final class Tables3D {
          return new AbstractCollection<Set<C>>() {
             @Override
             public Iterator<Set<C>> iterator() {
-               return Iterables.flatMap(base.asMap().values().iterator(),
+               return MoreIterables.flatMap(base.asMap().values().iterator(),
                      (Table2D<R, C, ?> t) -> new TransformingIterator<>(
                            t.asMap().values().iterator(), (Map<C, ?> m) -> m.keySet()));
             }
 
             @Override
             public int size() {
-               return Iterables.size(iterator());
+               return Iterators.size(iterator());
             }
          };
       }
@@ -330,7 +331,7 @@ final class Tables3D {
          return new AbstractSet<Cell2D<P, R, Set<C>>>() {
             @Override
             public Iterator<Cell2D<P, R, Set<C>>> iterator() {
-               return Iterables.flatMap(base.asMap().entrySet().iterator(),
+               return MoreIterables.flatMap(base.asMap().entrySet().iterator(),
                      (Entry<P, Table2D<R, C, V>> e1) ->
                            new TransformingIterator<>(e1.getValue().asMap().entrySet().iterator(),
                                  (Entry<R, Map<C, V>> e2) ->
@@ -340,7 +341,7 @@ final class Tables3D {
 
             @Override
             public int size() {
-               return Iterables.size(iterator());
+               return Iterators.size(iterator());
             }
          };
       }

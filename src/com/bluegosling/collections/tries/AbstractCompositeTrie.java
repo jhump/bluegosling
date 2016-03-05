@@ -1,8 +1,8 @@
 package com.bluegosling.collections.tries;
 
-import static com.bluegosling.collections.Iterables.upToN;
+import static com.bluegosling.collections.MoreIterables.upToN;
 
-import com.bluegosling.collections.Iterables;
+import com.bluegosling.collections.MoreIterables;
 import com.bluegosling.collections.MapUtils;
 import com.bluegosling.possible.Reference;
 import com.bluegosling.tuples.Trio;
@@ -49,7 +49,7 @@ abstract class AbstractCompositeTrie<K, C, V, N extends AbstractTrie.Node<C, K, 
    
    @SuppressWarnings("unchecked")
    Iterable<C> asIterable(Object key) {
-      return Iterables.cast(componentizer.getComponents((K) key));
+      return MoreIterables.cast(componentizer.getComponents((K) key));
    }
 
    @Override
@@ -201,7 +201,7 @@ abstract class AbstractCompositeTrie<K, C, V, N extends AbstractTrie.Node<C, K, 
 
    @Override
    public CompositeTrie<K, C, V> prefixMap(Iterable<C> prefix) {
-      Collection<C> snapshot = Iterables.snapshot(prefix);
+      Collection<C> snapshot = MoreIterables.snapshot(prefix);
       return snapshot.isEmpty() ? this : new PrefixCompositeTrie<>(snapshot, this);
    }
 
@@ -240,8 +240,8 @@ abstract class AbstractCompositeTrie<K, C, V, N extends AbstractTrie.Node<C, K, 
       
       @Override
       public CompositeTrie<K, C, V> prefixMap(Iterable<C> newPrefix) {
-         Collection<C> snapshot = Iterables.snapshot(newPrefix);
-         return snapshot.isEmpty() ? this : new PrefixCompositeTrie<>(Iterables.concatIterables(
+         Collection<C> snapshot = MoreIterables.snapshot(newPrefix);
+         return snapshot.isEmpty() ? this : new PrefixCompositeTrie<>(MoreIterables.concatIterables(
                this.prefix, snapshot), parent);
       }
       

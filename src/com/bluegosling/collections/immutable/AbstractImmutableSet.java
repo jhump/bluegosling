@@ -1,9 +1,11 @@
 package com.bluegosling.collections.immutable;
 
-import com.bluegosling.collections.CollectionUtils;
+import java.util.AbstractSet;
+import java.util.Collection;
+import java.util.function.Predicate;
 
 /**
- * An abstract base class for implementing an {@link ImmutableSet}. This provides implementations
+ * An abstract base class for implementing an immutable sets. This provides implementations
  * for all methods except {@link #size()} and {@link #iterator()}.
  *
  * <p>Nothing in this base class enforces set invariants. The only difference between this class
@@ -18,17 +20,47 @@ import com.bluegosling.collections.CollectionUtils;
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-// TODO: tests
-public abstract class AbstractImmutableSet<E> extends AbstractImmutableCollection<E>
-      implements ImmutableSet<E> {
-   
+public abstract class AbstractImmutableSet<E> extends AbstractSet<E> {
+
+   @Deprecated
    @Override
-   public boolean equals(Object o) {
-      return CollectionUtils.equals(this, o);
+   public final boolean add(E e) {
+      throw new UnsupportedOperationException();
    }
-   
+
+   @Deprecated
    @Override
-   public int hashCode() {
-      return CollectionUtils.hashCode(this);
+   public final boolean remove(Object o) {
+      throw new UnsupportedOperationException();
+   }
+
+   @Deprecated
+   @Override
+   public final boolean removeIf(Predicate<? super E> filter) {
+      throw new UnsupportedOperationException();
+   }
+
+   @Deprecated
+   @Override
+   public final boolean addAll(Collection<? extends E> c) {
+      throw new UnsupportedOperationException();
+   }
+
+   @Deprecated
+   @Override
+   public final boolean removeAll(Collection<?> c) {
+      throw new UnsupportedOperationException();
+   }
+
+   @Deprecated
+   @Override
+   public final boolean retainAll(Collection<?> c) {
+      throw new UnsupportedOperationException();
+   }
+
+   @Deprecated
+   @Override
+   public final void clear() {
+      throw new UnsupportedOperationException();
    }
 }

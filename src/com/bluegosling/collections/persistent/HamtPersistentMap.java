@@ -3,16 +3,15 @@ package com.bluegosling.collections.persistent;
 import static java.util.Objects.requireNonNull;
 
 import com.bluegosling.collections.HamtMap;
-import com.bluegosling.collections.MapUtils;
 import com.bluegosling.collections.immutable.AbstractImmutableMap;
-import com.bluegosling.collections.immutable.ImmutableMap;
-import com.bluegosling.collections.immutable.Immutables;
+import com.bluegosling.collections.immutable.AbstractImmutableSet;
 
 import java.util.ArrayDeque;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -34,7 +33,7 @@ import java.util.function.Consumer;
 // TODO: javadoc
 // TODO: moar tests?
 public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
-      implements PersistentMap<K, V> {
+implements PersistentMap<K, V> {
    
    /*
     * We intentionally use less density than HamtMap to reduce the cost of path copying on writes.
@@ -61,9 +60,9 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
     * 
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   private static class ListNode<K, V> implements Entry<K, V> {
-      final K key;
-      final V value;
+   private static class ListNode<K, V> extends SimpleImmutableEntry<K, V> {
+      private static final long serialVersionUID = -3212520312799926984L;
+      
       final ListNode<K, V> next;
       
       ListNode(K key, V value) {
@@ -71,34 +70,8 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
       }
       
       ListNode(K key, V value, ListNode<K, V> next) {
-         this.key = key;
-         this.value = value;
+         super(key, value);
          this.next = next;
-      }
-
-      @Override
-      public K key() {
-         return key;
-      }
-
-      @Override
-      public V value() {
-         return value;
-      }
-      
-      @Override
-      public boolean equals(Object o) {
-         return MapUtils.equals(this, o);
-      }
-
-      @Override
-      public int hashCode() {
-         return MapUtils.hashCode(this);
-      }
-      
-      @Override
-      public String toString() {
-         return MapUtils.toString(this);
       }
       
       /**
@@ -110,7 +83,7 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
        */
       public ListNode<K, V> replaceAll(BiFunction<? super K, ? super V, ? extends V> fn) {
          ListNode<K, V> newNext = next == null ? null : next.replaceAll(fn);
-         return new ListNode<>(key, fn.apply(key, value), newNext);
+         return new ListNode<>(getKey(), fn.apply(getKey(), getValue()), newNext);
       }
    }
    
@@ -303,7 +276,8 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
                LeafTrieNode<K, V> leaf = (LeafTrieNode<K, V>) remainingChild;
                return leaf instanceof InnerLeafTrieNode
                      ? leaf
-                     : new InnerLeafTrieNode<K, V>(leaf.key, leaf.value, leaf.next, hash(leaf.key));
+                     : new InnerLeafTrieNode<K, V>(leaf.getKey(), leaf.getValue(), leaf.next,
+                           hash(leaf.getKey()));
             }
             // create a replacement node without this child entry
             TrieNode<K, V> newChildren[] = createChildren(numChildren);
@@ -320,7 +294,8 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
             LeafTrieNode<K, V> leaf = (LeafTrieNode<K, V>) newChild;
             return leaf instanceof InnerLeafTrieNode
                   ? leaf
-                  : new InnerLeafTrieNode<K, V>(leaf.key, leaf.value, leaf.next, hash(leaf.key));
+                  : new InnerLeafTrieNode<K, V>(leaf.getKey(), leaf.getValue(), leaf.next,
+                        hash(leaf.getKey()));
          } else {
             // create a replacement node, replacing old child with this new one
             TrieNode<K, V> newChildren[] = children.clone();
@@ -405,6 +380,8 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    private static class LeafTrieNode<K, V> extends ListNode<K, V> implements TrieNode<K, V> {
+      private static final long serialVersionUID = 7453075769650243875L;
+
       LeafTrieNode(K key, V value) {
          super(key, value);
       }
@@ -416,7 +393,7 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
       @Override
       public boolean containsValue(Object searchValue) {
          for (ListNode<K, V> current = this; current != null; current = current.next) {
-            if (searchValue == null ? current.value == null : searchValue.equals(current.value)) {
+            if (Objects.equals(searchValue, current.getValue())) {
                return true;
             }
          }
@@ -431,7 +408,7 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
       
       ListNode<K, V> doFind(Object searchKey) {
          for (ListNode<K, V> current = this; current != null; current = current.next) {
-            if (searchKey == null ? current.key == null : searchKey.equals(current.key)) {
+            if (Objects.equals(searchKey, current.getKey())) {
                return current;
             }
          }
@@ -451,7 +428,7 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
       TrieNode<K, V> doRemove(Object keyToRemove, int hash) {
          ArrayDeque<ListNode<K, V>> stack = new ArrayDeque<ListNode<K, V>>();
          for (ListNode<K, V> current = this; current != null; current = current.next) {
-            if (keyToRemove == null ? current.key == null : keyToRemove.equals(current.key)) {
+            if (Objects.equals(keyToRemove, current.getKey())) {
                if (stack.isEmpty()) {
                   if (next == null) {
                      // no other values here, deleting whole node
@@ -459,16 +436,16 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
                   }
                   // removing the initial leaf node -- just create a new head ListNode that is
                   // also a TrieNode and keep the rest
-                  return create(next.key, next.value, next.next, hash);
+                  return create(next.getKey(), next.getValue(), next.next, hash);
                }
                // rebuild path from leaf node to here and keep the rest of the list
                current = current.next; // skip over the one we're removing
                while (true) {
                   ListNode<K, V> node = stack.pop();
                   if (stack.isEmpty()) {
-                     return create(node.key, node.value, current, hash);
+                     return create(node.getKey(), node.getValue(), current, hash);
                   }
-                  current = new ListNode<K, V>(node.key, node.value, current); 
+                  current = new ListNode<K, V>(node.getKey(), node.getValue(), current); 
                }
             }
             stack.push(current);
@@ -487,8 +464,8 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
          PutResult<K, V> result = new PutResult<>();
          ArrayDeque<ListNode<K, V>> stack = new ArrayDeque<ListNode<K, V>>();
          for (ListNode<K, V> current = this; current != null; current = current.next) {
-            if (newKey == null ? current.key == null : newKey.equals(current.key)) {
-               if (Objects.equals(newValue, current.value)) {
+            if (Objects.equals(newKey, current.getKey())) {
+               if (Objects.equals(newValue, current.getValue())) {
                   // no change
                   result.node = this;
                   result.added = false;
@@ -506,17 +483,18 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
                while (true) {
                   ListNode<K, V> node = stack.pop();
                   if (stack.isEmpty()) {
-                     result.node = create(node.key, node.value, current, hash);
+                     result.node = create(node.getKey(), node.getValue(), current, hash);
                      result.added = false;
                      return result;
                   }
-                  current = new ListNode<K, V>(node.key, node.value, current);
+                  current = new ListNode<K, V>(node.getKey(), node.getValue(), current);
                }
             }
             stack.push(current);
          }
          // adding new value - push to head of list
-         result.node = create(newKey, newValue, new ListNode<K, V>(key, value, next), hash);
+         result.node = create(newKey, newValue,
+               new ListNode<K, V>(getKey(), getValue(), next), hash);
          result.added = true;
          return result;
       }
@@ -533,7 +511,7 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
       @Override
       public LeafTrieNode<K, V> replaceAll(BiFunction<? super K, ? super V, ? extends V> fn) {
          ListNode<K, V> newNext = next == null ? null : next.replaceAll(fn);
-         return new LeafTrieNode<>(key, fn.apply(key, value), newNext);
+         return new LeafTrieNode<>(getKey(), fn.apply(getKey(), getValue()), newNext);
       }
    }
 
@@ -553,6 +531,8 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    private static class InnerLeafTrieNode<K, V> extends LeafTrieNode<K, V> {
+      private static final long serialVersionUID = -5989346938045660595L;
+      
       final int hashCode;
       
       InnerLeafTrieNode(K key, V value, int hashCode) {
@@ -605,7 +585,7 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
          TrieNode<K, V> current, addition;
          if (currentOffset + BITS_PER_LEVEL >= 32) {
             // at the end of the chain so use leaf nodes
-            current = new LeafTrieNode<K, V>(this.key, this.value, this.next);
+            current = new LeafTrieNode<K, V>(this.getKey(), this.getValue(), this.next);
             addition = new LeafTrieNode<K, V>(newKey, newValue);
          } else {
             current = this;
@@ -625,7 +605,8 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
       @Override
       public LeafTrieNode<K, V> replaceAll(BiFunction<? super K, ? super V, ? extends V> fn) {
          ListNode<K, V> newNext = next == null ? null : next.replaceAll(fn);
-         return new InnerLeafTrieNode<>(key, fn.apply(key, value), newNext, hashCode);
+         return new InnerLeafTrieNode<>(getKey(), fn.apply(getKey(), getValue()),
+               newNext, hashCode);
       }
    }
    
@@ -649,16 +630,12 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
       return (HamtPersistentMap<K, V>) EMPTY_INSTANCE;
    }
    
-   public static <K, V> HamtPersistentMap<K, V> create(Map<? extends K, ? extends V> map) {
-      return HamtPersistentMap.<K, V>create().putAll(map);
-   }
-
    @SuppressWarnings("unchecked") // due to immutability, cast is safe
-   public static <K, V> HamtPersistentMap<K, V> create(ImmutableMap<? extends K, ? extends V> map) {
+   public static <K, V> HamtPersistentMap<K, V> create(Map<? extends K, ? extends V> map) {
       if (map instanceof HamtPersistentMap) {
          return (HamtPersistentMap<K, V>) map;
       }
-      return HamtPersistentMap.<K, V>create().putAll(map);
+      return HamtPersistentMap.<K, V>create().withAll(map);
    }
 
    /**
@@ -677,11 +654,6 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
    }
    
    @Override
-   public Iterator<Entry<K, V>> iterator() {
-      return new Iter();
-   }
-   
-   @Override
    public boolean containsKey(Object o) {
       ListNode<K, V> node = root == null ? null : root.findNode(hash(o), 0, o);
       return node != null;
@@ -695,11 +667,11 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
    @Override
    public V get(Object key) {
       ListNode<K, V> node = root == null ? null : root.findNode(hash(key), 0, key);
-      return node == null ? null : node.value;
+      return node == null ? null : node.getValue();
    }
 
    @Override
-   public HamtPersistentMap<K, V> put(K key, V value) {
+   public HamtPersistentMap<K, V> with(K key, V value) {
       if (root == null) {
          return new HamtPersistentMap<K, V>(1, new InnerLeafTrieNode<K, V>(key, value, hash(key)));
       }
@@ -709,7 +681,7 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
    }
    
    @Override
-   public HamtPersistentMap<K, V> remove(Object o) {
+   public HamtPersistentMap<K, V> withoutKey(Object o) {
       if (root == null) {
          return this;
       }
@@ -718,7 +690,7 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
    }
 
    @Override
-   public HamtPersistentMap<K, V> removeAll(Iterable<?> keys) {
+   public HamtPersistentMap<K, V> withoutKeys(Iterable<?> keys) {
       if (isEmpty()) {
          return this;
       }
@@ -726,13 +698,13 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
       // to remove chunks from TrieNodes?
       HamtPersistentMap<K, V> ret = this;
       for (Object key : keys) {
-         ret = ret.remove(key);
+         ret = ret.withoutKey(key);
       }
       return ret;
    }
 
    @Override
-   public HamtPersistentMap<K, V> retainAll(Iterable<?> keys) {
+   public HamtPersistentMap<K, V> withOnlyKeys(Iterable<?> keys) {
       if (isEmpty()) {
          return this;
       }
@@ -742,33 +714,24 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
       for (Object key : keys) {
          ListNode<K, V> node = root == null ? null : root.findNode(hash(key), 0, key);
          if (node != null) {
-            ret = ret.put(node.key, node.value);
+            ret = ret.with(node.getKey(), node.getValue());
          }
       }
       return ret;
    }
 
    @Override
-   public HamtPersistentMap<K, V> putAll(Map<? extends K, ? extends V> items) {
-      // TODO: bulk insert? maybe create array of entries sorted by hash code and then use bulk
-      // operations to insert chunks into TrieNodes?
-      HamtPersistentMap<K, V> ret = this;
-      for (Map.Entry<? extends K, ? extends V> entry : items.entrySet()) {
-         ret = ret.put(entry.getKey(), entry.getValue());
-      }
-      return ret;
-   }
-
-   @Override
-   public HamtPersistentMap<K, V> putAll(ImmutableMap<? extends K, ? extends V> items) {
+   public HamtPersistentMap<K, V> withAll(Map<? extends K, ? extends V> items) {
       if (isEmpty() && items instanceof HamtPersistentMap) {
-         return Immutables.cast((HamtPersistentMap<? extends K, ? extends V>) items);
+         @SuppressWarnings("unchecked")
+         HamtPersistentMap<K, V> ret = (HamtPersistentMap<K, V>) items;
+         return ret;
       }
       // TODO: bulk insert? maybe create array of entries sorted by hash code and then use bulk
       // operations to insert chunks into TrieNodes?
       HamtPersistentMap<K, V> ret = this;
-      for (Entry<? extends K, ? extends V> entry : items) {
-         ret = ret.put(entry.key(), entry.value());
+      for (Entry<? extends K, ? extends V> entry : items.entrySet()) {
+         ret = ret.with(entry.getKey(), entry.getValue());
       }
       return ret;
    }
@@ -779,7 +742,7 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
    }
    
    @Override
-   public HamtPersistentMap<K, V> clear() {
+   public HamtPersistentMap<K, V> removeAll() {
       return create();
    }
    
@@ -787,14 +750,34 @@ public class HamtPersistentMap<K, V> extends AbstractImmutableMap<K, V>
    public void forEach(BiConsumer<? super K, ? super V> action) {
       requireNonNull(action);
       if (root != null) {
-         root.forEach(e -> action.accept(e.key, e.value));
+         root.forEach(e -> action.accept(e.getKey(), e.getValue()));
       }
    }
    
    @Override
-   public PersistentMap<K, V> replaceAll(BiFunction<? super K, ? super V, ? extends V> fn) {
+   public PersistentMap<K, V> withReplacements(BiFunction<? super K, ? super V, ? extends V> fn) {
       requireNonNull(fn);
       return root == null ? this : new HamtPersistentMap<>(size, root.replaceAll(fn));
+   }
+   
+   @Override
+   public Set<Entry<K, V>> entrySet() {
+      return new AbstractImmutableSet<Entry<K, V>>() {
+         @Override
+         public Iterator<Entry<K, V>> iterator() {
+            return new Iter();
+         }
+
+         @Override
+         public int size() {
+            return HamtPersistentMap.this.size();
+         }
+
+         @Override
+         public boolean contains(Object o) {
+            return HamtPersistentMap.this.containsKey(o);
+         }
+      };
    }
    
    /**

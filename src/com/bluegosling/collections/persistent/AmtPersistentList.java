@@ -1,9 +1,8 @@
 package com.bluegosling.collections.persistent;
 
-import com.bluegosling.collections.BidiIterable;
-import com.bluegosling.collections.Iterables;
-import com.bluegosling.collections.immutable.AbstractRandomAccessImmutableList;
+import com.bluegosling.collections.immutable.AbstractImmutableList;
 import com.bluegosling.vars.Variable;
+import com.google.common.collect.Iterables;
 
 import java.util.Iterator;
 import java.util.Objects;
@@ -21,8 +20,8 @@ import java.util.Objects;
  */
 // TODO: javadoc
 // TODO: tests
-public class AmtPersistentList<E> extends AbstractRandomAccessImmutableList<E>
-      implements PersistentList<E>, BidiIterable<E> {
+public class AmtPersistentList<E> extends AbstractImmutableList<E>
+implements PersistentList<E> {
 
    private static final AmtPersistentList<Object> EMPTY = new AmtPersistentList<>(null, 0, 0, 0, 0);
    
@@ -276,6 +275,35 @@ public class AmtPersistentList<E> extends AbstractRandomAccessImmutableList<E>
       this(root, depth, size, 0, 0);
    }
 
+   /**
+    * Checks that the specified index is greater than or equal to zero and less than this list's
+    * {@link #size}.
+    *
+    * @param index an index to check
+    */
+   private void rangeCheck(int index) {
+      if (index < 0) {
+         throw new IndexOutOfBoundsException(index + " < 0");
+      } else if (index >= size()) {
+         throw new IndexOutOfBoundsException(index + " >= " + size());
+      }
+   }
+
+   /**
+    * Checks that the specified index is greater than or equal to zero and less than or equal to
+    * this list's {@link #size}. This is for certain operations where an index equal to the size
+    * (<em>after</em> the last valid index in the list) is allowed.
+    *
+    * @param index an index to check
+    */
+   private void rangeCheckWide(int index) {
+      if (index < 0) {
+         throw new IndexOutOfBoundsException(index + " < 0");
+      } else if (index > size()) {
+         throw new IndexOutOfBoundsException(index + " > " + size());
+      }
+   }
+   
    @Override
    public E get(int i) {
       rangeCheck(i);
@@ -310,11 +338,11 @@ public class AmtPersistentList<E> extends AbstractRandomAccessImmutableList<E>
    }
 
    @Override
-   public AmtPersistentList<E> add(int i, E e) {
+   public AmtPersistentList<E> with(int i, E e) {
       if (i == size) {
-         return addLast(e);
+         return withTail(e);
       } else if (i == 0) {
-         return addFirst(e);
+         return withHead(e);
       }
       rangeCheck(i);
       // TODO: implement me
@@ -322,16 +350,16 @@ public class AmtPersistentList<E> extends AbstractRandomAccessImmutableList<E>
    }
 
    @Override
-   public AmtPersistentList<E> addAll(int i, Iterable<? extends E> items) {
+   public AmtPersistentList<E> withAll(int i, Iterable<? extends E> items) {
       if (i == size) {
-         return addAll(items);
+         return withAll(items);
       }
       // TODO: implement me
       return null;
    }
 
    @Override
-   public AmtPersistentList<E> addFirst(E e) {
+   public AmtPersistentList<E> withHead(E e) {
       if (size == 0) {
          TrieNode<E> newRoot = new LeafTrieNode<>(e);
          // TODO: return new AmtPersistentList<>(newRoot, 0, 1);
@@ -361,7 +389,7 @@ public class AmtPersistentList<E> extends AbstractRandomAccessImmutableList<E>
    }*/
 
    @Override
-   public AmtPersistentList<E> addLast(E e) {
+   public AmtPersistentList<E> withTail(E e) {
       if (size == 0) {
          Object newRoot[] = new Object[] { e };
          // TODO: return new AmtPersistentList<>(newRoot, 0, 1, 0);
@@ -374,7 +402,7 @@ public class AmtPersistentList<E> extends AbstractRandomAccessImmutableList<E>
    }
 
    @Override
-   public AmtPersistentList<E> set(int i, E e) {
+   public AmtPersistentList<E> replace(int i, E e) {
       rangeCheck(i);
       // TODO
       /*
@@ -409,37 +437,32 @@ public class AmtPersistentList<E> extends AbstractRandomAccessImmutableList<E>
    }
 
    @Override
-   public AmtPersistentList<E> remove(int i) {
+   public AmtPersistentList<E> without(int i) {
       rangeCheck(i);
       // TODO: implement me
       return null;
    }
 
    @Override
-   public AmtPersistentList<E> rest() {
-      return subList(1, size);
+   public AmtPersistentList<E> with(E e) {
+      return withTail(e);
    }
 
    @Override
-   public AmtPersistentList<E> add(E e) {
-      return addLast(e);
-   }
-
-   @Override
-   public AmtPersistentList<E> remove(Object o) {
+   public AmtPersistentList<E> without(Object o) {
       int i = indexOf(o);
-      return i >= 0 ? remove(i) : this;
+      return i >= 0 ? without(i) : this;
    }
 
    @Override
-   public AmtPersistentList<E> removeAll(Object o) {
+   public AmtPersistentList<E> withoutAny(Object o) {
       // TODO: bulk removal?
       AmtPersistentList<E> ret = this;
       int i = 0;
       for (Iterator<E> iter = iterator(); iter.hasNext();) {
          E e = iter.next();
          if (Objects.equals(e, o)) {
-            ret = ret.remove(i);
+            ret = ret.without(i);
          } else {
             i++;
          }
@@ -448,35 +471,35 @@ public class AmtPersistentList<E> extends AbstractRandomAccessImmutableList<E>
    }
 
    @Override
-   public AmtPersistentList<E> removeAll(Iterable<?> items) {
+   public AmtPersistentList<E> withoutAny(Iterable<?> items) {
       // TODO: bulk removal?
       AmtPersistentList<E> ret = this;
       for (Object o : items) {
-         ret = ret.removeAll(o);
+         ret = ret.withoutAny(o);
       }
       return ret;
    }
 
    @Override
-   public AmtPersistentList<E> retainAll(Iterable<?> items) {
+   public AmtPersistentList<E> withOnly(Iterable<?> items) {
       // TODO: bulk removal?
       AmtPersistentList<E> ret = create();
       for (E e : this) {
          if (Iterables.contains(items, e)) {
-            ret = ret.add(e);
+            ret = ret.with(e);
          }
       }
       return ret;
    }
 
    @Override
-   public AmtPersistentList<E> addAll(Iterable<? extends E> items) {
+   public AmtPersistentList<E> withAll(Iterable<? extends E> items) {
       // TODO: implement me
       return null;
    }
 
    @Override
-   public AmtPersistentList<E> clear() {
+   public AmtPersistentList<E> removeAll() {
       return create();
    }
 }

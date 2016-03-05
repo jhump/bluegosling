@@ -1,7 +1,6 @@
 package com.bluegosling.collections.concurrent;
 
 import com.bluegosling.collections.MapUtils;
-import com.bluegosling.collections.immutable.ImmutableMap;
 import com.bluegosling.collections.persistent.PersistentMap;
 import com.bluegosling.collections.views.TransformingCollection;
 import com.bluegosling.collections.views.TransformingSet;
@@ -72,7 +71,7 @@ public class PersistentMapBackedConcurrentMap<K, V> extends AbstractMap<K, V>
    public V put(K key, V value) {
       while (true) {
          PersistentMap<K, V> original = underlying.get();
-         PersistentMap<K, V> modified = original.put(key, value);
+         PersistentMap<K, V> modified = original.with(key, value);
          if (original == modified) {
             return value;
          }
@@ -90,7 +89,7 @@ public class PersistentMapBackedConcurrentMap<K, V> extends AbstractMap<K, V>
          if (prior != null || original.containsKey(key)) {
             return prior;
          }
-         PersistentMap<K, V> modified = original.put(key, value);
+         PersistentMap<K, V> modified = original.with(key, value);
          if (underlying.compareAndSet(original, modified)) {
             return null;
          }
@@ -101,7 +100,7 @@ public class PersistentMapBackedConcurrentMap<K, V> extends AbstractMap<K, V>
    public V remove(Object key) {
       while (true) {
          PersistentMap<K, V> original = underlying.get();
-         PersistentMap<K, V> modified = original.remove(key);
+         PersistentMap<K, V> modified = original.withoutKey(key);
          if (original == modified) {
             return null;
          }
@@ -121,7 +120,7 @@ public class PersistentMapBackedConcurrentMap<K, V> extends AbstractMap<K, V>
          if (!match) {
             return false;
          }
-         PersistentMap<K, V> modified = original.remove(key);
+         PersistentMap<K, V> modified = original.withoutKey(key);
          if (underlying.compareAndSet(original, modified)) {
             return true;
          }
@@ -138,7 +137,7 @@ public class PersistentMapBackedConcurrentMap<K, V> extends AbstractMap<K, V>
          if (!match) {
             return false;
          }
-         PersistentMap<K, V> modified = original.put(key, newValue);
+         PersistentMap<K, V> modified = original.with(key, newValue);
          if (underlying.compareAndSet(original, modified)) {
             return true;
          }
@@ -153,7 +152,7 @@ public class PersistentMapBackedConcurrentMap<K, V> extends AbstractMap<K, V>
          if (prior == null && !original.containsKey(key)) {
             return null;
          }
-         PersistentMap<K, V> modified = original.put(key, value);
+         PersistentMap<K, V> modified = original.with(key, value);
          if (original == modified) {
             assert Objects.equals(value, prior);
             return value;
@@ -166,7 +165,7 @@ public class PersistentMapBackedConcurrentMap<K, V> extends AbstractMap<K, V>
 
    @Override
    public void clear() {
-      underlying.set(underlying.get().clear());
+      underlying.set(underlying.get().removeAll());
    }
    
    @Override
@@ -200,13 +199,13 @@ public class PersistentMapBackedConcurrentMap<K, V> extends AbstractMap<K, V>
       return underlying.get().hashCode();
    }
 
-   Entry<K, V> asMutableEntry(final ImmutableMap.Entry<K, V> entry) {
+   Entry<K, V> asMutableEntry(Entry<K, V> entry) {
       return new Entry<K, V>() {
-         V value = entry.value();
+         V value = entry.getValue();
          
          @Override
          public K getKey() {
-            return entry.key();
+            return entry.getKey();
          }
 
          @Override
@@ -217,7 +216,7 @@ public class PersistentMapBackedConcurrentMap<K, V> extends AbstractMap<K, V>
          @Override
          public V setValue(V value) {
             // TODO: throw if replace fails?
-            replace(entry.key(), value);
+            replace(entry.getKey(), value);
             V ret = this.value;
             this.value = value;
             return ret;
@@ -249,9 +248,9 @@ public class PersistentMapBackedConcurrentMap<K, V> extends AbstractMap<K, V>
       @Override
       public Iterator<Entry<K, V>> iterator() {
          @SuppressWarnings("synthetic-access")
-         final Iterator<ImmutableMap.Entry<K, V>> iter = underlying.get().iterator();
+         final Iterator<Entry<K, V>> iter = underlying.get().entrySet().iterator();
          return new Iterator<Entry<K, V>>() {
-            private ImmutableMap.Entry<K, V> last = null;
+            private Entry<K, V> last = null;
             
             @Override
             public boolean hasNext() {
@@ -269,7 +268,7 @@ public class PersistentMapBackedConcurrentMap<K, V> extends AbstractMap<K, V>
                if (last == null) {
                   throw new IllegalStateException();
                }
-               PersistentMapBackedConcurrentMap.this.remove(last.key(), last.value());
+               PersistentMapBackedConcurrentMap.this.remove(last.getKey(), last.getValue());
                last = null;
             }
             

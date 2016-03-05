@@ -1,5 +1,7 @@
 package com.bluegosling.collections;
 
+import com.google.common.collect.Iterators;
+
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Objects;
@@ -21,7 +23,7 @@ public class SetFromCollection<E> implements Set<E> {
 
    @Override
    public int size() {
-      return Iterables.size(iterator());
+      return Iterators.size(iterator());
    }
 
    @Override
@@ -36,7 +38,7 @@ public class SetFromCollection<E> implements Set<E> {
 
    @Override
    public Iterator<E> iterator() {
-      return Iterables.unique(coll.iterator());
+      return MoreIterables.unique(coll.iterator());
    }
 
    @Override

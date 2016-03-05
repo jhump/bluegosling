@@ -3,9 +3,12 @@ package com.bluegosling.collections;
 import com.bluegosling.function.Predicates;
 
 import java.io.Serializable;
+import java.util.AbstractList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.NoSuchElementException;
-import java.util.OptionalInt;
+import java.util.RandomAccess;
+import java.util.stream.Collectors;
 
 /**
  * A growable array that does not require doubling and copying an underlying array. Instead, it
@@ -28,8 +31,8 @@ import java.util.OptionalInt;
 // TODO: serialization, cloning
 // TODO: more efficient iterator, spliterator
 // TODO: concurrent modification checks in iterator and spliterator
-public class NoCopyGrowableArray<T> extends AbstractGrowableArray<T>
-      implements Serializable, Cloneable {
+public class NoCopyGrowableArray<T> extends AbstractList<T>
+      implements Serializable, Cloneable, RandomAccess {
 
    private static final long serialVersionUID = -5864366571938870266L;
    
@@ -41,7 +44,6 @@ public class NoCopyGrowableArray<T> extends AbstractGrowableArray<T>
    private int dataBlockSize;
    private int lastDataBlockOccupancy;
    private int size;
-   private int modCount;
    
    public NoCopyGrowableArray() {
       indexBlock = new Object[2][];
@@ -53,9 +55,9 @@ public class NoCopyGrowableArray<T> extends AbstractGrowableArray<T>
       growBy(initialSize);
    }
    
-   public NoCopyGrowableArray(Iterable<? extends T> others) {
+   public NoCopyGrowableArray(Collection<? extends T> others) {
       this();
-      pushAll(others);
+      addAll(others);
    }
    
    private void rangeCheck(int i) {
@@ -64,7 +66,6 @@ public class NoCopyGrowableArray<T> extends AbstractGrowableArray<T>
       }
    }
    
-   @Override
    public void growBy(int numNewElements) {
       if (numNewElements < 0) {
          throw new IllegalArgumentException();
@@ -109,7 +110,6 @@ public class NoCopyGrowableArray<T> extends AbstractGrowableArray<T>
       size += numNewElements;
    }
    
-   @Override
    public void shrinkBy(int numElementsToRemove) {
       if (numElementsToRemove < 0) {
          throw new IllegalArgumentException();
@@ -156,6 +156,17 @@ public class NoCopyGrowableArray<T> extends AbstractGrowableArray<T>
       size -= numElementsToRemove;
    }
    
+   public void adjustSizeTo(int newCapacity) {
+      int sz = size();
+      if (newCapacity == sz) {
+         return;
+      } else if (newCapacity > sz) {
+         growBy(newCapacity - sz);
+      } else {
+         shrinkBy(sz - newCapacity);
+      }
+   }
+   
    @Override
    public T get(int index) {
       rangeCheck(index);
@@ -174,7 +185,7 @@ public class NoCopyGrowableArray<T> extends AbstractGrowableArray<T>
    }
 
    @Override
-   public void set(int index, T item) {
+   public T set(int index, T item) {
       rangeCheck(index);
       int r, k, b, e;
       r = index + 1;
@@ -185,10 +196,12 @@ public class NoCopyGrowableArray<T> extends AbstractGrowableArray<T>
       int bBits = k >> 1;
       b = r & ~(-1 << bBits);
       int p = (1 << eBits) + (1 << bBits) - 2;
+      @SuppressWarnings("unchecked")
+      T ret = (T) indexBlock[p + b][e];
       indexBlock[p + b][e] = item;
+      return ret;
    }
    
-   @Override
    public T last() {
       if (size == 0) {
          throw new NoSuchElementException();
@@ -198,7 +211,6 @@ public class NoCopyGrowableArray<T> extends AbstractGrowableArray<T>
       return ret;
    }
    
-   @Override
    public T first() {
       if (size == 0) {
          throw new NoSuchElementException();
@@ -209,12 +221,16 @@ public class NoCopyGrowableArray<T> extends AbstractGrowableArray<T>
    }
    
    @Override
+   public boolean add(T item) {
+      push(item);
+      return true;
+   }
+   
    public void push(T item) {
       internalGrowBy(1);
       indexBlock[numDataBlocks - 1][lastDataBlockOccupancy - 1] = item;
    }
    
-   @Override
    public T pop() {
       T ret = last();
       internalShrinkBy(1);
@@ -222,18 +238,17 @@ public class NoCopyGrowableArray<T> extends AbstractGrowableArray<T>
    }
    
    @Override
-   public void pushAll(Iterable<? extends T> values) {
+   public boolean addAll(Collection<? extends T> values) {
       // mark the initial index, for the first item we'll append
       int i = size;
       int d = numDataBlocks - 1;
       int e = lastDataBlockOccupancy;
       int lim = d == -1 ? 0 : indexBlock[d].length;
-      // try to pre-allocate the entire amount needed
-      OptionalInt otherSize = Iterables.trySize(values);
-      if (otherSize.isPresent()) {
-         growBy(otherSize.getAsInt());
-      }
+      boolean ret = false;
+      // pre-allocate the entire amount needed
+      growBy(values.size());
       for (T t : values) {
+         ret = true;
          if (i >= size) {
             internalGrowBy(1);
          }
@@ -251,6 +266,7 @@ public class NoCopyGrowableArray<T> extends AbstractGrowableArray<T>
       if (i < size) {
          internalShrinkBy(size - i);
       }
+      return ret;
    }
    
    @Override
@@ -275,7 +291,7 @@ public class NoCopyGrowableArray<T> extends AbstractGrowableArray<T>
    
    // TODO: remove and move anything useful into unit tests
    public static void main(String args[]) {
-      GrowableArray<String> l = new NoCopyGrowableArray<>();
+      NoCopyGrowableArray<String> l = new NoCopyGrowableArray<>();
       for (int i = 0; i < 26; i++) {
          char ch[] = new char[3];
          ch[0] = (char)('A' + i);
@@ -290,7 +306,7 @@ public class NoCopyGrowableArray<T> extends AbstractGrowableArray<T>
          }
       }
       l = l.stream().filter(Predicates.every(26))
-            .collect(GrowableArray.collector(NoCopyGrowableArray::new));
+            .collect(Collectors.toCollection(NoCopyGrowableArray::new));
       for (String s : l) {
          System.out.println(s);
       }

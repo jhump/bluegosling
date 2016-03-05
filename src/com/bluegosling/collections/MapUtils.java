@@ -1,7 +1,5 @@
 package com.bluegosling.collections;
 
-import com.bluegosling.collections.immutable.ImmutableMap;
-
 import java.util.Map;
 
 // TODO: javadoc
@@ -104,101 +102,6 @@ public final class MapUtils {
       sb.append(" ]");
       return sb.toString();
    }
-
-   public static boolean equals(ImmutableMap<?, ?> map, Object o) {
-      if (!(o instanceof ImmutableMap)) {
-         return false;
-      }
-      if (map == o) {
-         return true;
-      }
-      ImmutableMap<?, ?> other = (ImmutableMap<?, ?>) o;
-      if (map.size() != other.size()) {
-         return false;
-      }
-      boolean containsItselfAsKey = false;
-      Object selfValue = null;
-      for (ImmutableMap.Entry<?, ?> entry : map) {
-         Object key = entry.key();
-         Object value = entry.value();
-         if (key == map || key == other) {
-            containsItselfAsKey = true;
-            selfValue = value;
-         } else {
-            Object otherValue = other.get(key);
-            if (value == null && otherValue == null) {
-               // annoying to have to do a double look-up, but...
-               if (!other.containsKey(key)) {
-                  return false;
-               }
-            } else if (value == null || otherValue == null) {
-               return false;
-            } else if (value == map || value == other) {
-               if (otherValue != map && otherValue != other) {
-                  return false;
-               }
-            } else if (!value.equals(otherValue)) {
-               return false;
-            }
-         }
-      }
-      if (containsItselfAsKey) {
-         // verify other map also contains itself (or this map) and has proper associated value
-         for (ImmutableMap.Entry<?, ?> entry : other) {
-            Object key = entry.key();
-            Object value = entry.value();
-            if (key == map || key == other) {
-               // check that mapped value matches
-               if (value == null || selfValue == null) {
-                  return value == selfValue;
-               } else if (value == map || value == other) {
-                  return selfValue == map || selfValue == other;
-               } else {
-                  return value.equals(selfValue);
-               }
-            }
-         }
-         return false;
-      }
-      return true;
-   }
-
-   public static int hashCode(ImmutableMap<?, ?> map) {
-      int ret = 0;
-      for (ImmutableMap.Entry<?, ?> entry : map) {
-         if (entry.key() == map || entry.value() == map) {
-            ret += safeHashCode(entry.key(), entry, map)
-                  ^ safeHashCode(entry.value(), entry, map);
-         } else {
-            ret += entry.hashCode();
-         }
-      }
-      return ret;
-   }
-   
-   public static <K, V> String toString(ImmutableMap<K, V> map) {
-      StringBuilder sb = new StringBuilder();
-      sb.append("[");
-      boolean first = true;
-      for (ImmutableMap.Entry<K, V> entry : map) {
-         if (first) {
-            first = false;
-         } else {
-            sb.append(",");
-         }
-         sb.append(" ");
-         if (entry.key() == map || entry.value() == map) {
-            // don't overflow stack if map contains itself
-            safeToString(sb, entry.key(), entry, "( this entry )", map, "( this map )");
-            sb.append(" => ");
-            safeToString(sb, entry.value(), entry, "( this entry )", map, "( this map )");
-         } else {
-            sb.append(entry);
-         }
-      }
-      sb.append(" ]");
-      return sb.toString();
-   }
    
    public static boolean equals(Map.Entry<?, ?> entry, Object o) {
       if (!(o instanceof Map.Entry)) {
@@ -231,40 +134,6 @@ public final class MapUtils {
       safeToString(sb, entry.getKey(), entry, "( this entry )");
       sb.append(" => ");
       safeToString(sb, entry.getValue(), entry, "( this entry )");
-      return sb.toString();
-   }
-   
-   public static boolean equals(ImmutableMap.Entry<?, ?> entry, Object o) {
-      if (!(o instanceof ImmutableMap.Entry)) {
-         return false;
-      }
-      if (o == entry) {
-         return true;
-      }
-      ImmutableMap.Entry<?, ?> other = (ImmutableMap.Entry<?, ?>) o;
-      Object key = entry.key();
-      Object otherKey = other.key();
-      if ((key == entry || key == other) && otherKey != entry && otherKey != other) {
-         return false;
-      }
-      Object value = entry.value();
-      Object otherValue = other.value();
-      if ((value == entry || value == other) && otherValue != entry && otherValue != other) {
-         return false;
-      }
-      return (key == null ? otherKey == null : key.equals(otherKey))
-            && (value == null ? otherValue == null : value.equals(otherValue));
-   }
-
-   public static int hashCode(ImmutableMap.Entry<?, ?> entry) {
-      return safeHashCode(entry.key(), entry) ^ safeHashCode(entry.value(), entry);
-   }
-
-   public static String toString(ImmutableMap.Entry<?, ?> entry) {
-      StringBuilder sb = new StringBuilder();
-      safeToString(sb, entry.key(), entry, "( this entry )");
-      sb.append(" => ");
-      safeToString(sb, entry.value(), entry, "( this entry )");
       return sb.toString();
    }
    

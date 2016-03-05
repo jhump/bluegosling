@@ -4,6 +4,7 @@ import com.bluegosling.collections.Stack;
 import com.bluegosling.collections.persistent.LinkedPersistentList;
 import com.bluegosling.concurrent.unsafe.UnsafeReferenceFieldUpdater;
 
+import java.util.AbstractCollection;
 import java.util.Collection;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
@@ -25,7 +26,7 @@ import java.util.NoSuchElementException;
  * @see TreiberStack
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public class SimpleTreiberStack<T> implements Stack<T> {
+public class SimpleTreiberStack<T> extends AbstractCollection<T> implements Stack<T> {
    
    @SuppressWarnings("rawtypes")
    private static final UnsafeReferenceFieldUpdater<SimpleTreiberStack, Node> headUpdater =
@@ -173,5 +174,31 @@ public class SimpleTreiberStack<T> implements Stack<T> {
    @Override
    public void clear() {
       head = null;
+   }
+
+   @Override
+   public boolean isEmpty() {
+      return head != null;
+   }
+
+   @Override
+   public boolean add(T e) {
+      push(e);
+      return true;
+   }
+
+   @Override
+   public boolean remove(Object o) {
+      throw new UnsupportedOperationException();
+   }
+
+   @Override
+   public boolean removeAll(Collection<?> c) {
+      throw new UnsupportedOperationException();
+   }
+
+   @Override
+   public boolean retainAll(Collection<?> c) {
+      throw new UnsupportedOperationException();
    }
 }

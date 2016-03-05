@@ -4,9 +4,10 @@ import com.bluegosling.collections.CollectionUtils;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 /**
- * An abstract base class for {@link ImmutableList} implementations that use linked data structures
+ * An abstract base class for immutable list implementations that use linked data structures
  * so that access is sequential. Random access operations in this sort of list have linear runtime
  * complexity. Sub-classes need only implement {@link #size()}, {@link #first()}, and
  * {@link #rest()}.
@@ -16,8 +17,8 @@ import java.util.NoSuchElementException;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 //TODO: tests
-public abstract class AbstractLinkedImmutableList<E> extends AbstractImmutableCollection<E>
-      implements ImmutableList<E> {
+public abstract class AbstractLinkedImmutableList<E> extends AbstractImmutableList<E>
+implements ConsList<E> {
 
    /**
     * Checks that the specified index is greater than or equal to zero and less than this list's
@@ -51,7 +52,7 @@ public abstract class AbstractLinkedImmutableList<E> extends AbstractImmutableCo
    @Override
    public Iterator<E> iterator() {
       return new Iterator<E>() {
-         private ImmutableList<E> current = AbstractLinkedImmutableList.this;
+         private ConsList<E> current = AbstractLinkedImmutableList.this;
          
          @Override
          public boolean hasNext() {
@@ -70,7 +71,7 @@ public abstract class AbstractLinkedImmutableList<E> extends AbstractImmutableCo
    @Override
    public E get(int i) {
       rangeCheck(i);
-      ImmutableList<E> current = this;
+      ConsList<E> current = this;
       for (; i > 0; i--) {
          current = current.rest();
       }
@@ -80,35 +81,40 @@ public abstract class AbstractLinkedImmutableList<E> extends AbstractImmutableCo
    @Override
    public int indexOf(Object o) {
       int index = 0;
-      for (E element : this) {
-         if (o == null ? element == null : o.equals(element)) {
+      ConsList<E> current = this;
+      while (current != null) {
+         if (Objects.equals(o, current.first())) {
             return index;
          }
          index++;
+         current = current.rest();
       }
       return -1;
    }
 
    @Override
    public int lastIndexOf(Object o) {
-      Object array[] = toArray();
-      for (int i = size() - 1; i >= 0; i--) {
-         Object element = array[i];
-         if (o == null ? element == null : o.equals(element)) {
-            return i;
+      int index = 0;
+      int lastIndex = -1;
+      ConsList<E> current = this;
+      while (current != null) {
+         if (Objects.equals(o, current.first())) {
+            lastIndex = index;
          }
+         index++;
+         current = current.rest();
       }
-      return -1;
+      return lastIndex;
    }
 
    @Override
-   public ImmutableList<E> subList(int from, int to) {
+   public ConsList<E> subList(int from, int to) {
       rangeCheckWide(from);
       rangeCheckWide(to);
       if (from > to) {
          throw new IndexOutOfBoundsException("from " + from + " > to " + to);
       }
-      ImmutableList<E> current = this;
+      ConsList<E> current = this;
       for (; from > 0; from--) {
          current = current.rest();
       }
@@ -130,16 +136,16 @@ public abstract class AbstractLinkedImmutableList<E> extends AbstractImmutableCo
    }
    
    /**
-    * A sub-list view of an {@link ImmutableList} that is sequential/linked in nature.
+    * A sub-list view of an immutable list that is sequential/linked in nature.
     *
     * @param <E> the type of element in the list
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    protected static class LinkedSubList<E> extends AbstractLinkedImmutableList<E> {
-      private final ImmutableList<E> tail;
+      private final ConsList<E> tail;
       private final int length;
       
-      public LinkedSubList(ImmutableList<E> tail, int length) {
+      public LinkedSubList(ConsList<E> tail, int length) {
          this.tail = tail;
          this.length = length;
       }
@@ -153,7 +159,7 @@ public abstract class AbstractLinkedImmutableList<E> extends AbstractImmutableCo
       }
 
       @Override
-      public ImmutableList<E> rest() {
+      public ConsList<E> rest() {
          return new LinkedSubList<E>(tail.rest(), length - 1);
       }
 
@@ -163,13 +169,13 @@ public abstract class AbstractLinkedImmutableList<E> extends AbstractImmutableCo
       }
       
       @Override
-      public ImmutableList<E> subList(int from, int to) {
+      public ConsList<E> subList(int from, int to) {
          rangeCheckWide(from);
          rangeCheckWide(to);
          if (from > to) {
             throw new IndexOutOfBoundsException("from " + from + " > to " + to);
          }
-         ImmutableList<E> current = tail;
+         ConsList<E> current = tail;
          for (; from > 0; from--) {
             current = current.rest();
          }

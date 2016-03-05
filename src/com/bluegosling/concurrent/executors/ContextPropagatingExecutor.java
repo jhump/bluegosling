@@ -1,6 +1,6 @@
 package com.bluegosling.concurrent.executors;
 
-import com.bluegosling.collections.Iterables;
+import com.bluegosling.collections.MoreIterables;
 import com.bluegosling.tuples.Pair;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class ContextPropagatingExecutor extends WrappingExecutor {
    public ContextPropagatingExecutor(Executor delegate,
          Iterable<? extends ContextPropagator<?>> propagators) {
       super(delegate);
-      this.propagators = Iterables.snapshot(propagators);
+      this.propagators = MoreIterables.snapshot(propagators);
    }
    
    @Override

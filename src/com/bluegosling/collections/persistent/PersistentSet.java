@@ -1,6 +1,7 @@
 package com.bluegosling.collections.persistent;
 
-import com.bluegosling.collections.immutable.ImmutableSet;
+import java.util.Collection;
+import java.util.Set;
 
 /**
  * A fully persistent set. This provides mutation operations that return new sets. Since changes
@@ -11,15 +12,43 @@ import com.bluegosling.collections.immutable.ImmutableSet;
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public interface PersistentSet<E> extends ImmutableSet<E>, PersistentCollection<E> {
+public interface PersistentSet<E> extends Set<E>, PersistentCollection<E> {
 
-   /**
-    * {@inheritDoc}
-    * 
-    * <p>This method is overridden to covariantly return a {@link PersistentSet} instead of a
-    * {@link PersistentCollection}.
-    */
-   @Override PersistentSet<E> add(E e);
+   @Deprecated
+   @Override
+   default boolean add(E e) {
+      throw new UnsupportedOperationException();
+   }
+
+   @Deprecated
+   @Override
+   default boolean addAll(Collection<? extends E> coll) {
+      throw new UnsupportedOperationException();
+   }
+
+   @Deprecated
+   @Override
+   default boolean remove(Object o) {
+      throw new UnsupportedOperationException();
+   }
+
+   @Deprecated
+   @Override
+   default boolean removeAll(Collection<?> coll) {
+      throw new UnsupportedOperationException();
+   }
+
+   @Deprecated
+   @Override
+   default boolean retainAll(Collection<?> coll) {
+      throw new UnsupportedOperationException();
+   }
+
+   @Deprecated
+   @Override
+   default void clear() {
+      throw new UnsupportedOperationException();
+   }
    
    /**
     * {@inheritDoc}
@@ -27,7 +56,15 @@ public interface PersistentSet<E> extends ImmutableSet<E>, PersistentCollection<
     * <p>This method is overridden to covariantly return a {@link PersistentSet} instead of a
     * {@link PersistentCollection}.
     */
-   @Override PersistentSet<E> remove(Object o);
+   @Override PersistentSet<E> with(E e);
+   
+   /**
+    * {@inheritDoc}
+    * 
+    * <p>This method is overridden to covariantly return a {@link PersistentSet} instead of a
+    * {@link PersistentCollection}.
+    */
+   @Override PersistentSet<E> without(Object o);
 
    /**
     * {@inheritDoc}
@@ -35,9 +72,9 @@ public interface PersistentSet<E> extends ImmutableSet<E>, PersistentCollection<
     * <p>This method is overridden to covariantly return a {@link PersistentSet} instead of a
     * {@link PersistentCollection}.
     */
-   @Override default PersistentSet<E> removeAll(Object o) {
+   @Override default PersistentSet<E> withoutAny(Object o) {
       // sets don't have duplicates, so this is the same as remove(Object)
-      return remove(o);
+      return without(o);
    }
 
    /**
@@ -46,7 +83,7 @@ public interface PersistentSet<E> extends ImmutableSet<E>, PersistentCollection<
     * <p>This method is overridden to covariantly return a {@link PersistentSet} instead of a
     * {@link PersistentCollection}.
     */
-   @Override PersistentSet<E> removeAll(Iterable<?> items);
+   @Override PersistentSet<E> withoutAny(Iterable<?> items);
    
    /**
     * {@inheritDoc}
@@ -54,7 +91,7 @@ public interface PersistentSet<E> extends ImmutableSet<E>, PersistentCollection<
     * <p>This method is overridden to covariantly return a {@link PersistentSet} instead of a
     * {@link PersistentCollection}.
     */
-   @Override PersistentSet<E> retainAll(Iterable<?> items);
+   @Override PersistentSet<E> withOnly(Iterable<?> items);
    
    /**
     * {@inheritDoc}
@@ -62,14 +99,14 @@ public interface PersistentSet<E> extends ImmutableSet<E>, PersistentCollection<
     * <p>This method is overridden to covariantly return a {@link PersistentSet} instead of a
     * {@link PersistentCollection}.
     */
-   @Override PersistentSet<E> addAll(Iterable<? extends E> items);
+   @Override PersistentSet<E> withAll(Iterable<? extends E> items);
 
    /**
     * Returns an empty set.
     *
     * @return an empty persistent set
     */
-   @Override PersistentSet<E> clear();
+   @Override PersistentSet<E> removeAll();
    
    /**
     * Returns a persistent set that is backed by the given persistent map. Elements present in the
