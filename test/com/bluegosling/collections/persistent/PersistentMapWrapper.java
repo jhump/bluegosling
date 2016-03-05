@@ -1,13 +1,13 @@
 package com.bluegosling.collections.persistent;
 
-import com.bluegosling.collections.Iterables;
-import com.bluegosling.collections.immutable.ImmutableMap;
-import com.bluegosling.collections.immutable.ImmutableMapWrapper;
-import com.bluegosling.collections.immutable.Immutables;
+import com.bluegosling.collections.MoreIterables;
+import com.bluegosling.collections.persistent.PersistentMap;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * A wrapper to adapt a {@link Map} to a {@link PersistentMap}. This is used to create "reference
@@ -22,12 +22,52 @@ import java.util.Map;
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public class PersistentMapWrapper<K, V> extends ImmutableMapWrapper<K, V, Map<K, V>>
-      implements PersistentMap<K, V> {
+public class PersistentMapWrapper<K, V> implements PersistentMap<K, V> {
 
+   protected final Map<K, V> map;
 
    public PersistentMapWrapper(Map<K, V> map) {
-      super(map);
+      this.map = map;
+   }
+
+   @Override
+   public int size() {
+      return map.size();
+   }
+
+   @Override
+   public boolean isEmpty() {
+      return map.isEmpty();
+   }
+
+   @Override
+   public boolean containsKey(Object o) {
+      return map.containsKey(o);
+   }
+
+   @Override
+   public boolean containsValue(Object o) {
+      return map.containsValue(o);
+   }
+
+   @Override
+   public V get(Object key) {
+      return map.get(key);
+   }
+
+   @Override
+   public Set<K> keySet() {
+      return map.keySet();
+   }
+
+   @Override
+   public Collection<V> values() {
+      return map.values();
+   }
+
+   @Override
+   public Set<Entry<K, V>> entrySet() {
+      return map.entrySet();
    }
 
    protected Map<K, V> copy(Map<K, V> original) {
@@ -39,49 +79,42 @@ public class PersistentMapWrapper<K, V> extends ImmutableMapWrapper<K, V, Map<K,
    }
 
    @Override
-   public PersistentMap<K, V> put(K key, V value) {
+   public PersistentMap<K, V> with(K key, V value) {
       Map<K, V> newMap = copy(map);
       newMap.put(key, value);
       return wrapPersistent(newMap);
    }
 
    @Override
-   public PersistentMap<K, V> remove(Object o) {
+   public PersistentMap<K, V> withoutKey(Object o) {
       Map<K, V> newMap = copy(map);
       newMap.remove(o);
       return wrapPersistent(newMap);
    }
 
    @Override
-   public PersistentMap<K, V> removeAll(Iterable<?> keys) {
+   public PersistentMap<K, V> withoutKeys(Iterable<?> keys) {
       Map<K, V> newMap = copy(map);
-      newMap.keySet().removeAll(Iterables.snapshot(keys));
+      newMap.keySet().removeAll(MoreIterables.snapshot(keys));
       return wrapPersistent(newMap);
    }
 
    @Override
-   public PersistentMap<K, V> retainAll(Iterable<?> keys) {
+   public PersistentMap<K, V> withOnlyKeys(Iterable<?> keys) {
       Map<K, V> newMap = copy(map);
-      newMap.keySet().retainAll(Iterables.snapshot(keys));
+      newMap.keySet().retainAll(MoreIterables.snapshot(keys));
       return wrapPersistent(newMap);
    }
 
    @Override
-   public PersistentMap<K, V> putAll(Map<? extends K, ? extends V> items) {
+   public PersistentMap<K, V> withAll(Map<? extends K, ? extends V> items) {
       Map<K, V> newMap = copy(map);
       newMap.putAll(items);
       return wrapPersistent(newMap);
    }
 
    @Override
-   public PersistentMap<K, V> putAll(ImmutableMap<? extends K, ? extends V> items) {
-      Map<K, V> newMap = copy(map);
-      newMap.putAll(Immutables.asIfMutable(items));
-      return wrapPersistent(newMap);
-   }
-
-   @Override
-   public PersistentMap<K, V> clear() {
+   public PersistentMap<K, V> removeAll() {
       Map<K, V> newMap = copy(map);
       newMap.clear();
       return wrapPersistent(newMap);

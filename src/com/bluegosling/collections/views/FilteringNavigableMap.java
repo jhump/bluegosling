@@ -1,7 +1,7 @@
 package com.bluegosling.collections.views;
 
 import com.bluegosling.collections.CollectionUtils;
-import com.bluegosling.collections.Iterables;
+import com.bluegosling.collections.MoreIterables;
 import com.bluegosling.collections.SortedArrayMap;
 
 import java.util.Collection;
@@ -221,12 +221,12 @@ public class FilteringNavigableMap<K, V> extends FilteringSortedMap<K, V>
 
       @Override
       public Object[] toArray() {
-         return Iterables.toArray(this);
+         return MoreIterables.toArray(this);
       }
 
       @Override
       public <T> T[] toArray(T[] a) {
-         return Iterables.toArray(this, a);
+         return MoreIterables.toArray(this, a);
       }
 
       @Override

@@ -1,7 +1,7 @@
 package com.bluegosling.collections.tables;
 
-import com.bluegosling.collections.Iterables;
 import com.bluegosling.collections.views.FilteringIterator;
+import com.google.common.collect.Iterators;
 
 import java.util.AbstractCollection;
 import java.util.AbstractMap;
@@ -617,7 +617,7 @@ class NestedMap<K, V> {
 
             @Override
             public int size() {
-               return Iterables.size(iterator());
+               return Iterators.size(iterator());
             }
          };
       }
@@ -632,7 +632,7 @@ class NestedMap<K, V> {
 
          @Override
          public int size() {
-            return Iterables.size(iterator());
+            return Iterators.size(iterator());
          }
       };
    }
@@ -1095,9 +1095,33 @@ class NestedMap<K, V> {
             Level<K, V> child = map.get(k);
             return child == null && !map.containsKey(k)
                   ? Collections.emptyIterator()
-                  : Iterables.singletonIterator(
-                        new AbstractMap.SimpleImmutableEntry<>(k, child),
-                        () -> map.remove(k));
+                  : new Iterator<Entry<K, Level<K, V>>>() {
+                     // an iterator that returns just the single entry for k
+                     int state;
+
+                     @Override
+                     public boolean hasNext() {
+                        return state == 0;
+                     }
+
+                     @Override
+                     public Entry<K, Level<K, V>> next() {
+                        if (state != 0) {
+                           throw new NoSuchElementException();
+                        }
+                        state = 1;
+                        return new AbstractMap.SimpleImmutableEntry<>(k, child);
+                     }
+                     
+                     @Override
+                     public void remove() {
+                        if (state != 1) {
+                           throw new IllegalStateException();
+                        }
+                        state = 2;
+                        map.remove(k);
+                     }
+                  };
          }
       }
 

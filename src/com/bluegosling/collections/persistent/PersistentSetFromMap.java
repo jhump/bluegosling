@@ -1,7 +1,6 @@
 package com.bluegosling.collections.persistent;
 
-import com.bluegosling.collections.immutable.AbstractImmutableSet;
-
+import java.util.AbstractSet;
 import java.util.Iterator;
 
 /**
@@ -14,7 +13,7 @@ import java.util.Iterator;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 // TODO: tests
-class PersistentSetFromMap<E> extends AbstractImmutableSet<E> implements PersistentSet<E> {
+class PersistentSetFromMap<E> extends AbstractSet<E> implements PersistentSet<E> {
    
    private final PersistentMap<E, Boolean> map;
 
@@ -38,41 +37,41 @@ class PersistentSetFromMap<E> extends AbstractImmutableSet<E> implements Persist
    }
 
    @Override
-   public PersistentSet<E> removeAll(Object o) {
-      return new PersistentSetFromMap<>(map.remove(o));
+   public PersistentSet<E> withoutAny(Object o) {
+      return new PersistentSetFromMap<>(map.withoutKey(o));
    }
 
    @Override
-   public PersistentSet<E> add(E e) {
-      return new PersistentSetFromMap<>(map.put(e, Boolean.TRUE));
+   public PersistentSet<E> with(E e) {
+      return new PersistentSetFromMap<>(map.with(e, Boolean.TRUE));
    }
 
    @Override
-   public PersistentSet<E> remove(Object o) {
-      return new PersistentSetFromMap<>(map.remove(o));
+   public PersistentSet<E> without(Object o) {
+      return new PersistentSetFromMap<>(map.withoutKey(o));
    }
 
    @Override
-   public PersistentSet<E> removeAll(Iterable<?> items) {
-      return new PersistentSetFromMap<>(map.removeAll(items));
+   public PersistentSet<E> withoutAny(Iterable<?> items) {
+      return new PersistentSetFromMap<>(map.withoutKeys(items));
    }
 
    @Override
-   public PersistentSet<E> retainAll(Iterable<?> items) {
-      return new PersistentSetFromMap<>(map.retainAll(items));
+   public PersistentSet<E> withOnly(Iterable<?> items) {
+      return new PersistentSetFromMap<>(map.withOnlyKeys(items));
    }
 
    @Override
-   public PersistentSet<E> addAll(Iterable<? extends E> items) {
+   public PersistentSet<E> withAll(Iterable<? extends E> items) {
       PersistentSet<E> ret = this;
       for (E e : items) {
-         ret = ret.add(e);
+         ret = ret.with(e);
       }
       return ret;
    }
 
    @Override
-   public PersistentSet<E> clear() {
-      return new PersistentSetFromMap<>(map.clear());
+   public PersistentSet<E> removeAll() {
+      return new PersistentSetFromMap<>(map.removeAll());
    }
 }

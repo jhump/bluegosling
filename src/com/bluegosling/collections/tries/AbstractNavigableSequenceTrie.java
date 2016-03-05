@@ -1,10 +1,10 @@
 package com.bluegosling.collections.tries;
 
-import static com.bluegosling.collections.Iterables.upToN;
+import static com.bluegosling.collections.MoreIterables.upToN;
 
 import com.bluegosling.collections.AbstractNavigableMap;
 import com.bluegosling.collections.BoundType;
-import com.bluegosling.collections.Iterables;
+import com.bluegosling.collections.MoreIterables;
 import com.bluegosling.collections.views.DescendingSequenceTrie;
 import com.bluegosling.collections.views.DescendingSet;
 import com.bluegosling.possible.Reference;
@@ -40,7 +40,7 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
 
    @Override
    public Comparator<Iterable<K>> comparator() {
-      return Iterables.comparator(componentComparator);
+      return MoreIterables.comparator(componentComparator);
    }
 
    @Override
@@ -410,7 +410,7 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
 
    @Override
    public NavigableSequenceTrie<K, V> prefixMap(Iterable<K> prefix) {
-      Collection<K> snapshot = Iterables.snapshot(prefix);
+      Collection<K> snapshot = MoreIterables.snapshot(prefix);
       return snapshot.isEmpty() ? this : new NavigablePrefixSequenceTrie<>(snapshot, this);
    }
 
@@ -435,9 +435,9 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
    
       @Override
       public NavigableSequenceTrie<K, V> prefixMap(Iterable<K> newPrefix) {
-         Collection<K> snapshot = Iterables.snapshot(newPrefix);
+         Collection<K> snapshot = MoreIterables.snapshot(newPrefix);
          return snapshot.isEmpty() ? this : new NavigablePrefixSequenceTrie<>(
-               Iterables.concatIterables(this.prefix, snapshot), parent);
+               MoreIterables.concatIterables(this.prefix, snapshot), parent);
       }
       
       N getRoot() {
@@ -1005,7 +1005,7 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
          Reference<V> v = base.remove(keyIter);
          return v.isPresent()
                ? new AbstractMap.SimpleImmutableEntry<>(
-                     new ArrayList<>(Iterables.snapshot(keyIter)), v.get())
+                     new ArrayList<>(MoreIterables.snapshot(keyIter)), v.get())
                : null;
       }
    }

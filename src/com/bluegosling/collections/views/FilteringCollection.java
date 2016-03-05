@@ -1,7 +1,7 @@
 package com.bluegosling.collections.views;
 
 import com.bluegosling.collections.CollectionUtils;
-import com.bluegosling.collections.Iterables;
+import com.bluegosling.collections.MoreIterables;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -82,12 +82,12 @@ public class FilteringCollection<E> extends FilteringIterable<E> implements Coll
 
    @Override
    public Object[] toArray() {
-      return Iterables.toArray(this);
+      return MoreIterables.toArray(this);
    }
 
    @Override
    public <T> T[] toArray(T[] a) {
-      return Iterables.toArray(this, a);
+      return MoreIterables.toArray(this, a);
    }
 
    /**

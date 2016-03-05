@@ -7,6 +7,7 @@ import java.util.Deque;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.function.Predicate;
 
 /**
  * A simple stack interface. This interface is much more targeted for LIFO stacks and thus narrower
@@ -16,7 +17,7 @@ import java.util.NoSuchElementException;
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public interface Stack<T> extends SizedIterable<T> {
+public interface Stack<T> extends Collection<T> {
 
    /**
     * Pushes a value onto the stack.
@@ -107,6 +108,7 @@ public interface Stack<T> extends SizedIterable<T> {
    /**
     * Removes all items from the stack.
     */
+   @Override
    default void clear() {
       removeAll();
    }
@@ -184,6 +186,56 @@ public interface Stack<T> extends SizedIterable<T> {
          public void clear() {
             list.clear();
          }
+
+         @Override
+         public boolean contains(Object o) {
+            return list.contains(o);
+         }
+
+         @Override
+         public Object[] toArray() {
+            return list.toArray();
+         }
+
+         @Override
+         public <U> U[] toArray(U[] a) {
+            return list.toArray(a);
+         }
+
+         @Override
+         public boolean add(T e) {
+            return list.add(e);
+         }
+
+         @Override
+         public boolean remove(Object o) {
+            return list.remove(o);
+         }
+
+         @Override
+         public boolean containsAll(Collection<?> c) {
+            return list.containsAll(c);
+         }
+
+         @Override
+         public boolean addAll(Collection<? extends T> c) {
+            return list.addAll(c);
+         }
+
+         @Override
+         public boolean removeAll(Collection<?> c) {
+            return list.removeAll(c);
+         }
+
+         @Override
+         public boolean retainAll(Collection<?> c) {
+            return list.retainAll(c);
+         }
+         
+         @Override
+         public boolean removeIf(Predicate<? super T> predicate) {
+            return list.removeIf(predicate);
+         }
       };
    }
    
@@ -246,6 +298,56 @@ public interface Stack<T> extends SizedIterable<T> {
          @Override
          public void clear() {
             deque.clear();
+         }
+         
+         @Override
+         public boolean contains(Object o) {
+            return deque.contains(o);
+         }
+
+         @Override
+         public Object[] toArray() {
+            return deque.toArray();
+         }
+
+         @Override
+         public <U> U[] toArray(U[] a) {
+            return deque.toArray(a);
+         }
+
+         @Override
+         public boolean add(T e) {
+            return deque.add(e);
+         }
+
+         @Override
+         public boolean remove(Object o) {
+            return deque.remove(o);
+         }
+
+         @Override
+         public boolean containsAll(Collection<?> c) {
+            return deque.containsAll(c);
+         }
+
+         @Override
+         public boolean addAll(Collection<? extends T> c) {
+            return deque.addAll(c);
+         }
+
+         @Override
+         public boolean removeAll(Collection<?> c) {
+            return deque.removeAll(c);
+         }
+
+         @Override
+         public boolean retainAll(Collection<?> c) {
+            return deque.retainAll(c);
+         }
+         
+         @Override
+         public boolean removeIf(Predicate<? super T> predicate) {
+            return deque.removeIf(predicate);
          }
       };
    }

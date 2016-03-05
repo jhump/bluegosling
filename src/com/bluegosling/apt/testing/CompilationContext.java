@@ -2,7 +2,7 @@ package com.bluegosling.apt.testing;
 
 import static java.util.Objects.requireNonNull;
 
-import com.bluegosling.collections.Iterables;
+import com.google.common.collect.Iterables;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -212,7 +212,7 @@ public class CompilationContext {
 
       @Override
       public TaskBuilderImpl withOptions(Iterable<String> opts) {
-         Iterables.addTo(opts, this.options);
+         Iterables.addAll(this.options, opts);
          return this;
       }
 
@@ -223,7 +223,7 @@ public class CompilationContext {
 
       @Override
       public TaskBuilderImpl processingClasses(Iterable<Class<?>> classes) {
-         Iterables.addTo(classes, this.classesToProcess);
+         Iterables.addAll(this.classesToProcess, classes);
          return this;
       }
 
@@ -234,7 +234,7 @@ public class CompilationContext {
 
       @Override
       public TaskBuilderImpl processingFiles(Iterable<JavaFileObject> files) {
-         Iterables.addTo(files, this.filesToProcess);
+         Iterables.addAll(this.filesToProcess, files);
          return this;
       }
 

@@ -1,7 +1,8 @@
 package com.bluegosling.collections.persistent;
 
-import com.bluegosling.collections.Iterables;
-import com.bluegosling.collections.immutable.ImmutableCollectionWrapper;
+import com.bluegosling.collections.MoreIterables;
+import com.bluegosling.collections.persistent.PersistentCollection;
+import com.google.common.collect.Iterators;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,32 +23,69 @@ import java.util.Iterator;
  */
 public abstract class PersistentCollectionWrapper<E, C extends Collection<E>,
                                            P extends PersistentCollectionWrapper<E, C, P>>
-extends ImmutableCollectionWrapper<E, C>
 implements PersistentCollection<E> {
-   
+
+   protected final C collection;
+
    public PersistentCollectionWrapper(C collection) {
-      super(collection);
+      this.collection = collection;
    }
    
    protected abstract C copy(C original);
+   
    protected abstract P wrapPersistent(C coll);
+   
+   @Override
+   public Iterator<E> iterator() {
+      return Iterators.unmodifiableIterator(collection.iterator());
+   }
 
    @Override
-   public P add(E e) {
+   public int size() {
+      return collection.size();
+   }
+
+   @Override
+   public boolean isEmpty() {
+      return collection.isEmpty();
+   }
+
+   @Override
+   public Object[] toArray() {
+      return collection.toArray();
+   }
+
+   @Override
+   public <T> T[] toArray(T[] array) {
+      return collection.toArray(array);
+   }
+
+   @Override
+   public boolean contains(Object o) {
+      return collection.contains(o);
+   }
+
+   @Override
+   public boolean containsAll(Collection<?> items) {
+      return collection.containsAll(MoreIterables.snapshot(items));
+   }
+   
+   @Override
+   public P with(E e) {
       C newCollection = copy(collection);
       newCollection.add(e);
       return wrapPersistent(newCollection);
    }
 
    @Override
-   public P remove(Object o) {
+   public P without(Object o) {
       C newCollection = copy(collection);
       newCollection.remove(o);
       return wrapPersistent(newCollection);
    }
 
    @Override
-   public P removeAll(Object o) {
+   public P withoutAny(Object o) {
       C newCollection = copy(collection);
       for (Iterator<E> iter = newCollection.iterator(); iter.hasNext();) {
          E e = iter.next();
@@ -59,23 +97,23 @@ implements PersistentCollection<E> {
    }
 
    @Override
-   public P removeAll(Iterable<?> items) {
+   public P withoutAny(Iterable<?> items) {
       C newCollection = copy(collection);
-      newCollection.removeAll(Iterables.snapshot(items));
+      newCollection.removeAll(MoreIterables.snapshot(items));
       return wrapPersistent(newCollection);
    }
 
    @Override
-   public P retainAll(Iterable<?> items) {
+   public P withOnly(Iterable<?> items) {
       C newCollection = copy(collection);
-      newCollection.retainAll(Iterables.snapshot(items));
+      newCollection.retainAll(MoreIterables.snapshot(items));
       return wrapPersistent(newCollection);
    }
 
    @Override
-   public P addAll(Iterable<? extends E> items) {
+   public P withAll(Iterable<? extends E> items) {
       C newCollection = copy(collection);
-      newCollection.addAll(Iterables.snapshot(items));
+      newCollection.addAll(MoreIterables.snapshot(items));
       return wrapPersistent(newCollection);
    }
 }

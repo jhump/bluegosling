@@ -1,6 +1,6 @@
 package com.bluegosling.graph;
 
-import com.bluegosling.collections.Iterables;
+import com.google.common.collect.Iterables;
 
 import java.util.ArrayList;
 import java.util.concurrent.Executor;
@@ -42,7 +42,7 @@ public class ComputationFactory {
       }
       
       public Builder addDecorators(Iterable<NodeDecorator> decs) {
-         Iterables.addTo(decs, this.decorators);
+         Iterables.addAll(this.decorators, decs);
          return this;
       }
       

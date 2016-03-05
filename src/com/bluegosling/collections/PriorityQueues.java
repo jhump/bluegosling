@@ -24,19 +24,17 @@ public final class PriorityQueues {
    
    /**
     * A type of value that automatically associates itself with a queue entry when added to a
-    * {@link PriorityQueue}. This only works when using the object's {@link
-    * #add(Object, PriorityQueue)} method.
+    * {@link PriorityQueue}. This only works when using the object's {@link #add} method.
     * 
-    * <p>This can be very useful since usage of a {@link PriorityQueue} requires keeping track of an
-    * associated {@link Entry} after adding a value to the queue in order to perform other useful
-    * operations later. A common pattern is to store a reference to the associated entry in the
-    * actual value, after it is added to the queue. This class encapsulates that pattern.
+    * <p>This can be very useful since sophisticated usage of a {@link PriorityQueue} requires
+    * keeping track of an {@link Entry} after adding a value to the queue. A common pattern is to
+    * store a reference to the associated entry in the actual value, after it is added to the queue.
+    * This class encapsulates that pattern.
     * 
     * <p>To use, extend this class and add fields that represent the actual object/state being added
     * to a queue. Always use the object's {@link #add} method (instead of using the queue's
     * {@link PriorityQueue#add} method). This class also provides utility methods for interacting
-    * with the queue directly through the associated entry, like for removing the entry or changing
-    * its priority.
+    * with the queue, like for removing the entry or changing its priority.
     *
     * @param <P> the type of priority associated with this object
     * @param <E> the type of this object
@@ -117,36 +115,6 @@ public final class PriorityQueues {
          return entry.getPriority();
       }
    }
-   
-   /**
-    * A simple meldable ordered queue. You can attempt to meld it with any other instance of
-    * {@link MeldableQueue}. A runtime exception will be thrown if the two queues are not actually
-    * of compatible types for melding.
-    *
-    * @param <E> the type 
-    * @author Joshua Humphries (jhumphries131@gmail.com)
-    */
-   public interface MeldableQueue<E>
-         extends MeldableOrderedQueue<E, MeldableOrderedQueue<? extends E, MeldableQueue<E>>> {
-   }
-   
-   /**
-    * Creates a priority queue entry. This method should be used when adding items to a queue
-    * returned by {@link #asQueue}.
-    * 
-    * <p>If the same element and priority are to be added to multiple queues, create multiple
-    * entries. Adding the returned entry to more than one queue will result in an
-    * {@link IllegalStateException} being thrown. Trying to {@linkplain Entry#remove() remove} the
-    * entry before it has actually been added to a queue will also result in an
-    * {@link IllegalStateException} being thrown.
-    *
-    * @param element the element
-    * @param priority the priority for the given element
-    * @return an entry that represents the given element at the given priority
-    */
-   public static <E, P> Entry<E, P> entry(E element, P priority) {
-      return new AssociatingEntry<E, P>(element, priority);
-   }
 
    /**
     * Returns a view of a {@link PriorityQueue} as an {@link OrderedQueue}. The
@@ -156,10 +124,22 @@ public final class PriorityQueues {
     * @param priorityQueue a priority queue
     * @return a view of the given priority queue as a {@link OrderedQueue}
     */
-   public static <E, P> OrderedQueue<Entry<E, P>> asQueue(PriorityQueue<E, P> priorityQueue) {
-      return new QueueImpl<E, P>(priorityQueue);
+   public static <E> OrderedQueue<E> asQueue(PriorityQueue<E, E> priorityQueue) {
+      return new QueueImpl<>(priorityQueue);
    }
 
+   /**
+    * A simple meldable ordered queue. You can attempt to meld it with any other instance of
+    * {@link MeldableQueue}. A runtime exception will be thrown if the two queues are not actually
+    * of compatible types for melding.
+    *
+    * @param <E> the type 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   public interface MeldableQueue<E>
+         extends MeldableOrderedQueue<E, MeldableQueue<? extends E>> {
+   }
+   
    /**
     * Returns a view of a {@link MeldablePriorityQueue} as a {@link MeldableOrderedQueue}. The
     * {@link #entry(Object, Object)} method must be used to create objects that are added to the
@@ -170,89 +150,11 @@ public final class PriorityQueues {
     * @param priorityQueue a priority queue
     * @return a view of the given priority queue as a {@link MeldableOrderedQueue}
     */
-   public static <E, P, Q extends MeldablePriorityQueue<E, P, Q>>
-         MeldableQueue<Entry<E, P>> asQueue(Q priorityQueue) {
-      return new MeldableQueueImpl<E, P>(priorityQueue);
+   public static <E, Q extends MeldablePriorityQueue<E, E, Q>>
+         MeldableQueue<E> asQueue(Q priorityQueue) {
+      return new MeldableQueueImpl<>(priorityQueue);
    }
-   
-   /**
-    * A simple entry that becomes associated with another after being added to a queue.
-    *
-    * @param <E> the type of the element
-    * @param <P> the type of the element's priority
-    * 
-    * @author Joshua Humphries (jhumphries131@gmail.com)
-    */
-   private static class AssociatingEntry<E, P> implements Entry<E, P> {
-      private E element;
-      private P priority;
-      private Entry<E, P> associate;
-      
-      AssociatingEntry(E element, P priority) {
-         this.priority = priority;
-         this.element = element;
-      }
-      
-      @Override
-      public P getPriority() {
-         return associate == null ? priority : associate.getPriority();
-      }
 
-      @Override
-      public E getElement() {
-         return associate == null ? element : associate.getElement();
-      }
-
-      @Override
-      public void setPriority(P newPriority) {
-         if (associate == null) {
-            this.priority = newPriority;
-         } else {
-            associate.setPriority(newPriority);
-         }
-      }
-      
-      void setAssociate(Entry<E, P> associate) {
-         if (this.associate != null) {
-            throw new IllegalStateException(
-                  "This entry can only be used once and has already been added to a priority queue");
-         }
-         this.associate = associate;
-      }
-
-      @Override
-      public void setElement(E newElement) {
-         if (associate == null) {
-            this.element = newElement;
-         } else {
-            associate.setElement(newElement);
-         }
-      }
-
-      @Override
-      public void remove() {
-         if (associate == null) {
-            throw new IllegalStateException("This entry must first be added to a priority queue");
-         }
-         associate.remove();
-      }
-      
-      @Override
-      public boolean equals(Object o) {
-         return PriorityQueueUtils.equals(this,  o);
-      }
-      
-      @Override
-      public int hashCode() {
-         return PriorityQueueUtils.hashCode(this);
-      }
-      
-      @Override
-      public String toString() {
-         return PriorityQueueUtils.toString(this);
-      }
-   }
-   
    /**
     * An {@link OrderedQueue}, implemented on top of a {@link PriorityQueue}.
     *
@@ -261,89 +163,40 @@ public final class PriorityQueues {
     * 
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   private static class QueueImpl<E, P> extends AbstractQueue<Entry<E, P>> 
-         implements OrderedQueue<Entry<E, P>> {
+   private static class QueueImpl<E> extends AbstractQueue<E> 
+         implements OrderedQueue<E> {
       
-      final PriorityQueue<E, P> priorityQueue;
+      final PriorityQueue<E, E> priorityQueue;
       
-      QueueImpl(PriorityQueue<E, P> priorityQueue) {
+      QueueImpl(PriorityQueue<E, E> priorityQueue) {
          this.priorityQueue = priorityQueue;
       }
       
       @Override
-      public boolean offer(Entry<E, P> e) {
-         AssociatingEntry<E, P> entry = (AssociatingEntry<E, P>) e;
-         Entry<E, P> associate = priorityQueue.offer(e.getElement(), e.getPriority());
-         if (associate == null) {
-            return false;
-         }
-         entry.setAssociate(associate);
-         return true;
+      public boolean offer(E e) {
+         return priorityQueue.offer(e, e) != null;
       }
 
       @Override
-      public Entry<E, P> poll() {
-         return priorityQueue.poll();
+      public E poll() {
+         Entry<E, E> entry = priorityQueue.poll();
+         return entry == null ? null : entry.getElement();
       }
 
       @Override
-      public Entry<E, P> peek() {
-         return priorityQueue.peek();
-      }
-
-      @Override
-      public int size() {
-         return priorityQueue.size();
-      }
-
-      @Override
-      public boolean isEmpty() {
-         return priorityQueue.isEmpty();
-      }
-
-      @Override
-      public Iterator<Entry<E, P>> iterator() {
-         return priorityQueue.iterator();
-      }
-
-      @Override
-      public Object[] toArray() {
-         return priorityQueue.toArray();
-      }
-
-      @SuppressWarnings("unchecked")
-      @Override
-      public <T> T[] toArray(T[] a) {
-         if (a.getClass().getComponentType() != Entry.class) {
-            throw new ArrayStoreException();
-         }
-         Entry<E, P> entryArray[] = (Entry<E, P>[]) a;
-         return (T[]) priorityQueue.toArray(entryArray);
+      public E peek() {
+         Entry<E, E> entry = priorityQueue.peek();
+         return entry == null ? null : entry.getElement();
       }
 
       @Override
       public boolean contains(Object o) {
-         if (o instanceof Entry) {
-            for (Entry<E, P> entry : this) {
-               if (o.equals(entry)) {
-                  return true;
-               }
-            }
-         }
-         return false;
+         return priorityQueue.elements().contains(o);
       }
 
       @Override
       public boolean remove(Object o) {
-         if (o instanceof Entry) {
-            for (Entry<E, P> entry : this) {
-               if (o.equals(entry)) {
-                  entry.remove();
-                  return true;
-               }
-            }
-         }
-         return false;
+         return priorityQueue.elements().remove(o);
       }
 
       @Override
@@ -352,22 +205,23 @@ public final class PriorityQueues {
       }
       
       @Override
-      public Comparator<? super Entry<E, P>> comparator() {
-         return new Comparator<Entry<E, P>>() {
-            @Override
-            public int compare(Entry<E, P> o1, Entry<E, P> o2) {
-               Comparator<? super P> comp = priorityQueue.comparator();
-               if (comp == null) {
-                  comp = CollectionUtils.naturalOrder();
-               }
-               return comp.compare(o1.getPriority(), o2.getPriority());
-            }
-         };
+      public Comparator<? super E> comparator() {
+         return priorityQueue.comparator();
       }
       
       @Override
       public String toString() {
          return CollectionUtils.toString(this);
+      }
+
+      @Override
+      public Iterator<E> iterator() {
+         return priorityQueue.elements().iterator();
+      }
+
+      @Override
+      public int size() {
+         return priorityQueue.size();
       }
    }
    
@@ -379,22 +233,22 @@ public final class PriorityQueues {
     * 
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   private static class MeldableQueueImpl<E, P> extends QueueImpl<E, P>
-         implements MeldableQueue<Entry<E, P>> {
+   private static class MeldableQueueImpl<E> extends QueueImpl<E> implements MeldableQueue<E> {
       
-      <Q extends MeldablePriorityQueue<E, P, Q>> MeldableQueueImpl(Q priorityQueue) {
+      <Q extends MeldablePriorityQueue<E, E, Q>> MeldableQueueImpl(Q priorityQueue) {
          super(priorityQueue);
       }
 
       @Override
-      public boolean mergeFrom(
-            MeldableOrderedQueue<? extends Entry<E, P>, MeldableQueue<Entry<E, P>>> other) {
-         @SuppressWarnings({"rawtypes", "unchecked"})
-         MeldablePriorityQueue<E, P, ?> otherQueue =
-               (MeldablePriorityQueue<E, P, ?>)((MeldableQueueImpl) other).priorityQueue;
+      public boolean mergeFrom(MeldableQueue<? extends E> other) {
+         @SuppressWarnings("unchecked") // this isn't really unchecked, but confuses compiler...
+         MeldablePriorityQueue<? extends E, ? extends E, ?> otherQueue =
+               (MeldablePriorityQueue<? extends E, ? extends E, ?>)
+               ((MeldableQueueImpl<? extends E>) other).priorityQueue;
          @SuppressWarnings("unchecked")
-         MeldablePriorityQueue<E, P, MeldablePriorityQueue<? extends E, ? extends P, ?>> queue =
-               (MeldablePriorityQueue<E, P, MeldablePriorityQueue<? extends E, ? extends P, ?>>) priorityQueue;
+         MeldablePriorityQueue<E, E, MeldablePriorityQueue<? extends E, ? extends E, ?>> queue =
+               (MeldablePriorityQueue<E, E, MeldablePriorityQueue<? extends E, ? extends E, ?>>)
+               priorityQueue;
          
          return queue.mergeFrom(otherQueue);
       }

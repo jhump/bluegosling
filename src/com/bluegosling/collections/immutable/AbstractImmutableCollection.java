@@ -1,60 +1,61 @@
 package com.bluegosling.collections.immutable;
 
-import com.bluegosling.collections.CollectionUtils;
+import java.util.AbstractCollection;
+import java.util.Collection;
+import java.util.function.Predicate;
 
 /**
- * An abstract base class for implementing {@link ImmutableCollection} and its sub-interfaces. This
- * provides implementations for all methods except {@link #size()} and {@link #iterator()}.
+ * An abstract base class for implementing immutable collections. This overrides all mutable methods
+ * with {@code final} implementations that throw {@link UnsupportedOperationException}.
  *
  * @param <E> the type of element in the collection
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
+ * 
+ * @see AbstractImmutableSet
+ * @see AbstractImmutableList
  */
-// TODO: tests
-// TODO: move some of these into default methods on ImmutableCollection
-public abstract class AbstractImmutableCollection<E> implements ImmutableCollection<E> {
+public abstract class AbstractImmutableCollection<E> extends AbstractCollection<E> {
+
+   @Deprecated
    @Override
-   public boolean isEmpty() {
-      return size() == 0;
+   public final boolean add(E e) {
+      throw new UnsupportedOperationException();
    }
 
+   @Deprecated
    @Override
-   public Object[] toArray() {
-      return CollectionUtils.toArray(this);
+   public final boolean remove(Object o) {
+      throw new UnsupportedOperationException();
    }
 
+   @Deprecated
    @Override
-   public <T> T[] toArray(T[] array) {
-      return CollectionUtils.toArray(this, array);
+   public final boolean removeIf(Predicate<? super E> filter) {
+      throw new UnsupportedOperationException();
    }
 
+   @Deprecated
    @Override
-   public boolean contains(Object o) {
-      return CollectionUtils.contains(iterator(), o);
+   public final boolean addAll(Collection<? extends E> c) {
+      throw new UnsupportedOperationException();
    }
 
+   @Deprecated
    @Override
-   public boolean containsAll(Iterable<?> items) {
-      for (Object o : items) {
-         if (!contains(o)) {
-            return false;
-         }
-      }
-      return true;
+   public final boolean removeAll(Collection<?> c) {
+      throw new UnsupportedOperationException();
    }
 
+   @Deprecated
    @Override
-   public boolean containsAny(Iterable<?> items) {
-      for (Object o : items) {
-         if (contains(o)) {
-            return true;
-         }
-      }
-      return false;
+   public final boolean retainAll(Collection<?> c) {
+      throw new UnsupportedOperationException();
    }
-   
+
+   @Deprecated
    @Override
-   public String toString() {
-      return CollectionUtils.toString(this);
+   public final void clear() {
+      throw new UnsupportedOperationException();
    }
 }

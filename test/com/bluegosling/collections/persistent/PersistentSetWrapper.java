@@ -1,5 +1,7 @@
 package com.bluegosling.collections.persistent;
 
+import com.bluegosling.collections.persistent.PersistentSet;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -31,7 +33,7 @@ public class PersistentSetWrapper<E>
 
 
    @Override
-   public PersistentSet<E> clear() {
+   public PersistentSet<E> removeAll() {
       return new PersistentSetWrapper<>(new HashSet<>(0));
    }
 }

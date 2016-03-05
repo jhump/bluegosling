@@ -2,7 +2,7 @@ package com.bluegosling.reflect;
 
 import static java.util.Objects.requireNonNull;
 
-import com.bluegosling.collections.Iterables;
+import com.bluegosling.collections.MoreIterables;
 import com.bluegosling.collections.MapBuilder;
 import com.bluegosling.collections.views.TransformingCollection;
 
@@ -1629,8 +1629,8 @@ public final class AnnotatedTypes {
       
       AnnotatedTypeImpl(Type type, Iterable<? extends Annotation> annotations) {
          this.type = type;
-         this.annotations = Iterables.toArray(annotations,
-               new Annotation[Iterables.trySize(annotations).orElse(0)]);
+         this.annotations = MoreIterables.toArray(annotations,
+               new Annotation[MoreIterables.trySize(annotations).orElse(0)]);
       }
 
       @Override

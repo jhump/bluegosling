@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
 import java.util.Iterator;
 import java.util.Map;
 
-// TODO: use a test for ImmutableMaps/PersistentMaps? as is, we wrap the persistent map into a
+// TODO: use a test for PersistentMaps? as is, we wrap the persistent map into a
 // mutable implementation and then run that through the existing Apache map test
 @RunWith(BulkTestRunner.class)
 public class HamtPersistentMapTest extends AbstractTestMap {

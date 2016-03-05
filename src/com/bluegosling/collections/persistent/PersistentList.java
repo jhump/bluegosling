@@ -1,6 +1,8 @@
 package com.bluegosling.collections.persistent;
 
-import com.bluegosling.collections.immutable.ImmutableList;
+import java.util.Collection;
+import java.util.List;
+import java.util.function.UnaryOperator;
 
 /**
  * A fully persistent list. This provides mutation operations that return new lists. Since changes
@@ -11,7 +13,74 @@ import com.bluegosling.collections.immutable.ImmutableList;
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public interface PersistentList<E> extends ImmutableList<E>, PersistentCollection<E> {
+public interface PersistentList<E> extends List<E>, PersistentCollection<E> {
+   
+   @Deprecated
+   @Override
+   default E set(int i, E e) {
+      throw new UnsupportedOperationException();
+   }
+
+   @Deprecated
+   @Override
+   default void add(int i, E e) {
+      throw new UnsupportedOperationException();
+   }
+
+   @Deprecated
+   @Override
+   default boolean addAll(int i, Collection<? extends E> coll) {
+      throw new UnsupportedOperationException();
+   }
+
+   @Deprecated
+   @Override
+   default E remove(int i) {
+      throw new UnsupportedOperationException();
+   }
+
+   @Deprecated
+   @Override
+   default boolean add(E e) {
+      throw new UnsupportedOperationException();
+   }
+
+   @Deprecated
+   @Override
+   default boolean addAll(Collection<? extends E> coll) {
+      throw new UnsupportedOperationException();
+   }
+
+   @Deprecated
+   @Override
+   default boolean remove(Object o) {
+      throw new UnsupportedOperationException();
+   }   
+   
+   @Deprecated
+   @Override
+   default boolean removeAll(Collection<?> coll) {
+      throw new UnsupportedOperationException();
+   }
+   
+   @Deprecated
+   @Override
+   default boolean retainAll(Collection<?> coll) {
+      throw new UnsupportedOperationException();
+   }
+   
+   @Deprecated
+   @Override
+   default void replaceAll(UnaryOperator<E> op) {
+      throw new UnsupportedOperationException();
+   }
+   
+   @Deprecated
+   @Override
+   default void clear() {
+      throw new UnsupportedOperationException();
+   }
+   
    /**
     * {@inheritDoc}
     * 
@@ -31,7 +100,7 @@ public interface PersistentList<E> extends ImmutableList<E>, PersistentCollectio
     * @throws IndexOutOfBoundsException if the specified index is less than zero or greater than
     *       this list's {@link #size()}
     */
-   PersistentList<E> add(int i, E e);
+   PersistentList<E> with(int i, E e);
    
    /**
     * Adds all of the specified elements at the specified index. The first element fetched from the
@@ -44,7 +113,7 @@ public interface PersistentList<E> extends ImmutableList<E>, PersistentCollectio
     * @throws IndexOutOfBoundsException if the specified index is less than zero or greater than
     *       this list's {@link #size()}
     */
-   PersistentList<E> addAll(int i, Iterable<? extends E> items);
+   PersistentList<E> withAll(int i, Iterable<? extends E> items);
    
    /**
     * Adds the specified element to the front of the list. For some implementations, this may be
@@ -53,7 +122,7 @@ public interface PersistentList<E> extends ImmutableList<E>, PersistentCollectio
     * @param e the new element
     * @return a new list with the specified element inserted at the front of the list
     */
-   PersistentList<E> addFirst(E e);
+   PersistentList<E> withHead(E e);
 
    /**
     * Adds the specified element to the end of the list. For some implementations, this may be
@@ -62,7 +131,7 @@ public interface PersistentList<E> extends ImmutableList<E>, PersistentCollectio
     * @param e the new element
     * @return a new list with the specified element inserted at the end of the list
     */
-   PersistentList<E> addLast(E e);
+   PersistentList<E> withTail(E e);
    
    /**
     * Sets the element at the given index to the specified new value. The persistent list will copy
@@ -76,7 +145,7 @@ public interface PersistentList<E> extends ImmutableList<E>, PersistentCollectio
     * @throws IndexOutOfBoundsException if the specified index is less than zero or greater than
     *       or equal to this list's {@link #size()}
     */
-   PersistentList<E> set(int i, E e);
+   PersistentList<E> replace(int i, E e);
    
    /**
     * Removes the element at the given index. The persistent list will copy as little as possible to
@@ -89,15 +158,7 @@ public interface PersistentList<E> extends ImmutableList<E>, PersistentCollectio
     * @throws IndexOutOfBoundsException if the specified index is less than zero or greater than
     *       or equal to this list's {@link #size()}
     */
-   PersistentList<E> remove(int i);
-   
-   /**
-    * {@inheritDoc}
-    * 
-    * <p>This method is overridden to covariantly return a {@link PersistentList} instead of just
-    * an {@link ImmutableList}.
-    */
-   @Override PersistentList<E> rest();
+   PersistentList<E> without(int i);
    
    /**
     * {@inheritDoc}
@@ -113,7 +174,7 @@ public interface PersistentList<E> extends ImmutableList<E>, PersistentCollectio
     * <p>This method is overridden to covariantly return a {@link PersistentList} instead of a
     * {@link PersistentCollection}.
     */
-   @Override PersistentList<E> add(E e);
+   @Override PersistentList<E> with(E e);
    
    /**
     * {@inheritDoc}
@@ -121,7 +182,7 @@ public interface PersistentList<E> extends ImmutableList<E>, PersistentCollectio
     * <p>This method is overridden to covariantly return a {@link PersistentList} instead of a
     * {@link PersistentCollection}.
     */
-   @Override PersistentList<E> remove(Object o);
+   @Override PersistentList<E> without(Object o);
 
    /**
     * {@inheritDoc}
@@ -129,7 +190,7 @@ public interface PersistentList<E> extends ImmutableList<E>, PersistentCollectio
     * <p>This method is overridden to covariantly return a {@link PersistentList} instead of a
     * {@link PersistentCollection}.
     */
-   @Override PersistentList<E> removeAll(Object o);
+   @Override PersistentList<E> withoutAny(Object o);
 
    /**
     * {@inheritDoc}
@@ -137,7 +198,7 @@ public interface PersistentList<E> extends ImmutableList<E>, PersistentCollectio
     * <p>This method is overridden to covariantly return a {@link PersistentList} instead of a
     * {@link PersistentCollection}.
     */
-   @Override PersistentList<E> removeAll(Iterable<?> items);
+   @Override PersistentList<E> withoutAny(Iterable<?> items);
 
    /**
     * {@inheritDoc}
@@ -145,7 +206,7 @@ public interface PersistentList<E> extends ImmutableList<E>, PersistentCollectio
     * <p>This method is overridden to covariantly return a {@link PersistentList} instead of a
     * {@link PersistentCollection}.
     */
-   @Override PersistentList<E> retainAll(Iterable<?> items);
+   @Override PersistentList<E> withOnly(Iterable<?> items);
 
    /**
     * {@inheritDoc}
@@ -160,12 +221,12 @@ public interface PersistentList<E> extends ImmutableList<E>, PersistentCollectio
     * <p>This method is overridden to covariantly return a {@link PersistentList} instead of a
     * {@link PersistentCollection}.
     */
-   @Override PersistentList<E> addAll(Iterable<? extends E> items);
+   @Override PersistentList<E> withAll(Iterable<? extends E> items);
    
    /**
     * Returns an empty list.
     *
     * @return an empty persistent list
     */
-   @Override PersistentList<E> clear();
+   @Override PersistentList<E> removeAll();
 }

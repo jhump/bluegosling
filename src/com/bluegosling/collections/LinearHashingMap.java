@@ -83,7 +83,7 @@ public class LinearHashingMap<K, V> extends AbstractMap<K, V> implements Seriali
    private static final int DEFAULT_INITIAL_MASK = DEFAULT_INITIAL_SIZE - 1;
    private static final int DEFAULT_INITIAL_THRESHOLD = computeThreshold(DEFAULT_INITIAL_SIZE);
    
-   private transient GrowableArray<TableEntry<K, V>> table;
+   private transient NoCopyGrowableArray<TableEntry<K, V>> table;
    private transient TableEntry<K, V> first;
    private transient TableEntry<K, V> last;
    private transient int mask = DEFAULT_INITIAL_MASK;

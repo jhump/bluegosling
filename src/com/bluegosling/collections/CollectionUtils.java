@@ -1,9 +1,6 @@
 // Copyright (C) 2012 - Apriori Enterprises - All Rights Reserved
 package com.bluegosling.collections;
 
-import com.bluegosling.collections.immutable.ImmutableList;
-import com.bluegosling.collections.immutable.ImmutableSet;
-
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -100,35 +97,6 @@ public final class CollectionUtils {
       return listContentsEquals(list, l);
    }
 
-   // TODO: javadoc
-   public static boolean equals(ImmutableList<?> list, Object o) {
-      if (!(o instanceof ImmutableList)) {
-         return false;
-      }
-      if (list == o) {
-         return true;
-      }
-      ImmutableList<?> l = (ImmutableList<?>) o;
-      if (l.size() != list.size()) {
-         return false;
-      }
-      return listContentsEquals(list, l);
-   }
-
-   public static boolean equals(GrowableArray<?> a, Object o) {
-      if (!(o instanceof GrowableArray)) {
-         return false;
-      }
-      if (a == o) {
-         return true;
-      }
-      GrowableArray<?> l = (GrowableArray<?>) o;
-      if (l.size() != a.size()) {
-         return false;
-      }
-      return listContentsEquals(a, l);
-   }
-   
    private static boolean listContentsEquals(Iterable<?> l1, Iterable<?> l2) {
       Iterator<?> iter1 = l1.iterator();
       Iterator<?> iter2 = l2.iterator();
@@ -161,15 +129,6 @@ public final class CollectionUtils {
     */
    public static int hashCode(List<?> list) {
       return listHashCode(list);
-   }
-
-   // TODO: javadoc
-   public static int hashCode(ImmutableList<?> list) {
-      return listHashCode(list);
-   }
-
-   public static int hashCode(GrowableArray<?> a) {
-      return listHashCode(a);
    }
 
    private static int listHashCode(Iterable<?> l) {
@@ -225,43 +184,6 @@ public final class CollectionUtils {
       }
       return true;
    }
-   
-   // TODO: javadoc
-   public static boolean equals(ImmutableSet<?> set, Object o) {
-      if (!(o instanceof ImmutableSet)) {
-         return false;
-      }
-      if (set == o) {
-         return true;
-      }
-      ImmutableSet<?> other = (ImmutableSet<?>) o;
-      if (set.size() != other.size()) {
-         return false;
-      }
-      // The spec for interface Set says a set should never contain itself, but most implementations
-      // do not explicitly block this. So the paranoid code below handles this case.
-      boolean containsItself = false;
-      for (Object element : set) {
-         if (element == set || element == other) {
-            // don't test using contains(...) since that could cause infinite recursion
-            containsItself = true;
-         } else {
-            if (!other.contains(element)) {
-               return false;
-            }
-         }
-      }
-      if (containsItself) {
-         // safely check that other also contains itself
-         for (Object element : other) {
-            if (element == set || element == other) {
-               return true;
-            }
-         }
-         return false;
-      }
-      return true;
-   }
 
    /**
     * Computes the hash code for a set per the contract defined by {@link Set#hashCode()}.
@@ -270,18 +192,6 @@ public final class CollectionUtils {
     * @return the hash code for {@code list}
     */
    public static int hashCode(Set<?> set) {
-      int hashCode = 0;
-      for (Object item : set) {
-         if (item != null) {
-            // don't overflow stack if set contains itself -- substitute default hashcode
-            hashCode += item == set ? System.identityHashCode(set) : item.hashCode();
-         }
-      }
-      return hashCode;
-   }
-
-   // TODO: javadoc
-   public static int hashCode(ImmutableSet<?> set) {
       int hashCode = 0;
       for (Object item : set) {
          if (item != null) {
@@ -513,11 +423,6 @@ public final class CollectionUtils {
       return toArray(coll, coll.size());
    }
    
-   // TODO: javadoc
-   public static Object[] toArray(SizedIterable<?> coll) {
-      return toArray(coll, coll.size());
-   }
-   
    private static Object[] toArray(Iterable<?> iterable, int size) {
       Object ret[] = new Object[size];
       copyToArray(iterable, ret);
@@ -534,11 +439,6 @@ public final class CollectionUtils {
     * @return an array with the same elements as the specified collection
     */
    public static <T> T[] toArray(Collection<?> coll, T[] array) {
-      return toArray(coll, coll.size(), array);
-   }
-   
-   //TODO: javadoc
-   public static <T> T[] toArray(SizedIterable<?> coll, T[] array) {
       return toArray(coll, coll.size(), array);
    }
    

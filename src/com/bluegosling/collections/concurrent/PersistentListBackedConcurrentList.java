@@ -1,12 +1,12 @@
 package com.bluegosling.collections.concurrent;
 
-import com.bluegosling.collections.immutable.ImmutableList;
 import com.bluegosling.collections.persistent.PersistentList;
 import com.bluegosling.tuples.Pair;
 
 import java.util.Collection;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
+import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -112,7 +112,7 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
       public E set(int index, E element) {
          while (true) {
             PersistentList<E> original = get();
-            PersistentList<E> modified = original.set(index, element);
+            PersistentList<E> modified = original.replace(index, element);
             if (modified == original) {
                return element;
             }
@@ -129,7 +129,7 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
             if (!Objects.equals(original.get(index), expectedValue)) {
                return false;
             }
-            PersistentList<E> modified = original.set(index, newValue);
+            PersistentList<E> modified = original.replace(index, newValue);
             if (underlying.compareAndSet(original, modified)) {
                return true;
             }
@@ -140,7 +140,7 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
       public boolean add(E e) {
          while (true) {
             PersistentList<E> original = get();
-            PersistentList<E> modified = original.add(e);
+            PersistentList<E> modified = original.with(e);
             if (underlying.compareAndSet(original, modified)) {
                return true;
             }
@@ -151,7 +151,7 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
       public int addLast(E e) {
          while (true) {
             PersistentList<E> original = get();
-            PersistentList<E> modified = original.addLast(e);
+            PersistentList<E> modified = original.withTail(e);
             if (underlying.compareAndSet(original, modified)) {
                return original.size();
             }
@@ -162,7 +162,7 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
       public void add(int index, E element) {
          while (true) {
             PersistentList<E> original = get();
-            PersistentList<E> modified = original.add(index, element);
+            PersistentList<E> modified = original.with(index, element);
             if (underlying.compareAndSet(original, modified)) {
                return;
             }
@@ -176,7 +176,7 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
          }
          while (true) {
             PersistentList<E> original = get();
-            PersistentList<E> modified = original.addAll(c);
+            PersistentList<E> modified = original.withAll(c);
             if (modified == original) {
                return false;
             }
@@ -193,7 +193,7 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
          }
          while (true) {
             PersistentList<E> original = get();
-            PersistentList<E> modified = original.addAll(index, c);
+            PersistentList<E> modified = original.withAll(index, c);
             if (modified == original) {
                return false;
             }
@@ -210,7 +210,7 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
             if (!Objects.equals(original.get(index - 1), expectedPriorValue)) {
                return false;
             }
-            PersistentList<E> modified = original.add(index, addition);
+            PersistentList<E> modified = original.with(index, addition);
             assert modified != original;
             if (underlying.compareAndSet(original, modified)) {
                return true;
@@ -225,7 +225,7 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
             if (!Objects.equals(original.get(index), expectedNextValue)) {
                return false;
             }
-            PersistentList<E> modified = original.add(index, addition);
+            PersistentList<E> modified = original.with(index, addition);
             assert modified != original;
             if (underlying.compareAndSet(original, modified)) {
                return true;
@@ -237,7 +237,7 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
       public E remove(int index) {
          while (true) {
             PersistentList<E> original = get();
-            PersistentList<E> modified = original.remove(index);
+            PersistentList<E> modified = original.without(index);
             assert modified != original;
             if (underlying.compareAndSet(original, modified)) {
                return original.get(index);
@@ -252,7 +252,7 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
             if (!Objects.equals(original.get(index), expectedValue)) {
                return false;
             }
-            PersistentList<E> modified = original.remove(index);
+            PersistentList<E> modified = original.without(index);
             assert modified != original;
             if (underlying.compareAndSet(original, modified)) {
                return true;
@@ -264,7 +264,7 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
       public boolean remove(Object o) {
          while (true) {
             PersistentList<E> original = get();
-            PersistentList<E> modified = original.remove(o);
+            PersistentList<E> modified = original.without(o);
             if (modified == original) {
                return false;
             }
@@ -278,7 +278,7 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
       public boolean removeAll(Collection<?> c) {
          while (true) {
             PersistentList<E> original = get();
-            PersistentList<E> modified = original.removeAll(c);
+            PersistentList<E> modified = original.withoutAny(c);
             if (modified == original) {
                return false;
             }
@@ -292,7 +292,7 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
       public boolean retainAll(Collection<?> c) {
          while (true) {
             PersistentList<E> original = get();
-            PersistentList<E> modified = original.retainAll(c);
+            PersistentList<E> modified = original.withOnly(c);
             if (modified == original) {
                return false;
             }
@@ -304,7 +304,7 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
 
       @Override
       public void clear() {
-         underlying.set(get().clear());
+         underlying.set(get().removeAll());
       }
 
       @Override
@@ -365,7 +365,7 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
 
       int addLastLocked(E e) {
          PersistentList<E> original = underlying;
-         underlying = underlying.add(e);
+         underlying = underlying.withTail(e);
          return original.size();
       }
 
@@ -377,7 +377,7 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
       }
 
       boolean removeLocked(Object o) {
-         PersistentList<E> modified = underlying.remove(o);
+         PersistentList<E> modified = underlying.without(o);
          if (modified == underlying) {
             return false;
          }
@@ -396,7 +396,7 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
       }
       
       boolean addAllLocked(Collection<? extends E> c) {
-         PersistentList<E> modified = underlying.addAll(c);
+         PersistentList<E> modified = underlying.withAll(c);
          if (modified == underlying) {
             return false;
          }
@@ -415,7 +415,7 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
       }
       
       boolean addAllLocked(int index, Collection<? extends E> c) {
-         PersistentList<E> modified = underlying.addAll(index, c);
+         PersistentList<E> modified = underlying.withAll(index, c);
          if (modified == underlying) {
             return false;
          }
@@ -434,7 +434,7 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
       }
       
       boolean removeAllLocked(Collection<?> c) {
-         PersistentList<E> modified = underlying.removeAll(c);
+         PersistentList<E> modified = underlying.withoutAny(c);
          if (modified == underlying) {
             return false;
          }
@@ -453,7 +453,7 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
       }
 
       boolean retainAllLocked(Collection<?> c) {
-         PersistentList<E> modified = underlying.retainAll(c);
+         PersistentList<E> modified = underlying.withOnly(c);
          if (modified == underlying) {
             return false;
          }
@@ -472,13 +472,13 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
       }
       
       void clearLocked() {
-         underlying = underlying.clear();
+         underlying = underlying.removeAll();
       }
 
       @Override
       public E set(int index, E element) {
          synchronized (lock) {
-            PersistentList<E> modified = underlying.set(index, element);
+            PersistentList<E> modified = underlying.replace(index, element);
             if (modified == underlying) {
                return element;
             }
@@ -494,7 +494,7 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
             if (!Objects.equals(existing, underlying.get(index))) {
                return false;
             }
-            underlying = underlying.set(index, replacement);
+            underlying = underlying.replace(index, replacement);
             return true;
          }
       }
@@ -507,7 +507,7 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
       }
 
       void addLocked(int index, E e) {
-         underlying = underlying.add(index, e);
+         underlying = underlying.with(index, e);
       }
 
 
@@ -520,7 +520,7 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
             if (!Objects.equals(underlying.get(index - 1), expectedPriorValue)) {
                return false;
             }
-            underlying = underlying.add(index, addition);
+            underlying = underlying.with(index, addition);
             return true;
          }
       }
@@ -534,7 +534,7 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
             if (!Objects.equals(underlying.get(index), expectedNextValue)) {
                return false;
             }
-            underlying = underlying.add(index, addition);
+            underlying = underlying.with(index, addition);
             return true;
          }
       }
@@ -547,7 +547,7 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
       }
 
       E removeLocked(int index) {
-         PersistentList<E> modified = underlying.remove(index);
+         PersistentList<E> modified = underlying.without(index);
          E ret = underlying.get(index);
          underlying = modified;
          return ret;
@@ -564,7 +564,7 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
          if (!Objects.equals(o, underlying.get(index))) {
             return false;
          }
-         underlying = underlying.remove(index);
+         underlying = underlying.without(index);
          return true;
       }
 
@@ -591,7 +591,7 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
       private abstract class ModifiableSubList implements ConcurrentList<E> {
          private final int from;
          private final int to;
-         private final AtomicReference<Pair<ImmutableList<E>, ImmutableList<E>>> memoized;
+         private final AtomicReference<Pair<List<E>, List<E>>> memoized;
          
          ModifiableSubList(int from, int to) {
             this.from = from;
@@ -599,7 +599,7 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
             memoized = new AtomicReference<>();
          }
          
-         private ImmutableList<E> underlyingSublist() {
+         private List<E> underlyingSublist() {
             // TODO
             /*while (true) {
                Pair<ImmutableList<E>, ImmutableList<E>> pair = memoized.get();
@@ -761,7 +761,7 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
 
          @Override
          public ConcurrentList<E> subList(int fromIndex, int toIndex) {
-            ImmutableList<E> list = underlyingSublist();
+            List<E> list = underlyingSublist();
             if (fromIndex < 0 || toIndex > list.size() || fromIndex > toIndex) {
                throw new IndexOutOfBoundsException();
             }
@@ -772,7 +772,7 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
 
          @Override
          public ConcurrentList<E> tailList(int fromIndex) {
-            ImmutableList<E> list = underlyingSublist();
+            List<E> list = underlyingSublist();
             if (fromIndex < 0 || fromIndex > list.size()) {
                throw new IndexOutOfBoundsException();
             }

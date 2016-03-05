@@ -1,7 +1,6 @@
 package com.bluegosling.tuples;
 
 import com.bluegosling.collections.PriorityQueue;
-import com.bluegosling.collections.immutable.ImmutableMap;
 
 import java.util.Collection;
 import java.util.Comparator;
@@ -80,17 +79,6 @@ public final class Tuples {
     */
    public <K, V> Pair<K, V> fromEntry(Map.Entry<? extends K, ? extends V> entry) {
       return Pair.<K, V>create(entry.getKey(), entry.getValue());
-   }
-
-   /**
-    * Converts an immutable map entry into a pair of key and value.
-    *
-    * @param entry an immutable map entry
-    * @return a pair of the entry's key and its value
-    * @throws NullPointerException if the given entry is {@code null}
-    */
-   public <K, V> Pair<K, V> fromEntry(ImmutableMap.Entry<? extends K, ? extends V> entry) {
-      return Pair.<K, V>create(entry.key(), entry.value());
    }
 
    /**
