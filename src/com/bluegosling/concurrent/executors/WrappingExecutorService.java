@@ -1,6 +1,7 @@
 package com.bluegosling.concurrent.executors;
 
-import com.bluegosling.concurrent.futures.fluent.FluentFuture;
+import com.bluegosling.concurrent.fluent.FluentExecutorService;
+import com.bluegosling.concurrent.fluent.FluentFuture;
 
 import java.util.Collection;
 import java.util.List;

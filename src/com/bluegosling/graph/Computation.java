@@ -1,11 +1,11 @@
 package com.bluegosling.graph;
 
-import static com.bluegosling.concurrent.futures.fluent.FluentFuture.dereference;
-import static com.bluegosling.concurrent.futures.fluent.FluentFuture.join;
+import static com.bluegosling.concurrent.fluent.FluentFuture.dereference;
+import static com.bluegosling.concurrent.fluent.FluentFuture.join;
 
 import com.bluegosling.concurrent.FutureListener;
-import com.bluegosling.concurrent.futures.fluent.FluentFuture;
-import com.bluegosling.concurrent.futures.fluent.SettableRunnableFluentFuture;
+import com.bluegosling.concurrent.fluent.FluentFuture;
+import com.bluegosling.concurrent.fluent.SettableRunnableFluentFuture;
 import com.bluegosling.reflect.TypeRef;
 import com.bluegosling.util.Immediate;
 

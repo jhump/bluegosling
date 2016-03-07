@@ -1,9 +1,10 @@
 package com.bluegosling.concurrent.executors;
 
 import com.bluegosling.concurrent.Cancellable;
-import com.bluegosling.concurrent.futures.fluent.FluentFuture;
-import com.bluegosling.concurrent.futures.fluent.SettableFluentFuture;
-import com.bluegosling.concurrent.futures.fluent.SettableRunnableFluentFuture;
+import com.bluegosling.concurrent.fluent.FluentExecutorService;
+import com.bluegosling.concurrent.fluent.FluentFuture;
+import com.bluegosling.concurrent.fluent.SettableFluentFuture;
+import com.bluegosling.concurrent.fluent.SettableRunnableFluentFuture;
 
 import java.util.ArrayList;
 import java.util.Collections;

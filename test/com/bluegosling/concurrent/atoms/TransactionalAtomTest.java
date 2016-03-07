@@ -6,7 +6,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import com.bluegosling.concurrent.futures.fluent.FluentFuture;
+import com.bluegosling.concurrent.fluent.FluentFuture;
 import com.bluegosling.possible.Holder;
 import com.bluegosling.tuples.Trio;
 

@@ -1,6 +1,6 @@
 package com.bluegosling.possible;
 
-import com.bluegosling.concurrent.futures.fluent.FluentFuture;
+import com.bluegosling.concurrent.fluent.FluentFuture;
 import com.bluegosling.possible.Possibles.FuturePossible;
 import com.bluegosling.possible.Possibles.FluentFuturePossible;
 

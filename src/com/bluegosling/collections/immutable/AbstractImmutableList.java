@@ -1,11 +1,16 @@
 package com.bluegosling.collections.immutable;
 
+import com.bluegosling.collections.MoreIterables;
+import com.google.common.collect.Iterators;
+
 import java.util.AbstractList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 
@@ -113,5 +118,20 @@ public abstract class AbstractImmutableList<E> extends AbstractList<E> {
    public List<E> subList(int fromIndex, int toIndex) {
       // wrap the returned sublist, to ensure that no mutable operations are inadvertently exposed
       return Collections.unmodifiableList(super.subList(fromIndex, toIndex));
+   }
+   
+   @Override
+   public Iterator<E> iterator() {
+      return Iterators.unmodifiableIterator(super.iterator());
+   }
+
+   @Override
+   public ListIterator<E> listIterator() {
+      return MoreIterables.unmodifiableIterator(super.listIterator());
+   }
+
+   @Override
+   public ListIterator<E> listIterator(int pos) {
+      return MoreIterables.unmodifiableIterator(super.listIterator(pos));
    }
 }

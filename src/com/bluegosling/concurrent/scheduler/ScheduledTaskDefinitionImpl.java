@@ -1,7 +1,7 @@
 package com.bluegosling.concurrent.scheduler;
 
-import com.bluegosling.concurrent.futures.fluent.FluentRepeatingFuture;
-import com.bluegosling.concurrent.futures.fluent.FluentScheduledFutureTask;
+import com.bluegosling.concurrent.fluent.FluentRepeatingFuture;
+import com.bluegosling.concurrent.fluent.FluentScheduledFutureTask;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.ArrayDeque;

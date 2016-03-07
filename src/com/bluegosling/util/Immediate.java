@@ -3,7 +3,7 @@ package com.bluegosling.util;
 import static java.util.Objects.requireNonNull;
 
 import com.bluegosling.concurrent.FutureVisitor;
-import com.bluegosling.concurrent.futures.fluent.FluentFuture;
+import com.bluegosling.concurrent.fluent.FluentFuture;
 import com.bluegosling.vars.Variable;
 
 import java.util.concurrent.CancellationException;

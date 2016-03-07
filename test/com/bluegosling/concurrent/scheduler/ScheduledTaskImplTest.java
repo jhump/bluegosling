@@ -1,6 +1,6 @@
 package com.bluegosling.concurrent.scheduler;
 
-import com.bluegosling.concurrent.futures.fluent.FluentScheduledFutureTaskTest;
+import com.bluegosling.concurrent.fluent.FluentScheduledFutureTaskTest;
 import com.bluegosling.util.Clock;
 
 import java.util.concurrent.Callable;

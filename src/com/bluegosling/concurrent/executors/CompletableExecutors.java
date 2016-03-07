@@ -2,6 +2,7 @@ package com.bluegosling.concurrent.executors;
 
 import static java.util.concurrent.CompletableFuture.completedFuture;
 
+import com.bluegosling.concurrent.fluent.FluentExecutorService;
 import com.bluegosling.concurrent.futures.CompletableFutures;
 
 import java.util.ArrayList;

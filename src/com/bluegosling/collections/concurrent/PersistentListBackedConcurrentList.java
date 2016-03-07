@@ -1,6 +1,6 @@
 package com.bluegosling.collections.concurrent;
 
-import com.bluegosling.collections.persistent.PersistentList;
+import com.bluegosling.collections.immutable.PersistentList;
 import com.bluegosling.tuples.Pair;
 
 import java.util.Collection;
@@ -112,7 +112,7 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
       public E set(int index, E element) {
          while (true) {
             PersistentList<E> original = get();
-            PersistentList<E> modified = original.replace(index, element);
+            PersistentList<E> modified = original.withReplacement(index, element);
             if (modified == original) {
                return element;
             }
@@ -129,7 +129,7 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
             if (!Objects.equals(original.get(index), expectedValue)) {
                return false;
             }
-            PersistentList<E> modified = original.replace(index, newValue);
+            PersistentList<E> modified = original.withReplacement(index, newValue);
             if (underlying.compareAndSet(original, modified)) {
                return true;
             }
@@ -478,7 +478,7 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
       @Override
       public E set(int index, E element) {
          synchronized (lock) {
-            PersistentList<E> modified = underlying.replace(index, element);
+            PersistentList<E> modified = underlying.withReplacement(index, element);
             if (modified == underlying) {
                return element;
             }
@@ -494,7 +494,7 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
             if (!Objects.equals(existing, underlying.get(index))) {
                return false;
             }
-            underlying = underlying.replace(index, replacement);
+            underlying = underlying.withReplacement(index, replacement);
             return true;
          }
       }

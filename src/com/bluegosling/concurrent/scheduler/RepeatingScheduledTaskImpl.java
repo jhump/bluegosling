@@ -2,7 +2,7 @@ package com.bluegosling.concurrent.scheduler;
 
 import com.bluegosling.concurrent.FutureListener;
 import com.bluegosling.concurrent.FutureVisitor;
-import com.bluegosling.concurrent.futures.fluent.FluentFuture;
+import com.bluegosling.concurrent.fluent.FluentFuture;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Delayed;

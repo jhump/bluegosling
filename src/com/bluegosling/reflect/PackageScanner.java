@@ -4,10 +4,10 @@ import static java.util.Objects.requireNonNull;
 
 import com.bluegosling.concurrent.Awaitable;
 import com.bluegosling.concurrent.ThreadFactories;
-import com.bluegosling.concurrent.executors.FluentExecutorService;
 import com.bluegosling.concurrent.executors.SameThreadExecutor;
-import com.bluegosling.concurrent.futures.fluent.FluentFuture;
-import com.bluegosling.concurrent.futures.fluent.SettableFluentFuture;
+import com.bluegosling.concurrent.fluent.FluentExecutorService;
+import com.bluegosling.concurrent.fluent.FluentFuture;
+import com.bluegosling.concurrent.fluent.SettableFluentFuture;
 import com.bluegosling.util.Stopwatch;
 
 import java.io.File;

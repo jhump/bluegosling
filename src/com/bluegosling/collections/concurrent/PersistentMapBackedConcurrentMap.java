@@ -1,7 +1,7 @@
 package com.bluegosling.collections.concurrent;
 
 import com.bluegosling.collections.MapUtils;
-import com.bluegosling.collections.persistent.PersistentMap;
+import com.bluegosling.collections.immutable.PersistentMap;
 import com.bluegosling.collections.views.TransformingCollection;
 import com.bluegosling.collections.views.TransformingSet;
 

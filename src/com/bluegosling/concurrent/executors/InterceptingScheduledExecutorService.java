@@ -1,7 +1,8 @@
 package com.bluegosling.concurrent.executors;
 
-import com.bluegosling.concurrent.futures.fluent.FluentRepeatingFuture;
-import com.bluegosling.concurrent.futures.fluent.FluentScheduledFuture;
+import com.bluegosling.concurrent.fluent.FluentRepeatingFuture;
+import com.bluegosling.concurrent.fluent.FluentScheduledExecutorService;
+import com.bluegosling.concurrent.fluent.FluentScheduledFuture;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;

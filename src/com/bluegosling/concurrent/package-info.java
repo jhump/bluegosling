@@ -2,7 +2,7 @@
  * Classes that extend and enhance the API provided by the {@code java.util.concurrent} package. Of
  * particular note:
  * 
- * <h3>{@link com.bluegosling.concurrent.futures.fluent.FluentFuture}</h3>
+ * <h3>{@link com.bluegosling.concurrent.fluent.FluentFuture}</h3>
  * This interface is a {@code Future} that allows completion callbacks to be registered. This means
  * code has the flexibility of either doing things asynchronously with callbacks or synchronously
  * by blocking for the future to complete. It also provides numerous other new methods to greatly

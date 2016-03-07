@@ -9,11 +9,9 @@ import com.google.common.collect.Iterators;
 
 import java.lang.reflect.Array;
 import java.util.AbstractCollection;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Deque;
 import java.util.HashSet;
@@ -205,18 +203,18 @@ public final class MoreIterables {
             // empty iterator -- no sense doing anything else
             return iter;
          }
-         ArrayDeque<E> deque;
+         ArrayList<E> list;
          // try to determine best initial size
          OptionalInt size = trySize(iterable);
          if (size.isPresent()) {
-            deque = new ArrayDeque<>(size.getAsInt());
+            list = new ArrayList<>(size.getAsInt());
          } else {
-            deque = new ArrayDeque<>();
+            list = new ArrayList<>();
          }
          while (iter.hasNext()) {
-            deque.push(iter.next());
+            list.add(iter.next());
          }
-         return deque.iterator();
+         return CollectionUtils.reverseIterator(list.listIterator(list.size()));
       }
    }
    
@@ -701,138 +699,7 @@ public final class MoreIterables {
     * @see #push(Iterator, Object...)
     */
    public static <E> Iterator<E> push(Iterator<? extends E> iterator, Iterable<E> pushed) {
-      return concat(pushed.iterator(), iterator);
-   }
-
-   /**
-    * Concatenates all of the given iterators into one. Iteration order will yield all elements in
-    * the first given iterator, and then the next and so on.
-    *
-    * <p>Attempts to remove the elements using {@link Iterator#remove()} will remove them from the
-    * underlying iterator that emitted them.
-    * 
-    * @param iterators an array of iterators
-    * @return a view of the array of iterators as a single iterators with all elements concatenated
-    *       into a new sequence
-    * @see #concat(Iterable)
-    */
-   @SafeVarargs
-   public static <E> Iterator<E> concat(Iterator<? extends E>... iterators) {
-      switch (iterators.length) {
-         case 0:
-            return Collections.emptyIterator();
-         case 1:
-            return cast(iterators[0]);
-         case 2:
-            if (iterators[0].hasNext()) {
-               if (iterators[1].hasNext()) {
-                  return new TwoIterators<>(iterators[0], iterators[1]);
-               } else {
-                  return cast(iterators[0]);
-               }
-            } else {
-               return cast(iterators[1]);
-            }
-         default:
-            return new FlatMapIterator<>(Arrays.asList(iterators).iterator(), Function.identity());
-      }
-   }
-
-   /**
-    * Concatenates all of the given iterators into one. Iteration order will yield all elements in
-    * the first given iterator, and then the next and so on.
-    *
-    * <p>Attempts to remove the elements using {@link Iterator#remove()} will remove them from the
-    * underlying iterator that emitted them.
-    * 
-    * @param iterators a sequence of iterators
-    * @return a view of the array of iterators as a single iterators with all elements concatenated
-    *       into a new sequence
-    * @see #concat(Iterator...)
-    */
-   public static <E> Iterator<E> concat(Iterable<Iterator<? extends E>> iterators) {
-      Iterator<Iterator<? extends E>> iter = iterators.iterator();
-      if (!iter.hasNext()) {
-         return Collections.emptyIterator();
-      }
-      Iterator<? extends E> first = iter.next();
-      if (!iter.hasNext()) {
-         return cast(first);
-      }
-      Iterator<? extends E> second = iter.next();
-      if (!iter.hasNext()) {
-         if (first.hasNext()) {
-            if (second.hasNext()) {
-               return new TwoIterators<>(first, second);
-            } else {
-               return cast(first);
-            }
-         } else {
-            return cast(second);
-         }
-      }
-      return new FlatMapIterator<>(push(iter, first, second), Function.identity());
-   }
-   
-   // TODO: doc
-   
-   @SafeVarargs
-   public static <E> Iterable<E> concatIterables(Iterable<? extends E>... iterables) {
-      return concatIterables(Arrays.asList(iterables));
-   }
-
-   public static <E> Iterable<E> concatIterables(Iterable<Iterable<? extends E>> iterables) {
-      return () -> new FlatMapIterator<Iterable<? extends E>, E>(iterables.iterator(),
-            Iterable::iterator);
-   }
-
-   /**
-    * Returns a view of the first <em>n</em> elements of the given iterable. This iterable will
-    * yield elements from the given iterable until either the underlying iterable is exhausted
-    * or it has yielded the given number of elements.
-    *
-    * @param iterable an iterable
-    * @param n the maximum number of elements to yield
-    * @return an iterable that contains up to the first <em>n</em> elements of the given iterable
-    * @see #upToN(Iterator, int)
-    */
-   public static <E> Iterable<E> upToN(Iterable<E> iterable, int n) {
-      return () -> upToN(iterable.iterator(), n);
-   }
-   
-   /**
-    * Returns a view of the first <em>n</em> elements of the given iterator. This iterator will
-    * yield elements from the given iterator until either the underlying iterator is exhausted
-    * or it has yielded the given number of elements.
-    *
-    * @param iterator an iterator
-    * @param n the maximum number of elements to yield
-    * @return an iterator that yields up to the first <em>n</em> elements of the given iterator
-    * @see #upToN(Iterable, int)
-    */
-   public static <E> Iterator<E> upToN(Iterator<E> iterator, int n) {
-      return new Iterator<E>() {
-         int remaining = n;
-
-         @Override
-         public boolean hasNext() {
-            return iterator.hasNext() && remaining > 0;
-         }
-
-         @Override
-         public E next() {
-            if (remaining <= 0) {
-               throw new NoSuchElementException();
-            }
-            remaining--;
-            return iterator.next();
-         }
-         
-         @Override
-         public void remove() {
-            iterator.remove();
-         }
-      };
+      return Iterators.concat(pushed.iterator(), iterator);
    }
    
    /**
@@ -846,106 +713,7 @@ public final class MoreIterables {
     */
    public static <T, U> Iterator<U> flatMap(Iterator<T> iterator,
          Function<? super T, ? extends Iterator<? extends U>> fn) {
-      return new FlatMapIterator<>(iterator, fn);
-   }
-
-   /**
-    * An iterator that emits exactly one element.
-    *
-    * @param <E> the type of the value emitted
-    * 
-    * @author Joshua Humphries (jhumphries131@gmail.com)
-    */
-   private static class SingletonIterator<E> implements Iterator<E> {
-      private final E e;
-      private final Runnable onRemove;
-      private int state; // 0 zilch, 1 fetched, 2 removed
-      
-      SingletonIterator(E e, Runnable onRemove) {
-         this.e = e;
-         this.onRemove = onRemove;
-      }
-      
-      @Override
-      public boolean hasNext() {
-         return state == 0;
-      }
-
-      @Override
-      public E next() {
-         if (state > 0) {
-            throw new NoSuchElementException();
-         }
-         state = 1;
-         return e;
-      }
-
-      @Override
-      public void remove() {
-         if (onRemove == null) {
-            throw new UnsupportedOperationException();
-         }
-         if (state != 1) {
-            throw new IllegalStateException();
-         }
-         onRemove.run();
-         state = 2;
-      }
-   }
-
-   /**
-    * An iterator that concatenates the elements from exactly two other iterators.
-    *
-    * @param <E> the type of the value emitted
-    * 
-    * @author Joshua Humphries (jhumphries131@gmail.com)
-    */
-   private static class TwoIterators<E> implements Iterator<E> {
-      final Iterator<? extends E> iter1;
-      final Iterator<? extends E> iter2;
-      boolean first;
-      int lastFetched = 0;
-      
-      TwoIterators(Iterator<? extends E> iter1, Iterator<? extends E> iter2) {
-         this.iter1 = iter1;
-         this.iter2 = iter2;
-         first = iter1.hasNext();
-      }
-      
-      @Override
-      public boolean hasNext() {
-         return first ? iter1.hasNext() : iter2.hasNext();
-      }
-
-      @Override
-      public E next() {
-         if (first) {
-            lastFetched = 1;
-            E ret = iter1.next();
-            if (!iter1.hasNext()) {
-               first = false;
-            }
-            return ret;
-         }
-         lastFetched = 2;
-         return iter2.next();
-      }
-      
-      @Override
-      public void remove() {
-         switch (lastFetched) {
-            case 0:
-               throw new IllegalStateException();
-            case 1:
-               iter1.remove();
-               break;
-            case 2:
-               iter2.remove();
-               break;
-            default:
-               throw new AssertionError();
-         }
-      }
+      return Iterators.concat(Iterators.transform(iterator, fn::apply));
    }
    
    /**
@@ -1000,67 +768,6 @@ public final class MoreIterables {
          } else {
             tail.remove();
          }
-      }
-   }
-   
-   /**
-    * An iterator that concatenates multiple iterators. A function is applied to elements of a given
-    * iterator to expand them into constituent iterators. Iteration yields elements from these
-    * constituent iterators.
-    *
-    * @param <T> the type of the given iterator
-    * @param <U> the type of the values emitted
-    * 
-    * @author Joshua Humphries (jhumphries131@gmail.com)
-    */
-   private static class FlatMapIterator<T, U> implements Iterator<U> {
-      private final Iterator<? extends T> iterator;
-      private final Function<? super T, ? extends Iterator<? extends U>> fn;
-      Iterator<? extends U> current;
-      Iterator<? extends U> lastFetched;
-      
-      FlatMapIterator(Iterator<? extends T> iterator,
-            Function<? super T, ? extends Iterator<? extends U>> fn) {
-         this.iterator = iterator;
-         this.fn = fn;
-         findNext();
-      }
-
-      private void findNext() {
-         while (iterator.hasNext()) {
-            Iterator<? extends U> iter = fn.apply(iterator.next());
-            if (iter.hasNext()) {
-               current = iter;
-               return;
-            }
-         }
-         current = null;
-      }
-
-      @Override
-      public boolean hasNext() {
-         return current != null && current.hasNext();
-      }
-
-      @Override
-      public U next() {
-         if (current == null) {
-            throw new NoSuchElementException();
-         }
-         lastFetched = current;
-         U ret = current.next();
-         if (!current.hasNext()) {
-            findNext();
-         }
-         return ret;
-      }
-
-      @Override
-      public void remove() {
-         if (lastFetched == null) {
-            throw new IllegalStateException();
-         }
-         lastFetched.remove();
       }
    }
 }
