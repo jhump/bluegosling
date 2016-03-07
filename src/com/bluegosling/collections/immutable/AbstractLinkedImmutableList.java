@@ -3,6 +3,7 @@ package com.bluegosling.collections.immutable;
 import com.bluegosling.collections.CollectionUtils;
 
 import java.util.Iterator;
+import java.util.ListIterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
@@ -68,6 +69,124 @@ implements ConsList<E> {
       };
    }
 
+   private static class IterNode<E> {
+      final E value;
+      final IterNode<E> prev;
+      IterNode<E> next;
+      
+      IterNode(E value) {
+         this(value, null);
+      }
+      
+      IterNode(E value, IterNode<E> prev) {
+         this.value = value;
+         this.prev = prev;
+      }
+
+      IterNode<E> makeNext(E e) {
+         IterNode<E> n = new IterNode<>(e, this);
+         this.next = n;
+         return n;
+      }
+   }
+   
+   @Override
+   public ListIterator<E> listIterator() {
+      // creates an ad-hoc doubly-linked list as we progress through values, in order to iterate
+      // backwards to previous values
+      return new ListIterator<E>() {
+         private ConsList<E> highWater;
+         private IterNode<E> next;
+         private IterNode<E> prev = null;
+         private int nextIndex = 0;
+         
+         {
+            if (isEmpty()) {
+               next = null;
+            } else {
+               next = new IterNode<>(first());
+               highWater = rest();
+            }
+         }
+         
+         @Override
+         public boolean hasNext() {
+            return next != null;
+         }
+
+         @Override
+         public E next() {
+            if (next == null) {
+               throw new NoSuchElementException();
+            }
+            prev = next;
+            E ret = next.value;
+            if (next.next == null && !highWater.isEmpty()) {
+               // append new node to doubly-linked list
+               next = next.makeNext(highWater.first());
+               highWater = highWater.rest();
+            } else {
+               next = next.next;
+            }
+            nextIndex++;
+            return ret;
+         }
+
+         @Override
+         public boolean hasPrevious() {
+            return prev != null;
+         }
+
+         @Override
+         public E previous() {
+            if (prev == null) {
+               throw new NoSuchElementException();
+            }
+            next = prev;
+            E ret = prev.value;
+            prev = prev.prev;
+            nextIndex--;
+            return ret;
+         }
+
+         @Override
+         public int nextIndex() {
+            return nextIndex;
+         }
+
+         @Override
+         public int previousIndex() {
+            return nextIndex - 1;
+         }
+
+         @Override
+         public void remove() {
+            throw new UnsupportedOperationException();
+         }
+
+         @Override
+         public void set(E e) {
+            throw new UnsupportedOperationException();
+         }
+
+         @Override
+         public void add(E e) {
+            throw new UnsupportedOperationException();
+         }
+      };
+   }
+   
+   @Override
+   public ListIterator<E> listIterator(int pos) {
+      rangeCheckWide(pos);
+      ListIterator<E> iter = listIterator();
+      while (pos > 0) {
+         iter.next();
+         pos--;
+      }
+      return iter;
+   }
+   
    @Override
    public E get(int i) {
       rangeCheck(i);
@@ -82,7 +201,7 @@ implements ConsList<E> {
    public int indexOf(Object o) {
       int index = 0;
       ConsList<E> current = this;
-      while (current != null) {
+      while (!current.isEmpty()) {
          if (Objects.equals(o, current.first())) {
             return index;
          }
@@ -97,7 +216,7 @@ implements ConsList<E> {
       int index = 0;
       int lastIndex = -1;
       ConsList<E> current = this;
-      while (current != null) {
+      while (!current.isEmpty()) {
          if (Objects.equals(o, current.first())) {
             lastIndex = index;
          }

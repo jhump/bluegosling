@@ -4,7 +4,7 @@ import com.bluegosling.choice.Choice.OfFive;
 import com.bluegosling.choice.Choice.OfFour;
 import com.bluegosling.choice.Choice.OfThree;
 import com.bluegosling.choice.Choice.OfTwo;
-import com.bluegosling.concurrent.futures.fluent.FluentFuture;
+import com.bluegosling.concurrent.fluent.FluentFuture;
 
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;

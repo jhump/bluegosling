@@ -1,7 +1,7 @@
 package com.bluegosling.collections;
 
-import com.bluegosling.concurrent.executors.FluentExecutorService;
-import com.bluegosling.concurrent.futures.fluent.FluentFuture;
+import com.bluegosling.concurrent.fluent.FluentExecutorService;
+import com.bluegosling.concurrent.fluent.FluentFuture;
 
 import java.util.Arrays;
 import java.util.Collections;

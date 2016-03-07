@@ -1,6 +1,6 @@
 package com.bluegosling.graph;
 
-import com.bluegosling.concurrent.futures.fluent.FluentFuture;
+import com.bluegosling.concurrent.fluent.FluentFuture;
 
 import java.util.concurrent.Callable;
 

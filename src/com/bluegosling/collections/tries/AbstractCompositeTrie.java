@@ -1,11 +1,10 @@
 package com.bluegosling.collections.tries;
 
-import static com.bluegosling.collections.MoreIterables.upToN;
-
-import com.bluegosling.collections.MoreIterables;
 import com.bluegosling.collections.MapUtils;
+import com.bluegosling.collections.MoreIterables;
 import com.bluegosling.possible.Reference;
 import com.bluegosling.tuples.Trio;
+import com.google.common.collect.Iterables;
 
 import java.util.AbstractCollection;
 import java.util.AbstractSet;
@@ -207,7 +206,7 @@ abstract class AbstractCompositeTrie<K, C, V, N extends AbstractTrie.Node<C, K, 
 
    @Override
    public CompositeTrie<K, C, V> prefixMap(Iterable<C> prefix, int numComponents) {
-      return prefixMap(upToN(prefix, numComponents));
+      return prefixMap(Iterables.limit(prefix, numComponents));
    }
    
    @Override
@@ -241,7 +240,7 @@ abstract class AbstractCompositeTrie<K, C, V, N extends AbstractTrie.Node<C, K, 
       @Override
       public CompositeTrie<K, C, V> prefixMap(Iterable<C> newPrefix) {
          Collection<C> snapshot = MoreIterables.snapshot(newPrefix);
-         return snapshot.isEmpty() ? this : new PrefixCompositeTrie<>(MoreIterables.concatIterables(
+         return snapshot.isEmpty() ? this : new PrefixCompositeTrie<>(Iterables.concat(
                this.prefix, snapshot), parent);
       }
       

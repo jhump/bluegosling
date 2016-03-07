@@ -1,6 +1,6 @@
 package com.bluegosling.concurrent.scheduler;
 
-import com.bluegosling.concurrent.futures.fluent.FluentRepeatingFuture;
+import com.bluegosling.concurrent.fluent.FluentRepeatingFuture;
 
 import java.util.concurrent.TimeUnit;
 

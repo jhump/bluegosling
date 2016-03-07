@@ -1,7 +1,12 @@
 package com.bluegosling.collections.immutable;
 
+import com.google.common.collect.ImmutableMap;
+
 import java.util.AbstractMap;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -97,5 +102,15 @@ public abstract class AbstractImmutableMap<K, V> extends AbstractMap<K, V> {
    public final V merge(K key, V value,
          BiFunction<? super V, ? super V, ? extends V> remappingFunction) {
       throw new UnsupportedOperationException();
+   }
+   
+   @Override
+   public Set<K> keySet() {
+      return Collections.unmodifiableSet(super.keySet());
+   }
+
+   @Override
+   public Collection<V> values() {
+      return Collections.unmodifiableCollection(super.values());
    }
 }

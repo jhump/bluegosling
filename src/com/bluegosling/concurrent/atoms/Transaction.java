@@ -1,9 +1,9 @@
 package com.bluegosling.concurrent.atoms;
 
 import com.bluegosling.concurrent.DeadlockException;
-import com.bluegosling.concurrent.futures.fluent.FluentFuture;
-import com.bluegosling.concurrent.futures.fluent.RunnableFluentFuture;
-import com.bluegosling.concurrent.futures.fluent.SettableFluentFuture;
+import com.bluegosling.concurrent.fluent.FluentFuture;
+import com.bluegosling.concurrent.fluent.RunnableFluentFuture;
+import com.bluegosling.concurrent.fluent.SettableFluentFuture;
 import com.bluegosling.concurrent.locks.HierarchicalLock.AcquiredLock;
 import com.bluegosling.concurrent.locks.HierarchicalLock.ExclusiveLock;
 import com.bluegosling.concurrent.locks.HierarchicalLock.SharedLock;

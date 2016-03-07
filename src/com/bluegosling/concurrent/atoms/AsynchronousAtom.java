@@ -6,9 +6,9 @@ import com.bluegosling.concurrent.FutureListener;
 import com.bluegosling.concurrent.FutureVisitor;
 import com.bluegosling.concurrent.executors.ActorThreadPool;
 import com.bluegosling.concurrent.executors.SerializingExecutor;
-import com.bluegosling.concurrent.futures.fluent.FluentFuture;
-import com.bluegosling.concurrent.futures.fluent.FluentFutureTask;
-import com.bluegosling.concurrent.futures.fluent.RunnableFluentFuture;
+import com.bluegosling.concurrent.fluent.FluentFuture;
+import com.bluegosling.concurrent.fluent.FluentFutureTask;
+import com.bluegosling.concurrent.fluent.RunnableFluentFuture;
 import com.bluegosling.function.TriFunction;
 import com.bluegosling.possible.Reference;
 

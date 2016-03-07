@@ -1,7 +1,5 @@
 package com.bluegosling.collections.immutable;
 
-import com.bluegosling.collections.persistent.PersistentCollection;
-import com.bluegosling.collections.persistent.PersistentMap;
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableMap;
 

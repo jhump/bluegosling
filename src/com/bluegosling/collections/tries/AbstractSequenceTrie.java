@@ -1,10 +1,9 @@
 package com.bluegosling.collections.tries;
 
-import static com.bluegosling.collections.MoreIterables.upToN;
-
-import com.bluegosling.collections.MoreIterables;
 import com.bluegosling.collections.MapUtils;
+import com.bluegosling.collections.MoreIterables;
 import com.bluegosling.possible.Reference;
+import com.google.common.collect.Iterables;
 
 import java.util.AbstractCollection;
 import java.util.AbstractSet;
@@ -207,7 +206,7 @@ abstract class AbstractSequenceTrie<K, V, N extends AbstractTrie.Node<K, Void, V
 
    @Override
    public SequenceTrie<K, V> prefixMap(Iterable<K> prefix, int numComponents) {
-      return prefixMap(upToN(prefix, numComponents));
+      return prefixMap(Iterables.limit(prefix, numComponents));
    }
    
    @Override
@@ -242,7 +241,7 @@ abstract class AbstractSequenceTrie<K, V, N extends AbstractTrie.Node<K, Void, V
          Collection<K> snapshot = MoreIterables.snapshot(newPrefix);
          return snapshot.isEmpty()
                ? this
-               : new PrefixSequenceTrie<>(MoreIterables.concatIterables(this.prefix, snapshot), parent);
+               : new PrefixSequenceTrie<>(Iterables.concat(this.prefix, snapshot), parent);
       }
       
       N getRoot() {

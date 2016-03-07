@@ -1,7 +1,7 @@
 package com.bluegosling.concurrent;
 
-import com.bluegosling.concurrent.futures.fluent.CombiningFluentFuture;
-import com.bluegosling.concurrent.futures.fluent.FluentFuture;
+import com.bluegosling.concurrent.fluent.CombiningFluentFuture;
+import com.bluegosling.concurrent.fluent.FluentFuture;
 import com.bluegosling.tuples.NTuple;
 import com.bluegosling.tuples.Pair;
 import com.bluegosling.tuples.Quartet;

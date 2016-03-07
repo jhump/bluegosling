@@ -1,11 +1,11 @@
 package com.bluegosling.graph;
 
-import static com.bluegosling.concurrent.futures.fluent.FluentFuture.completedFuture;
+import static com.bluegosling.concurrent.fluent.FluentFuture.completedFuture;
 
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toSet;
 
-import com.bluegosling.concurrent.futures.fluent.FluentFuture;
+import com.bluegosling.concurrent.fluent.FluentFuture;
 import com.bluegosling.graph.NodeOperations.Operation1;
 import com.bluegosling.graph.NodeOperations.Operation10;
 import com.bluegosling.graph.NodeOperations.Operation2;

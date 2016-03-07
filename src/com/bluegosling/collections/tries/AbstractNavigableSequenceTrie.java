@@ -1,13 +1,12 @@
 package com.bluegosling.collections.tries;
 
-import static com.bluegosling.collections.MoreIterables.upToN;
-
 import com.bluegosling.collections.AbstractNavigableMap;
 import com.bluegosling.collections.BoundType;
 import com.bluegosling.collections.MoreIterables;
 import com.bluegosling.collections.views.DescendingSequenceTrie;
 import com.bluegosling.collections.views.DescendingSet;
 import com.bluegosling.possible.Reference;
+import com.google.common.collect.Iterables;
 
 import java.util.AbstractCollection;
 import java.util.AbstractMap;
@@ -416,7 +415,7 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
 
    @Override
    public NavigableSequenceTrie<K, V> prefixMap(Iterable<K> prefix, int numComponents) {
-      return prefixMap(upToN(prefix, numComponents));
+      return prefixMap(Iterables.limit(prefix, numComponents));
    }
    
    static class NavigablePrefixSequenceTrie<K, V, N extends NavigableNode<K, Void, V, N>>
@@ -437,7 +436,7 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
       public NavigableSequenceTrie<K, V> prefixMap(Iterable<K> newPrefix) {
          Collection<K> snapshot = MoreIterables.snapshot(newPrefix);
          return snapshot.isEmpty() ? this : new NavigablePrefixSequenceTrie<>(
-               MoreIterables.concatIterables(this.prefix, snapshot), parent);
+               Iterables.concat(this.prefix, snapshot), parent);
       }
       
       N getRoot() {
@@ -812,7 +811,7 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
 
       @Override
       public NavigableSequenceTrie<K, V> prefixMap(Iterable<K> prefix, int numComponents) {
-         return prefixMap(upToN(prefix, numComponents));
+         return prefixMap(Iterables.limit(prefix, numComponents));
       }
 
       @Override

@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 import com.bluegosling.concurrent.executors.ActorThreadPool;
 import com.bluegosling.concurrent.executors.PipeliningExecutor;
 import com.bluegosling.concurrent.executors.SerializingExecutor;
-import com.bluegosling.concurrent.futures.fluent.FluentFuture;
+import com.bluegosling.concurrent.fluent.FluentFuture;
 
 import org.junit.Ignore;
 import org.junit.Test;

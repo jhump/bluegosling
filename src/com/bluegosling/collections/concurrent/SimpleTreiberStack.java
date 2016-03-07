@@ -1,7 +1,7 @@
 package com.bluegosling.collections.concurrent;
 
 import com.bluegosling.collections.Stack;
-import com.bluegosling.collections.persistent.LinkedPersistentList;
+import com.bluegosling.collections.immutable.LinkedPersistentList;
 import com.bluegosling.concurrent.unsafe.UnsafeReferenceFieldUpdater;
 
 import java.util.AbstractCollection;

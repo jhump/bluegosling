@@ -42,12 +42,12 @@ public class ArrayBackedLinkedListTest extends AbstractTestList {
 
    @Override
    public List<?> makeEmptyList() {
-      return new ArrayBackedLinkedList<Object>();
+      return new ArrayBackedLinkedList<>();
    }
 
    @Override
    public List<?> makeFullList() {
-      return new ArrayBackedLinkedList<Object>(Arrays.asList(getFullElements()));
+      return new ArrayBackedLinkedList<>(Arrays.asList(getFullElements()));
    }
 
    @Override

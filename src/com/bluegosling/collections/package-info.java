@@ -32,10 +32,10 @@
  *    This provides a more convenient API for things like {@link java.lang.String}s, whose
  *    components are a sequence of {@code char}s. The {@link java.util.Map} interface is in terms of
  *    the composite type, instead of being in terms of {@link java.lang.Iterable}s.</dd>
- * <dt>{@link com.bluegosling.collections.persistent.ImmutableCollection}</dt>
+ * <dt>{@link com.bluegosling.collections.immutable.ImmutableCollection}</dt>
  *    <dd>This interface is the root of a hierarchy of <a href="#immutable-persistent">immutable
  *    collections</a>, parallel to the normal mutable interfaces in the JCF.</dd>
- * <dt>{@link com.bluegosling.collections.persistent.PersistentCollection}</dt>
+ * <dt>{@link com.bluegosling.collections.immutable.PersistentCollection}</dt>
  *    <dd>The root interface of a hierarchy of fully <a href="#immutable-persistent">persistent
  *    collections</a>. They also happen to extend their immutable counter-parts since a persistent
  *    data structure is also immutable.</dd>
@@ -69,7 +69,7 @@
  * This package contains a family of interfaces to represent immutable collections, and their close
  * cousins, persistent collections. Also present are interfaces for immutable and persistent maps.
  * 
- * <p>The utility class {@link com.bluegosling.collections.persistent.Immutables} provides numerous methods for
+ * <p>The utility class {@link com.bluegosling.collections.immutable.Immutables} provides numerous methods for
  * creating immutable collections or adapting them to standard collection and map interfaces. Also
  * present are abstract base classes for implementing new immutable collection implementations.
  * 
@@ -141,8 +141,8 @@
  *    unset, the requested key is not in the map. The array of children only has as many elements as
  *    there are bits set in the bitmask. To determine the index of a child in that array, just count
  *    the number of set bits in the bitmask that are less significant than the one of interest.
- *    (Also see {@link com.bluegosling.collections.persistent.AmtPersistentList}, {@link
- *    com.bluegosling.collections.HamtMap}, and {@link com.bluegosling.collections.persistent.HamtPersistentMap}.)</li>
+ *    (Also see {@link com.bluegosling.collections.immutable.AmtPersistentList}, {@link
+ *    com.bluegosling.collections.HamtMap}, and {@link com.bluegosling.collections.immutable.HamtPersistentMap}.)</li>
  * </ol>
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
