@@ -457,7 +457,7 @@ public final class CollectionUtils {
     * versa.
     * 
     * <p>The returned iterator will support all operations that the underlying iterator supports,
-    * including {@code add} and {@link remove}. Adding multiple elements in a row from the reversed
+    * including {@code add} and {@code remove}. Adding multiple elements in a row from the reversed
     * iterator effectively adds them in reverse order.
     * 
     * @param iter an iterator
@@ -552,8 +552,8 @@ public final class CollectionUtils {
 
    /**
     * Removes a specified object using an iterator. This helper method implements
-    * {@link #remove(Object)}, {@link #removeAll(Object)}, {@link #removeFirstOccurrence(Object)},
-    * and even {@link #removeLastOccurrence(Object)} (the lattermost of which uses a
+    * {@code remove(Object)}, {@code removeAll(Collection<?>)}, {@code removeFirstOccurrence(Object)},
+    * and even {code removeLastOccurrence(Object)} (the lattermost of which uses a
     * {@link reverseIterator} to find the last occurrence instead of the first).
     * 
     * @param item the item to remove

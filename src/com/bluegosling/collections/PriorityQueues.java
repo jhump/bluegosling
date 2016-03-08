@@ -117,9 +117,9 @@ public final class PriorityQueues {
    }
 
    /**
-    * Returns a view of a {@link PriorityQueue} as an {@link OrderedQueue}. The
-    * {@link #entry(Object, Object)} method must be used to create objects that are added to the
-    * returned queue. Otherwise, adding an entry will result in a {@link ClassCastException}.
+    * Returns a view of a {@link PriorityQueue} as an {@link OrderedQueue}. The elements in the
+    * queue have intrinsic priority instead of a separate explicit priority. So when added to the
+    * given queue, the priority value is the same as the element value.
     *
     * @param priorityQueue a priority queue
     * @return a view of the given priority queue as a {@link OrderedQueue}
@@ -142,10 +142,10 @@ public final class PriorityQueues {
    
    /**
     * Returns a view of a {@link MeldablePriorityQueue} as a {@link MeldableOrderedQueue}. The
-    * {@link #entry(Object, Object)} method must be used to create objects that are added to the
-    * returned queue. Otherwise, adding an entry will result in a {@link ClassCastException}.
-    * Attempting to meld the returned queue with another whose underlying priority queue is not
-    * actually meldable will also result in a {@link ClassCastException}.
+    * elements in the queue have intrinsic priority instead of a separate explicit priority. So when
+    * added to the given queue, the priority value is the same as the element value. Attempting to
+    * meld the returned queue with another whose underlying priority queue is not actually meldable
+    * will also result in a {@link ClassCastException}.
     *
     * @param priorityQueue a priority queue
     * @return a view of the given priority queue as a {@link MeldableOrderedQueue}
