@@ -12,10 +12,10 @@ import java.util.function.Function;
 
 /**
  * An abstract base class for implementing {@link ImmutableMap}s. Sub-classes only need to provide
- * implementations for {@link #size()} and {@link #iterator()}. However, sub-classes are advised to
- * also provide implementations for {@link #get(Object)} and {@link #containsKey(Object)} as the
- * default implementations run in linear time whereas map's are usually expected to be more
- * efficient than that.
+ * an implementation for {@link #entrySet()}. However, sub-classes are advised to also provide
+ * implementations for {@link #get(Object)} and {@link #containsKey(Object)} as the default
+ * implementations run in linear time whereas map's are usually expected to be more efficient than
+ * that.
  *
  * @param <K> the type of keys in the map
  * @param <V> the type of values in the map

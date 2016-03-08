@@ -17,11 +17,6 @@
  * <dt>{@link com.bluegosling.collections.BitSequence}</dt>
  *    <dd>An immutable sequence of bits. This is similar to {@link java.util.BitSet} except that it
  *    is immutable and provides additional methods for simpler querying.</dd>
- * <dt>{@link com.bluegosling.collections.GrowableArray}</dt>
- *    <dd>An abstraction that represents a growable array. This is very similar to the standard
- *    {@link java.util.List} interface, but has a narrower API more like arrays. Implementations can
- *    be used to back lists, queues, hash tables, and other structures that use arrays as their
- *    backing stores.</dd>
  * <dt>{@link com.bluegosling.collections.tries.SequenceTrie}</dt>
  *    <dd>A {@link java.util.Map} that organizes keys that represent sequences and provides views of
  *    sub-maps that all share a common prefix. This data structure is typically known as a prefix
@@ -32,23 +27,14 @@
  *    This provides a more convenient API for things like {@link java.lang.String}s, whose
  *    components are a sequence of {@code char}s. The {@link java.util.Map} interface is in terms of
  *    the composite type, instead of being in terms of {@link java.lang.Iterable}s.</dd>
- * <dt>{@link com.bluegosling.collections.immutable.ImmutableCollection}</dt>
- *    <dd>This interface is the root of a hierarchy of <a href="#immutable-persistent">immutable
- *    collections</a>, parallel to the normal mutable interfaces in the JCF.</dd>
  * <dt>{@link com.bluegosling.collections.immutable.PersistentCollection}</dt>
  *    <dd>The root interface of a hierarchy of fully <a href="#immutable-persistent">persistent
- *    collections</a>. They also happen to extend their immutable counter-parts since a persistent
- *    data structure is also immutable.</dd>
+ *    collections</a>, parallel to the normal mutable interfaces in the JCF.</dd>
  * <dt>{@link com.bluegosling.collections.PriorityQueue}</dt>
  *    <dd>A priority queue. This interface is a little different than the JRE's class of the same
  *    name in that it exposes additional operations of a classical priority-queue ADT, mainly
  *    {@code reduce-key}. This decouples an element's priority from its intrinsic value, making it
  *    more useful for certain types of graph algorithms.</dd>
- * <dt>{@link com.bluegosling.collections.SizedIterable}</dt>
- *    <dd>A sized iterable is just an iterable that also has {@code size()} and {@code isEmpty}
- *    methods. Several collection-like interfaces in this package, do not actually extend the
- *    {@link java.util.Collection} interface, but they do provide size information in addition to
- *    their {@code iterator}.
  * </dl>
  * 
  * <h3>Concurrent Collections</h3>
