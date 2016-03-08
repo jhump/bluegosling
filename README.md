@@ -35,7 +35,7 @@ interfaces).
 
 ## How can I learn more?
 
-You can peruse the complete java doc here: https://rawgit.com/jhump/bluegosling/master/javadoc/index.html
+You can peruse the complete java doc here: http://jhump.github.io/bluegosling/javadoc/index.html
 
 ## Who are you?
 
