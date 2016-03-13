@@ -1159,7 +1159,7 @@ public class Transaction {
    /**
     * Rolls back the current transaction. This resets all mutations made. All futures associated
     * with {@linkplain TransactionalAtom#commute(Function) commute} operations and {@linkplain
-    * AsynchronousAtomTest asynchronous actions} that have been performed in this transaction are
+    * AsynchronousAtom asynchronous actions} that have been performed in this transaction are
     * cancelled.
     * 
     * @throws IllegalStateException if this transaction is not running on the current thread
@@ -1189,7 +1189,7 @@ public class Transaction {
    /**
     * Performs a partial roll back. All mutations made since the specified savepoint was established
     * are reset. Similarly, all futures for {@linkplain TransactionalAtom#commute(Function) commute}
-    * operations and {@linkplain AsynchronousAtomTest asynchronous actions} are cancelled. Changes made
+    * operations and {@linkplain AsynchronousAtom asynchronous actions} are cancelled. Changes made
     * prior to the savepoint being established are retained.
     *
     * @param point the savepoint up to which point the transaction is reversed
