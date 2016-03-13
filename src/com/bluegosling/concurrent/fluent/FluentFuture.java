@@ -63,7 +63,7 @@ import java.util.function.Function;
  * assist with implementing listeners and with writing asynchronous code. Many will throw an
  * {@link IllegalStateException} if invoked before the future is done.</li>
  * <li><strong>Monadic</strong>: This future includes numerous useful default methods, all built on
- * top of the listener primitive, that allow it to be used as a monad, chaining additional
+ * top of the listener primitive, that allow it to be used like a monad, chaining additional
  * operations and applying numerous kinds of transformations.
  * </ol>
  *

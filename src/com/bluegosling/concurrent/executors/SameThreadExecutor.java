@@ -1,11 +1,17 @@
 package com.bluegosling.concurrent.executors;
 
+import com.google.common.util.concurrent.MoreExecutors;
+
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.concurrent.Executor;
 
 /**
- * A simple executor that runs each task synchronously in the same thread that submits it.
+ * A simple executor that runs each task synchronously in the same thread that submits it. Unlike
+ * Guava's {@link MoreExecutors#directExecutor()} and
+ * {@link MoreExecutors#newDirectExecutorService()}, this implementation provides a "trampoline"
+ * that queues the work for the current thread to execute, instead of actually executing it
+ * immediately. This allows for deep hierarchies of tasks without the risk of stack overflow.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */

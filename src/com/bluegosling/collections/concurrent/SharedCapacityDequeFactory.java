@@ -32,7 +32,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * <p>The queues returned by this factory will generally have all of the properties of the
  * implementation that is wrapped. The exception to this rule is that some methods on the returned
  * queues are <strong>not atomic</strong>, even if the underlying implementation provides an atomic
- * implementation of the operation. This is done so as to accurately track the total size of all
+ * version of the operation. This is done so as to accurately track the total size of all
  * queues and to enforce the total capacity. The methods impacted by this exception follow:
  * <ul>
  * <li>{@link Collection#addAll(Collection) addAll}</li>
