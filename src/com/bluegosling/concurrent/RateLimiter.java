@@ -8,6 +8,35 @@ import com.bluegosling.util.SystemClock;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * A synchronizer that can be used to limit the rate, or frequency, of an operation. This uses a
+ * leaky bucket algorithm to control the rate.
+ * 
+ * <p>This is effectively just like Guava's {@link com.google.common.util.concurrent.RateLimiter}
+ * except with several additional features:
+ * <ol>
+ * <li>This version allows control over the bucket size (e.g. maximum number of stored permits).
+ * </li>
+ * <li>This version allows creation of the limiter with a specific initial bucket size, which can be
+ * be greater than the steady-state bucket size. This allows an initial burst that is larger than
+ * allowed in steady-state operations.</li>
+ * <li>This version provides a jitter parameter, which adds a small amount of randomness to the
+ * delay between permits being added to the bucket. Note that using jitter will reduce performance
+ * slightly. For typical rates, this should not be an issue. But for extremely high rates (100s of
+ * thousands per second or millions per second), this can reduce the actual observed rate due to
+ * contention over the limiter while computing jitter.</li>
+ * <li>This version provides interruptible acquisition methods. (Guava's version uses
+ * uninterruptible blocking when an acquirer needs to wait for a permit.)</li>
+ * <li>Finally, this version provides methods for forcibly taking tokens from the bucket or putting
+ * them back. This can be used for reconciliation when the number of permits an operation needs is
+ * not known apriori. In such a case, the operation acquires an estimated number of permits. On
+ * completion, the operation has measured the actual number of permits needed. It can then push
+ * tokens back into the bucket (if the estimate was too high) or remove tokens (if the estimate was
+ * too low).</li>
+ * </ol>
+ *
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
 // TODO: javadoc
 // TODO: tests
 public class RateLimiter {
@@ -81,7 +110,12 @@ public class RateLimiter {
          throw new InterruptedException();
       }
       long acquireCompleteNanos = makeReservation(permits, -1);
-      clock.sleep(acquireCompleteNanos, TimeUnit.NANOSECONDS);
+      try {
+         clock.sleep(acquireCompleteNanos, TimeUnit.NANOSECONDS);
+      } catch (InterruptedException e) {
+         putBack(permits);
+         throw e;
+      }
    }
 
    public boolean tryAcquire() {
@@ -111,10 +145,35 @@ public class RateLimiter {
       if (acquireCompleteNanos == -1) {
          return false;
       }
-      clock.sleep(acquireCompleteNanos, TimeUnit.NANOSECONDS);
+      try {
+         clock.sleep(acquireCompleteNanos, TimeUnit.NANOSECONDS);
+      } catch (InterruptedException e) {
+         putBack(permits);
+         throw e;
+      }
       return true;
    }
    
+   public synchronized void putBack(long permits) {
+      if (permits < 0) {
+         throw new IllegalArgumentException();
+      }
+      if (permits == 0) {
+         return;
+      }
+      this.storedPermits += permits;
+   }
+
+   public synchronized void forceTake(long permits) {
+      if (permits < 0) {
+         throw new IllegalArgumentException();
+      }
+      if (permits == 0) {
+         return;
+      }
+      this.storedPermits -= permits;
+   }
+
    public synchronized double getRate() {
       return NANOS_PER_SEC / rateNanosPerPermit;
    }
@@ -166,7 +225,7 @@ public class RateLimiter {
    private synchronized long makeReservation(long permits, long maxWaitNanos) {
       final long realNow = clock.nanoTime();
       // Give ourselves an extra microsecond for margin of error. Otherwise, we get weird effects
-      // with very high rates but max bucket size of 1 where the permit should have been in the
+      // with very high rates and max bucket size of 1, where the permit should have been in the
       // bucket but we missed it due to scheduling inaccuracy.
       final long now = realNow - NANOS_PER_MICRO;
       final double rate = rateNanosPerPermit;
@@ -193,10 +252,12 @@ public class RateLimiter {
             return 0;
          }
          // fall through to below to figure out how long to wait
-      } else {
-         assert stored == 0;
+      } else if (stored >= permits) {
+         this.storedPermits = stored - permits;
+         return 0;
       }
       
+      // compute how long caller must wait for the requested permits
       long shortage = permits - stored;
       long extraTime;
       if (jtr == 0) {
@@ -207,7 +268,7 @@ public class RateLimiter {
       }
       asOf += extraTime;
       long waitTime = Math.max(0, asOf - realNow); 
-      if (maxWaitNanos < 0 || maxWaitNanos > waitTime) {
+      if (maxWaitNanos < 0 || maxWaitNanos >= waitTime) {
          this.asOfNanos = asOf;
          this.storedPermits = 0;
          return waitTime;

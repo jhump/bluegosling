@@ -21,8 +21,8 @@ import java.util.function.Supplier;
 /**
  * An abstract base class for {@link SequenceTrie} implementations. Concrete sub-classes need only
  * provide a concrete implementation of {@link Node} and override the {@link #newNode} method. This
- * is ideal for tries where each node uses some sort of map to store the edges (which map key
- * elements to sub-tries).
+ * is ideal for tries where each node uses some sort of map to store the edges (to associate key
+ * elements with sub-tries).
  *
  * @param <K> the component type of keys in the map (a key will be a sequence of these components)  
  * @param <V> the type of values in the map
