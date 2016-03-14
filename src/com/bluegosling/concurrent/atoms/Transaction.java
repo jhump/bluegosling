@@ -491,7 +491,7 @@ public class Transaction {
    }
    
    /**
-    * Unpins the specified version. The version must have first been {@linkplain #pinVersion(long)
+    * Unpins the specified version. The version must have first been {@linkplain #pinVersion(Long)
     * pinned}. Once unpinned, atom values associated with this version may be removed.
     *
     * @param version the version to unpin

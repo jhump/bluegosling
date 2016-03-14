@@ -622,7 +622,7 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
       void checkCanBlock() {
          // If the transaction hasn't been committed, then the submitter thread isn't allowed to
          // block because that would cause the transaction to freeze in a deadlock!
-         if (!pending && Thread.currentThread() == submitter) {
+         if (pending && Thread.currentThread() == submitter) {
             throw new IllegalStateException(
                   "Cannot block on future until corresponding transaction is committed");
          }
