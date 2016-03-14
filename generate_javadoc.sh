@@ -19,7 +19,6 @@ rm -rf javadoc/ 2> /dev/null
 mkdir javadoc/
 find src -type d \
 	| grep com/bluegosling/ \
-	| grep -v com/bluegosling/apt/util \
 	| sed s/\\//\\./g | sed s/src\\.// \
 	| xargs javadoc -source 8 \
 	-classpath bin/:lib/commons-collections-testframework-3.2.1.jar:lib/javax.inject.jar:lib/junit-4.10.jar:lib/guava-19.0.jar \
