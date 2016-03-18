@@ -2,6 +2,7 @@ package com.bluegosling.collections.views;
 
 import com.bluegosling.collections.CollectionUtils;
 import com.bluegosling.collections.MoreIterables;
+import com.google.common.collect.Collections2;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,6 +22,8 @@ import java.util.function.Predicate;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
  * @param <E> the type of element in the collection
+ * 
+ * @see Collections2#transform(Collection, com.google.common.base.Function)
  */
 //TODO: tests
 public class FilteringCollection<E> extends FilteringIterable<E> implements Collection<E> {

@@ -4,6 +4,8 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.function.Predicate;
 
+import com.google.common.collect.Iterators;
+
 /**
  * A filtered view of another iterator. This is a wrapper that elides all members of the wrapped
  * iterator that do not match a given predicate.
@@ -11,6 +13,8 @@ import java.util.function.Predicate;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
  * @param <E> the type of element in the iterator
+ * 
+ * @see Iterators#filter(Iterator, com.google.common.base.Predicate)
  */
 //TODO: tests
 public class FilteringIterator<E> implements Iterator<E> {
