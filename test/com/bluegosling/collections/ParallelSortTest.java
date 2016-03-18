@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import com.bluegosling.util.Stopwatch;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -77,6 +78,7 @@ public class ParallelSortTest {
       assertEquals(Arrays.asList(1, 2, 3, 4, 5), parallelSortIntegers(5, 1));
    }
    
+   @Ignore
    @Test public void sortMillionIntegersTimed() {
       warmUp();
       
