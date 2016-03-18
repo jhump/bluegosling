@@ -1,6 +1,7 @@
 package com.bluegosling.collections.views;
 
 import com.bluegosling.collections.CollectionUtils;
+import com.google.common.collect.Sets;
 
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -18,6 +19,8 @@ import java.util.function.Predicate;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
  * @param <E> the type of element in the sets
+ * 
+ * @see Sets#filter(Set, com.google.common.base.Predicate)
  */
 //TODO: tests
 public class FilteringSet<E> extends FilteringCollection<E> implements Set<E> {

@@ -3,6 +3,8 @@ package com.bluegosling.collections.views;
 import java.util.Iterator;
 import java.util.function.Function;
 
+import com.google.common.collect.Iterables;
+
 /**
  * An iterable whose elements are the results of applying a function to another iterable. This
  * iterable is simply a wrapper. Changes to the underlying iterable are visible in the
@@ -16,6 +18,8 @@ import java.util.function.Function;
  *
  * @param <I> the "input" type; the type of the wrapped iterable
  * @param <O> the "output" type; the type of elements in this iterable
+ * 
+ * @see Iterables#transform(Iterable, com.google.common.base.Function)
  */
 //TODO: tests
 public class TransformingIterable<I, O> implements Iterable<O> {
