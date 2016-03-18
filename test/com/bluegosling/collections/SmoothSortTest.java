@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import com.bluegosling.util.Stopwatch;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -60,7 +61,8 @@ public class SmoothSortTest {
       }
    }
    
-   /*@Test*/ public void sort_list_performance() {
+   @Ignore
+   @Test public void sort_list_performance() {
       // warm up
       int maxLen = 10;
       int count = 1000;
