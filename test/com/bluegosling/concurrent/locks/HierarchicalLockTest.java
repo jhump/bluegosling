@@ -427,7 +427,7 @@ public class HierarchicalLockTest {
       ExclusiveLock exclusive = lock.exclusiveLock();
       exclusiveThreads.add(Thread.currentThread());
       start.countDown();
-      Thread.sleep(50); // let all threads try to acquire
+      Thread.sleep(250); // let all threads try to acquire
 
       assertEquals(0, sharedThreads.size());
       assertEquals(1, exclusiveThreads.size());
