@@ -73,7 +73,7 @@ public class MakeFluentFutureTest extends AbstractRunnableFluentFutureTest {
       // before listeners have been executed. So we also want to wait for listeners to
       // run, too.
       try {
-         assertTrue(futureChecker.listenerCompletion.await(100,  TimeUnit.MILLISECONDS));
+         assertTrue(futureChecker.listenerCompletion.await(200,  TimeUnit.MILLISECONDS));
       } catch (InterruptedException e) {
          throw new RuntimeException(e);
       }
