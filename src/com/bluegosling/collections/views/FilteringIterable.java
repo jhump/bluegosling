@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.function.Predicate;
 
+import com.google.common.collect.Iterables;
+
 /**
  * A filtered view of another iterable. This is a wrapper that elides all members of the wrapped
  * iterable that do not match a given predicate. Changes to the underlying iterable will be visible
@@ -15,6 +17,8 @@ import java.util.function.Predicate;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
  * @param <E> the type of element in the iterable
+ * 
+ * @see Iterables#filter(Iterable, com.google.common.base.Predicate)
  */
 //TODO: tests
 public class FilteringIterable<E> implements Iterable<E> {

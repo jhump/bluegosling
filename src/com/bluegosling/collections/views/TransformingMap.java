@@ -1,6 +1,7 @@
 package com.bluegosling.collections.views;
 
 import com.bluegosling.collections.MapUtils;
+import com.google.common.collect.Maps;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -52,6 +53,8 @@ import java.util.function.Function;
  * 
  * @see TransformingMap.ReadOnly
  * @see TransformingMap.Bidi
+ * @see Maps#transformEntries(Map, com.google.common.collect.Maps.EntryTransformer)
+ * @see Maps#transformValues(Map, com.google.common.base.Function)
  */
 // TODO: tests
 public class TransformingMap<KI, VI, KO, VO> implements Map<KO, VO> {

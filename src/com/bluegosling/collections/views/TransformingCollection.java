@@ -1,6 +1,7 @@
 package com.bluegosling.collections.views;
 
 import com.bluegosling.collections.CollectionUtils;
+import com.google.common.collect.Collections2;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -32,6 +33,7 @@ import java.util.function.Function;
  * 
  * @see TransformingCollection.ReadOnly
  * @see TransformingCollection.Bidi
+ * @see Collections2#transform(Collection, com.google.common.base.Function)
  */
 //TODO: tests
 public class TransformingCollection<I, O> extends TransformingIterable<I, O>
