@@ -21,6 +21,11 @@ import java.util.NoSuchElementException;
  */
 public abstract class AbstractDeque<E> extends AbstractQueue<E> implements Deque<E> {
 
+   /**
+    * {@inheritDoc}
+    * 
+    * <p>This implementation delegates to {@link #addLast(Object)} and always returns true.
+    */
    @Override
    public boolean add(E e) {
       addLast(e);

@@ -493,12 +493,8 @@ enum CoreReflectionTypes implements Types {
             capturedArgs.add(arg);
          }
       }
-      // TODO: fix once AnnotatedParameterizedType supports getting annotated owner type
+      AnnotatedType owner = AnnotatedTypes.getOwnerType(pType);
       ParameterizedType pt = (ParameterizedType) pType.getType();
-      Type ownerType = pt.getOwnerType();
-      AnnotatedParameterizedType owner = ownerType instanceof ParameterizedType
-            ? AnnotatedTypes.newAnnotatedParameterizedType((ParameterizedType) ownerType)
-            : null;
       AnnotatedType raw = AnnotatedTypes.newAnnotatedType(pt.getRawType(), type.getAnnotations());
       return new CoreReflectionDeclaredType(owner, raw, capturedArgs);
    }
@@ -854,20 +850,8 @@ enum CoreReflectionTypes implements Types {
 
    @Override
    public DeclaredType getParameterizedTypeMirror(AnnotatedParameterizedType parameterizedType) {
-      // TODO: use an AnnotatedType once AnnotatedParameterizedType is fixed to expose its
-      // annotated owner type
-      Type owner;
-      Type type = parameterizedType.getType();
-      if (type instanceof Class) {
-         Class<?> clazz = (Class<?>) type;
-         owner = Modifier.isStatic(clazz.getModifiers())
-               ? null : clazz.getEnclosingClass();
-      } else {
-         owner = ((ParameterizedType) type).getOwnerType();
-      }
-      AnnotatedType annotatedOwner = owner == null
-            ? null : AnnotatedTypes.newAnnotatedType(owner);
-      return new CoreReflectionDeclaredType(annotatedOwner, parameterizedType,
+      AnnotatedType owner = AnnotatedTypes.getOwnerType(parameterizedType);
+      return new CoreReflectionDeclaredType(owner, parameterizedType,
             parameterizedType.getAnnotatedActualTypeArguments());
    }
 

@@ -45,7 +45,6 @@ import java.util.stream.StreamSupport;
  * @see Type
  */
 public final class Types {
-   
    static final Type EMPTY_TYPES[] = new Type[0];
    static final Type JUST_OBJECT[] = new Type[] { Object.class };
    static final TypeVariable<?> EMPTY_TYPE_VARIABLES[] = new TypeVariable<?>[0];
@@ -53,7 +52,7 @@ public final class Types {
    private static final Class<?> ARRAY_INTERFACES[] =
          new Class<?>[] { Cloneable.class, Serializable.class };
    private static final Type ARRAY_SUPERTYPES[] =
-         new Type[] { Object.class, Serializable.class, Cloneable.class };
+         new Type[] { Object.class, Cloneable.class, Serializable.class };
    private static final Annotation EMPTY_ANNOTATIONS[] = new Annotation[0];
    private static final WildcardType EXTENDS_ANY = newExtendsWildcardType(Object.class);
    
@@ -104,6 +103,57 @@ public final class Types {
          return null;
       }
       return getErasure(t);
+   }
+   
+   /**
+    * Determines the zero, of default, value for a given type. For most types this will simply be
+    * {@code null}. But for methods that return primitives, this will be the primitive type's
+    * zero value (e.g. zero or false).
+    * 
+    * @param type the type
+    * @return the zero value for the given type
+    */
+   public static Object getZeroValue(Type type) {
+      if (!(type instanceof Class)) {
+         return null;
+      }
+      Class<?> clazz = (Class<?>) type;
+      if (!clazz.isPrimitive()) {
+         return null;
+      }
+      else if (clazz == int.class) {
+         return 0;
+      }
+      else if (clazz == short.class) {
+         return (short) 0;
+      }
+      else if (clazz == byte.class) {
+         return (byte) 0;
+      }
+      else if (clazz == char.class) {
+         return '\u0000';
+      }
+      else if (clazz == long.class) {
+         return 0L;
+      }
+      else if (clazz == double.class) {
+         return 0.0;
+      }
+      else if (clazz == float.class) {
+         return 0.0F;
+      }
+      else if (clazz == boolean.class) {
+         return false;
+      }
+      else if (clazz == void.class) {
+         return null;
+      }
+      else {
+         // this should never happen...
+         throw new IllegalArgumentException(
+               "Could not determine default value for "
+                     + clazz.getName());
+      }
    }
 
    /**
@@ -390,7 +440,12 @@ public final class Types {
    public static Type getGenericSuperclass(Type type) {
       requireNonNull(type);
       if (type instanceof Class) {
-         return ((Class<?>) type).getGenericSuperclass();
+         Class<?> clazz = (Class<?>) type;
+         // if the given type is the raw form of a generic type, then its supertype
+         // is also a raw type
+         return clazz.getTypeParameters().length == 0
+               ? clazz.getGenericSuperclass()
+               : clazz.getSuperclass();
       } else if (type instanceof ParameterizedType) {
          Class<?> superClass = getErasure(((ParameterizedType) type).getRawType()).getSuperclass();
          if (superClass == null) {
@@ -440,7 +495,12 @@ public final class Types {
    public static Type[] getGenericInterfaces(Type type) {
       requireNonNull(type);
       if (type instanceof Class) {
-         return ((Class<?>) type).getGenericInterfaces();
+         Class<?> clazz = (Class<?>) type;
+         // if the given type is the raw form of a generic type, then its interfaces
+         // are also raw types
+         return clazz.getTypeParameters().length == 0
+               ? clazz.getGenericInterfaces()
+               : clazz.getInterfaces();
       } else if (type instanceof ParameterizedType) {
          Class<?> interfaces[] =
                getErasure(((ParameterizedType) type).getRawType()).getInterfaces();
@@ -448,14 +508,14 @@ public final class Types {
             return interfaces;
          }
          int len = interfaces.length;
-         Type genericInterfaces[] = new Type[len];
+         Type[] genericInterfaces = new Type[len];
          for (int i = 0; i < len; i++) {
             genericInterfaces[i] = resolveSupertype(type, interfaces[i]);
             assert genericInterfaces[i] != null;
          }
          return genericInterfaces;
       } else if (type instanceof GenericArrayType) {
-         return ARRAY_INTERFACES;
+         return ARRAY_INTERFACES.clone();
       } else if (type instanceof WildcardType || type instanceof TypeVariable) {
          Type bounds[] = type instanceof WildcardType ? ((WildcardType) type).getUpperBounds()
                : ((TypeVariable<?>) type).getBounds();
@@ -870,8 +930,7 @@ public final class Types {
          Class<?> fromClass = (Class<?>) from;
          if (to instanceof ParameterizedType && fromClass.isPrimitive()) {
             // try a boxing conversion.
-            Class<?> boxedFromClass = box(fromClass);
-            return boxedFromClass != fromClass && isAssignableReference(boxedFromClass, to, true); 
+            return isAssignableReference(box(fromClass), to, true); 
          } else if (to instanceof Class) {
             Class<?> toClass = (Class<?>) to;
             if (fromClass.isPrimitive()) {
@@ -883,7 +942,8 @@ public final class Types {
                return toClass.isAssignableFrom(box(fromClass));
             } else if (toClass.isPrimitive()) {
                // unboxing conversion
-               return toClass.isAssignableFrom(unbox(fromClass));
+               Class<?> unboxed = unbox(fromClass);
+               return unboxed != fromClass && toClass.isAssignableFrom(unboxed);
             }
          }
       }
@@ -977,7 +1037,7 @@ public final class Types {
                   fromArrayType.getGenericComponentType(), toClass.getComponentType(),
                   allowUncheckedConversion);
          } else if (from instanceof ParameterizedType) {
-            Class<?> fromRaw = (Class<?>) ((ParameterizedType) from).getRawType();
+            Class<?> fromRaw = getErasure(((ParameterizedType) from).getRawType());
             return toClass.isAssignableFrom(fromRaw);
          } else {
             return false;
@@ -1174,7 +1234,7 @@ public final class Types {
     * @param aClass a class, possibly a primitive type
     * @return true if the one class is a subtype of the other per primitive subtyping
     */
-   private static boolean isPrimitiveSubtype(Class<?> possibleSubclass, Class<?> aClass) {
+   static boolean isPrimitiveSubtype(Class<?> possibleSubclass, Class<?> aClass) {
       Set<Class<?>> subTypes = PRIMITIVE_SUBTYPES.get(aClass);
       return subTypes != null && subTypes.contains(possibleSubclass);
    }
@@ -1311,6 +1371,11 @@ public final class Types {
       return superTypes;
    }
    
+   // TODO: doc
+   static Class<?> getPrimitiveSupertype(Class<?> primitiveType) {
+      return PRIMITIVE_DIRECT_SUPERTYPES.get(primitiveType);
+   }
+   
    /**
     * Determines if the given type is a generic type. The only types that are <em>not</em> generic
     * are {@code Class} tokens for non-parameterizable types (e.g. classes and interfaces with no
@@ -1423,7 +1488,7 @@ public final class Types {
     * subsequent elements interface types).
     * 
     * <p>The JLS indicates that recursive types, which could result in infinite recursion in
-    * computing the last upper bounds, should result in cyclic data structures. Core reflection type
+    * computing the least upper bounds, should result in cyclic data structures. Core reflection type
     * interfaces are generally not expected to be cyclic. So if the computed least upper bound
     * {@code `lub`} were, for example, to result in {@code Comparable<`lub`>} then a non-cyclic
     * type, {@code Comparable<?>} would be returned instead.
@@ -1541,8 +1606,8 @@ public final class Types {
          for (Class<?> t2 : candidateSet) {
             if (t1 == t2) {
                continue;
-            }      
-            if (isSubtype(t2, t1)) {
+            }
+            if (t1.isAssignableFrom(t2)) {     
                csIter.remove();
                break;
             }
@@ -2009,8 +2074,8 @@ public final class Types {
       if (superType == null || superType instanceof Class) {
          return null; // cannot resolve
       }
-      TypeVariable<?> vars[] = ((Class<?>) declaration).getTypeParameters();
-      Type actualArgs[] = ((ParameterizedType) superType).getActualTypeArguments();
+      TypeVariable<?>[] vars = ((Class<?>) declaration).getTypeParameters();
+      Type[] actualArgs = ((ParameterizedType) superType).getActualTypeArguments();
       assert actualArgs.length == vars.length;
       for (int i = 0, len = vars.length; i < len; i++) {
          if (equals(vars[i], variable)) {
@@ -2157,10 +2222,8 @@ public final class Types {
          Type initialOwner = pType.getOwnerType();
          Type resolvedOwner = initialOwner == null ? null
                : replaceTypeVariablesInternal(initialOwner, typeVariables);
-         Type initialRaw = pType.getRawType();
-         Type resolvedRaw = initialRaw == null ? null
-               : replaceTypeVariablesInternal(initialRaw, typeVariables);
-         boolean different = initialOwner != resolvedOwner || initialRaw != resolvedRaw;
+         Type raw = pType.getRawType();
+         boolean different = initialOwner != resolvedOwner;
          Type initialArgs[] = pType.getActualTypeArguments();
          List<Type> resolvedArgs = new ArrayList<>(initialArgs.length);
          for (Type initial : initialArgs) {
@@ -2171,7 +2234,7 @@ public final class Types {
             }
          }
          return different
-               ? new ParameterizedTypeImpl(resolvedOwner, resolvedRaw, resolvedArgs)
+               ? new ParameterizedTypeImpl(resolvedOwner, raw, resolvedArgs)
                : type;
          
       } else if (type instanceof GenericArrayType) {
@@ -2234,7 +2297,7 @@ public final class Types {
     * @throws IllegalArgumentException if the given argument is not a valid value for the given
     *       type variable
     */
-   private static void checkTypeValue(TypeVariable<?> variable, Type argument,
+   static void checkTypeValue(TypeVariable<?> variable, Type argument,
          Map<TypeVariable<?>, Type> resolvedVariables) {
       if (argument instanceof Class && ((Class<?>) argument).isPrimitive()) {
          throw new IllegalArgumentException("Argument for variable " + variable.getName()
@@ -2266,7 +2329,7 @@ public final class Types {
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   private static class TypePathElement {
+   static class TypePathElement {
       enum Kind {
          /**
           * The path elements traverses an actual argument for a type variable, in a parameterized
@@ -2716,8 +2779,8 @@ public final class Types {
       for (int i = 0, len = actualInterfaces.length; i < len; i++) {
          if (actualInterfaces[i] == intrface) {
             actualSuper = actualInterfaces[i];
-            genericSuper = genericInterfaces[i];
-            ret = genericSuper;
+            ret = genericSuper = genericInterfaces[i];
+            break;
          }
       }
       if (ret == null) {
@@ -2727,6 +2790,7 @@ public final class Types {
             if (ret != null) {
                actualSuper = actualInterfaces[i];
                genericSuper = genericInterfaces[i];
+               break;
             }
          }
       }
@@ -3149,7 +3213,7 @@ public final class Types {
       }
    }
    
-   private static <G extends GenericDeclaration> TypeVariable<G> wrap(TypeVariable<G> type) {
+   static <G extends GenericDeclaration> TypeVariable<G> wrap(TypeVariable<G> type) {
       if (type instanceof ProperType) {
          return type;
       } else {

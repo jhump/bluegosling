@@ -143,15 +143,15 @@ class ExecutableSignature implements AnnotatedElement {
     * @return the erasure of this executable signature
     */
    public ExecutableSignature erased() {
-      AnnotatedType recv = AnnotatedTypes.getErasedType(getAnnotatedReceiverType());
-      AnnotatedType ret = AnnotatedTypes.getErasedType(getAnnotatedReturnType());
+      AnnotatedType recv = AnnotatedTypes.getErasure(getAnnotatedReceiverType());
+      AnnotatedType ret = AnnotatedTypes.getErasure(getAnnotatedReturnType());
       AnnotatedType[] params = getAnnotatedParameterTypes();
       for (int i = 0; i < params.length; i++) {
-         params[i] = AnnotatedTypes.getErasedType(params[i]);
+         params[i] = AnnotatedTypes.getErasure(params[i]);
       }
       AnnotatedType[] exs = getAnnotatedExceptionTypes();
       for (int i = 0; i < exs.length; i++) {
-         exs[i] = AnnotatedTypes.getErasedType(exs[i]);
+         exs[i] = AnnotatedTypes.getErasure(exs[i]);
       }
       return new ExecutableSignature(name, annotationSource, recv, ret, params, exs, EMPTY_VARS);
    }

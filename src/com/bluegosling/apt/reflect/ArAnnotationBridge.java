@@ -1,7 +1,7 @@
 package com.bluegosling.apt.reflect;
 
 import com.bluegosling.collections.views.TransformingList;
-import com.bluegosling.reflect.ProxyUtils;
+import com.google.common.reflect.Reflection;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Array;
@@ -198,7 +198,7 @@ public final class ArAnnotationBridge {
       if (!clazz.isAnnotation()) {
          throw new IllegalStateException("annotation has improper type");
       }
-      T proxy = ProxyUtils.newProxyInstance(clazz, new AnnotationBridgeHandler(annotation, clazz));
+      T proxy = Reflection.newProxy(clazz, new AnnotationBridgeHandler(annotation, clazz));
       return proxy;      
    }
    
