@@ -20,6 +20,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
 
+import com.google.common.reflect.Reflection;
+
 /**
  * Utility methods for working with instances of {@link Annotation}. These are mostly helpful in
  * fabricating annotation instances and performing comparisons between two annotations.
@@ -153,32 +155,29 @@ public final class Annotations {
          throw new IllegalArgumentException("Map contains invalid keys for "
                + annotationType.getName() + ": " + keys);
       }
-      T ret = ProxyUtils.newProxyInstance(annotationType,
-            new InvocationHandler() {
-               @Override
-               public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                  // ugh, why does this send null instead of empty array when there are no args...
-                  if (args == null) {
-                     args = EMPTY;
-                  }
-                  Object val = resolvedAttributes.get(method.getName());
-                  if (val == null || args.length > 0) {
-                     if (args.length == 1 && method.getName().equals("equals")) {
-                        return equal((Annotation) proxy, args[0]);
-                     } else if (args.length == 0 && method.getName().equals("hashCode")) {
-                        return Annotations.hashCode((Annotation) proxy);
-                     } else if (args.length == 0 && method.getName().equals("toString")) {
-                        return Annotations.toString((Annotation) proxy);
-                     } else if (args.length == 0 && method.getName().equals("annotationType")) {
-                        return annotationType;
-                     } else {
-                        // WTF?
-                        throw new UnsupportedOperationException(method.getName());
-                     }
-                  }
-                  // arrays are defensively copied
-                  return val.getClass().isArray() ? ArrayUtils.clone(val) : val;
+      T ret = Reflection.newProxy(annotationType,
+            (Object proxy, Method method, Object[] args) -> {
+               // ugh, why does this send null instead of empty array when there are no args...
+               if (args == null) {
+                  args = EMPTY;
                }
+               Object val = resolvedAttributes.get(method.getName());
+               if (val == null || args.length > 0) {
+                  if (args.length == 1 && method.getName().equals("equals")) {
+                     return equal((Annotation) proxy, args[0]);
+                  } else if (args.length == 0 && method.getName().equals("hashCode")) {
+                     return Annotations.hashCode((Annotation) proxy);
+                  } else if (args.length == 0 && method.getName().equals("toString")) {
+                     return Annotations.toString((Annotation) proxy);
+                  } else if (args.length == 0 && method.getName().equals("annotationType")) {
+                     return annotationType;
+                  } else {
+                     // WTF?
+                     throw new UnsupportedOperationException(method.getName());
+                  }
+               }
+               // arrays are defensively copied
+               return val.getClass().isArray() ? ArrayUtils.clone(val) : val;
             });
       return ret;
    }

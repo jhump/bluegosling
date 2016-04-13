@@ -33,8 +33,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.reflect.AnnotatedType;
 import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.GenericDeclaration;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Proxy;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 import java.lang.reflect.WildcardType;
@@ -213,6 +215,95 @@ public class TypesTest {
       assertThrows(UnknownTypeException.class, () -> Types.getErasure(InvalidType.INSTANCE));
    }
    
+   // helper interface with methods of various return types to
+   // make sure values returned by getZeroValue() are appropriate
+   private interface TestInterface {
+      // primitives
+      void voidMethod();
+
+      int intMethod();
+
+      short shortMethod();
+
+      byte byteMethod();
+
+      long longMethod();
+
+      char charMethod();
+
+      double doubleMethod();
+
+      float floatMethod();
+
+      boolean booleanMethod();
+
+      // objects
+      String stringMethod();
+
+      Object objectMethod();
+
+      // objects that box primitives
+      Void voidObjMethod();
+
+      Integer intObjMethod();
+
+      Short shortObjMethod();
+
+      Byte byteObjMethod();
+
+      Long longObjMethod();
+
+      Character charObjMethod();
+
+      Double doubleObjMethod();
+
+      Float floatObjMethod();
+
+      Boolean booleanObjMethod();
+   }
+
+   @Test public void getZeroValue() {
+      // use an actual proxy so we not only check that returned values are what we
+      // expect but further verify that expected values are appropriate and correct
+      // (and won't generate NullPointerExceptions or ClassCastExceptions)
+      TestInterface proxy = (TestInterface) Proxy.newProxyInstance(
+            TestInterface.class.getClassLoader(),
+            new Class<?>[] { TestInterface.class }, new InvocationHandler() {
+               @Override
+               public Object invoke(Object obj, Method method, Object[] args) throws Throwable {
+                  // method under test!
+                  return Types.getZeroValue(method.getReturnType());
+               }
+            });
+
+      // this just makes sure no exception occurs (no return value to inspect)
+      proxy.voidMethod();
+      // zeroes
+      assertEquals(0, proxy.intMethod());
+      assertEquals(0, proxy.shortMethod());
+      assertEquals(0, proxy.byteMethod());
+      assertEquals(0, proxy.longMethod());
+      assertEquals(0, proxy.charMethod());
+      assertEquals(0.0, proxy.doubleMethod(), 0.0 /* exactly zero */);
+      assertEquals(0.0F, proxy.floatMethod(), 0.0F /* exactly zero */);
+      // false
+      assertFalse(proxy.booleanMethod());
+
+      // the rest are objects and can(should) be null
+      assertNull(proxy.voidObjMethod());
+      assertNull(proxy.intObjMethod());
+      assertNull(proxy.shortObjMethod());
+      assertNull(proxy.byteObjMethod());
+      assertNull(proxy.longObjMethod());
+      assertNull(proxy.charObjMethod());
+      assertNull(proxy.doubleObjMethod());
+      assertNull(proxy.floatObjMethod());
+      assertNull(proxy.booleanObjMethod());
+
+      assertNull(proxy.objectMethod());
+      assertNull(proxy.stringMethod());
+   }
+   
    @Test public void getActualTypeArguments() {
       assertArrayEquals(EMPTY, Types.getActualTypeArguments(Object.class));
       assertArrayEquals(EMPTY, Types.getActualTypeArguments(Map.class));
@@ -338,7 +429,7 @@ public class TypesTest {
       assertEquals("java.lang.Class", Types.toString(Class.class));
       assertEquals("java.lang.Object[]", Types.toString(Object[].class));
       assertEquals("com.bluegosling.reflect.TypeTesting.Dummy", Types.toString(Dummy.class));
-      assertEquals("com.bluegosling.reflect.TypesTest$1", Types.toString(new Object() { }.getClass()));
+      assertEquals("com.bluegosling.reflect.TypesTest$2", Types.toString(new Object() { }.getClass()));
       assertEquals("java.util.List<java.util.Map<T,java.lang.Integer>>",
             Types.toString(PARAM_TYPE));
       assertEquals("java.util.Map<java.lang.String,java.lang.Number>[]",
@@ -1452,6 +1543,9 @@ public class TypesTest {
       assertEquals(Object[][][][][][][][].class, Types.getArrayType(Object[][][][][][][].class));
       assertEquals(Types[].class, Types.getArrayType(Types.class));
       assertEquals(TypesTest[].class, Types.getArrayType(TypesTest.class));
+
+      assertThrows(NullPointerException.class, () -> Types.getArrayType(null));
+      assertThrows(IllegalArgumentException.class, () -> Types.getArrayType(void.class));
    }
    
    @SafeVarargs

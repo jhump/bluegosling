@@ -2,7 +2,7 @@ package com.bluegosling.testing;
 
 import com.bluegosling.reflect.MethodCapturer;
 import com.bluegosling.reflect.MethodSignature;
-import com.bluegosling.reflect.ProxyUtils;
+import com.bluegosling.reflect.Types;
 import com.bluegosling.util.Cloner;
 import com.bluegosling.util.Cloners;
 
@@ -1537,7 +1537,7 @@ public class InterfaceVerifier<T> {
          // finish
          if (testThrown != null) {
             if (suppressExceptions) {
-               return ProxyUtils.getDefaultValue(conf.returnType);
+               return Types.getZeroValue(conf.returnType);
             }
             else {
                throw testThrown;

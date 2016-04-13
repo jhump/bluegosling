@@ -23,7 +23,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class TypeAnnotationCheckerTest {
+public class TypeAnnotationHierarchyTest {
    
    @interface Nullable {
    }
@@ -32,7 +32,7 @@ public class TypeAnnotationCheckerTest {
    }
 
    @Test public void simpleHierarchy() {
-      TypeAnnotationChecker checker = new TypeAnnotationChecker.Builder()
+      TypeAnnotationChecker checker = new TypeAnnotationHierarchy.Builder()
             .equivalent(null, Nullable.class)
             .assignable(NotNull.class, Nullable.class)
             .build();
@@ -98,7 +98,7 @@ public class TypeAnnotationCheckerTest {
    }
 
    @Test public void moreComplicatedHierarchy() {
-      TypeAnnotationChecker checker = new TypeAnnotationChecker.Builder()
+      TypeAnnotationChecker checker = new TypeAnnotationHierarchy.Builder()
             .equivalent(null, LevelA.class)
             .assignable(LevelA_0.class, LevelA.class)
             .assignable(LevelA_0_0.class, LevelA_0.class)
@@ -294,7 +294,7 @@ public class TypeAnnotationCheckerTest {
    }
    
    @Test public void attributeMaps() {
-      TypeAnnotationChecker checker = new TypeAnnotationChecker.Builder()
+      TypeAnnotationChecker checker = new TypeAnnotationHierarchy.Builder()
          .equivalent(FromA.class, To.class, MapBuilder.<String, String>forHashMap()
                .put("a", "one")
                .put("b", "two")
@@ -419,7 +419,7 @@ public class TypeAnnotationCheckerTest {
    }
    
    @Test public void builder_preventCycles() {
-      TypeAnnotationChecker.Builder builder = new TypeAnnotationChecker.Builder();
+      TypeAnnotationHierarchy.Builder builder = new TypeAnnotationHierarchy.Builder();
       // cannot assign a type to itself, even in equivalence
       assertDisallowed(IllegalArgumentException.class, builder, null, null);
       assertDisallowed(IllegalArgumentException.class, builder, Override.class, Override.class);
@@ -428,13 +428,13 @@ public class TypeAnnotationCheckerTest {
       builder.equivalent(null, Nullable.class);
       assertDisallowed(IllegalStateException.class, builder, null, Nullable.class);
       assertDisallowed(IllegalStateException.class, builder, Nullable.class, null);
-      builder = new TypeAnnotationChecker.Builder();
+      builder = new TypeAnnotationHierarchy.Builder();
       builder.assignable(null, Nullable.class);
       assertDisallowed(IllegalStateException.class, builder, null, Nullable.class);
       assertDisallowed(IllegalStateException.class, builder, Nullable.class, null);
       
       // classic cycle with equivalences
-      builder = new TypeAnnotationChecker.Builder();
+      builder = new TypeAnnotationHierarchy.Builder();
       builder.equivalent(null, Nullable.class);
       builder.equivalent(Nullable.class, NotNull.class);
       // null -> Nullable -> NotNull -> null
@@ -442,7 +442,7 @@ public class TypeAnnotationCheckerTest {
       assertDisallowed(IllegalStateException.class, builder, NotNull.class, null);
 
       // classic cycle with assignability
-      builder = new TypeAnnotationChecker.Builder();
+      builder = new TypeAnnotationHierarchy.Builder();
       builder.assignable(null, Nullable.class);
       builder.assignable(Nullable.class, NotNull.class);
       // null -> Nullable -> NotNull -> null
@@ -451,13 +451,13 @@ public class TypeAnnotationCheckerTest {
       builder.assignable(null, NotNull.class);
       
       // shortest possible cycle (caller should use equivalent instead!)
-      builder = new TypeAnnotationChecker.Builder();
+      builder = new TypeAnnotationHierarchy.Builder();
       builder.assignable(null, Nullable.class);
       assertDisallowed(IllegalStateException.class, builder, Nullable.class, null);
    }
    
    private void assertDisallowed(Class<? extends Throwable> expectThrown,
-         TypeAnnotationChecker.Builder builder, Class<? extends Annotation> a1,
+         TypeAnnotationHierarchy.Builder builder, Class<? extends Annotation> a1,
          Class<? extends Annotation> a2) {
       assertThrows(expectThrown, () -> builder.equivalent(a1, a2));
       assertThrows(expectThrown, () -> builder.assignable(a1, a2));
@@ -473,25 +473,25 @@ public class TypeAnnotationCheckerTest {
    }
 
    @Test public void builder_disallowIncompatibilities() {
-      TypeAnnotationChecker.Builder builder = new TypeAnnotationChecker.Builder();
+      TypeAnnotationHierarchy.Builder builder = new TypeAnnotationHierarchy.Builder();
       assertThrows(IllegalArgumentException.class,
             () -> builder.equivalent(LevelA_1.class, LevelB.class));
       
       // this direction works
       builder.assignable(LevelA_1.class, LevelB.class);
       // but reverse does not: LevelB (no fields) can't be assigned to LevelA_1 (one field)
-      TypeAnnotationChecker.Builder builder2 = new TypeAnnotationChecker.Builder();
+      TypeAnnotationHierarchy.Builder builder2 = new TypeAnnotationHierarchy.Builder();
       assertThrows(IllegalArgumentException.class,
             () -> builder2.assignable(LevelB.class, LevelA_1.class));
    }
 
    @Test public void builder_disallowIncorrectAttributeMaps() {
       // empty map is useless, but permitted if annotations have no attributes
-      new TypeAnnotationChecker.Builder()
+      new TypeAnnotationHierarchy.Builder()
             .equivalent(LevelA.class, LevelB.class, Collections.emptyMap())
             .assignable(null, Nullable.class, Collections.emptyMap());
       
-      TypeAnnotationChecker.Builder builder = new TypeAnnotationChecker.Builder();
+      TypeAnnotationHierarchy.Builder builder = new TypeAnnotationHierarchy.Builder();
       // map not 1-to-1
       assertDisallowed(builder, LevelA_0_0.class, LevelA_0.class, MapBuilder.<String, String>forHashMap()
             .put("value", "value")
@@ -547,7 +547,7 @@ public class TypeAnnotationCheckerTest {
             .build());
    }
    
-   private void assertDisallowed(TypeAnnotationChecker.Builder builder,
+   private void assertDisallowed(TypeAnnotationHierarchy.Builder builder,
          Class<? extends Annotation> a1, Class<? extends Annotation> a2,
          Map<String, String> attributeMap) {
       assertThrows(IllegalArgumentException.class, () -> builder.equivalent(a1, a2, attributeMap));

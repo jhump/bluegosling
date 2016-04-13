@@ -1,6 +1,6 @@
 package com.bluegosling.apt.testing;
 
-import com.bluegosling.reflect.ProxyUtils;
+import com.bluegosling.reflect.Caster;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -172,7 +172,7 @@ class FileDefinition {
    private static List<FileDefinition> getFilesFromAnnotations(Method testMethod, Class<?> testClass,
          Class<? extends Annotation> annotationType) {
       List<FileDefinition> files = new ArrayList<>();
-      FileSets forMethod = ProxyUtils.castToInterface(testMethod.getAnnotation(annotationType),
+      FileSets forMethod = Caster.castToInterface(testMethod.getAnnotation(annotationType),
             FileSets.class, true);
       boolean includeClass = true;
       if (forMethod != null) {
@@ -182,7 +182,7 @@ class FileDefinition {
          addFilesToProcess(forMethod, files);
       }
       if (includeClass) {
-         FileSets forClass = ProxyUtils.castToInterface(testClass.getAnnotation(annotationType),
+         FileSets forClass = Caster.castToInterface(testClass.getAnnotation(annotationType),
                FileSets.class, true);
          if (forClass != null) {
             addFilesToProcess(forClass, files);
