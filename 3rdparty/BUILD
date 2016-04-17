@@ -22,3 +22,8 @@ jar_library(name='jsr305',
             jars=[
               jar('com.google.code.findbugs', 'jsr305', '3.0.1')
             ])
+
+jar_library(name='javaparser',
+            jars=[
+              jar('com.github.javaparser', 'javaparser-core', '2.4.0')
+            ])
