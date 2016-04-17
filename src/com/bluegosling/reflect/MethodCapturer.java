@@ -95,7 +95,7 @@ public class MethodCapturer<E> {
                            throws Throwable {
                         captured = method;
                         capturedSig = new MethodSignature(method);
-                        return ProxyUtils.getDefaultValue(method.getReturnType());
+                        return Types.getZeroValue(method.getReturnType());
                      }
                   });
             proxy = p;

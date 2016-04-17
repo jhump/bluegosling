@@ -1,6 +1,7 @@
 package com.bluegosling.reflect;
 
 import com.bluegosling.reflect.BlasterException.BlasterExceptionCause;
+import com.google.common.reflect.Reflection;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
@@ -296,7 +297,7 @@ public class Blaster<T> {
     * @return a new blasting proxy
     */
    public T blastTo(Collection<? extends T> instances) {
-      return ProxyUtils.newProxyInstance(iface,
+      return Reflection.newProxy(iface,
             new BlasterInvocationHandler(instances, onNullAction, onExceptionAction));
    }
    
@@ -440,10 +441,10 @@ public class Blaster<T> {
          // otherwise return value
          Class<?> returnType = method.getReturnType();
          if (returnType.isInterface()) {
-            return ProxyUtils.newProxyInstance(returnType,
+            return Reflection.newProxy(returnType,
                   new BlasterInvocationHandler(nextBlastTargets, onNullAction, onExceptionAction));
          } else {
-            return last == null ? ProxyUtils.getDefaultValue(returnType) : last.get();
+            return last == null ? Types.getZeroValue(returnType) : last.get();
          }
       }
    }
