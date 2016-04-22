@@ -336,8 +336,8 @@ public interface FluentFuture<T> extends Future<T>, Cancellable, Awaitable {
     * @return a future that is the result of applying the function to this future value
     */
    default <U> FluentFuture<U> flatMap(
-         Function<? super T, ? extends FluentFuture<U>> function) {
-      return dereference(map(function));
+         Function<? super T, ? extends FluentFuture<? extends U>> function) {
+      return cast(dereference(map(function)));
    }
    
    /**
@@ -935,7 +935,7 @@ public interface FluentFuture<T> extends Future<T>, Cancellable, Awaitable {
     * @return a future value that represents the value of the future future
     */
    static <T> FluentFuture<T> dereference(
-         FluentFuture<? extends FluentFuture<T>> future) {
+         FluentFuture<? extends FluentFuture<? extends T>> future) {
       AtomicReference<FluentFuture<?>> outstanding = new AtomicReference<>(future);
       // visible thanks to always written before volatile write and read after volatile read
       VariableBoolean shouldInterrupt = new VariableBoolean();
@@ -957,9 +957,9 @@ public interface FluentFuture<T> extends Future<T>, Cancellable, Awaitable {
             return false;
          }
       };
-      future.visitWhenDone(new FutureVisitor<FluentFuture<T>>() {
+      future.visitWhenDone(new FutureVisitor<FluentFuture<? extends T>>() {
          @Override
-         public void successful(FluentFuture<T> value) {
+         public void successful(FluentFuture<? extends T> value) {
             if (outstanding.getAndSet(value) == null) {
                // result already cancelled, so also cancel this value
                if (value != null) {

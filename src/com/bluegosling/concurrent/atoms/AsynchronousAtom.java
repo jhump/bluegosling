@@ -731,7 +731,7 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
 
       @Override
       public <U> FluentFuture<U> flatMap(
-            Function<? super T, ? extends FluentFuture<U>> function) {
+            Function<? super T, ? extends FluentFuture<? extends U>> function) {
          return delegate.flatMap(function);
       }
 
