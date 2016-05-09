@@ -1,6 +1,5 @@
 package com.bluegosling.collections.concurrent;
 
-import com.bluegosling.collections.Stack;
 import com.bluegosling.collections.immutable.LinkedPersistentList;
 import com.bluegosling.concurrent.unsafe.UnsafeReferenceFieldUpdater;
 
@@ -26,7 +25,7 @@ import java.util.NoSuchElementException;
  * @see TreiberStack
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public class SimpleTreiberStack<T> extends AbstractCollection<T> implements Stack<T> {
+public class SimpleTreiberStack<T> extends AbstractCollection<T> implements ConcurrentStack<T> {
    
    @SuppressWarnings("rawtypes")
    private static final UnsafeReferenceFieldUpdater<SimpleTreiberStack, Node> headUpdater =
@@ -65,6 +64,10 @@ public class SimpleTreiberStack<T> extends AbstractCollection<T> implements Stac
    volatile Node<T> head;
    
    public SimpleTreiberStack() {
+   }
+
+   public SimpleTreiberStack(Collection<? extends T> coll) {
+      addAll(coll);
    }
 
    SimpleTreiberStack(Node<T> head) {
@@ -178,7 +181,7 @@ public class SimpleTreiberStack<T> extends AbstractCollection<T> implements Stac
 
    @Override
    public boolean isEmpty() {
-      return head != null;
+      return head == null;
    }
 
    @Override

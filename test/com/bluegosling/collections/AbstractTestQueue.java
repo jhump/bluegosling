@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Queue;
 
-//TODO: more tests for queue methods
 //TODO: javadoc
 public abstract class AbstractTestQueue extends AbstractTestCollection {
 

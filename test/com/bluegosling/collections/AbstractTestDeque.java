@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-//TODO: add tests for deque methods!
+//TODO: javadoc
 public abstract class AbstractTestDeque extends AbstractTestQueue {
 
    protected AbstractTestDeque(String testName) {

@@ -3,7 +3,7 @@ package com.bluegosling.function;
 import com.bluegosling.reflect.ArrayUtils;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
+import java.util.AbstractList;
 import java.util.List;
 import java.util.function.BinaryOperator;
 
@@ -14,10 +14,30 @@ public final class Operators {
 
    public static <T> BinaryOperator<List<T>> concatList() {
       return (l1, l2) -> {
-         List<T> result = new ArrayList<>(l1.size() + l2.size());
-         result.addAll(l1);
-         result.addAll(l2);
-         return result;
+         return new AbstractList<T>() {
+            @Override
+            public T get(int index) {
+               if (index < 0) {
+                  throw new IndexOutOfBoundsException("index " + index + " should not be negative");
+               }
+               int sz1 = l1.size();
+               if (index < sz1) {
+                  return l1.get(index);
+               }
+               int index2 = index - sz1;
+               int sz2 = l2.size();
+               if (index2 < sz2) {
+                  return l2.get(index2);
+               }
+               throw new IndexOutOfBoundsException("index " + index + " >= list length "
+                     + (sz1 + sz2));
+            }
+
+            @Override
+            public int size() {
+               return l1.size() + l2.size();
+            }
+         };
       };
    }
 

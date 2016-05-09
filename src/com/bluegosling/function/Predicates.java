@@ -12,6 +12,10 @@ import java.util.function.Predicate;
 
 /**
  * Numerous utility methods related to using {@link Predicate}s.
+ * 
+ * <p>Some of the methods in this class are similar to methods in Guava's
+ * {@link com.google.common.base.Predicates} except that they pertain to Java 8
+ * {@link java.util.function.Predicate}s.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  * 
