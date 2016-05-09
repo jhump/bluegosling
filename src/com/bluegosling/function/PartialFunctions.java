@@ -65,7 +65,7 @@ public final class PartialFunctions {
     * @return a partial function that computes results by looking up values in the map
     */
    public static <K, V> PartialFunction<K, V> fromMap(Map<? super K, ? extends V> map) {
-      return (o) -> Optional.of(map.get(o));
+      return (o) -> Optional.ofNullable(map.get(o));
    }
    
    /**
@@ -150,14 +150,9 @@ public final class PartialFunctions {
    static <T> T construct(Constructor<T> ctor) {
       try {
          return ctor.newInstance();
-      }
-      catch (InstantiationException e) {
+      } catch (InstantiationException | IllegalAccessException e) {
          throw new RuntimeException(e);
-      }
-      catch (IllegalAccessException e) {
-         throw new RuntimeException(e);
-      }
-      catch (InvocationTargetException e) {
+      } catch (InvocationTargetException e) {
          throw new RuntimeException(e.getCause());
       }
    }

@@ -451,43 +451,43 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
       }
 
       @Override
-      protected N get(Iterable<K> keys) {
+      N get(Iterable<K> keys) {
          N node = getRoot();
          return node != null ? super.get(keys) : null;
       }
 
       @Override
-      protected N firstNode() {
+      N firstNode() {
          N node = getRoot();
          return node != null ? super.firstNode() : null;
       }
       
       @Override
-      protected N lastNode() {
+      N lastNode() {
          N node = getRoot();
          return node != null ? super.lastNode() : null;
       }
 
       @Override
-      protected N floorNode(Iterable<K> keys) {
+      N floorNode(Iterable<K> keys) {
          N node = getRoot();
          return node != null ? super.floorNode(keys) : null;
       }
 
       @Override
-      protected N ceilingNode(Iterable<K> keys) {
+      N ceilingNode(Iterable<K> keys) {
          N node = getRoot();
          return node != null ? super.ceilingNode(keys) : null;
       }
       
       @Override
-      protected N lowerNode(Iterable<K> keys) {
+      N lowerNode(Iterable<K> keys) {
          N node = getRoot();
          return node != null ? super.lowerNode(keys) : null;
       }
 
       @Override
-      protected N higherNode(Iterable<K> keys) {
+      N higherNode(Iterable<K> keys) {
          N node = getRoot();
          return node != null ? super.higherNode(keys) : null;
       }
@@ -495,7 +495,7 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
       // don't need to override put() since it uses ensurePath, which is overridden below
       
       @Override
-      protected N ensurePath(Iterable<K> path) {
+      N ensurePath(Iterable<K> path) {
          // make sure we have a path to this prefix trie's root
          N node = this.root;
          if (node == null || (node.isEmpty() && !node.valuePresent())
@@ -507,13 +507,13 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
       }
 
       @Override
-      protected Reference<V> remove(Iterable<K> keys) {
+      Reference<V> remove(Iterable<K> keys) {
          N node = getRoot();
          return node != null ? super.remove(keys) : Reference.unset();
       }
 
       @Override
-      protected N newNode(K key, N p) {
+      N newNode(K key, N p) {
          return parent.newNode(key, p);
       }
       
@@ -550,7 +550,7 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
       }
       
       @Override
-      protected <T> Iterator<T> entryIterator(BiFunction<Supplier<List<K>>, N, T> producer) {
+      <T> Iterator<T> entryIterator(BiFunction<Supplier<List<K>>, N, T> producer) {
          N node = getRoot();
          if (node == null) {
             return Collections.emptyIterator();
@@ -569,8 +569,7 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
       }
 
       @Override
-      protected <T> Iterator<T> descendingEntryIterator(
-            BiFunction<Supplier<List<K>>, N, T> producer) {
+      <T> Iterator<T> descendingEntryIterator(BiFunction<Supplier<List<K>>, N, T> producer) {
          N node = getRoot();
          if (node == null) {
             return Collections.emptyIterator();
@@ -589,8 +588,7 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
       }
    }
    
-   protected class KeySet extends AbstractSet<List<K>> implements NavigableSet<List<K>> {
-      
+   class KeySet extends AbstractSet<List<K>> implements NavigableSet<List<K>> {
       @Override
       public List<K> lower(List<K> e) {
          return AbstractNavigableSequenceTrie.this.lowerKey(e);
@@ -712,7 +710,7 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
       }
    }
    
-   protected static class SubTrie<K, V> extends AbstractNavigableMap<List<K>, V>
+   static class SubTrie<K, V> extends AbstractNavigableMap<List<K>, V>
          implements NavigableSequenceTrie<K, V> {
       private final AbstractNavigableSequenceTrie<K, V, ?> base;
       private final Iterable<K> lowerBound;

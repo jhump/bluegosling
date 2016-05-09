@@ -212,7 +212,7 @@ abstract class AbstractTrie<K, X, V, N extends AbstractTrie.Node<K, X, V, N>> {
    /**
     * The root of this trie.
     */
-   protected N root;
+   N root;
    
    /**
     * The generation number of this trie. This is updated whenever major structural changes are
@@ -224,12 +224,12 @@ abstract class AbstractTrie<K, X, V, N extends AbstractTrie.Node<K, X, V, N>> {
     * operation can run in constant time. So the generation is incremented when the trie is cleared.
     * A prefix sub-trie will see the change to generation and know to invalidate its memoized root.
     */
-   protected int generation;
+   int generation;
    
    /**
     * Used by concrete sub-classes to construct a new, empty trie.
     */
-   protected AbstractTrie() {
+   AbstractTrie() {
       this.root = newNode(null, null);
    }
    
@@ -240,7 +240,7 @@ abstract class AbstractTrie<K, X, V, N extends AbstractTrie.Node<K, X, V, N>> {
     * 
     * @param root the node that will be this trie's root
     */
-   protected AbstractTrie(N root) {
+   AbstractTrie(N root) {
       this.root = root;
    }
    
@@ -251,7 +251,7 @@ abstract class AbstractTrie<K, X, V, N extends AbstractTrie.Node<K, X, V, N>> {
     * @param parent the new node's parent or {@code null} if the new node is a root
     * @return a new node for the given key element and with the given parent
     */
-   protected abstract N newNode(K key, N parent);
+   abstract N newNode(K key, N parent);
    
    /**
     * Finds the node that represents the given sequence of key elements. This navigates down the
@@ -261,7 +261,7 @@ abstract class AbstractTrie<K, X, V, N extends AbstractTrie.Node<K, X, V, N>> {
     * @param keys a sequence of key elements
     * @return the node that represents the given key elements or {@code null} if it does not exist
     */
-   protected N get(Iterable<K> keys) {
+   N get(Iterable<K> keys) {
       Iterator<K> iter = keys.iterator();
       N node = root;
       while (iter.hasNext() && node != null) {
@@ -279,7 +279,7 @@ abstract class AbstractTrie<K, X, V, N extends AbstractTrie.Node<K, X, V, N>> {
     * @param keys a sequence of key elements
     * @return the node that represents the given key elements
     */
-   protected N ensurePath(Iterable<K> keys) {
+   N ensurePath(Iterable<K> keys) {
       return ensurePath(root, keys);
    }
 
@@ -291,7 +291,7 @@ abstract class AbstractTrie<K, X, V, N extends AbstractTrie.Node<K, X, V, N>> {
     * @param keys a sequence of key elements
     * @return the node that represents the given key elements
     */
-   protected final N ensurePath(N start, Iterable<K> keys) {
+   final N ensurePath(N start, Iterable<K> keys) {
       Iterator<K> iter = keys.iterator();
       N node = start;
       while (iter.hasNext()) {
@@ -314,7 +314,7 @@ abstract class AbstractTrie<K, X, V, N extends AbstractTrie.Node<K, X, V, N>> {
     * @param value the value for this mapping
     * @return the previously mapped value for this key or {@code null} if no such mapping existed
     */
-   protected V put(Iterable<K> keys, X leafKey, V value) {
+   V put(Iterable<K> keys, X leafKey, V value) {
       N node = ensurePath(keys);
       V ret;
       if (node.valuePresent()) {
@@ -338,7 +338,7 @@ abstract class AbstractTrie<K, X, V, N extends AbstractTrie.Node<K, X, V, N>> {
     * @return an unset reference if the given sequence of key elements did not exist; otherwise a
     *       reference set to the value that was associated with the removed keys
     */
-   protected Reference<V> remove(Iterable<K> keys) {
+   Reference<V> remove(Iterable<K> keys) {
       Iterator<K> iter = keys.iterator();
       N node = root;
       while (iter.hasNext()) {
@@ -363,7 +363,7 @@ abstract class AbstractTrie<K, X, V, N extends AbstractTrie.Node<K, X, V, N>> {
     *
     * @param node the node whose mapping is to be removed from the trie
     */
-   protected void remove(N node) {
+   void remove(N node) {
       assert node.valuePresent();
       node.clearValue();
       for (N n = node.getParent(); n != null; n = n.getParent()) {
@@ -443,7 +443,7 @@ abstract class AbstractTrie<K, X, V, N extends AbstractTrie.Node<K, X, V, N>> {
     *       the key list for that node
     * @return an iterator that will visit each mapping in the trie
     */
-   protected <T> Iterator<T> entryIterator(BiFunction<Supplier<List<K>>, N, T> producer) {
+   <T> Iterator<T> entryIterator(BiFunction<Supplier<List<K>>, N, T> producer) {
       return new EntryIterator<>(root, producer);
    }
    
@@ -458,7 +458,7 @@ abstract class AbstractTrie<K, X, V, N extends AbstractTrie.Node<K, X, V, N>> {
     * @param startAt the initial node visited by the iterator
     * @return an iterator that will visit each mapping in the trie
     */
-   protected <T> Iterator<T> entryIteratorFrom(BiFunction<Supplier<List<K>>, N, T> producer,
+   <T> Iterator<T> entryIteratorFrom(BiFunction<Supplier<List<K>>, N, T> producer,
          N startAt) {
       return new EntryIterator<>(root, producer, startAt);
    }
@@ -471,7 +471,7 @@ abstract class AbstractTrie<K, X, V, N extends AbstractTrie.Node<K, X, V, N>> {
     * @param end the ending node (will actually be the parent of the first element in the path)
     * @return the list that represents the path between the two given nodes
     */
-   protected List<K> createKeyList(N start, N end) {
+   List<K> createKeyList(N start, N end) {
       List<K> ret = new ArrayList<>();
       N node = start;
       while (node != null && node != end) {
@@ -495,7 +495,7 @@ abstract class AbstractTrie<K, X, V, N extends AbstractTrie.Node<K, X, V, N>> {
     * 
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   protected static class EntryImpl<T, K, X, V, N extends Node<K, X, V, N>> implements Entry<T, V> {
+   static class EntryImpl<T, K, X, V, N extends Node<K, X, V, N>> implements Entry<T, V> {
       final T key;
       final N node;
       
@@ -555,7 +555,7 @@ abstract class AbstractTrie<K, X, V, N extends AbstractTrie.Node<K, X, V, N>> {
     * 
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   protected static class EntryIterator<T, K, X, V, N extends Node<K, X, V, N>>
+   static class EntryIterator<T, K, X, V, N extends Node<K, X, V, N>>
          implements Iterator<T> {
       
       /**
@@ -587,12 +587,11 @@ abstract class AbstractTrie<K, X, V, N extends AbstractTrie.Node<K, X, V, N>> {
        * @param root the root of the trie
        * @param producer an object that constructs the fetched values
        */
-      protected EntryIterator(N root, BiFunction<Supplier<List<K>>, N, T> producer) {
+      EntryIterator(N root, BiFunction<Supplier<List<K>>, N, T> producer) {
          this(root, producer, root);
       }
 
-      protected EntryIterator(N root, BiFunction<Supplier<List<K>>, N, T> producer,
-            N startAt) {
+      EntryIterator(N root, BiFunction<Supplier<List<K>>, N, T> producer, N startAt) {
          N prev = null;
          while(true) {
             assert startAt != null;

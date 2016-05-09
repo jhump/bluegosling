@@ -1,7 +1,5 @@
 package com.bluegosling.util;
 
-import com.bluegosling.collections.views.TransformingList;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -53,16 +51,29 @@ public interface Hasher<T> {
     * @param value a value
     * @return a wrapper that uses this hasher to implement {@code hashCode} and {@code equals}
     */
-   default Supplier<T> apply(Class<? extends T> type, T value) {
-      return new Supplier<T>() {
+   default <U extends T> Supplier<U> wrap(Class<U> type, U value) {
+      class Wrapper implements Supplier<U> {
+         private final Class<U> type;
+         private final U value;
+         
+         Wrapper(Class<U> type, U value) {
+            this.type = type;
+            this.value = value;
+         }
+         
          @Override
-         public T get() {
+         public U get() {
             return value;
          }
          
          @Override
          public boolean equals(Object o) {
-            return type.isInstance(o) && Hasher.this.equals(value, type.cast(o));
+            if (o.getClass() == getClass()) {
+               @SuppressWarnings("unchecked")
+               Object other = ((Wrapper) o).value;
+               return type.isInstance(other) && Hasher.this.equals(value, type.cast(other));
+            }
+            return false;
          }
          
          @Override
@@ -70,18 +81,19 @@ public interface Hasher<T> {
             return Hasher.this.hashCode(value);
          }
       };
+      return new Wrapper(type, value);
    }
    
    /**
     * Returns a function that can be applied to any object to return a
-    * {@linkplain #apply(Class, Object) hashing wrapper} for that object. This effectively "curries"
+    * {@linkplain #wrap(Class, Object) hashing wrapper} for that object. This effectively "curries"
     * the type token which can simplify downstream usages of the hasher.
     *
     * @param type the type of values that can be equal to the given value
     * @return a function that returns hashing wrappers for the arguments given to it
     */
-   default Function<T, Supplier<T>> forType(Class<? extends T> type) {
-      return t -> apply(type, t);
+   default <U extends T> Function<U, Supplier<U>> wrapperForType(Class<U> type) {
+      return t -> wrap(type, t);
    }
 
    /**
@@ -110,7 +122,9 @@ public interface Hasher<T> {
          @Override
          public int hashCode(T val) {
             return Objects.hash(
-                  new TransformingList<>(fieldAccessors, t -> t.apply(val)).toArray());
+                  fieldAccessors.stream()
+                        .map(f -> f.apply(val))
+                        .toArray(Object[]::new));
          }
 
          @Override

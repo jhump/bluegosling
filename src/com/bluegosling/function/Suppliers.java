@@ -39,6 +39,9 @@ public final class Suppliers {
     * is "memo-ized". All subsequent attempts to get a value from the returned supplier will just
     * get the same memo-ized result of that first invocation.
     * 
+    * <p>This is effectively the same as Guava's {@link com.google.common.base.Suppliers#memoize}
+    * except that it returns a Java 8 {@link java.util.function.Supplier}.
+    * 
     * @param supplier a supplier
     * @return a supplier that will invoke the specified supplier no more than one time and then
     *       memo-ize the result

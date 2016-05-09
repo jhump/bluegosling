@@ -141,7 +141,7 @@ abstract class AbstractNavigableTrie<K, X, V, N extends AbstractNavigableTrie.Na
     *
     * @return the node that corresponds to the first key in the trie
     */
-   protected N firstNode() {
+   N firstNode() {
       return findFirst(root);
    }
    
@@ -168,7 +168,7 @@ abstract class AbstractNavigableTrie<K, X, V, N extends AbstractNavigableTrie.Na
     *
     * @return the node that corresponds to the last key in the trie
     */
-   protected N lastNode() {
+   N lastNode() {
       return findLast(root);
    }
 
@@ -199,7 +199,7 @@ abstract class AbstractNavigableTrie<K, X, V, N extends AbstractNavigableTrie.Na
     * @return the node that represents the largest key that is less than or equal to the given key
     *       elements
     */
-   protected N floorNode(Iterable<K> keys) {
+   N floorNode(Iterable<K> keys) {
       return findFloor(keys, true);
    }
 
@@ -209,7 +209,7 @@ abstract class AbstractNavigableTrie<K, X, V, N extends AbstractNavigableTrie.Na
     * @param keys a sequence of key elements
     * @return the node that represents the largest key that is less than the given key elements
     */
-   protected N lowerNode(Iterable<K> keys) {
+   N lowerNode(Iterable<K> keys) {
       return findFloor(keys, false);
    }
 
@@ -306,7 +306,7 @@ abstract class AbstractNavigableTrie<K, X, V, N extends AbstractNavigableTrie.Na
     * @return the node that represents the smallest key that is greater than or equal to the given
     *       key elements
     */
-   protected N ceilingNode(Iterable<K> keys) {
+   N ceilingNode(Iterable<K> keys) {
       return findCeiling(keys, true);
    }
    
@@ -316,7 +316,7 @@ abstract class AbstractNavigableTrie<K, X, V, N extends AbstractNavigableTrie.Na
     * @param keys a sequence of key elements
     * @return the node that represents the smallest key that is greater than the given key elements
     */
-   protected N higherNode(Iterable<K> keys) {
+   N higherNode(Iterable<K> keys) {
       return findCeiling(keys, false);
    }
 
@@ -409,7 +409,7 @@ abstract class AbstractNavigableTrie<K, X, V, N extends AbstractNavigableTrie.Na
     *       the key list for that node
     * @return an iterator that will visit each mapping in the trie
     */
-   protected <T> Iterator<T> descendingEntryIterator(BiFunction<Supplier<List<K>>, N, T> producer) {
+   <T> Iterator<T> descendingEntryIterator(BiFunction<Supplier<List<K>>, N, T> producer) {
       return new DescendingEntryIterator<>(root, producer);
    }
 
@@ -424,7 +424,7 @@ abstract class AbstractNavigableTrie<K, X, V, N extends AbstractNavigableTrie.Na
     * @param startAt the initial node visited by the iterator
     * @return an iterator that will visit each mapping in the trie
     */
-   protected <T> Iterator<T> descendingEntryIteratorFrom(
+   <T> Iterator<T> descendingEntryIteratorFrom(
          BiFunction<Supplier<List<K>>, N, T> producer, N startAt) {
       return new DescendingEntryIterator<>(root, producer, startAt);
    }
@@ -441,19 +441,18 @@ abstract class AbstractNavigableTrie<K, X, V, N extends AbstractNavigableTrie.Na
     * 
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */   
-   protected static class DescendingEntryIterator<T, K, X, V, N extends NavigableNode<K, X, V, N>>
+   static class DescendingEntryIterator<T, K, X, V, N extends NavigableNode<K, X, V, N>>
          implements Iterator<T> {
       final ArrayDeque<StackFrame<K, X, V, N>> frames = new ArrayDeque<>();
       final BiFunction<Supplier<List<K>>, N, T> producer;
       boolean first = true;
       N lastFetched;
       
-      protected DescendingEntryIterator(N root, BiFunction<Supplier<List<K>>, N, T> producer) {
+      DescendingEntryIterator(N root, BiFunction<Supplier<List<K>>, N, T> producer) {
          this(root, producer, findLast(root));
       }
       
-      protected DescendingEntryIterator(N root, BiFunction<Supplier<List<K>>, N, T> producer,
-            N startAt) {
+      DescendingEntryIterator(N root, BiFunction<Supplier<List<K>>, N, T> producer, N startAt) {
          N prev = null;
          while(true) {
             assert startAt != null;
