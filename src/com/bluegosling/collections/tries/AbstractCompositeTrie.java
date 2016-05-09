@@ -1,5 +1,6 @@
 package com.bluegosling.collections.tries;
 
+import com.bluegosling.collections.CollectionUtils;
 import com.bluegosling.collections.MapUtils;
 import com.bluegosling.collections.MoreIterables;
 import com.bluegosling.possible.Reference;
@@ -9,6 +10,7 @@ import com.google.common.collect.Iterables;
 import java.util.AbstractCollection;
 import java.util.AbstractSet;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -47,19 +49,35 @@ abstract class AbstractCompositeTrie<K, C, V, N extends AbstractTrie.Node<C, K, 
    }
    
    @SuppressWarnings("unchecked")
-   Iterable<C> asIterable(Object key) {
-      return MoreIterables.cast(componentizer.getComponents((K) key));
+   Iterable<C> tryAsIterable(Object key) {
+      try {
+         return MoreIterables.cast(componentizer.getComponents((K) key));
+      } catch (ClassCastException e) {
+         return null;
+      }
+   }
+
+   Iterable<C> asIterable(K key) {
+      return MoreIterables.cast(componentizer.getComponents(key));
    }
 
    @Override
    public boolean containsKey(Object key) {
-      N node = get(asIterable(key));
+      Iterable<C> iter = tryAsIterable(key);
+      if (iter == null) {
+         return false;
+      }
+      N node = get(iter);
       return node != null && node.valuePresent();
    }
 
    @Override
    public V get(Object key) {
-      N node = get(asIterable(key));
+      Iterable<C> iter = tryAsIterable(key);
+      if (iter == null) {
+         return null;
+      }
+      N node = get(iter);
       return node != null ? node.getValue() : null;
    }
 
@@ -70,7 +88,11 @@ abstract class AbstractCompositeTrie<K, C, V, N extends AbstractTrie.Node<C, K, 
 
    @Override
    public V remove(Object key) {
-      return remove(asIterable(key)).orElse(null);
+      Iterable<C> iter = tryAsIterable(key);
+      if (iter == null) {
+         return null;
+      }
+      return remove(iter).orElse(null);
    }
 
    @Override
@@ -100,7 +122,11 @@ abstract class AbstractCompositeTrie<K, C, V, N extends AbstractTrie.Node<C, K, 
          
          @Override
          public boolean remove(Object o) {
-            return AbstractCompositeTrie.this.remove(asIterable(o)).isPresent();
+            Iterable<C> iter = tryAsIterable(o);
+            if (iter == null) {
+               return false;
+            }
+            return AbstractCompositeTrie.this.remove(iter).isPresent();
          }
 
          @Override
@@ -155,7 +181,11 @@ abstract class AbstractCompositeTrie<K, C, V, N extends AbstractTrie.Node<C, K, 
             }
             Entry<?, ?> other = (Entry<?, ?>) o;
             Object key = other.getKey();
-            N node = get(asIterable(key));
+            Iterable<C> iter = tryAsIterable(key);
+            if (iter == null) {
+               return false;
+            }
+            N node = get(iter);
             return node != null && node.valuePresent()
                   && Objects.equals(node.getValue(), other.getValue());
          }
@@ -167,7 +197,11 @@ abstract class AbstractCompositeTrie<K, C, V, N extends AbstractTrie.Node<C, K, 
             }
             Entry<?, ?> other = (Entry<?, ?>) o;
             Object key = other.getKey();
-            N node = get(asIterable(key));
+            Iterable<C> iter = tryAsIterable(key);
+            if (iter == null) {
+               return false;
+            }
+            N node = get(iter);
             if (node == null || !node.valuePresent()
                   || !Objects.equals(node.getValue(), other.getValue())) {
                return false;
@@ -244,7 +278,7 @@ abstract class AbstractCompositeTrie<K, C, V, N extends AbstractTrie.Node<C, K, 
                this.prefix, snapshot), parent);
       }
       
-      protected Iterable<C> checkPrefix(Iterable<C> newKey) {
+      Iterable<C> checkPrefix(Iterable<C> newKey) {
          Iterator<C> iter = newKey.iterator();
          for (C prefixComponent : prefix) {
             if (!iter.hasNext()) {
@@ -264,7 +298,8 @@ abstract class AbstractCompositeTrie<K, C, V, N extends AbstractTrie.Node<C, K, 
       public V put(K key, V value) {
          Iterable<C> k = checkPrefix(asIterable(key));
          if (k == null) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(
+                  "Key, " + key + ", does not have prefix " + CollectionUtils.toString(prefix));
          }
          return put(k, key, value);
       }
@@ -287,7 +322,7 @@ abstract class AbstractCompositeTrie<K, C, V, N extends AbstractTrie.Node<C, K, 
          }
       }
       
-      protected N getRoot() {
+      N getRoot() {
          if (root == null || (root.isEmpty() && !root.valuePresent())
                || this.generation != parent.generation) {
             // root needs to be recomputed
@@ -296,9 +331,13 @@ abstract class AbstractCompositeTrie<K, C, V, N extends AbstractTrie.Node<C, K, 
          }
          return root;
       }
-
+      
       @Override
-      protected N get(Iterable<C> keys) {
+      N get(Iterable<C> keys) {
+         keys = checkPrefix(keys);
+         if (keys == null) {
+            return null;
+         }
          N node = getRoot();
          return node != null ? super.get(keys) : null;
       }
@@ -306,7 +345,7 @@ abstract class AbstractCompositeTrie<K, C, V, N extends AbstractTrie.Node<C, K, 
       // don't need to override put() since it uses ensurePath, which is overridden below
       
       @Override
-      protected N ensurePath(Iterable<C> path) {
+      N ensurePath(Iterable<C> path) {
          // make sure we have a path to this prefix trie's root
          if (root == null || (root.isEmpty() && !root.valuePresent())
                || this.generation != parent.generation) {
@@ -318,13 +357,27 @@ abstract class AbstractCompositeTrie<K, C, V, N extends AbstractTrie.Node<C, K, 
       }
 
       @Override
-      protected Reference<V> remove(Iterable<C> keys) {
+      Reference<V> remove(Iterable<C> keys) {
+         keys = checkPrefix(keys);
+         if (keys == null) {
+            return Reference.unset();
+         }
          N node = getRoot();
          return node != null ? super.remove(keys) : Reference.unset();
       }
 
       @Override
-      protected N newNode(C key, N p) {
+      N newNode(C key, N p) {
+         if (parent == null) {
+            // This can only happen during initialization. Super-class constructor invokes newNode
+            // to initialize root, but we haven't yet had the chance to initialize parent.
+            assert Arrays.stream(Thread.currentThread().getStackTrace())
+                  .anyMatch(ste -> {
+                     return ste.getClassName().equals(getClass().getName())
+                           && ste.getMethodName().equals("<init>");
+                  });
+            return null;
+         }
          return parent.newNode(key, p);
       }
       
@@ -361,7 +414,7 @@ abstract class AbstractCompositeTrie<K, C, V, N extends AbstractTrie.Node<C, K, 
       }
       
       @Override
-      protected <T> Iterator<T> entryIterator(BiFunction<Supplier<List<C>>, N, T> producer) {
+      <T> Iterator<T> entryIterator(BiFunction<Supplier<List<C>>, N, T> producer) {
          N node = getRoot();
          if (node == null) {
             return Collections.emptyIterator();

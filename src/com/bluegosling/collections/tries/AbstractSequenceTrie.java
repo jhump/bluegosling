@@ -254,7 +254,7 @@ abstract class AbstractSequenceTrie<K, V, N extends AbstractTrie.Node<K, Void, V
       }
 
       @Override
-      protected N get(Iterable<K> keys) {
+      N get(Iterable<K> keys) {
          N node = getRoot();
          return node != null ? super.get(keys) : null;
       }
@@ -262,7 +262,7 @@ abstract class AbstractSequenceTrie<K, V, N extends AbstractTrie.Node<K, Void, V
       // don't need to override put() since it uses ensurePath, which is overridden below
       
       @Override
-      protected N ensurePath(Iterable<K> path) {
+      N ensurePath(Iterable<K> path) {
          // make sure we have a path to this prefix trie's root
          if (root == null || (root.isEmpty() && !root.valuePresent())
                || this.generation != parent.generation) {
@@ -273,13 +273,13 @@ abstract class AbstractSequenceTrie<K, V, N extends AbstractTrie.Node<K, Void, V
       }
 
       @Override
-      protected Reference<V> remove(Iterable<K> keys) {
+      Reference<V> remove(Iterable<K> keys) {
          N node = getRoot();
          return node != null ? super.remove(keys) : Reference.unset();
       }
 
       @Override
-      protected N newNode(K key, N p) {
+      N newNode(K key, N p) {
          if (parent == null) {
             // This can only happen during initialization. Super-class constructor invokes newNode
             // to initialize root, but we haven't yet had the chance to initialize parent.
@@ -326,7 +326,7 @@ abstract class AbstractSequenceTrie<K, V, N extends AbstractTrie.Node<K, Void, V
       }
       
       @Override
-      protected <T> Iterator<T> entryIterator(BiFunction<Supplier<List<K>>, N, T> producer) {
+      <T> Iterator<T> entryIterator(BiFunction<Supplier<List<K>>, N, T> producer) {
          N node = getRoot();
          if (node == null) {
             return Collections.emptyIterator();

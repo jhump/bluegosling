@@ -2,6 +2,7 @@ package com.bluegosling.collections.tries;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 //TODO: javadoc
 //TODO: tests
@@ -49,8 +50,17 @@ public class HashCompositeTrie<K, C, V>
       
       @Override
       public void clearValue() {
-         this.value = null;
-         this.present = false;
+         if (present) {
+            value = null;
+            present = false;
+            count--;
+         }
+      }
+
+      @Override
+      public void clear() {
+         super.clear();
+         count = present ? 1 : 0;
       }
       
       @Override
@@ -98,6 +108,17 @@ public class HashCompositeTrie<K, C, V>
       super(componentizer);
    }
    
+   public HashCompositeTrie(CompositeTrie<K, ? extends C, ? extends V> other) {
+      this(other.componentizer());
+      putAll(other);
+   }
+
+   public HashCompositeTrie(Componentizer<? super K, ? extends C> componentizer,
+         Map<? extends K, ? extends V> map) {
+      this(componentizer);
+      putAll(map);
+   }
+
    @Override
    protected TrieNode<C, K, V> newNode(C key, TrieNode<C, K, V> p) {
       return new TrieNode<>(key, p);

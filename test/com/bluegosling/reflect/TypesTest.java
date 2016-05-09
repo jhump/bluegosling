@@ -1107,7 +1107,19 @@ public class TypesTest {
    @Test public void getLeastUpperBounds_glbProducesBadIntersection() {
       // TODO
    }
+   
+   @Test public void getLeastUpperBounds_recursiveType() {
+      // TODO
+   }
+   
+   @Test public void isFunctionalInterface() {
+      // TODO
+   }
 
+   @Test public void isFunctionalInterface_twoMethodsThatCanEqualWithParameterizations() {
+      // TODO
+   }
+   
    static class Owner<A, B, C> {
       static class StaticOwned<T> {
       }
