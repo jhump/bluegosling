@@ -1,7 +1,5 @@
 package com.bluegosling.collections;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Deque;
 import java.util.Iterator;
@@ -81,39 +79,6 @@ public interface Stack<T> extends Collection<T> {
    }
 
    /**
-    * Drains the stack by popping all elements from the stack and adding them to the given
-    * collection. The top of the stack will be the first item added to the collection. 
-    *
-    * @param coll the collection into which items are drained
-    */
-   default void drainTo(Collection<? super T> coll) {
-      while (!isEmpty()) {
-         try {
-            coll.add(pop());
-         } catch (NoSuchElementException e) {
-            // last item was concurrently removed
-         }
-      }
-   }
-   
-   /**
-    * Drains the stack and returns its contents in a new instance. This can be interpreted as a
-    * "clone" then "clear" operation, in one.
-    *
-    * @return a new stack that has all of the contents that were held by this stack, in the same
-    *       order
-    */
-   Stack<T> removeAll();
-
-   /**
-    * Removes all items from the stack.
-    */
-   @Override
-   default void clear() {
-      removeAll();
-   }
-   
-   /**
     * Adapts the {@link List} interface to this interface. Since lists usually have constant time
     * append and constant time removal from the end, the end of the list is considered the top of
     * the stack.
@@ -175,13 +140,7 @@ public interface Stack<T> extends Collection<T> {
             return list.remove(list.size() - 1);
          }
          
-         @Override
-         public Stack<T> removeAll() {
-            Stack<T> ret = fromList(new ArrayList<>(list));
-            list.clear();
-            return ret;
-         }
-         
+
          @Override
          public void clear() {
             list.clear();
@@ -209,7 +168,7 @@ public interface Stack<T> extends Collection<T> {
 
          @Override
          public boolean remove(Object o) {
-            return list.remove(o);
+            return CollectionUtils.removeObject(o, iterator(), true);
          }
 
          @Override
@@ -235,6 +194,12 @@ public interface Stack<T> extends Collection<T> {
          @Override
          public boolean removeIf(Predicate<? super T> predicate) {
             return list.removeIf(predicate);
+         }
+
+         
+         @Override
+         public String toString() {
+            return CollectionUtils.toString(list);
          }
       };
    }
@@ -289,13 +254,6 @@ public interface Stack<T> extends Collection<T> {
          }
 
          @Override
-         public Stack<T> removeAll() {
-            Stack<T> ret = fromDeque(new ArrayDeque<>(deque));
-            deque.clear();
-            return ret;
-         }
-         
-         @Override
          public void clear() {
             deque.clear();
          }
@@ -317,7 +275,8 @@ public interface Stack<T> extends Collection<T> {
 
          @Override
          public boolean add(T e) {
-            return deque.add(e);
+            deque.push(e);
+            return true;
          }
 
          @Override
@@ -332,7 +291,10 @@ public interface Stack<T> extends Collection<T> {
 
          @Override
          public boolean addAll(Collection<? extends T> c) {
-            return deque.addAll(c);
+            for (T t : c) {
+               deque.push(t);
+            }
+            return true;
          }
 
          @Override
@@ -348,6 +310,11 @@ public interface Stack<T> extends Collection<T> {
          @Override
          public boolean removeIf(Predicate<? super T> predicate) {
             return deque.removeIf(predicate);
+         }
+         
+         @Override
+         public String toString() {
+            return CollectionUtils.toString(deque);
          }
       };
    }

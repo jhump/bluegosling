@@ -1,8 +1,9 @@
 package com.bluegosling.collections.concurrent;
 
-import com.bluegosling.collections.Stack;
 import com.bluegosling.concurrent.unsafe.UnsafeIntegerFieldUpdater;
 import com.bluegosling.concurrent.unsafe.UnsafeReferenceFieldUpdater;
+import com.bluegosling.vars.Variable;
+import com.bluegosling.vars.VariableInt;
 
 import java.util.AbstractCollection;
 import java.util.Collection;
@@ -39,7 +40,7 @@ import java.util.function.Supplier;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 // TODO: tests
-public class TreiberStack<T> extends AbstractCollection<T> implements Stack<T> {
+public class TreiberStack<T> extends AbstractCollection<T> implements ConcurrentStack<T> {
 
    @SuppressWarnings("rawtypes")
    private static final UnsafeReferenceFieldUpdater<TreiberStack, Node> headUpdater =
@@ -103,11 +104,19 @@ public class TreiberStack<T> extends AbstractCollection<T> implements Stack<T> {
    @Override
    public Iterator<T> iterator() {
       return new Iterator<T>() {
-         Node<T> next = head;
+         Node<T> next;
          Node<T> current;
          Node<T> previous;
          boolean removed[] = new boolean[1];
          boolean lastFetchedWasRemoved;
+         
+         {
+            next = head;
+            removed[0] = next != null && next.isMarked();
+            while (next != null && removed[0]) {
+               next = next.get(removed);
+            };
+         }
          
          @Override
          public boolean hasNext() {
@@ -242,7 +251,12 @@ public class TreiberStack<T> extends AbstractCollection<T> implements Stack<T> {
    
    @Override
    public int size() {
-      return size;
+      // Under concurrent operations, it is possible for one thread to add a value to empty stack,
+      // another thread pop that value, and then second thread decrement size before first thread
+      // completes the increment. This would cause size to be negative. So we avoid that by simply
+      // returning 0 if we observe a negative size.
+      int sz = size;
+      return sz < 0 ? 0 : sz;
    }
    
    /**
@@ -358,24 +372,23 @@ public class TreiberStack<T> extends AbstractCollection<T> implements Stack<T> {
     */
    @Override
    public TreiberStack<T> removeAll() {
-      int sz[] = new int[1];
-      @SuppressWarnings("unchecked")
-      Node<T> list[] = (Node<T>[]) new Node<?>[1];
+      VariableInt sz = new VariableInt();
+      Variable<Node<T>> list = new Variable<>();
       // We want the new stack to be in the same order as the one we're clearing. Simply pushing
       // the removed items to new list would end up reversing the order. So this is a little
       // complicated to get the order right.
       doClear(null, (Node<T> tail, Node<T> removedNode) -> {
-         sz[0]++;
+         sz.incrementAndGet();
          Node<T> newTail = new Node<T>(removedNode.value);
          if (tail == null) {
-            assert list[0] == null;
-            list[0] = newTail; 
+            assert list.get() == null && sz.get() == 1;
+            list.set(newTail); 
          } else {
             tail.set(newTail, false);
          }
          return newTail;
       });
-      return new TreiberStack<>(list[0], sz[0]);
+      return new TreiberStack<>(list.get(), sz.get());
    }
    
    @Override

@@ -110,6 +110,7 @@ import java.util.TreeMap;
 //TODO: javadoc
 //TODO: tests
 //TODO: subMapByIndices/subSetByIndices should use checkWide(from) instead of check(from)
+//TODO: extend AbstractRandomAccessNavigableMap? 
 public class WeightBalancedTreeMap<K, V>
       implements RandomAccessNavigableMap<K, V>, Serializable, Cloneable {
    
