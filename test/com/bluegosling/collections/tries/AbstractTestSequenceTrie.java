@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Arrays;
 
-//TODO: add tests for sequence trie methods!
 public abstract class AbstractTestSequenceTrie extends AbstractTestMap {
    
    public AbstractTestSequenceTrie(String testName) {
@@ -134,7 +133,7 @@ public abstract class AbstractTestSequenceTrie extends AbstractTestMap {
    // NB: Marked abstract to prevent JUnit test runner from thinking it can run this class. It is
    // only runnable when instantiated by enclosing test.
    public abstract static class BulkTestPrefixMap extends AbstractTestSequenceTrie {
-      private final AbstractTestSequenceTrie outer;
+      protected final AbstractTestSequenceTrie outer;
       
       public BulkTestPrefixMap(AbstractTestSequenceTrie outer) {
          super("");
@@ -197,7 +196,7 @@ public abstract class AbstractTestSequenceTrie extends AbstractTestMap {
    // NB: Marked abstract to prevent JUnit test runner from thinking it can run this class. It is
    // only runnable when instantiated by enclosing test.
    public abstract static class BulkTestRecursivePrefixMap extends AbstractTestMap {
-      private final BulkTestPrefixMap outer;
+      protected final BulkTestPrefixMap outer;
       
       public BulkTestRecursivePrefixMap(BulkTestPrefixMap outer) {
          super("");

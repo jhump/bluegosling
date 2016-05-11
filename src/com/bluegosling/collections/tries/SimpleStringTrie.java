@@ -1,6 +1,6 @@
 package com.bluegosling.collections.tries;
 
-import com.bluegosling.collections.primitive.CharIterator;
+import com.bluegosling.collections.primitive.ByteIterator;
 
 import java.text.Collator;
 import java.util.Comparator;
@@ -29,24 +29,8 @@ import java.util.NoSuchElementException;
 //TODO: tests
 //TODO: implement me and remove abstract modifier (don't forget serialization and cloning)
 public abstract class SimpleStringTrie<V>
-      implements NavigableCompositeTrie<CharSequence, Character, V> {
+      implements NavigableCompositeTrie<CharSequence, Byte, V> {
 
-   static final Componentizer<CharSequence, Character> COMPONENTIZER =
-         key -> () -> new CharIterator() {
-            private int index = 0;
-            
-            @Override public boolean hasNext() {
-               return index < key.length();
-            }
-
-            @Override public char nextChar() {
-               if (index >= key.length()) {
-                  throw new NoSuchElementException();
-               }
-               return key.charAt(index++);
-            }
-         };
-         
    private Collator collator;
    
    public SimpleStringTrie() {
@@ -84,8 +68,21 @@ public abstract class SimpleStringTrie<V>
       return collator::compare;
    }
    
-   @Override public Componentizer<CharSequence, Character> componentizer() {
-      return COMPONENTIZER;
-   }
-   
+   @Override public Componentizer<CharSequence, Byte> componentizer() {
+      return key -> () -> new ByteIterator() {
+         byte[] bytes = collator.getCollationKey(key.toString()).toByteArray();
+         private int index = 0;
+         
+         @Override public boolean hasNext() {
+            return index < bytes.length;
+         }
+
+         @Override public byte nextByte() {
+            if (index >= bytes.length) {
+               throw new NoSuchElementException();
+            }
+            return bytes[index++];
+         } 
+      };
+   }   
 }
