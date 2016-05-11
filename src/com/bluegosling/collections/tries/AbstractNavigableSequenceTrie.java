@@ -2,6 +2,7 @@ package com.bluegosling.collections.tries;
 
 import com.bluegosling.collections.AbstractNavigableMap;
 import com.bluegosling.collections.BoundType;
+import com.bluegosling.collections.MapUtils;
 import com.bluegosling.collections.MoreIterables;
 import com.bluegosling.collections.views.DescendingSequenceTrie;
 import com.bluegosling.collections.views.DescendingSet;
@@ -12,6 +13,7 @@ import java.util.AbstractCollection;
 import java.util.AbstractMap;
 import java.util.AbstractSet;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -417,6 +419,21 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
    public NavigableSequenceTrie<K, V> prefixMap(Iterable<K> prefix, int numComponents) {
       return prefixMap(Iterables.limit(prefix, numComponents));
    }
+
+   @Override
+   public boolean equals(Object o) {
+      return MapUtils.equals(this, o);
+   }
+   
+   @Override
+   public int hashCode() {
+      return MapUtils.hashCode(this);
+   }
+   
+   @Override
+   public String toString() {
+      return MapUtils.toString(this);
+   }
    
    static class NavigablePrefixSequenceTrie<K, V, N extends NavigableNode<K, Void, V, N>>
          extends AbstractNavigableSequenceTrie<K, V, N> {
@@ -514,6 +531,16 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
 
       @Override
       N newNode(K key, N p) {
+         if (parent == null) {
+            // This can only happen during initialization. Super-class constructor invokes newNode
+            // to initialize root, but we haven't yet had the chance to initialize parent.
+            assert Arrays.stream(Thread.currentThread().getStackTrace())
+                  .anyMatch(ste -> {
+                     return ste.getClassName().equals(getClass().getName())
+                           && ste.getMethodName().equals("<init>");
+                  });
+            return null;
+         }
          return parent.newNode(key, p);
       }
       

@@ -8,5 +8,4 @@ public abstract class AbstractTestNavigableMap extends AbstractTestSortedMap {
    protected AbstractTestNavigableMap(String testName) {
       super(testName);
    }
-
 }

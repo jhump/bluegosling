@@ -1,5 +1,7 @@
 package com.bluegosling.collections;
 
+import static com.bluegosling.testing.MoreAsserts.assertThrows;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -24,40 +26,11 @@ public class CircularBufferTest {
    
    private void checkEmptyBuffer(CircularBuffer<?> buffer) {
       assertEquals(0, buffer.count());
-      try {
-         buffer.peek(0);
-         fail("Expecting but did not catch IllegalArgumentException");
-      }
-      catch (IllegalArgumentException expected) {
-      }
-
-      try {
-         buffer.peekFirst();
-         fail("Expecting but did not catch IllegalStateException");
-      }
-      catch (IllegalStateException expected) {
-      }
-      
-      try {
-         buffer.peekLast();
-         fail("Expecting but did not catch IllegalStateException");
-      }
-      catch (IllegalStateException expected) {
-      }
-
-      try {
-         buffer.removeFirst();
-         fail("Expecting but did not catch IllegalStateException");
-      }
-      catch (IllegalStateException expected) {
-      }
-
-      try {
-         buffer.removeLast();
-         fail("Expecting but did not catch IllegalStateException");
-      }
-      catch (IllegalStateException expected) {
-      }
+      assertThrows(IllegalArgumentException.class, () -> buffer.peek(0));
+      assertThrows(IllegalStateException.class, () -> buffer.peekFirst());
+      assertThrows(IllegalStateException.class, () -> buffer.peekLast());
+      assertThrows(IllegalStateException.class, () -> buffer.removeFirst());
+      assertThrows(IllegalStateException.class, () -> buffer.removeLast());
       
       // check that all refs are null
       for (Object o : buffer.elements) {
@@ -71,24 +44,11 @@ public class CircularBufferTest {
       checkEmptyBuffer(buffer);
       
       // cannot instantiate w/ negative capacity
-      try {
-         new CircularBuffer<Object>(-1);
-         fail("Expected but did not catch IllegalArgumentException");
-      } catch (IllegalArgumentException expected) {
-      }
+      assertThrows(IllegalArgumentException.class, () -> new CircularBuffer<Object>(-1));
 
       // or, for that matter, any value less than 2
-      try {
-         new CircularBuffer<Object>(0);
-         fail("Expected but did not catch IllegalArgumentException");
-      } catch (IllegalArgumentException expected) {
-      }
-      
-      try {
-         new CircularBuffer<Object>(1);
-         fail("Expected but did not catch IllegalArgumentException");
-      } catch (IllegalArgumentException expected) {
-      }
+      assertThrows(IllegalArgumentException.class, () -> new CircularBuffer<Object>(0));
+      assertThrows(IllegalArgumentException.class, () -> new CircularBuffer<Object>(1));
    }
    
    @Test public void addFirst() {
@@ -124,11 +84,7 @@ public class CircularBufferTest {
       assertEquals("abc", buffer.peek(3));
       assertEquals(4, buffer.count());
       
-      try {
-         buffer.addFirst("mno");
-         fail("Expecting but did not catch IllegalStateException");
-      } catch (IllegalStateException expected) {
-      }
+      assertThrows(IllegalStateException.class, () -> buffer.addFirst("mno"));
    }
 
    @Test public void addLast() {
@@ -164,11 +120,7 @@ public class CircularBufferTest {
       assertEquals("jkl", buffer.peek(3));
       assertEquals(4, buffer.count());
       
-      try {
-         buffer.addLast("mno");
-         fail("Expecting but did not catch IllegalStateException");
-      } catch (IllegalStateException expected) {
-      }
+      assertThrows(IllegalStateException.class, () -> buffer.addLast("mno"));
    }
    
    @Test public void removeFirst() {
@@ -288,23 +240,15 @@ public class CircularBufferTest {
       assertEquals(10, buffer2.capacity());
       checkSameContents(buffer1, buffer2);
       
-      try {
-         // buffer1 is full
-         buffer1.addLast("mno");
-         fail("Expecting but did not catch IllegalStateException");
-      } catch (IllegalStateException expected) {
-      }
+      // buffer1 is full
+      assertThrows(IllegalStateException.class, () -> buffer1.addLast("mno"));
       
       // but buffer2 is not
       buffer2.addLast("mno");
       assertEquals("mno", buffer2.peekLast());
       
-      try {
-         // buffer2 has 5 elements, so this is too small
-         buffer2.changeCapacity(4);
-         fail("Expecting but did not catch IllegalArgumentException");
-      } catch (IllegalArgumentException expected) {
-      }
+      // buffer2 has 5 elements, so this is too small
+      assertThrows(IllegalArgumentException.class, () -> buffer2.changeCapacity(4));
       
       // shrink
       CircularBuffer<Object> buffer3 = buffer2.changeCapacity(5);
@@ -312,11 +256,7 @@ public class CircularBufferTest {
       
       // even if source is empty, capacity must be >= 2
       buffer1.clear();
-      try {
-         buffer1.changeCapacity(1);
-         fail("Expected but did not catch IllegalArgumentException");
-      } catch (IllegalArgumentException expected) {
-      }
+      assertThrows(IllegalArgumentException.class, () -> buffer1.changeCapacity(1));
       
       CircularBuffer<Object> empty = buffer1.changeCapacity(2);
       checkSameContents(buffer1, empty);
@@ -331,8 +271,8 @@ public class CircularBufferTest {
       buffer1.addFirst("abc");
       buffer1.addFirst("abc");
       buffer1.addFirst("abc");
-      buffer2 = buffer1.changeCapacity(6);
-      checkSameContents(buffer1, buffer2);
+      CircularBuffer<Object> buffer4 = buffer1.changeCapacity(6);
+      checkSameContents(buffer1, buffer4);
    }
    
    private void checkSameContents(CircularBuffer<?> buffer, Deque<?> deque) {

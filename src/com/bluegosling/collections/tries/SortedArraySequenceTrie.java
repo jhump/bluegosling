@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 //TODO: javadoc
-//TODO: tests
 //TODO: don't forget serialization and cloning
 //TODO: also add a CompactSortedArraySequenceTrie?
 public class SortedArraySequenceTrie<K, V>
@@ -53,10 +52,19 @@ public class SortedArraySequenceTrie<K, V>
 
       @Override
       public void clearValue() {
-         this.value = null;
-         this.present = false;
+         if (present) {
+            value = null;
+            present = false;
+            count--;
+         }
       }
 
+      @Override
+      public void clear() {
+         super.clear();
+         count = present ? 1 : 0;
+      }
+      
       @Override
       public Void getLeafKey() {
          return null;

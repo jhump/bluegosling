@@ -11,7 +11,6 @@ import java.util.List;
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.map.AbstractTestMap;
 
-//TODO: add tests for composite trie methods!
 public abstract class AbstractTestCompositeTrie extends AbstractTestMap {
    
    public AbstractTestCompositeTrie(String testName) {
@@ -138,7 +137,7 @@ public abstract class AbstractTestCompositeTrie extends AbstractTestMap {
    // NB: Marked abstract to prevent JUnit test runner from thinking it can run this class. It is
    // only runnable when instantiated by enclosing test.
    public abstract static class BulkTestPrefixMap extends AbstractTestCompositeTrie {
-      private final AbstractTestCompositeTrie outer;
+      protected final AbstractTestCompositeTrie outer;
       
       public BulkTestPrefixMap(AbstractTestCompositeTrie outer) {
          super("");
@@ -149,7 +148,6 @@ public abstract class AbstractTestCompositeTrie extends AbstractTestMap {
          CompositeTrie<List<Object>, Object, Object> ret = makeFullMap();
          ret.clear();
          return ret;
-         
       }
       
       @Override public CompositeTrie<List<Object>, Object, Object> makeFullMap() {
@@ -210,7 +208,7 @@ public abstract class AbstractTestCompositeTrie extends AbstractTestMap {
    // NB: Marked abstract to prevent JUnit test runner from thinking it can run this class. It is
    // only runnable when instantiated by enclosing test.
    public abstract static class BulkTestRecursivePrefixMap extends AbstractTestMap {
-      private final BulkTestPrefixMap outer;
+      protected final BulkTestPrefixMap outer;
       
       public BulkTestRecursivePrefixMap(BulkTestPrefixMap outer) {
          super("");

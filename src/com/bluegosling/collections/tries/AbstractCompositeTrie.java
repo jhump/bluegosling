@@ -312,7 +312,8 @@ abstract class AbstractCompositeTrie<K, C, V, N extends AbstractTrie.Node<C, K, 
             K key = entry.getKey();
             Iterable<C> k = checkPrefix(asIterable(key));
             if (k == null) {
-               throw new IllegalArgumentException();
+               throw new IllegalArgumentException(
+                     "Key, " + key + ", does not have prefix " + CollectionUtils.toString(prefix));
             }
             entries.add(Trio.create(k, key, entry.getValue()));
          }
