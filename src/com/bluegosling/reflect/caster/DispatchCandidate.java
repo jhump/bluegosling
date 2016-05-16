@@ -1,4 +1,4 @@
-package com.bluegosling.reflect;
+package com.bluegosling.reflect.caster;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;

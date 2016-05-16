@@ -1,4 +1,4 @@
-package com.bluegosling.reflect;
+package com.bluegosling.reflect.blaster;
 
 import java.util.Collection;
 import java.util.Collections;

@@ -1,6 +1,7 @@
-package com.bluegosling.reflect;
+package com.bluegosling.reflect.blaster;
 
-import com.bluegosling.reflect.BlasterException.BlasterExceptionCause;
+import com.bluegosling.reflect.Types;
+import com.bluegosling.reflect.blaster.BlasterException.BlasterExceptionCause;
 import com.google.common.reflect.Reflection;
 
 import java.lang.reflect.InvocationHandler;
@@ -230,7 +231,7 @@ public class Blaster<T> {
     * @see #blastedResults()         
     */
    @SuppressWarnings({"unchecked", "rawtypes"}) // could be unsafe, but ok if caller is using this idiom properly
-   public static <T> List<Result<T>> blastedResults(@SuppressWarnings("unused") T t) {
+   public static <T> List<Result<T>> blastedResults(T t) {
       return (List) blastedResults();
    }
    

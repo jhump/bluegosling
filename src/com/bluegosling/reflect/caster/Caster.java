@@ -1,8 +1,6 @@
-package com.bluegosling.reflect;
+package com.bluegosling.reflect.caster;
 
 import static java.util.Objects.requireNonNull;
-
-import com.bluegosling.reflect.DispatchSettings.Visibility;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
@@ -10,6 +8,9 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.bluegosling.reflect.Members;
+import com.bluegosling.reflect.caster.DispatchSettings.Visibility;
 
 /**
  * An object that can cast objects to arbitrary interfaces. This can be used to cast objects to
@@ -112,7 +113,7 @@ public class Caster<T> {
     * @return a new caster
     */
    public <O> Caster<O> to(Class<O> otherInterface) {
-      return new Caster<O>(otherInterface, dynamicMethods, allowUnsupportedOperations, settings);
+      return new Caster<>(otherInterface, dynamicMethods, allowUnsupportedOperations, settings);
    }
    
    /**
@@ -241,23 +242,27 @@ public class Caster<T> {
                if (settings.visibility() == Visibility.PUBLIC) {
                   targetMethod = targetClass.getMethod(m.getName(), m.getParameterTypes());
                } else {
-                  Method candidate = Members.findMethod(targetClass, m.getName(), m.getParameterTypes());
-                  if (settings.visibility().isVisible(candidate.getModifiers())) {
-                     targetMethod = candidate;
-                     targetMethod.setAccessible(true);
-                  } else {
-                     throw new NoSuchMethodException(m.toString());
-                  }
+                  targetMethod =
+                        Members.findMethod(targetClass, m.getName(), m.getParameterTypes());
                }
-               ConversionStrategy<?, ?> strategy = ConversionStrategy.getConversionStrategy(targetMethod.getReturnType(),
-                     m.getReturnType(), settings.isCastingReturnTypes());
+               if (targetMethod == null || !isCompatible(m, targetMethod)
+                     || !settings.visibility().isVisible(targetMethod.getModifiers())) {
+                  throw new NoSuchMethodException(m.toString());
+               }
+               if (!targetMethod.isAccessible()) {
+                  targetMethod.setAccessible(true);
+               }
+               ConversionStrategy<?, ?> strategy =
+                     ConversionStrategy.getConversionStrategy(targetMethod.getReturnType(),
+                           m.getReturnType(), settings.isCastingReturnTypes());
                if (strategy != null) {
                   @SuppressWarnings("rawtypes")
                   final Converter converter = strategy.getConverter();
                   if (converter == null) {
                      methodMap.put(m, new InvocationHandler() {
                         @Override
-                        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                        public Object invoke(Object proxy, Method method, Object[] args)
+                              throws Throwable {
                            try {
                               return targetMethod.invoke(o, args);
                            } catch (InvocationTargetException e) {
@@ -268,7 +273,8 @@ public class Caster<T> {
                   } else {
                      methodMap.put(m, new InvocationHandler() {
                         @Override
-                        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                        public Object invoke(Object proxy, Method method, Object[] args)
+                              throws Throwable {
                            try {
                               return converter.convert(targetMethod.invoke(o, args), Caster.this);
                            } catch (InvocationTargetException e) {
@@ -306,7 +312,8 @@ public class Caster<T> {
             if (allowUnsupportedOperations) {
                methodMap.put(m, new InvocationHandler() {
                   @Override
-                  public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                  public Object invoke(Object proxy, Method method, Object[] args)
+                        throws Throwable {
                      throw new UnsupportedOperationException(method.getName());
                   }
                });
@@ -356,6 +363,12 @@ public class Caster<T> {
             });      
    }
    
+   private boolean isCompatible(Method method, Method candidate) {
+      // TODO: we know methods have the same erased types for args, so
+      // now we need to test generic types
+      return true;
+   }
+
    /**
     * Creates a new builder for configuring and creating {@link Caster}s.
     * 
@@ -456,7 +469,8 @@ public class Caster<T> {
        */
       Builder(Class<T> iface) {
          if (!iface.isInterface()) {
-            throw new IllegalArgumentException("Specified class, " + iface.getName() + ", is not an interface");
+            throw new IllegalArgumentException(
+                  "Specified class, " + iface.getName() + ", is not an interface");
          }
          this.iface = iface;
       }
