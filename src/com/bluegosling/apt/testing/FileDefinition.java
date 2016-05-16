@@ -1,7 +1,5 @@
 package com.bluegosling.apt.testing;
 
-import com.bluegosling.reflect.Caster;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -9,6 +7,9 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.tools.JavaFileManager.Location;
+
+import com.bluegosling.reflect.caster.Caster;
+
 import javax.tools.StandardLocation;
 
 /**

@@ -1,9 +1,11 @@
-package com.bluegosling.reflect;
+package com.bluegosling.reflect.caster;
 
 import java.lang.reflect.Proxy;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
+
+import com.bluegosling.reflect.caster.Caster;
 
 import junit.framework.TestCase;
 

@@ -1,7 +1,5 @@
-package com.bluegosling.reflect;
+package com.bluegosling.reflect.caster;
 
-
-import com.bluegosling.reflect.DispatchSettings.Visibility;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -9,6 +7,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import com.bluegosling.reflect.Members;
+import com.bluegosling.reflect.caster.DispatchSettings.Visibility;
 
 /**
  * A set of eligible dispatch candidates. This is a set of methods that could be used for method
@@ -274,6 +275,8 @@ class DispatchCandidates {
             int otherLen = m.getParameterTypes().length;
             if (otherLen == argsLen || (m.isVarArgs() && otherLen <= argsLen + 1)
                   || (expandVarArgs && method.isVarArgs() && argsLen <= otherLen + 1)) {
+               // TODO: check argument types to rule out impossible candidates (including
+               // checking of generic types)
                methods.add(m);
             }
          }
