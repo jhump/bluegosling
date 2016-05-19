@@ -7,7 +7,7 @@ import com.bluegosling.concurrent.FutureListener;
 import com.bluegosling.concurrent.fluent.FluentFuture;
 import com.bluegosling.concurrent.fluent.SettableRunnableFluentFuture;
 import com.bluegosling.reflect.TypeRef;
-import com.bluegosling.util.Immediate;
+import com.bluegosling.util.Result;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -275,7 +275,7 @@ public class Computation<T> {
          if (in.isAsync()) {
             args[i] = deps[i];
          } else if (in.isOptional()) {
-            args[i] = Immediate.fromCompletedFuture(deps[i]);
+            args[i] = Result.fromCompletedFuture(deps[i]);
          } else {
             if (deps[i].isFailed()) {
                // we want to propagate the cause of failure, regardless
