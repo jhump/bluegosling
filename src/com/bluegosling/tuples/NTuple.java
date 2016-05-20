@@ -5,6 +5,8 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.function.Function;
 
+import com.bluegosling.util.ValueType;
+
 /**
  * A tuple that has more than five elements. It is so named since it can have {@code n} number of
  * elements (where {@code n > 5}).
@@ -22,18 +24,19 @@ import java.util.function.Function;
  * @param <D> the type of the fourth item
  * @param <E> the type of the fifth item
  */
-public class NTuple<A, B, C, D, E> extends AbstractTuple
+@ValueType
+public final class NTuple<A, B, C, D, E> extends AbstractTuple
       implements Tuple.Ops5<A, B, C, D, E>, Serializable {
 
    private static final long serialVersionUID = 787923089202872798L;
    
    // ideally, these would all be final. but they can't be to support serialization
-   
    private transient A a;
    private transient B b;
    private transient C c;
    private transient D d;
    private transient E e;
+   
    private final Object[] array;
    
    private NTuple(A a, B b, C c, D d, E e, Object o, Object array[]) {

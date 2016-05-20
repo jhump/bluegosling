@@ -19,36 +19,35 @@ import java.util.function.Function;
 //methods that create instances: if index == 0 then value is an A, if index == 1 then it's a B, 
 //and so on.
 @SuppressWarnings("unchecked")
-public final class AnyOfFour<A, B, C, D> implements Choice.OfFour<A, B, C, D>, Serializable {
-   private static final long serialVersionUID = 843813593675166274L;
-   
+public final class Union4<A, B, C, D> implements Choice.OfFour<A, B, C, D>, Serializable {
+   private static final long serialVersionUID = -8557684884722232629L;
+
    private final Object value;
    private final int index;
    
-   private AnyOfFour(Object value, int index) {
+   private Union4(Object value, int index) {
       assert index >= 0 && index < 4;
-      assert value != null;
       this.value = value;
       this.index = index;
    }
+
+   public static <A, B, C, D> Union4<A, B, C, D> withFirst(A a) {
+      return new Union4<>(a, 0);
+   }
    
-   public static <A, B, C, D> AnyOfFour<A, B, C, D> withFirst(A a) {
-      return new AnyOfFour<>(requireNonNull(a), 0);
-   }
-   
-   public static <A, B, C, D> AnyOfFour<A, B, C, D> withSecond(B b) {
-      return new AnyOfFour<>(requireNonNull(b), 1);
+   public static <A, B, C, D> Union4<A, B, C, D> withSecond(B b) {
+      return new Union4<>(b, 1);
    }
 
-   public static <A, B, C, D> AnyOfFour<A, B, C, D> withThird(C c) {
-      return new AnyOfFour<>(requireNonNull(c), 2);
+   public static <A, B, C, D> Union4<A, B, C, D> withThird(C c) {
+      return new Union4<>(c, 2);
    }
 
-   public static <A, B, C, D> AnyOfFour<A, B, C, D> withFourth(D d) {
-      return new AnyOfFour<>(requireNonNull(d), 3);
+   public static <A, B, C, D> Union4<A, B, C, D> withFourth(D d) {
+      return new Union4<>(d, 3);
    }
 
-   public static <A, B, C, D> AnyOfFour<A, B, C, D> of(A a, B b, C c, D d) {
+   public static <A, B, C, D> Union4<A, B, C, D> of(A a, B b, C c, D d) {
       int count = 0;
       if (a != null) {
          count++;
@@ -62,34 +61,32 @@ public final class AnyOfFour<A, B, C, D> implements Choice.OfFour<A, B, C, D>, S
       if (d != null) {
          count++;
       }
-      if (count != 1) {
-         throw new IllegalArgumentException("Exactly one argument must be non-null");
+      if (count > 1) {
+         throw new IllegalArgumentException("Only one argument can be non-null");
       }
-      if (a != null) {
-         return new AnyOfFour<>(a, 0);
+      if (a != null || count == 0) {
+         return new Union4<>(a, 0);
       } else if (b != null) {
-         return new AnyOfFour<>(b, 1);
+         return new Union4<>(b, 1);
       } else if (c != null) {
-         return new AnyOfFour<>(c, 2);
+         return new Union4<>(c, 2);
       } else { // d != null
-         return new AnyOfFour<>(d, 3);
+         return new Union4<>(d, 3);
       }
    }
    
-   public static <A, B, C, D> AnyOfFour<A, B, C, D> firstOf(A a, B b, C c, D d) {
+   public static <A, B, C, D> Union4<A, B, C, D> firstOf(A a, B b, C c, D d) {
       if (a != null) {
-         return new AnyOfFour<>(a, 0);
+         return new Union4<>(a, 0);
       } else if (b != null) {
-         return new AnyOfFour<>(b, 1);
+         return new Union4<>(b, 1);
       } else if (c != null) {
-         return new AnyOfFour<>(c, 2);
-      } else if (d != null) {
-         return new AnyOfFour<>(d, 3);
+         return new Union4<>(c, 2);
       } else {
-         throw new IllegalArgumentException("At least one argument must be non-null");
+         return new Union4<>(d, 3);
       }
    }
-   
+
    @Override
    public boolean hasFirst() {
       return index == 0;
@@ -167,152 +164,153 @@ public final class AnyOfFour<A, B, C, D> implements Choice.OfFour<A, B, C, D>, S
       return index == 3 ? Reference.setTo((D) value) : Reference.unset();
    }
       
+
    @Override
-   public <T> AnyOfFour<T, B, C, D> mapFirst(Function<? super A, ? extends T> function) {
-      return index == 0 ? withFirst(function.apply((A) value)) : (AnyOfFour<T, B, C, D>) this;
+   public <T> Union4<T, B, C, D> mapFirst(Function<? super A, ? extends T> function) {
+      return index == 0 ? withFirst(function.apply((A) value)) : (Union4<T, B, C, D>) this;
    }
    
    @Override
-   public <T> AnyOfFour<A, T, C, D> mapSecond(Function<? super B, ? extends T> function) {
-      return index == 1 ? withSecond(function.apply((B) value)) : (AnyOfFour<A, T, C, D>) this;
+   public <T> Union4<A, T, C, D> mapSecond(Function<? super B, ? extends T> function) {
+      return index == 1 ? withSecond(function.apply((B) value)) : (Union4<A, T, C, D>) this;
    }
 
    @Override
-   public <T> AnyOfFour<A, B, T, D> mapThird(Function<? super C, ? extends T> function) {
-      return index == 2 ? withThird(function.apply((C) value)) : (AnyOfFour<A, B, T, D>) this;
+   public <T> Union4<A, B, T, D> mapThird(Function<? super C, ? extends T> function) {
+      return index == 2 ? withThird(function.apply((C) value)) : (Union4<A, B, T, D>) this;
    }
 
    @Override
-   public <T> AnyOfFour<A, B, C, T> mapFourth(Function<? super D, ? extends T> function) {
-      return index == 3 ? withFourth(function.apply((D) value)) : (AnyOfFour<A, B, C, T>) this;
+   public <T> Union4<A, B, C, T> mapFourth(Function<? super D, ? extends T> function) {
+      return index == 3 ? withFourth(function.apply((D) value)) : (Union4<A, B, C, T>) this;
    }
-
+   
    @Override
-   public <E> AnyOfFive<E, A, B, C, D> expandFirst() {
+   public <E> Union5<E, A, B, C, D> expandFirst() {
       if (index == 0) {
-         return AnyOfFive.withSecond((A) value);
+         return Union5.withSecond((A) value);
       } else if (index == 1) {
-         return AnyOfFive.withThird((B) value);
+         return Union5.withThird((B) value);
       } else if (index == 2) {
-         return AnyOfFive.withFourth((C) value);
+         return Union5.withFourth((C) value);
       } else { // index == 3
-         return AnyOfFive.withFifth((D) value);
-      }
-   }
-
-   @Override
-   public <E> AnyOfFive<A, E, B, C, D> expandSecond() {
-      if (index == 0) {
-         return AnyOfFive.withFirst((A) value);
-      } else if (index == 1) {
-         return AnyOfFive.withThird((B) value);
-      } else if (index == 2) {
-         return AnyOfFive.withFourth((C) value);
-      } else { // index == 3
-         return AnyOfFive.withFifth((D) value);
-      }
-   }
-
-   @Override
-   public <E> AnyOfFive<A, B, E, C, D> expandThird() {
-      if (index == 0) {
-         return AnyOfFive.withFirst((A) value);
-      } else if (index == 1) {
-         return AnyOfFive.withSecond((B) value);
-      } else if (index == 2) {
-         return AnyOfFive.withFourth((C) value);
-      } else { // index == 3
-         return AnyOfFive.withFifth((D) value);
-      }
-   }
-
-   @Override
-   public <E> AnyOfFive<A, B, C, E, D> expandFourth() {
-      if (index == 0) {
-         return AnyOfFive.withFirst((A) value);
-      } else if (index == 1) {
-         return AnyOfFive.withSecond((B) value);
-      } else if (index == 2) {
-         return AnyOfFive.withThird((C) value);
-      } else { // index == 3
-         return AnyOfFive.withFifth((D) value);
-      }
-   }
-
-   @Override
-   public <E> AnyOfFive<A, B, C, D, E> expandFifth() {
-      if (index == 0) {
-         return AnyOfFive.withFirst((A) value);
-      } else if (index == 1) {
-         return AnyOfFive.withSecond((B) value);
-      } else if (index == 2) {
-         return AnyOfFive.withThird((C) value);
-      } else { // index == 3
-         return AnyOfFive.withFourth((D) value);
+         return Union5.withFifth((D) value);
       }
    }
    
-   public AnyOfThree<B, C, D> contractFirst(Function<? super A, AnyOfThree<B, C, D>> function) {
+   @Override
+   public <E> Union5<A, E, B, C, D> expandSecond() {
+      if (index == 0) {
+         return Union5.withFirst((A) value);
+      } else if (index == 1) {
+         return Union5.withThird((B) value);
+      } else if (index == 2) {
+         return Union5.withFourth((C) value);
+      } else { // index == 3
+         return Union5.withFifth((D) value);
+      }
+   }
+   
+   @Override
+   public <E> Union5<A, B, E, C, D> expandThird() {
+      if (index == 0) {
+         return Union5.withFirst((A) value);
+      } else if (index == 1) {
+         return Union5.withSecond((B) value);
+      } else if (index == 2) {
+         return Union5.withFourth((C) value);
+      } else { // index == 3
+         return Union5.withFifth((D) value);
+      }
+   }
+   
+   @Override
+   public <E> Union5<A, B, C, E, D> expandFourth() {
+      if (index == 0) {
+         return Union5.withFirst((A) value);
+      } else if (index == 1) {
+         return Union5.withSecond((B) value);
+      } else if (index == 2) {
+         return Union5.withThird((C) value);
+      } else { // index == 3
+         return Union5.withFifth((D) value);
+      }
+   }
+   
+   @Override
+   public <E> Union5<A, B, C, D, E> expandFifth() {
+      if (index == 0) {
+         return Union5.withFirst((A) value);
+      } else if (index == 1) {
+         return Union5.withSecond((B) value);
+      } else if (index == 2) {
+         return Union5.withThird((C) value);
+      } else { // index == 3
+         return Union5.withFourth((D) value);
+      }
+   }
+   
+   public Union3<B, C, D> contractFirst(Function<? super A, Union3<B, C, D>> function) {
       if (index == 0) {
          return function.apply((A) value);
       } else if (index == 1) {
-         return AnyOfThree.withFirst((B) value);
+         return Union3.withFirst((B) value);
       } else if (index == 2) {
-         return AnyOfThree.withSecond((C) value);
+         return Union3.withSecond((C) value);
       } else { // index == 3
-         return AnyOfThree.withThird((D) value);
+         return Union3.withThird((D) value);
       }
    }
 
-   public AnyOfThree<A, C, D> contractSecond(Function<? super B, AnyOfThree<A, C, D>> function) {
+   public Union3<A, C, D> contractSecond(Function<? super B, Union3<A, C, D>> function) {
       if (index == 0) {
-         return AnyOfThree.withFirst((A) value);
+         return Union3.withFirst((A) value);
       } else if (index == 1) {
          return function.apply((B) value);
       } else if (index == 2) {
-         return AnyOfThree.withSecond((C) value);
+         return Union3.withSecond((C) value);
       } else { // index == 3
-         return AnyOfThree.withThird((D) value);
+         return Union3.withThird((D) value);
       }
    }
 
-   public AnyOfThree<A, B, D> contractThird(Function<? super C, AnyOfThree<A, B, D>> function) {
+   public Union3<A, B, D> contractThird(Function<? super C, Union3<A, B, D>> function) {
       if (index == 0) {
-         return AnyOfThree.withFirst((A) value);
+         return Union3.withFirst((A) value);
       } else if (index == 1) {
-         return AnyOfThree.withSecond((B) value);
+         return Union3.withSecond((B) value);
       } else if (index == 2) {
          return function.apply((C) value);
       } else { // index == 3
-         return AnyOfThree.withThird((D) value);
+         return Union3.withThird((D) value);
       }
    }
 
-   public AnyOfThree<A, B, C> contractFourth(Function<? super D, AnyOfThree<A, B, C>> function) {
+   public Union3<A, B, C> contractFourth(Function<? super D, Union3<A, B, C>> function) {
       if (index == 0) {
-         return AnyOfThree.withFirst((A) value);
+         return Union3.withFirst((A) value);
       } else if (index == 1) {
-         return AnyOfThree.withSecond((B) value);
+         return Union3.withSecond((B) value);
       } else if (index == 2) {
-         return AnyOfThree.withThird((C) value);
+         return Union3.withThird((C) value);
       } else { // index == 3
          return function.apply((D) value);
       }
    }
-
-   public AnyOfFour<A, B, C, D> flatMapFirst(Function<? super A, AnyOfFour<A, B, C, D>> function) {
+   
+   public Union4<A, B, C, D> flatMapFirst(Function<? super A, Union4<A, B, C, D>> function) {
       return index == 0 ? requireNonNull(function.apply((A) value)) : this;
    }
    
-   public AnyOfFour<A, B, C, D> flatMapSecond(Function<? super B, AnyOfFour<A, B, C, D>> function) {
+   public Union4<A, B, C, D> flatMapSecond(Function<? super B, Union4<A, B, C, D>> function) {
       return index == 1 ? requireNonNull(function.apply((B) value)) : this;
    }
    
-   public AnyOfFour<A, B, C, D> flatMapThird(Function<? super C, AnyOfFour<A, B, C, D>> function) {
+   public Union4<A, B, C, D> flatMapThird(Function<? super C, Union4<A, B, C, D>> function) {
       return index == 2 ? requireNonNull(function.apply((C) value)) : this;
    }
    
-   public AnyOfFour<A, B, C, D> flatMapFourth(Function<? super D, AnyOfFour<A, B, C, D>> function) {
+   public Union4<A, B, C, D> flatMapFourth(Function<? super D, Union4<A, B, C, D>> function) {
       return index == 3 ? requireNonNull(function.apply((D) value)) : this;
    }
    
@@ -331,10 +329,10 @@ public final class AnyOfFour<A, B, C, D> implements Choice.OfFour<A, B, C, D>, S
 
    @Override
    public boolean equals(Object o) {
-      if (!(o instanceof AnyOfFour)) {
+      if (!(o instanceof Union4)) {
          return false;
       }
-      AnyOfFour<?, ?, ?, ?> other = (AnyOfFour<?, ?, ?, ?>) o;
+      Union4<?, ?, ?, ?> other = (Union4<?, ?, ?, ?>) o;
       return index == other.index && Objects.equals(value, other.value);
    }
    
@@ -346,13 +344,13 @@ public final class AnyOfFour<A, B, C, D> implements Choice.OfFour<A, B, C, D>, S
    @Override
    public String toString() {
       if (index == 0) {
-         return "AnyOfFour.first[" + value + "]";
+         return "Union4.first[" + value + "]";
       } else if (index == 1) {
-         return "AnyOfFour.second[" + value + "]";
+         return "Union4.second[" + value + "]";
       } else if (index == 2) {
-         return "AnyOfFour.third[" + value + "]";
+         return "Union4.third[" + value + "]";
       } else { // index == 3
-         return "AnyOfFour.fourth[" + value + "]";
+         return "Union4.fourth[" + value + "]";
       }
    }
 }

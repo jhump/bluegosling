@@ -2,6 +2,7 @@ package com.bluegosling.tuples;
 
 import com.bluegosling.function.TriFunction;
 import com.bluegosling.function.TriPredicate;
+import com.bluegosling.util.ValueType;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,7 +21,8 @@ import java.util.function.Function;
  * @param <B> the type of the second item
  * @param <C> the type of the third item
  */
-public class Trio<A, B, C> extends AbstractTuple implements Tuple.Ops3<A, B, C>, Serializable {
+@ValueType
+public final class Trio<A, B, C> extends AbstractTuple implements Tuple.Ops3<A, B, C>, Serializable {
 
    private static final long serialVersionUID = -2245545958928314038L;
 

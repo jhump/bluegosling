@@ -25,7 +25,7 @@ import java.util.function.Function;
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-// moar javadocs
+//TODO: describe in doc why interfaces don't have contract* methods?
 public interface Choice<A, B> {
    
    /**
@@ -55,7 +55,7 @@ public interface Choice<A, B> {
     * Retrieves the value of the first option, if it is present.
     *
     * @return the value of the first option, if present
-    * @throws IllegalStateException if the first option is not present
+    * @throws NoSuchElementException if the first option is not present
     * 
     * @see #hasFirst()
     */
@@ -65,7 +65,7 @@ public interface Choice<A, B> {
     * Retrieves the value of the second option, if it is present.
     *
     * @return the value of the second option, if present
-    * @throws IllegalStateException if the second option is not present
+    * @throws NoSuchElementException if the second option is not present
     * 
     * @see #hasSecond()
     */
@@ -133,7 +133,7 @@ public interface Choice<A, B> {
        * Retrieves the value of the third option, if it is present.
        *
        * @return the value of the third option, if present
-       * @throws IllegalStateException if the third option is not present
+       * @throws NoSuchElementException if the third option is not present
        * 
        * @see #hasThird()
        */
@@ -190,7 +190,7 @@ public interface Choice<A, B> {
        * Retrieves the value of the fourth option, if it is present.
        *
        * @return the value of the fourth option, if present
-       * @throws IllegalStateException if the fourth option is not present
+       * @throws NoSuchElementException if the fourth option is not present
        * 
        * @see #hasFourth()
        */
@@ -251,7 +251,7 @@ public interface Choice<A, B> {
        * Retrieves the value of the fifth option, if it is present.
        *
        * @return the value of the fifth option, if present
-       * @throws IllegalStateException if the fifth option is not present
+       * @throws NoSuchElementException if the fifth option is not present
        * 
        * @see #hasFifth()
        */

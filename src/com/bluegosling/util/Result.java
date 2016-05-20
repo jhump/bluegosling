@@ -1,7 +1,6 @@
 package com.bluegosling.util;
 
-import static java.util.Objects.requireNonNull;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -11,6 +10,7 @@ import java.util.Optional;
 
 import com.bluegosling.concurrent.fluent.FluentFuture;
 import com.bluegosling.function.TriFunction;
+import com.google.common.base.Objects;
 
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
@@ -22,21 +22,46 @@ import java.util.function.Supplier;
 
 /**
  * The result of an operation, which can either represent a successful value or a cause of failure.
- * In some respects, this like a {@link Future}, except the result is available immediately. In
- * other respects, it is like an {@link Optional} with extra information (cause of failure) when
- * the value is not present.
  * 
- * @param <T> the type of value
+ * <p>In some respects, this like a {@link Future}, except the result is available immediately. In
+ * other respects, it is like an {@link Optional} with extra information (cause of failure) when
+ * the value is not present. Its API has similarities with both {@link Optional} and
+ * {@link FluentFuture}.
+ * 
+ * @param <T> the type of value, for successful results
+ * @param <E> the type of error, for failed results (typically but not necessarily a sub-type of
+ *       {@link Throwable}
  */
-public abstract class Result<T, X extends Throwable> {
+@ValueType
+//For efficiency, we store the value or error in a single Object field and then must cast to type
+//variable T or E (which is an unchecked cast). This is safe due to the invariant ensured by the
+//factory methods that create instances: if success then value is a T, otherwise it's an E.
+@SuppressWarnings("unchecked")
+public final class Result<T, E> implements Serializable {
+   private static final long serialVersionUID = -5305908494573148254L;
+   
+   private final boolean success;
+   private final Object value;
+   
+   private Result(boolean success, Object value) {
+      this.success = success;
+      this.value = value;
+   }
+   
+   // TODO: doc
+   public interface Visitor<T, E, R> {
+      R visitValue(T t);
+      R visitError(E e);
+   }
+
    /**
     * Returns a successful result.
     *
     * @param t the value
     * @return a successful result
     */
-   public static <T, X extends Throwable> Result<T, X> successful(T t) {
-      return new Success<>(t);
+   public static <T, E> Result<T, E> ok(T t) {
+      return new Result<>(true, t);
    }
 
    /**
@@ -44,9 +69,10 @@ public abstract class Result<T, X extends Throwable> {
     *
     * @param failure the cause of failure
     * @return a failed result
+    * @throws NullPointerException if the given failure is null
     */
-   public static <T, X extends Throwable> Result<T, X> failed(X failure) {
-      return new Failure<>(requireNonNull(failure));
+   public static <T, E> Result<T, E> error(E failure) {
+      return new Result<>(false, failure);
    }
 
    /**
@@ -65,23 +91,23 @@ public abstract class Result<T, X extends Throwable> {
       if (f instanceof FluentFuture) {
          FluentFuture<T> lf = (FluentFuture<T>) f;
          if (lf.isSuccessful()) {
-            return successful(lf.getResult());
+            return ok(lf.getResult());
          } else if (lf.isCancelled()) {
-            return failed(new CancellationException());
+            return error(new CancellationException());
          } else {
             assert lf.isFailed();
-            return failed(lf.getFailure());
+            return error(lf.getFailure());
          }
       } else {
          boolean interrupted = false;
          try {
             while (true) {
                try {
-                  return successful(f.get());
+                  return ok(f.get());
                } catch (ExecutionException e) {
-                  return failed(e.getCause());
+                  return error(e.getCause());
                } catch (CancellationException e) {
-                  return failed(e);
+                  return error(e);
                } catch (InterruptedException e) {
                   interrupted = true;
                }
@@ -95,14 +121,22 @@ public abstract class Result<T, X extends Throwable> {
    }
    
    /**
-    * Returns a future that represents the same value or failure as this result.
+    * Returns a future that represents the same value or failure as this result. If this result
+    * represents a failure then the future will be a failed future. In that case, if the cause of
+    * failure is a {@link Throwable}, that is is the cause of failure for the returned future, too.
+    * Otherwise, the cause of failure for the future is a {@link FailedResultException} that wraps
+    * the result's cause of failure.
     * 
     * @return a future that represents the same value or failure as this result
     */
    public FluentFuture<T> asFuture() {
-      return isFailed()
-            ? FluentFuture.failedFuture(getFailure())
-            : FluentFuture.completedFuture(get());
+      if (isFailed()) {
+         E e = getFailure();
+         return Throwable.class.isInstance(e)
+               ? FluentFuture.failedFuture((Throwable) e)
+               : FluentFuture.failedFuture(new FailedResultException(e));
+      }
+      return FluentFuture.completedFuture(get());
    }
 
    /**
@@ -111,15 +145,27 @@ public abstract class Result<T, X extends Throwable> {
     * @return the result value
     * @throws NoSuchElementException if this result represents a failure
     */
-   public abstract T get();
+   public T get() {
+      if (success) {
+         return (T) value;
+      }
+      throw new NoSuchElementException();
+   }
    
    /**
-    * Gets the value of this result or throws the cause of failure.
+    * Gets the value of the given result or throws the cause of failure.
     * 
-    * @return the result value if present
-    * @throws X the cause of failure if this result is not successful
+    * @param r the result
+    * @return the result's value, if present
+    * @throws E the cause of failure if this result is not successful
     */
-   public abstract T checkedGet() throws X;
+   public static <T, E extends Throwable> T checkedGet(Result<? extends T, ? extends E> r)
+         throws E {
+      if (r.isSuccessful()) {
+         return r.get();
+      }
+      throw r.getFailure();
+   }
    
    /**
     * Gets the result's cause of failure.
@@ -127,21 +173,30 @@ public abstract class Result<T, X extends Throwable> {
     * @return the cause of failure
     * @throws IllegalStateException if this result is successful
     */
-   public abstract X getFailure();
+   public E getFailure() {
+      if (success) {
+         throw new IllegalStateException();
+      }
+      return (E) value;
+   }
    
    /**
     * Determines if this result is successful or not.
     *
     * @return true if this result is successful
     */
-   public abstract boolean isSuccessful();
+   public boolean isSuccessful() {
+      return success;
+   }
    
    /**
     * Determines if this result is a failure or not.
     *
     * @return true if this result is a failure
     */
-   public abstract boolean isFailed();
+   public boolean isFailed() {
+      return !success;
+   }
    
    /**
     * Returns a new result whose value is the result of mapping this result's value using the given
@@ -150,7 +205,9 @@ public abstract class Result<T, X extends Throwable> {
     * @param fn mapping function
     * @return a new result whose value is mapped via the given function
     */
-   public abstract <U> Result<U, X> map(Function<? super T, ? extends U> fn);
+   public <U> Result<U, E> map(Function<? super T, ? extends U> fn) {
+      return success ? ok(fn.apply((T) value)) : (Result<U, E>) this;
+   }
    
    /**
     * Returns a new result that is the result of mapping this result's value using the given
@@ -159,8 +216,10 @@ public abstract class Result<T, X extends Throwable> {
     * @param fn mapping function, from value to result object
     * @return a new result, mapped via the given function
     */
-   public abstract <U> Result<U, X> flatMap(
-         Function<? super T, ? extends Result<? extends U, ? extends X>> fn);
+   public <U> Result<U, E> flatMap(
+         Function<? super T, Result<? extends U, ? extends E>> fn) {
+      return success ? cast(fn.apply((T) value)) : (Result<U, E>) this;
+   }
    
    /**
     * Returns a new result whose cause of failure is the result of mapping this result's cause of
@@ -170,8 +229,9 @@ public abstract class Result<T, X extends Throwable> {
     * @param fn mapping function, from one cause of failure to another
     * @return a new result whose cause of failure is mapped via the given function
     */
-   public abstract <Y extends Throwable> Result<T, Y> mapException(
-         Function<? super X, ? extends Y> fn);
+   public <F> Result<T, F> mapException(Function<? super E, ? extends F> fn) {
+      return success ? (Result<T, F>) this : error(fn.apply((E) value));
+   }
 
    /**
     * Recovers a failed result into a successful one. If this result is a failure, it is mapped to
@@ -182,7 +242,9 @@ public abstract class Result<T, X extends Throwable> {
     * @return a new result with the same value as this result or with a value provided by the given
     *       function if this result is a failure
     */
-   public abstract Result<T, X> recover(Function<? super X, ? extends T> fn);
+   public Result<T, E> recover(Function<? super E, ? extends T> fn) {
+      return success ? this : ok(fn.apply((E) value));
+   }
    
    /**
     * Gets the value of this result or the given value if this result is a failure.
@@ -190,7 +252,9 @@ public abstract class Result<T, X extends Throwable> {
     * @param other another value to use if this result is a failure
     * @return the result value or the given value if this result is a failure
     */
-   public abstract T orElse(T other);
+   public T orElse(T other) {
+      return success ? (T) value : other;
+   }
    
    /**
     * Gets the value of this result or the value returned by the given supplier if this result is a
@@ -199,7 +263,9 @@ public abstract class Result<T, X extends Throwable> {
     * @param other a supplier of another value to use if this result is a failure
     * @return the result value or a the value returned by the given supplier
     */
-   public abstract T orElseGet(Supplier<? extends T> other);
+   public T orElseGet(Supplier<? extends T> other) {
+      return success ? (T) value : other.get();
+   }
    
    /**
     * Gets the value of this result or throws an exception provided by a given supplier.
@@ -208,21 +274,34 @@ public abstract class Result<T, X extends Throwable> {
     * @return the result value if this result is a success
     * @throws Y if this result is a failure
     */
-   public abstract <Y extends Throwable> T orElseThrow(Supplier<? extends Y> failure) throws Y;
+   public <Y extends Throwable> T orElseThrow(Supplier<? extends Y> failure) throws Y {
+      if (!success) {
+         throw failure.get();
+      }
+      return (T) value;
+   }
    
    /**
     * Invokes the given action if this result is a success.
     * 
     * @param consumer an action that accepts this result's value
     */
-   public abstract void ifSuccessful(Consumer<? super T> consumer);
+   public void ifSuccessful(Consumer<? super T> consumer) {
+      if (success) {
+         consumer.accept((T) value);
+      }
+   }
    
    /**
     * Invokes the given action if this result is a failure.
     * 
     * @param consumer an action that accepts this result's cause of failure
     */
-   public abstract void ifFailed(Consumer<? super X> consumer);
+   public void ifFailed(Consumer<? super E> consumer) {
+      if (!success) {
+         consumer.accept((E) value);
+      }
+   }
    
    /**
     * Combines this result with another. If either result is a failure, the returned result is a
@@ -233,15 +312,14 @@ public abstract class Result<T, X extends Throwable> {
     * @return a new result whose value is the combination of this result and the given one or has
     *       the same cause of failure as this result or the given one
     */
-   @SuppressWarnings("unchecked")
-   public <U, V> Result<V, X> combineWith(Result<U, X> other,
+   public <U, V> Result<V, E> combineWith(Result<U, E> other,
          BiFunction<? super T, ? super U, ? extends V> fn) {
       if (isFailed()) {
-         return (Result<V, X>) this;
+         return (Result<V, E>) this;
       } else if (other.isFailed()) {
-         return (Result<V, X>) other;
+         return (Result<V, E>) other;
       }
-      return Result.successful(fn.apply(get(), other.get()));
+      return Result.ok(fn.apply(get(), other.get()));
    }
 
    /**
@@ -254,17 +332,16 @@ public abstract class Result<T, X extends Throwable> {
     * @return a new result whose value is the combination of this result and the given two or has
     *       the same cause of failure as this result or of one of the given two
     */
-   @SuppressWarnings("unchecked")
-   public <U, V, W> Result<W, X> combineWith(Result<U, X> other1, Result<V, X> other2,
+   public <U, V, W> Result<W, E> combineWith(Result<U, E> other1, Result<V, E> other2,
          TriFunction<? super T, ? super U, ? super V, ? extends W> fn) {
       if (isFailed()) {
-         return (Result<W, X>) this;
+         return (Result<W, E>) this;
       } else if (other1.isFailed()) {
-         return (Result<W, X>) other1;
+         return (Result<W, E>) other1;
       } else if (other2.isFailed()) {
-         return (Result<W, X>) other2;
+         return (Result<W, E>) other2;
       }
-      return Result.successful(fn.apply(get(), other1.get(), other2.get()));
+      return Result.ok(fn.apply(get(), other1.get(), other2.get()));
    }
 
    /**
@@ -289,7 +366,6 @@ public abstract class Result<T, X extends Throwable> {
     * @return a new result whose value is the list of values for the given results or has
     *       the same cause of failure as one of the given results
     */
-   @SuppressWarnings("unchecked")
    static <T, X extends Throwable> Result<List<T>, X> join(
          Iterable<? extends Result<? extends T, ? extends X>> results) {
       List<T> l = new ArrayList<>();
@@ -307,7 +383,7 @@ public abstract class Result<T, X extends Throwable> {
          return (Result<List<T>, X>) failure;
       }
       
-      return Result.successful(Collections.unmodifiableList(l));
+      return Result.ok(Collections.unmodifiableList(l));
    }
    
    /**
@@ -354,7 +430,6 @@ public abstract class Result<T, X extends Throwable> {
     * @return a result whose value is extracted from the given object or whose cause of failure is
     *       the same as the given result
     */
-   @SuppressWarnings("unchecked")
    static <T, X extends Throwable> Result<T, X> dereference(
          Result<? extends Result<T, X>, ? extends X> result) {
       if (result.isFailed()) {
@@ -371,184 +446,37 @@ public abstract class Result<T, X extends Throwable> {
     * @param immediate an immediate value
     * @return the same immediate value, but with its type parameter as a super-type of the original
     */
-   static <T, U extends T, X extends Throwable, Y extends X> Result<T, X> cast(
-         Result<U, Y> result) {
-      // co-variance makes it safe since all operations return a T or X, none take a T or X
-      @SuppressWarnings("unchecked")
-      Result<T, X> cast = (Result<T, X>) result;
-      return cast;
-   }
-
-   /**
-    * A successful result.
-    *
-    * @param <T> the type of value
-    * 
-    * @author Joshua Humphries (jhumphries131@gmail.com)
-    */
-   private static class Success<T, X extends Throwable> extends Result<T, X> {
-      private final T t;
-      
-      Success(T t) {
-         this.t = t;
-      }
-      
-      @Override
-      public T get() {
-         return t;
-      }
-
-      @Override
-      public T checkedGet() {
-         return t;
-      }
-
-      @Override
-      public X getFailure() {
-         throw new IllegalStateException();
-      }
-
-      @Override
-      public boolean isSuccessful() {
-         return true;
-      }
-
-      @Override
-      public boolean isFailed() {
-         return false;
-      }
-
-      @Override
-      public <U> Result<U, X> map(Function<? super T, ? extends U> fn) {
-         return Result.successful(fn.apply(t));
-      }
-
-      @Override
-      public <U> Result<U, X> flatMap(
-            Function<? super T, ? extends Result<? extends U, ? extends X>> fn) {
-         return cast(fn.apply(t));
-      }
-
-      @SuppressWarnings("unchecked")
-      @Override
-      public <Y extends Throwable> Result<T, Y> mapException(Function<? super X, ? extends Y> fn) {
-         return (Result<T, Y>) this;
-      }
-
-      @Override
-      public Result<T, X> recover(Function<? super X, ? extends T> fn) {
-         return this;
-      }
-      
-      @Override
-      public T orElse(T other) {
-         return t;
-      }
-
-      @Override
-      public T orElseGet(Supplier<? extends T> other) {
-         return t;
-      }
-
-      @Override
-      public <Y extends Throwable> T orElseThrow(Supplier<? extends Y> failure) throws Y {
-         return t;
-      }
-      
-      @Override
-      public void ifSuccessful(Consumer<? super T> consumer) {
-         consumer.accept(t);
-      }
-
-      @Override
-      public void ifFailed(Consumer<? super X> consumer) {
-      }
+   static <T, U extends T, E, F extends E> Result<T, E> cast(
+         Result<U, F> result) {
+      // co-variance makes it safe since all operations return a T or E, none take a T or E
+      return  (Result<T, E>) result;
    }
    
-   /**
-    * A failed result.
-    *
-    * @param <T> the type of value
-    * 
-    * @author Joshua Humphries (jhumphries131@gmail.com)
-    */
-   private static class Failure<T, X extends Throwable> extends Result<T, X> {
-      private final X failure;
-      
-      Failure(X failure) {
-         this.failure = failure;
-      }
-      
-      @Override
-      public T get() {
-         throw new NoSuchElementException();
-      }
-      
-      @Override
-      public T checkedGet() throws X {
-         throw failure;
-      }
+   // TODO: doc
+   public <R> R visit(Visitor<? super T, ? super E, ? extends R> visitor) {
+      return success ? visitor.visitValue((T) value) : visitor.visitError((E) value);
+   }
 
-      @Override
-      public X getFailure() {
-         return failure;
-      }
-
-      @Override
-      public boolean isSuccessful() {
+   
+   @Override
+   public boolean equals(Object o) {
+      if (!(o instanceof Result)) {
          return false;
       }
-
-      @Override
-      public boolean isFailed() {
-         return true;
-      }
-
-      @SuppressWarnings("unchecked")
-      @Override
-      public <U> Result<U, X> map(Function<? super T, ? extends U> fn) {
-         return (Result<U, X>) this;
-      }
-
-      @SuppressWarnings("unchecked")
-      @Override
-      public <U> Result<U, X> flatMap(
-            Function<? super T, ? extends Result<? extends U, ? extends X>> fn) {
-         return (Result<U, X>) this;
-      }
-
-      @Override
-      public <Y extends Throwable> Result<T, Y> mapException(Function<? super X, ? extends Y> fn) {
-         return Result.failed(fn.apply(failure));
-      }
-
-      @Override
-      public Result<T, X> recover(Function<? super X, ? extends T> fn) {
-         return Result.successful(fn.apply(failure));
-      }  
-      
-      @Override
-      public T orElse(T other) {
-         return other;
-      }
-
-      @Override
-      public T orElseGet(Supplier<? extends T> other) {
-         return other.get();
-      }
-
-      @Override
-      public <Y extends Throwable> T orElseThrow(Supplier<? extends Y> failure) throws Y {
-         throw failure.get();
-      }
-      
-      @Override
-      public void ifSuccessful(Consumer<? super T> consumer) {
-      }
-
-      @Override
-      public void ifFailed(Consumer<? super X> consumer) {
-         consumer.accept(failure);
-      }
+      Result<?, ?> other = (Result<?, ?>) o;
+      return success == other.success
+            && Objects.equal(value, other.value);
+   }
+   
+   @Override
+   public int hashCode() {
+      return success ? Objects.hashCode(value) : ~Objects.hashCode(value);
+   }
+   
+   @Override
+   public String toString() {
+      return success
+            ? "Result.ok[" + value + "]"
+            : "Result.error[" + value + "]";
    }
 }

@@ -3,13 +3,16 @@ package com.bluegosling.tuples;
 import java.io.Serializable;
 import java.util.function.Function;
 
+import com.bluegosling.util.ValueType;
+
 /**
  * A tuple that has no elements. Since tuples are immutable, there is no need for more than one
  * instance of this class, so all instances are just references to the constant {@link #INSTANCE}.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public class Empty extends AbstractTuple implements Serializable {
+@ValueType
+public final class Empty extends AbstractTuple implements Serializable {
 
    private static final long serialVersionUID = -8355558216675899868L;
 

@@ -149,12 +149,12 @@ public interface Possible<T> {
     * @return the possible value, but with {@code null} values treated as absent
     */
    static <T> Possible<T> notNull(final Possible<T> possible) {
-      if (possible instanceof Optionals.Some || possible instanceof Optionals.None) {
+      if (possible instanceof Optionals.OptionalPossible) {
          return possible;
       }
       if (possible instanceof Reference) {
          // References are immutable, so this is easy.
-         return possible.isPresent() ? Optionals.of(possible.get()) : Optionals.none();
+         return possible.isPresent() ? Optionals.ofNullable(possible.get()) : Optionals.empty();
       }
       // Given instance could be mutable, so we need to wrap it.
       return new AbstractDynamicPossible<T>() {
@@ -206,9 +206,9 @@ public interface Possible<T> {
     * @param possibles a collection of possible values
     * @return a list of present values
     */
-   static <T> List<T> presentOnly(Collection<? extends Possible<T>> possibles) {
+   static <T> List<T> presentOnly(Collection<? extends Possible<? extends T>> possibles) {
       List<T> present = new ArrayList<T>(possibles.size());
-      for (Possible<T> p : possibles) {
+      for (Possible<? extends T> p : possibles) {
          if (p.isPresent()) {
             try {
                present.add(p.get());
@@ -234,9 +234,9 @@ public interface Possible<T> {
     * @return a list of values extracted from the collection, {@code null} for objects where a value
     *       was not present 
     */
-   static <T> List<T> nullIfNotPresent(Collection<? extends Possible<T>> possibles) {
+   static <T> List<T> nullIfNotPresent(Collection<? extends Possible<? extends T>> possibles) {
       List<T> present = new ArrayList<T>(possibles.size());
-      for (Possible<T> p : possibles) {
+      for (Possible<? extends T> p : possibles) {
          present.add(p.orElse(null));
       }
       return Collections.unmodifiableList(present);
@@ -250,7 +250,7 @@ public interface Possible<T> {
     * @param possible a possible value
     * @return an immutable snapshot of the possible value
     */
-   static <T> Possible<T> snapshot(Possible<T> possible) {
+   static <T> Possible<T> snapshot(Possible<? extends T> possible) {
       return Reference.asReference(possible);
    }
 }

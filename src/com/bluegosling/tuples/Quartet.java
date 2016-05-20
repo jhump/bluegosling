@@ -8,6 +8,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Function;
 
+import com.bluegosling.util.ValueType;
+
 /**
  * A tuple with four items.
  *
@@ -18,7 +20,8 @@ import java.util.function.Function;
  * @param <C> the type of the third item
  * @param <D> the type of the fourth item
  */
-public class Quartet<A, B, C, D> extends AbstractTuple
+@ValueType
+public final class Quartet<A, B, C, D> extends AbstractTuple
       implements Tuple.Ops4<A, B, C, D>, Serializable {
 
    private static final long serialVersionUID = -4005223210115823097L;

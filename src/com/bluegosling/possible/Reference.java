@@ -3,11 +3,14 @@ package com.bluegosling.possible;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+
+import com.bluegosling.util.ValueType;
 
 /**
  * A {@linkplain Possible possible} value that, even if present, can be {@code null}. A reference
@@ -19,9 +22,23 @@ import java.util.function.Supplier;
  * @param <T> the type of the possible value
  */
 //TODO: tests for cast, upcast
-public abstract class Reference<T> implements Possible<T> {
+@ValueType
+public final class Reference<T> implements Possible<T>, Serializable {
+   private static final long serialVersionUID = -7778850069219799999L;
+
+   private static final Reference<?> UNSET = new Reference<>();
+   
+   private final boolean set;
+   private final T t;
 
    private Reference() {
+      set = false;
+      t = null;
+   }
+   
+   private Reference(T t) {
+      this.set = true;
+      this.t = t;
    }
 
    /**
@@ -31,7 +48,7 @@ public abstract class Reference<T> implements Possible<T> {
     */
    @SuppressWarnings("unchecked")
    public static <T> Reference<T> unset() {
-      return (Reference<T>) UnsetReference.INSTANCE;
+      return (Reference<T>) UNSET;
    }
    
    /**
@@ -41,7 +58,7 @@ public abstract class Reference<T> implements Possible<T> {
     * @return a set reference
     */
    public static <T> Reference<T> setTo(T t) {
-      return new SetReference<T>(t);
+      return new Reference<>(t);
    }
    
    /**
@@ -52,11 +69,11 @@ public abstract class Reference<T> implements Possible<T> {
     * @param possible a possible value
     * @return the possible value, converted to a reference
     */
-   public static <T> Reference<T> asReference(Possible<T> possible) {
+   public static <T> Reference<T> asReference(Possible<? extends T> possible) {
       if (possible instanceof Reference) {
-         return (Reference<T>) possible;
+         return upcast((Reference<? extends T>) possible);
       }
-      return possible.isPresent() ? setTo(possible.get()) : Reference.<T>unset();
+      return possible.isPresent() ? setTo(possible.get()) : Reference.unset();
    }
    
    /**
@@ -99,13 +116,43 @@ public abstract class Reference<T> implements Possible<T> {
       return (Reference<S>) from;
    }
    
-   /**
-    * {@inheritDoc}
-    * 
-    * <p>Overrides the return type to indicate that it will be an instance of {@link Reference}.
-    */
    @Override
-   public abstract <U> Reference<U> map(Function<? super T, ? extends U> function);
+   public boolean isPresent() {
+      return set;
+   }
+   
+   @Override
+   public void ifPresent(Consumer<? super T> consumer) {
+      if (set) {
+         consumer.accept(t);
+      }
+   }
+
+   @Override
+   public T get() {
+      if (!set) {
+         throw new NoSuchElementException();
+      }
+      return t;
+   }
+
+   @Override
+   public T orElse(T alternate) {
+      return set ? t : alternate;
+   }
+   
+   @Override
+   public T orElseGet(Supplier<? extends T> supplier) {
+      return set ? t : supplier.get();
+   }
+
+   @Override
+   public <X extends Throwable> T orElseThrow(Supplier<? extends X> throwable) throws X {
+      if (!set) {
+         throw throwable.get();
+      }
+      return t;
+   }
    
    /**
     * {@inheritDoc}
@@ -113,7 +160,12 @@ public abstract class Reference<T> implements Possible<T> {
     * <p>Overrides the return type to indicate that it will be an instance of {@link Reference}.
     */
    @Override
-   public abstract <U> Reference<U> flatMap(Function<? super T, ? extends Possible<U>> function);
+   public <U> Reference<U> map(Function<? super T, ? extends U> function) {
+      if (!set) {
+         return unset();
+      }
+      return setTo(function.apply(t));
+   }
    
    /**
     * {@inheritDoc}
@@ -121,7 +173,19 @@ public abstract class Reference<T> implements Possible<T> {
     * <p>Overrides the return type to indicate that it will be an instance of {@link Reference}.
     */
    @Override
-   public abstract Reference<T> filter(Predicate<? super T> predicate);
+   public <U> Reference<U> flatMap(Function<? super T, ? extends Possible<U>> function) {
+      return set ? asReference(function.apply(t)) : unset();
+   }
+   
+   /**
+    * {@inheritDoc}
+    * 
+    * <p>Overrides the return type to indicate that it will be an instance of {@link Reference}.
+    */
+   @Override
+   public Reference<T> filter(Predicate<? super T> predicate) {
+      return set && predicate.test(t) ? this : unset();
+   }
    
    /**
     * {@inheritDoc}
@@ -131,7 +195,9 @@ public abstract class Reference<T> implements Possible<T> {
     * {@linkplain #asReference(Possible) converted}.
     */
    @Override
-   public abstract Reference<T> or(Possible<T> alternate);
+   public Possible<T> or(Possible<T> alternate) {
+      return set ? this : alternate;
+   }
 
    /**
     * Returns the current reference if a value is present or the specified reference if not.
@@ -139,218 +205,41 @@ public abstract class Reference<T> implements Possible<T> {
     * @param alternate an alternate value
     * @return returns the current reference if a value is present or the alternate if not
     */
-   public abstract Reference<T> or(Reference<T> alternate);
+   public Reference<T> or(Reference<T> alternate) {
+      return set ? this : alternate;
+   }
    
-   /**
-    * A reference with a value present.
-    *
-    * @author Joshua Humphries (jhumphries131@gmail.com)
-    *
-    * @param <T> the type of the value
-    */
-   private static class SetReference<T> extends Reference<T> implements Serializable {
-
-      private static final long serialVersionUID = 7364438623841250389L;
-      
-      private final T t;
-      
-      @SuppressWarnings("synthetic-access") // super-class ctor is private
-      SetReference(T t) {
-         this.t = t;
-      }
-      
-      @Override
-      public boolean isPresent() {
-         return true;
-      }
-      
-      @Override
-      public void ifPresent(Consumer<? super T> consumer) {
-         consumer.accept(t);
-      }
-
-      @Override
-      public T get() {
-         return t;
-      }
-
-      @Override
-      public T orElse(T alternate) {
-         return t;
-      }
-      
-      @Override
-      public T orElseGet(Supplier<? extends T> supplier) {
-         return t;
-      }
-
-      @Override
-      public <X extends Throwable> T orElseThrow(Supplier<? extends X> throwable) throws X {
-         return t;
-      }
-
-      @Override
-      public Reference<T> or(Possible<T> alternate) {
-         return this;
-      }
-      
-      @Override
-      public Reference<T> or(Reference<T> alternate) {
-         return this;
-      }
-      
-      @Override
-      public <U> Reference<U> map(Function<? super T, ? extends U> function) {
-         return setTo(function.apply(t));
-      }
-
-      @Override
-      public <U> Reference<U> flatMap(Function<? super T, ? extends Possible<U>> function) {
-         return asReference(function.apply(t));
-      }
-
-      @Override
-      public Reference<T> filter(Predicate<? super T> predicate) {
-         return predicate.test(t) ? this : unset();
-      }
-
-      @Override
-      public Set<T> asSet() {
-         return Collections.singleton(t);
-      }
-
-      @Override
-      public <R> R visit(Possible.Visitor<? super T, R> visitor) {
-         return visitor.present(t);
-      }
-      
-      @Override
-      public boolean equals(Object o) {
-         if (!(o instanceof SetReference)) {
-            return false;
-         }
-         SetReference<?> other = (SetReference<?>) o;
-         return t == null ? other.t == null : t.equals(other.t);
-      }
-      
-      @Override
-      public int hashCode() {
-         return SetReference.class.hashCode() ^ (t == null ? 0 : t.hashCode());
-      }
-      
-      @Override
-      public String toString() {
-         return "Reference: " + t;
-      }
+   @Override
+   public Set<T> asSet() {
+      return set ? Collections.singleton(t) : Collections.emptySet();
    }
 
-   /**
-    * An unset reference (no value present).
-    *
-    * @author Joshua Humphries (jhumphries131@gmail.com)
-    *
-    * @param <T> the type of the value
-    */
-   private static class UnsetReference<T> extends Reference<T> implements Serializable {
-      
-      private static final long serialVersionUID = -7792329235520529671L;
-      
-      /** 
-       * The singleton unset reference. Since references are immutable, and this form has no
-       * present value, the same instance can be used for all usages.
-       */
-      static final UnsetReference<?> INSTANCE = new UnsetReference<Object>();
-      
-      @SuppressWarnings("synthetic-access") // super-class ctor is private
-      private UnsetReference() {
-      }
-      
-      @Override
-      public boolean isPresent() {
+   @Override
+   public <R> R visit(Possible.Visitor<? super T, R> visitor) {
+      return set ? visitor.present(t) : visitor.absent();
+   }
+   
+   @Override
+   public boolean equals(Object o) {
+      if (!(o instanceof Reference)) {
          return false;
       }
-      
-      @Override
-      public void ifPresent(Consumer<? super T> consumer) {
+      Reference<?> other = (Reference<?>) o;
+      if (!set && !other.set) {
+         return true;
       }
-
-      @Override
-      public T get() {
-         throw new NoSuchElementException();
-      }
-
-      @Override
-      public T orElse(T alternate) {
-         return alternate;
-      }
-      
-      @Override
-      public T orElseGet(Supplier<? extends T> supplier) {
-         return supplier.get();
-      }
-
-      @Override
-      public <X extends Throwable> T orElseThrow(Supplier<? extends X> throwable) throws X {
-         throw throwable.get();
-      }
-
-      @Override
-      public Set<T> asSet() {
-         return Collections.emptySet();
-      }
-
-      @Override
-      public <R> R visit(Possible.Visitor<? super T, R> visitor) {
-         return visitor.absent();
-      }
-
-      @Override
-      public Reference<T> or(Possible<T> alternate) {
-         return asReference(alternate);
-      }
-      
-      @Override
-      public Reference<T> or(Reference<T> alternate) {
-         return alternate;
-      }
-      
-      @Override
-      public <U> Reference<U> map(Function<? super T, ? extends U> function) {
-         return unset();
-      }
-
-      @Override
-      public <U> Reference<U> flatMap(Function<? super T, ? extends Possible<U>> function) {
-         return unset();
-      }
-
-      @Override
-      public Reference<T> filter(Predicate<? super T> predicate) {
-         return this;
-      }
-      
-      @Override
-      public boolean equals(Object o) {
-         return o == this;
-      }
-      
-      @Override
-      public int hashCode() {
-         return UnsetReference.class.hashCode();
-      }
-      
-      @Override
-      public String toString() {
-         return "Reference, unset";
-      }
-      
-      /**
-       * Ensures that the singleton pattern is enforced during serialization.
-       * 
-       * @return {@link #INSTANCE}
-       */
-      private Object readResolve() {
-         return INSTANCE;
-      }
+      return set && other.set && Objects.equals(t, other.t);
+   }
+   
+   @Override
+   public int hashCode() {
+      return set ? Objects.hashCode(t) : -1;
+   }
+   
+   @Override
+   public String toString() {
+      return set
+            ? "Reference[" + t + "]"
+            : "Reference.unset";
    }
 }

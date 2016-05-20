@@ -8,6 +8,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Function;
 
+import com.bluegosling.util.ValueType;
+
 /**
  * A tuple with five items.
  *
@@ -19,7 +21,8 @@ import java.util.function.Function;
  * @param <D> the type of the fourth item
  * @param <E> the type of the fifth item
  */
-public class Quintet<A, B, C, D, E> extends AbstractTuple
+@ValueType
+public final class Quintet<A, B, C, D, E> extends AbstractTuple
       implements Tuple.Ops5<A, B, C, D, E>, Serializable {
 
    private static final long serialVersionUID = -6961697944717178646L;
