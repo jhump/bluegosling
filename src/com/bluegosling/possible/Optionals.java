@@ -1,14 +1,20 @@
 package com.bluegosling.possible;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+
+import com.bluegosling.util.ValueType;
 
 /**
  * Utility methods related to {@link Optional}s, including conversion to and from the interface
@@ -19,19 +25,41 @@ import java.util.function.Supplier;
 //TODO: tests for cast, upcast
 public final class Optionals {
 
-   // TODO: presentOnly, nullIfNotPresent static methods
-
    private Optionals() {
    }
    
    // TODO: doc
    
+   public static <T> List<T> nullIfNotPresent(
+         Collection<? extends Optional<? extends T>> optionals) {
+      List<T> present = new ArrayList<T>(optionals.size());
+      for (Optional<? extends T> o : optionals) {
+         present.add(o.orElse(null));
+      }
+      return Collections.unmodifiableList(present);
+   }
+   
+   static <T> List<T> presentOnly(Collection<? extends Optional<? extends T>> optionals) {
+      List<T> present = new ArrayList<T>(optionals.size());
+      for (Optional<? extends T> o : optionals) {
+         if (o.isPresent()) {
+            try {
+               present.add(o.get());
+            } catch (NoSuchElementException e) {
+               // this should happen rarely if ever, but could occur with a mutable object if a
+               // race occurs and the value becomes absent after the call to isPresent()
+            }
+         }
+      }
+      return Collections.unmodifiableList(present);
+   }
+   
    public static <T> Possible<T> toPossible(Optional<T> optional) {
-      return optional.isPresent() ? new Some<>(optional.get()) : none();
+      return ofNullable(optional.orElse(null));
    }
 
    public static <T> Optional<T> fromPossible(Possible<T> possible) {
-      return possible.isPresent() ? Optional.ofNullable(possible.get()) : Optional.empty();
+      return Optional.ofNullable(possible.orElse(null));
    }
 
    /**
@@ -80,8 +108,8 @@ public final class Optionals {
     * @return an object with no value present
     */
    @SuppressWarnings("unchecked")
-   static <T> Possible<T> none() {
-      return (Possible<T>) None.INSTANCE;
+   static <T> Possible<T> empty() {
+      return (Possible<T>) OptionalPossible.NONE;
    }
    
    /**
@@ -93,207 +121,126 @@ public final class Optionals {
     *       otherwise {@linkplain #none() none}
     */
    static <T> Possible<T> of(T t) {
-      return t != null ? new Some<>(t) : none();
+      return new OptionalPossible<>(Objects.requireNonNull(t));
+   }
+   
+   // TODO: doc
+   static <T> Possible<T> ofNullable(T t) {
+      return t == null ? empty() : of(t);
    }
 
    /**
-    * An optional value that has some value. The value cannot be {@code null}.
+    * An possible that wraps an {@link Optional}..
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     *
     * @param <T> the type of the optional value
     */
-   static class Some<T> implements Possible<T>, Serializable {
-
+   @ValueType
+   static final class OptionalPossible<T> implements Possible<T>, Serializable {
       private static final long serialVersionUID = 1511876184470865192L;
+      
+      private static final OptionalPossible<?> NONE = new OptionalPossible<>(null);
       
       private final T t;
       
-      Some(T t) {
-         if (t == null) {
-            throw new NullPointerException();
-         }
+      OptionalPossible(T t) {
          this.t = t;
       }
 
       @Override
       public boolean isPresent() {
-         return true;
+         return t != null;
       }
       
       @Override
       public void ifPresent(Consumer<? super T> consumer) {
-         consumer.accept(t);
+         if (t != null) {
+            consumer.accept(t);
+         }
       }
 
       @Override
       public T get() {
+         if (t == null) {
+            throw new NoSuchElementException();
+         }
          return t;
       }
 
       @Override
       public T orElse(T alternate) {
-         return t;
+         return t == null ? alternate : t;
       }
       
       @Override
       public T orElseGet(Supplier<? extends T> supplier) {
-         return t;
+         return t == null ? supplier.get() : t;
       }
 
       @Override
       public <X extends Throwable> T orElseThrow(Supplier<? extends X> throwable) throws X {
+         if (t == null) {
+            throw throwable.get();
+         }
          return t;
       }
 
       @Override
       public Possible<T> or(Possible<T> alternate) {
-         return this;
+         return t == null ? alternate : this;
       }
       
+      @SuppressWarnings("unchecked")
       @Override
       public <U> Possible<U> map(Function<? super T, ? extends U> function) {
-         return of(function.apply(t));
+         if (t == null) {
+            return (Possible<U>) this;
+         }
+         return ofNullable(function.apply(t));
       }
 
+      @SuppressWarnings("unchecked")
       @Override
       public <U> Possible<U> flatMap(Function<? super T, ? extends Possible<U>> function) {
-         return Possible.notNull(function.apply(t));
+         return t != null
+               ? Objects.requireNonNull(function.apply(t))
+               : (Possible<U>) this;
       }
 
       @Override
       public Possible<T> filter(Predicate<? super T> predicate) {
-         return predicate.test(t) ? this : none();
+         return t != null && predicate.test(t) ? this : empty();
       }
 
       @Override
       public Set<T> asSet() {
-         return Collections.singleton(t);
+         return t != null ? Collections.singleton(t) : Collections.emptySet();
       }
 
       @Override
       public <R> R visit(Possible.Visitor<? super T, R> visitor) {
-         return visitor.present(t);
+         return t != null
+               ? visitor.present(t)
+               : visitor.absent();
       }
       
       @Override
-      public boolean equals(Object o) {
-         return o instanceof Some && t.equals(((Some<?>) o).t);
-      }
-      
-      @Override
-      public int hashCode() {
-         return Some.class.hashCode() ^ t.hashCode();
-      }
-      
-      @Override
-      public String toString() {
-         return "Optional: " + t;
-      }
-   }
-   
-   /**
-    * An optional value that actually has no value. Can be thought of as representing no object or
-    * as representing {@code null}.
-    *
-    * @author Joshua Humphries (jhumphries131@gmail.com)
-    *
-    * @param <T> the type of the optional value
-    */
-   static class None<T> implements Possible<T>, Serializable {
-      
-      private static final long serialVersionUID = 5598018120900214802L;
-      
-      /** 
-       * The singleton object. Since optionals are immutable, and this form has no present value,
-       * the same instance can be used for all usages.
-       */
-      static final None<?> INSTANCE = new None<Object>();
-      
-      private None() {
-      }
-      
-      @Override
-      public boolean isPresent() {
-         return false;
-      }
-      
-      @Override
-      public void ifPresent(Consumer<? super T> consumer) {
-      }
-
-      @Override
-      public T get() {
-         throw new NoSuchElementException();
-      }
-
-      @Override
-      public T orElse(T alternate) {
-         return alternate;
-      }
-      
-      @Override
-      public T orElseGet(Supplier<? extends T> supplier) {
-         return supplier.get();
-      }
-
-      @Override
-      public <X extends Throwable> T orElseThrow(Supplier<? extends X> throwable) throws X {
-         throw throwable.get();
-      }
-
-      @Override
-      public Set<T> asSet() {
-         return Collections.emptySet();
-      }
-
-      @Override
-      public <R> R visit(Possible.Visitor<? super T, R> visitor) {
-         return visitor.absent();
-      }
-
-      @Override
-      public Possible<T> or(Possible<T> alternate) {
-         return Possible.notNull(alternate);
-      }
-      
-      @Override
-      public <U> Possible<U> map(Function<? super T, ? extends U> function) {
-         return none();
-      }
-
-      @Override
-      public <U> Possible<U> flatMap(Function<? super T, ? extends Possible<U>> function) {
-         return none();
-      }
-
-      @Override
-      public Possible<T> filter(Predicate<? super T> predicate) {
-         return this;
-      }
-      
-      @Override
-      public boolean equals(Object o) {
-         return o == this;
+      public boolean equals(Object other) {
+         return other instanceof OptionalPossible
+               && Objects.equals(t, ((OptionalPossible<?>) other).t);
       }
       
       @Override
       public int hashCode() {
-         return None.class.hashCode();
+         return Objects.hashCode(t);
       }
       
       @Override
       public String toString() {
-         return "Optional, none";
-      }
-      
-      /**
-       * Ensures that the singleton pattern is enforced during serialization.
-       * 
-       * @return {@link #INSTANCE}
-       */
-      private Object readResolve() {
-         return INSTANCE;
+         return t != null
+               ? "Possible[" + t + "]"
+               : "Possible.empty";
       }
    }
 }

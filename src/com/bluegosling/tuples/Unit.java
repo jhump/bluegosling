@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import com.bluegosling.util.ValueType;
+
 /**
  * A tuple with a single item.
  *
@@ -15,7 +17,8 @@ import java.util.function.Predicate;
  *
  * @param <A> the element type
  */
-public class Unit<A> extends AbstractTuple implements Tuple.Ops1<A>, Serializable {
+@ValueType
+public final class Unit<A> extends AbstractTuple implements Tuple.Ops1<A>, Serializable {
 
    private static final long serialVersionUID = -9201943154135089064L;
    

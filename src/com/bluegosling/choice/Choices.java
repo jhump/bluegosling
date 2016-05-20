@@ -21,7 +21,6 @@ import java.util.concurrent.Future;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 //TODO: tests
-//TODO: describe in doc why interfaces don't have contract* methods?
 public class Choices {
    
    /**
@@ -79,53 +78,5 @@ public class Choices {
       @SuppressWarnings("unchecked") // all components extend T, so this will be safe
       T ret = (T) choice.get();
       return ret;
-   }
-   
-   /**
-    * Returns a view of the given future as a {@link Variant2}. Completed futures are inherently a
-    * choice between a successful value and cause of failure. This allows conversion of the future
-    * into an actual {@link Choice} object.
-    *
-    * @param future the completed future
-    * @return a variant with the first option set to the future's successful result or the second
-    *       option set to the cause of failure, depending on the future's actual disposition
-    * @throws IllegalArgumentException if the given future is not yet done
-    */
-   public static <T> Variant2<T, Throwable> fromCompletedFuture(Future<T> future) {
-      if (!future.isDone()) {
-         throw new IllegalArgumentException("The given future has not yet completed.");
-      }
-      if (future instanceof FluentFuture) {
-         FluentFuture<T> lFuture = (FluentFuture<T>) future;
-         if (lFuture.isSuccessful()) {
-            return Variant2.withFirst(lFuture.getResult());
-         } else if (lFuture.isFailed()) {
-            return Variant2.withSecond(lFuture.getFailure());
-         } else if (lFuture.isCancelled()) {
-            return Variant2.<T, Throwable>withSecond(new CancellationException());
-         } else {
-            throw new AssertionError("Future is not in valid state");
-         }
-      } else {
-         // future is done, but it is still possible for get() to throw InterruptedException
-         boolean interrupted = true;
-         try {
-            while (true) {
-               try {
-                  return Variant2.withFirst(future.get());
-               } catch (ExecutionException e) {
-                  return Variant2.withSecond(e.getCause());
-               } catch (CancellationException e) {
-                  return Variant2.<T, Throwable>withSecond(e);
-               } catch (InterruptedException e) {
-                  interrupted = true;
-               }
-            }
-         } finally {
-            if (interrupted) {
-               Thread.currentThread().interrupt();
-            }
-         }
-      }
    }
 }

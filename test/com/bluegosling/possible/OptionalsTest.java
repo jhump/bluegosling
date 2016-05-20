@@ -27,9 +27,6 @@ public class OptionalsTest extends AbstractPossibleTest {
    }
    
    @Test public void nullsMeanAbsent() {
-      // this converts present null into absent
-      checkAbsentValue(valueAbsent().or(Reference.setTo(null)));
-
       // and map treats null results as absent
       checkAbsentValue(valuePresent("abc").map((s) -> null));
    }

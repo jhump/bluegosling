@@ -19,40 +19,39 @@ import java.util.function.Function;
 //methods that create instances: if index == 0 then value is an A, if index == 1 then it's a B, 
 //and so on.
 @SuppressWarnings("unchecked")
-public final class AnyOfFive<A, B, C, D, E> implements Choice.OfFive<A, B, C, D, E>, Serializable {
-   private static final long serialVersionUID = -1273837947264890128L;
-   
+public final class Union5<A, B, C, D, E> implements Choice.OfFive<A, B, C, D, E>, Serializable {
+   private static final long serialVersionUID = -1914510684839843360L;
+
    private final Object value;
    private final int index;
    
-   private AnyOfFive(Object value, int index) {
+   private Union5(Object value, int index) {
       assert index >= 0 && index < 5;
-      assert value != null;
       this.value = value;
       this.index = index;
    }
-
-   public static <A, B, C, D, E> AnyOfFive<A, B, C, D, E> withFirst(A a) {
-      return new AnyOfFive<>(requireNonNull(a), 0);
+   
+   public static <A, B, C, D, E> Union5<A, B, C, D, E> withFirst(A a) {
+      return new Union5<>(a, 0);
    }
    
-   public static <A, B, C, D, E> AnyOfFive<A, B, C, D, E> withSecond(B b) {
-      return new AnyOfFive<>(requireNonNull(b), 1);
+   public static <A, B, C, D, E> Union5<A, B, C, D, E> withSecond(B b) {
+      return new Union5<>(b, 1);
    }
 
-   public static <A, B, C, D, E> AnyOfFive<A, B, C, D, E> withThird(C c) {
-      return new AnyOfFive<>(requireNonNull(c), 2);
+   public static <A, B, C, D, E> Union5<A, B, C, D, E> withThird(C c) {
+      return new Union5<>(c, 2);
    }
 
-   public static <A, B, C, D, E> AnyOfFive<A, B, C, D, E> withFourth(D d) {
-      return new AnyOfFive<>(requireNonNull(d), 3);
+   public static <A, B, C, D, E> Union5<A, B, C, D, E> withFourth(D d) {
+      return new Union5<>(d, 3);
    }
 
-   public static <A, B, C, D, E> AnyOfFive<A, B, C, D, E> withFifth(E e) {
-      return new AnyOfFive<>(requireNonNull(e), 4);
+   public static <A, B, C, D, E> Union5<A, B, C, D, E> withFifth(E e) {
+      return new Union5<>(e, 4);
    }
 
-   public static <A, B, C, D, E> AnyOfFive<A, B, C, D, E> of(A a, B b, C c, D d, E e) {
+   public static <A, B, C, D, E> Union5<A, B, C, D, E> of(A a, B b, C c, D d, E e) {
       int count = 0;
       if (a != null) {
          count++;
@@ -69,38 +68,36 @@ public final class AnyOfFive<A, B, C, D, E> implements Choice.OfFive<A, B, C, D,
       if (e != null) {
          count++;
       }
-      if (count != 1) {
-         throw new IllegalArgumentException("Exactly one argument must be non-null");
+      if (count > 1) {
+         throw new IllegalArgumentException("Only one argument can be non-null");
       }
-      if (a != null) {
-         return new AnyOfFive<>(a, 0);
+      if (a != null || count == 0) {
+         return new Union5<>(a, 0);
       } else if (b != null) {
-         return new AnyOfFive<>(b, 1);
+         return new Union5<>(b, 1);
       } else if (c != null) {
-         return new AnyOfFive<>(c, 2);
+         return new Union5<>(c, 2);
       } else if (d != null) {
-         return new AnyOfFive<>(d, 3);
+         return new Union5<>(d, 3);
       } else { // e != null
-         return new AnyOfFive<>(e, 4);
+         return new Union5<>(e, 4);
       }
    }
    
-   public static <A, B, C, D, E> AnyOfFive<A, B, C, D, E> firstOf(A a, B b, C c, D d, E e) {
+   public static <A, B, C, D, E> Union5<A, B, C, D, E> firstOf(A a, B b, C c, D d, E e) {
       if (a != null) {
-         return new AnyOfFive<>(a, 0);
+         return new Union5<>(a, 0);
       } else if (b != null) {
-         return new AnyOfFive<>(b, 1);
+         return new Union5<>(b, 1);
       } else if (c != null) {
-         return new AnyOfFive<>(c, 2);
+         return new Union5<>(c, 2);
       } else if (d != null) {
-         return new AnyOfFive<>(d, 3);
-      } else if (e != null) {
-         return new AnyOfFive<>(e, 4);
+         return new Union5<>(d, 3);
       } else {
-         throw new IllegalArgumentException("At least one argument must be non-null");
+         return new Union5<>(e, 4);
       }
    }
-   
+
    @Override
    public boolean hasFirst() {
       return index == 0;
@@ -197,117 +194,117 @@ public final class AnyOfFive<A, B, C, D, E> implements Choice.OfFive<A, B, C, D,
    }
    
    @Override
-   public <T> AnyOfFive<T, B, C, D, E> mapFirst(Function<? super A, ? extends T> function) {
-      return index == 0 ? withFirst(function.apply((A) value)) : (AnyOfFive<T, B, C, D, E>) this;
+   public <T> Union5<T, B, C, D, E> mapFirst(Function<? super A, ? extends T> function) {
+      return index == 0 ? withFirst(function.apply((A) value)) : (Union5<T, B, C, D, E>) this;
    }
    
    @Override
-   public <T> AnyOfFive<A, T, C, D, E> mapSecond(Function<? super B, ? extends T> function) {
-      return index == 1 ? withSecond(function.apply((B) value)) : (AnyOfFive<A, T, C, D, E>) this;
+   public <T> Union5<A, T, C, D, E> mapSecond(Function<? super B, ? extends T> function) {
+      return index == 1 ? withSecond(function.apply((B) value)) : (Union5<A, T, C, D, E>) this;
    }
 
    @Override
-   public <T> AnyOfFive<A, B, T, D, E> mapThird(Function<? super C, ? extends T> function) {
-      return index == 2 ? withThird(function.apply((C) value)) : (AnyOfFive<A, B, T, D, E>) this;
+   public <T> Union5<A, B, T, D, E> mapThird(Function<? super C, ? extends T> function) {
+      return index == 2 ? withThird(function.apply((C) value)) : (Union5<A, B, T, D, E>) this;
    }
 
    @Override
-   public <T> AnyOfFive<A, B, C, T, E> mapFourth(Function<? super D, ? extends T> function) {
-      return index == 3 ? withFourth(function.apply((D) value)) : (AnyOfFive<A, B, C, T, E>) this;
+   public <T> Union5<A, B, C, T, E> mapFourth(Function<? super D, ? extends T> function) {
+      return index == 3 ? withFourth(function.apply((D) value)) : (Union5<A, B, C, T, E>) this;
    }
 
    @Override
-   public <T> AnyOfFive<A, B, C, D, T> mapFifth(Function<? super E, ? extends T> function) {
-      return index == 4 ? withFifth(function.apply((E) value)) : (AnyOfFive<A, B, C, D, T>) this;
+   public <T> Union5<A, B, C, D, T> mapFifth(Function<? super E, ? extends T> function) {
+      return index == 4 ? withFifth(function.apply((E) value)) : (Union5<A, B, C, D, T>) this;
    }
 
-   public AnyOfFour<B, C, D, E> contractFirst(Function<? super A, AnyOfFour<B, C, D, E>> function) {
+   public Union4<B, C, D, E> contractFirst(Function<? super A, Union4<B, C, D, E>> function) {
       if (index == 0) {
          return function.apply((A) value);
       } else if (index == 1) {
-         return AnyOfFour.withFirst((B) value);
+         return Union4.withFirst((B) value);
       } else if (index == 2) {
-         return AnyOfFour.withSecond((C) value);
+         return Union4.withSecond((C) value);
       } else if (index == 3) {
-         return AnyOfFour.withThird((D) value);
+         return Union4.withThird((D) value);
       } else { // index == 4
-         return AnyOfFour.withFourth((E) value);
+         return Union4.withFourth((E) value);
       }
    }
 
-   public AnyOfFour<A, C, D, E> contractSecond(Function<? super B, AnyOfFour<A, C, D, E>> function) {
+   public Union4<A, C, D, E> contractSecond(Function<? super B, Union4<A, C, D, E>> function) {
       if (index == 0) {
-         return AnyOfFour.withFirst((A) value);
+         return Union4.withFirst((A) value);
       } else if (index == 1) {
          return function.apply((B) value);
       } else if (index == 2) {
-         return AnyOfFour.withSecond((C) value);
+         return Union4.withSecond((C) value);
       } else if (index == 3) {
-         return AnyOfFour.withThird((D) value);
+         return Union4.withThird((D) value);
       } else { // index == 4
-         return AnyOfFour.withFourth((E) value);
+         return Union4.withFourth((E) value);
       }
    }
 
-   public AnyOfFour<A, B, D, E> contractThird(Function<? super C, AnyOfFour<A, B, D, E>> function) {
+   public Union4<A, B, D, E> contractThird(Function<? super C, Union4<A, B, D, E>> function) {
       if (index == 0) {
-         return AnyOfFour.withFirst((A) value);
+         return Union4.withFirst((A) value);
       } else if (index == 1) {
-         return AnyOfFour.withSecond((B) value);
+         return Union4.withSecond((B) value);
       } else if (index == 2) {
          return function.apply((C) value);
       } else if (index == 3) {
-         return AnyOfFour.withThird((D) value);
+         return Union4.withThird((D) value);
       } else { // index == 4
-         return AnyOfFour.withFourth((E) value);
+         return Union4.withFourth((E) value);
       }
    }
 
-   public AnyOfFour<A, B, C, E> contractFourth(Function<? super D, AnyOfFour<A, B, C, E>> function) {
+   public Union4<A, B, C, E> contractFourth(Function<? super D, Union4<A, B, C, E>> function) {
       if (index == 0) {
-         return AnyOfFour.withFirst((A) value);
+         return Union4.withFirst((A) value);
       } else if (index == 1) {
-         return AnyOfFour.withSecond((B) value);
+         return Union4.withSecond((B) value);
       } else if (index == 2) {
-         return AnyOfFour.withThird((C) value);
+         return Union4.withThird((C) value);
       } else if (index == 3) {
          return function.apply((D) value);
       } else { // index == 4
-         return AnyOfFour.withFourth((E) value);
+         return Union4.withFourth((E) value);
       }
    }
 
-   public AnyOfFour<A, B, C, D> contractFifth(Function<? super E, AnyOfFour<A, B, C, D>> function) {
+   public Union4<A, B, C, D> contractFifth(Function<? super E, Union4<A, B, C, D>> function) {
       if (index == 0) {
-         return AnyOfFour.withFirst((A) value);
+         return Union4.withFirst((A) value);
       } else if (index == 1) {
-         return AnyOfFour.withSecond((B) value);
+         return Union4.withSecond((B) value);
       } else if (index == 2) {
-         return AnyOfFour.withThird((C) value);
+         return Union4.withThird((C) value);
       } else if (index == 3) {
-         return AnyOfFour.withFourth((D) value);
+         return Union4.withFourth((D) value);
       } else { // index == 4
          return function.apply((E) value);
       }
    }
 
-   public AnyOfFive<A, B, C, D, E> flatMapFirst(Function<? super A, AnyOfFive<A, B, C, D, E>> function) {
+   public Union5<A, B, C, D, E> flatMapFirst(Function<? super A, Union5<A, B, C, D, E>> function) {
       return index == 0 ? requireNonNull(function.apply((A) value)) : this;
    }
 
-   public AnyOfFive<A, B, C, D, E> flatMapSecond(Function<? super B, AnyOfFive<A, B, C, D, E>> function) {
+   public Union5<A, B, C, D, E> flatMapSecond(Function<? super B, Union5<A, B, C, D, E>> function) {
       return index == 1 ? requireNonNull(function.apply((B) value)) : this;
    }
 
-   public AnyOfFive<A, B, C, D, E> flatMapThird(Function<? super C, AnyOfFive<A, B, C, D, E>> function) {
+   public Union5<A, B, C, D, E> flatMapThird(Function<? super C, Union5<A, B, C, D, E>> function) {
       return index == 2 ? requireNonNull(function.apply((C) value)) : this;
    }
 
-   public AnyOfFive<A, B, C, D, E> flatMapFourth(Function<? super D, AnyOfFive<A, B, C, D, E>> function) {
+   public Union5<A, B, C, D, E> flatMapFourth(Function<? super D, Union5<A, B, C, D, E>> function) {
       return index == 3 ? requireNonNull(function.apply((D) value)) : this;
    }
 
-   public AnyOfFive<A, B, C, D, E> flatMapFifth(Function<? super E, AnyOfFive<A, B, C, D, E>> function) {
+   public Union5<A, B, C, D, E> flatMapFifth(Function<? super E, Union5<A, B, C, D, E>> function) {
       return index == 4 ? requireNonNull(function.apply((E) value)) : this;
    }
    
@@ -328,10 +325,10 @@ public final class AnyOfFive<A, B, C, D, E> implements Choice.OfFive<A, B, C, D,
 
    @Override
    public boolean equals(Object o) {
-      if (!(o instanceof AnyOfFive)) {
+      if (!(o instanceof Union5)) {
          return false;
       }
-      AnyOfFive<?, ?, ?, ?, ?> other = (AnyOfFive<?, ?, ?, ?, ?>) o;
+      Union5<?, ?, ?, ?, ?> other = (Union5<?, ?, ?, ?, ?>) o;
       return index == other.index && Objects.equals(value, other.value);
    }
    
@@ -343,15 +340,15 @@ public final class AnyOfFive<A, B, C, D, E> implements Choice.OfFive<A, B, C, D,
    @Override
    public String toString() {
       if (index == 0) {
-         return "AnyOfFive.first[" + value + "]";
+         return "Union5.first[" + value + "]";
       } else if (index == 1) {
-         return "AnyOfFive.second[" + value + "]";
+         return "Union5.second[" + value + "]";
       } else if (index == 2) {
-         return "AnyOfFive.third[" + value + "]";
+         return "Union5.third[" + value + "]";
       } else if (index == 3) {
-         return "AnyOfFive.fourth[" + value + "]";
+         return "Union5.fourth[" + value + "]";
       } else { // index == 4
-         return "AnyOfFive.fifth[" + value + "]";
+         return "Union5.fifth[" + value + "]";
       }
    }
 }

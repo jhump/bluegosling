@@ -23,7 +23,7 @@ import java.util.function.Predicate;
  *
  * @param <T> the type of the held value
  */
-public class Holder<T> extends AbstractDynamicPossible<T> implements Serializable {
+public final class Holder<T> extends AbstractDynamicPossible<T> implements Serializable {
    
    private static final long serialVersionUID = -1290017626307767440L;
 

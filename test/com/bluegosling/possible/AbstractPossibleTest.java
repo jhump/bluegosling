@@ -52,6 +52,7 @@ public abstract class AbstractPossibleTest {
       assertEquals(value, p.get());
       assertEquals(value, p.orElse(null));
       assertEquals(value, p.orElse(value + "xyz"));
+      assertEquals(value, p.orElseGet(() -> "xyz"));
       assertEquals(value, p.orElseThrow(() -> new RuntimeException()));
       checkSingletonSet(p.asSet(), value);
       

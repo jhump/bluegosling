@@ -10,6 +10,8 @@ import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 
+import com.bluegosling.util.ValueType;
+
 /**
  * A tuple with two items.
  *
@@ -18,7 +20,8 @@ import java.util.function.Function;
  * @param <A> the type of the first item
  * @param <B> the type of the second item
  */
-public class Pair<A, B> extends AbstractTuple implements Tuple.Ops2<A, B>, Serializable {
+@ValueType
+public final class Pair<A, B> extends AbstractTuple implements Tuple.Ops2<A, B>, Serializable {
    
    private static final long serialVersionUID = 6469872298989893473L;
 
