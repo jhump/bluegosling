@@ -22,6 +22,8 @@ import java.util.function.Function;
 public final class Union4<A, B, C, D> implements Choice.OfFour<A, B, C, D>, Serializable {
    private static final long serialVersionUID = -8557684884722232629L;
 
+   private static final Union4<?, ?, ?, ?> EMPTY = withFirst(null);
+
    private final Object value;
    private final int index;
    
@@ -61,10 +63,10 @@ public final class Union4<A, B, C, D> implements Choice.OfFour<A, B, C, D>, Seri
       if (d != null) {
          count++;
       }
-      if (count > 1) {
-         throw new IllegalArgumentException("Only one argument can be non-null");
+      if (count != 1) {
+         throw new IllegalArgumentException("Exactly one argument should be non-null");
       }
-      if (a != null || count == 0) {
+      if (a != null) {
          return new Union4<>(a, 0);
       } else if (b != null) {
          return new Union4<>(b, 1);
@@ -82,8 +84,10 @@ public final class Union4<A, B, C, D> implements Choice.OfFour<A, B, C, D>, Seri
          return new Union4<>(b, 1);
       } else if (c != null) {
          return new Union4<>(c, 2);
-      } else {
+      } else if (d != null) {
          return new Union4<>(d, 3);
+      } else {
+         return (Union4<A, B, C, D>) EMPTY;
       }
    }
 

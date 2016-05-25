@@ -21,6 +21,8 @@ import java.util.function.Function;
 public final class Union2<A, B> implements Choice.OfTwo<A, B>, Serializable {
    private static final long serialVersionUID = 3078358490669146744L;
    
+   private static final Union2<?, ?> EMPTY = withFirst(null);
+   
    private final Object value;
    private final int index;
    
@@ -49,8 +51,10 @@ public final class Union2<A, B> implements Choice.OfTwo<A, B>, Serializable {
    public static <A, B> Union2<A, B> firstOf(A a, B b) {
       if (a != null) {
          return new Union2<>(a, 0);
-      } else {
+      } else if (b != null) {
          return new Union2<>(b, 1);
+      } else {
+         return (Union2<A, B>) EMPTY;
       }
    }
       

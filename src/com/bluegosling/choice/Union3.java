@@ -22,6 +22,8 @@ import java.util.function.Function;
 public final class Union3<A, B, C> implements Choice.OfThree<A, B, C>, Serializable {
    private static final long serialVersionUID = 3859951374248326999L;
 
+   private static final Union3<?, ?, ?> EMPTY = withFirst(null);
+
    private final Object value;
    private final int index;
    
@@ -54,10 +56,10 @@ public final class Union3<A, B, C> implements Choice.OfThree<A, B, C>, Serializa
       if (c != null) {
          count++;
       }
-      if (count > 1) {
-         throw new IllegalArgumentException("Only one argument can be non-null");
+      if (count != 1) {
+         throw new IllegalArgumentException("Exactly one argument should be non-null");
       }
-      if (a != null || count == 0) {
+      if (a != null) {
          return new Union3<>(a, 0);
       } else if (b != null) {
          return new Union3<>(b, 1);
@@ -71,8 +73,10 @@ public final class Union3<A, B, C> implements Choice.OfThree<A, B, C>, Serializa
          return new Union3<>(a, 0);
       } else if (b != null) {
          return new Union3<>(b, 1);
-      } else {
+      } else if (c != null) {
          return new Union3<>(c, 2);
+      } else {
+         return (Union3<A, B, C>) EMPTY;
       }
    }
 

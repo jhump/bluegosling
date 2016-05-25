@@ -3,6 +3,7 @@ package com.bluegosling.util;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -10,6 +11,8 @@ import java.util.Optional;
 
 import com.bluegosling.concurrent.fluent.FluentFuture;
 import com.bluegosling.function.TriFunction;
+import com.bluegosling.possible.Possible;
+import com.bluegosling.possible.Reference;
 import com.google.common.base.Objects;
 
 import java.util.concurrent.CancellationException;
@@ -422,6 +425,35 @@ public final class Result<T, E> implements Serializable {
       throw new NoSuchElementException();
    }
 
+   public static <T> List<T> nullIfFailed(
+         Collection<? extends Result<? extends T, ?>> results) {
+      List<T> present = new ArrayList<T>(results.size());
+      for (Result<? extends T, ?> o : results) {
+         present.add(o.orElse(null));
+      }
+      return Collections.unmodifiableList(present);
+   }
+   
+   static <T> List<T> successfulOnly(Collection<? extends Result<? extends T, ?>> results) {
+      List<T> present = new ArrayList<>(results.size());
+      for (Result<? extends T, ?> o : results) {
+         if (o.isSuccessful()) {
+            present.add(o.get());
+         }
+      }
+      return Collections.unmodifiableList(present);
+   }
+
+   static <E> List<E> failedOnly(Collection<? extends Result<?, ? extends E>> results) {
+      List<E> present = new ArrayList<>(results.size());
+      for (Result<?, ? extends E> o : results) {
+         if (o.isFailed()) {
+            present.add(o.getFailure());
+         }
+      }
+      return Collections.unmodifiableList(present);
+   }
+
    /**
     * Extracts the result from a result whose value is also a result object. If this result is a
     * failure then the returned result has the same cause of failure.
@@ -457,7 +489,14 @@ public final class Result<T, E> implements Serializable {
       return success ? visitor.visitValue((T) value) : visitor.visitError((E) value);
    }
 
-   
+   public Optional<T> asOptional() {
+      return success ? Optional.ofNullable((T) value) : Optional.empty();
+   }
+
+   public Possible<T> asPossible() {
+      return success ? Reference.setTo((T) value) : Reference.unset();
+   }
+
    @Override
    public boolean equals(Object o) {
       if (!(o instanceof Result)) {

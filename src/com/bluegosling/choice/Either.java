@@ -266,7 +266,7 @@ public final class Either<A, B> implements Choice.OfTwo<A, B>, Serializable {
     *       given function to the value of the second option
     */
    public Either<A, B> flatMapSecond(Function<? super B, Either<A, B>> function) {
-      return index == 0 ? requireNonNull(function.apply((B) value)) : this;
+      return index == 1 ? requireNonNull(function.apply((B) value)) : this;
    }
    
    @Override
