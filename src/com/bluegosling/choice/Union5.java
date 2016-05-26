@@ -22,6 +22,8 @@ import java.util.function.Function;
 public final class Union5<A, B, C, D, E> implements Choice.OfFive<A, B, C, D, E>, Serializable {
    private static final long serialVersionUID = -1914510684839843360L;
 
+   private static final Union5<?, ?, ?, ?, ?> EMPTY = withFirst(null);
+
    private final Object value;
    private final int index;
    
@@ -68,10 +70,10 @@ public final class Union5<A, B, C, D, E> implements Choice.OfFive<A, B, C, D, E>
       if (e != null) {
          count++;
       }
-      if (count > 1) {
-         throw new IllegalArgumentException("Only one argument can be non-null");
+      if (count != 1) {
+         throw new IllegalArgumentException("Exactly one argument should be non-null");
       }
-      if (a != null || count == 0) {
+      if (a != null) {
          return new Union5<>(a, 0);
       } else if (b != null) {
          return new Union5<>(b, 1);
@@ -93,8 +95,10 @@ public final class Union5<A, B, C, D, E> implements Choice.OfFive<A, B, C, D, E>
          return new Union5<>(c, 2);
       } else if (d != null) {
          return new Union5<>(d, 3);
-      } else {
+      } else if (e != null) {
          return new Union5<>(e, 4);
+      } else {
+         return (Union5<A, B, C, D, E>) EMPTY;
       }
    }
 
