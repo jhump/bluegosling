@@ -677,7 +677,7 @@ final class FluentFutures {
     */
    static class CompletedScheduledFuture<T> extends CompletedFuture<T>
          implements FluentScheduledFuture<T> {
-      private static Delayed delayed;
+      private final Delayed delayed;
       
       CompletedScheduledFuture(T value, Delayed delayed) {
          super(value);
@@ -759,7 +759,7 @@ final class FluentFutures {
     */
    static class FailedScheduledFuture<T> extends FailedFuture<T>
          implements FluentScheduledFuture<T> {
-      private static Delayed delayed;
+      private final Delayed delayed;
       
       FailedScheduledFuture(Throwable failure, Delayed delayed) {
          super(failure);
@@ -841,7 +841,7 @@ final class FluentFutures {
     */
    static class CancelledScheduledFuture<T> extends CancelledFuture<T>
          implements FluentScheduledFuture<T> {
-      private static Delayed delayed;
+      private final Delayed delayed;
 
       CancelledScheduledFuture(Delayed delayed) {
          this.delayed = delayed;
