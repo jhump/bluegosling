@@ -690,8 +690,7 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
     */
    public int getActiveCount() {
       long c = activeCount.longValue();
-      assert c > 0;
-      assert c <= Integer.MAX_VALUE;
+      assert c >= 0 && c <= Integer.MAX_VALUE;
       return (int) c;
    }
 
