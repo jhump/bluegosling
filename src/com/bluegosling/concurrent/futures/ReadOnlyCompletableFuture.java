@@ -6,7 +6,7 @@ import java.util.concurrent.CompletionStage;
 /**
  * A completable future whose public API is read-only. Attempts to {@linkplain #complete(Object)
  * complete} or {@linkplain #obtrudeValue(Object) obtrude} a value or cause of failure will result
- * in {@link UnsupportedOperationException}s. Also, calls {@link #toCompletableFuture()} will
+ * in {@link UnsupportedOperationException}s. Also, calls to {@link #toCompletableFuture()} will
  * clone the future, returning a new {@link CompletableFuture} that is kept in sync with the
  * original, completing or failing with the same result or cause.
  * 
@@ -80,8 +80,6 @@ public class ReadOnlyCompletableFuture<T> extends InterruptibleCompletableFuture
     * Returns a new {@link CompletableFuture} that completes with the same value or cause of failure
     * as this future. The returned future is a standard future, not a read-only one. So it can be
     * completed/obtruded. However, changes to the returned future will not impact this future.
-    *
-    * @see java.util.concurrent.CompletableFuture#toCompletableFuture()
     */
    @Override
    public CompletableFuture<T> toCompletableFuture() {

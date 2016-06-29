@@ -140,7 +140,7 @@ public class DoubleInstanceLockedTreeMap<K, V> implements ConcurrentMap<K, V>, N
 
    @Override
    public Entry<K, V> lowerEntry(K key) {
-      return new EntryImpl(lock.read(m -> m.lowerEntry(key)));
+      return wrap(lock.read(m -> m.lowerEntry(key)));
    }
 
    @Override
@@ -150,7 +150,7 @@ public class DoubleInstanceLockedTreeMap<K, V> implements ConcurrentMap<K, V>, N
 
    @Override
    public Entry<K, V> floorEntry(K key) {
-      return new EntryImpl(lock.read(m -> m.floorEntry(key)));
+      return wrap(lock.read(m -> m.floorEntry(key)));
    }
 
    @Override
@@ -160,7 +160,7 @@ public class DoubleInstanceLockedTreeMap<K, V> implements ConcurrentMap<K, V>, N
 
    @Override
    public Entry<K, V> ceilingEntry(K key) {
-      return new EntryImpl(lock.read(m -> m.ceilingEntry(key)));
+      return wrap(lock.read(m -> m.ceilingEntry(key)));
    }
 
    @Override
@@ -170,7 +170,7 @@ public class DoubleInstanceLockedTreeMap<K, V> implements ConcurrentMap<K, V>, N
 
    @Override
    public Entry<K, V> higherEntry(K key) {
-      return new EntryImpl(lock.read(m -> m.higherEntry(key)));
+      return wrap(lock.read(m -> m.higherEntry(key)));
    }
 
    @Override
@@ -180,22 +180,22 @@ public class DoubleInstanceLockedTreeMap<K, V> implements ConcurrentMap<K, V>, N
 
    @Override
    public Entry<K, V> firstEntry() {
-      return new EntryImpl(lock.read(NavigableMap::firstEntry));
+      return wrap(lock.read(NavigableMap::firstEntry));
    }
 
    @Override
    public Entry<K, V> lastEntry() {
-      return new EntryImpl(lock.read(NavigableMap::lastEntry));
+      return wrap(lock.read(NavigableMap::lastEntry));
    }
 
    @Override
    public Entry<K, V> pollFirstEntry() {
-      return new EntryImpl(lock.read(NavigableMap::pollFirstEntry));
+      return wrap(lock.read(NavigableMap::pollFirstEntry));
    }
 
    @Override
    public Entry<K, V> pollLastEntry() {
-      return new EntryImpl(lock.read(NavigableMap::pollLastEntry));
+      return wrap(lock.read(NavigableMap::pollLastEntry));
    }
 
    @Override
@@ -321,6 +321,10 @@ public class DoubleInstanceLockedTreeMap<K, V> implements ConcurrentMap<K, V>, N
    public String toString() {
       return lock.read(Map::toString);
    }
+
+   EntryImpl wrap(Entry<K, V> e) {
+      return e == null ? null : new EntryImpl(e);
+   }
    
    /**
     * Implements the {@link Entry} interface for entries in this map. This represents a snapshot of
@@ -332,7 +336,7 @@ public class DoubleInstanceLockedTreeMap<K, V> implements ConcurrentMap<K, V>, N
     */
    private class EntryImpl implements Entry<K, V> {
       final K key;
-      V value;
+      volatile V value;
       
       EntryImpl(Entry<K, V> e) {
          this.key = e.getKey();
@@ -358,7 +362,7 @@ public class DoubleInstanceLockedTreeMap<K, V> implements ConcurrentMap<K, V>, N
 
       @Override
       public V setValue(V value) {
-         return lock.read(m -> {
+         return lock.write(m -> {
             V v = m.replace(key, value);
             if (v == null && !m.containsKey(key)) {
                throw new ConcurrentModificationException();
@@ -742,7 +746,7 @@ public class DoubleInstanceLockedTreeMap<K, V> implements ConcurrentMap<K, V>, N
             @Override
             public Entry<K, V> next() {
                hasFetched = true;
-               lastFetched = new EntryImpl(iter.next());
+               lastFetched = wrap(iter.next());
                return lastFetched;
             }
             
@@ -887,7 +891,7 @@ public class DoubleInstanceLockedTreeMap<K, V> implements ConcurrentMap<K, V>, N
 
       @Override
       public Entry<K, V> lowerEntry(K key) {
-         return lock.read(m -> derive.apply(m).lowerEntry(key));
+         return wrap(lock.read(m -> derive.apply(m).lowerEntry(key)));
       }
 
       @Override
@@ -897,7 +901,7 @@ public class DoubleInstanceLockedTreeMap<K, V> implements ConcurrentMap<K, V>, N
 
       @Override
       public Entry<K, V> floorEntry(K key) {
-         return lock.read(m -> derive.apply(m).floorEntry(key));
+         return wrap(lock.read(m -> derive.apply(m).floorEntry(key)));
       }
 
       @Override
@@ -907,7 +911,7 @@ public class DoubleInstanceLockedTreeMap<K, V> implements ConcurrentMap<K, V>, N
 
       @Override
       public Entry<K, V> ceilingEntry(K key) {
-         return lock.read(m -> derive.apply(m).ceilingEntry(key));
+         return wrap(lock.read(m -> derive.apply(m).ceilingEntry(key)));
       }
 
       @Override
@@ -917,7 +921,7 @@ public class DoubleInstanceLockedTreeMap<K, V> implements ConcurrentMap<K, V>, N
 
       @Override
       public Entry<K, V> higherEntry(K key) {
-         return lock.read(m -> derive.apply(m).higherEntry(key));
+         return wrap(lock.read(m -> derive.apply(m).higherEntry(key)));
       }
 
       @Override
@@ -927,22 +931,22 @@ public class DoubleInstanceLockedTreeMap<K, V> implements ConcurrentMap<K, V>, N
 
       @Override
       public Entry<K, V> firstEntry() {
-         return lock.read(m -> derive.apply(m).firstEntry());
+         return wrap(lock.read(m -> derive.apply(m).firstEntry()));
       }
 
       @Override
       public Entry<K, V> lastEntry() {
-         return lock.read(m -> derive.apply(m).lastEntry());
+         return wrap(lock.read(m -> derive.apply(m).lastEntry()));
       }
 
       @Override
       public Entry<K, V> pollFirstEntry() {
-         return lock.read(m -> derive.apply(m).pollFirstEntry());
+         return wrap(lock.read(m -> derive.apply(m).pollFirstEntry()));
       }
 
       @Override
       public Entry<K, V> pollLastEntry() {
-         return lock.read(m -> derive.apply(m).pollLastEntry());
+         return wrap(lock.read(m -> derive.apply(m).pollLastEntry()));
       }
 
       @Override

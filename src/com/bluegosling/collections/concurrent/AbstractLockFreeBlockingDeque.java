@@ -91,7 +91,6 @@ public abstract class AbstractLockFreeBlockingDeque<E> extends AbstractDeque<E>
     * @return the item removed from the deque or {@code null} if the deque is empty
     * @throws InterruptedException if the operation was interrupted
     */
-   @SuppressWarnings("unused") // exception is present for overriding sub-classes
    protected E pollFirstInterruptibly() throws InterruptedException {
       return pollFirst();
    }
@@ -106,7 +105,6 @@ public abstract class AbstractLockFreeBlockingDeque<E> extends AbstractDeque<E>
     * @return the item removed from the deque or {@code null} if the deque is empty
     * @throws InterruptedException if the operation was interrupted
     */
-   @SuppressWarnings("unused") // exception is present for overriding sub-classes
    protected E pollLastInterruptibly() throws InterruptedException {
       return pollLast();
    }
@@ -121,7 +119,6 @@ public abstract class AbstractLockFreeBlockingDeque<E> extends AbstractDeque<E>
     * @return true if the element was accepted or false if the deque is full
     * @throws InterruptedException if the operation was interrupted
     */
-   @SuppressWarnings("unused") // exception is present for overriding sub-classes
    protected boolean offerFirstInterruptibly(E e) throws InterruptedException {
       return offerFirst(e);
    }
@@ -136,7 +133,6 @@ public abstract class AbstractLockFreeBlockingDeque<E> extends AbstractDeque<E>
     * @return true if the element was accepted or false if the deque is full
     * @throws InterruptedException if the operation was interrupted
     */
-   @SuppressWarnings("unused") // exception is present for overriding sub-classes
    protected boolean offerLastInterruptibly(E e) throws InterruptedException {
       return offerLast(e);
    }

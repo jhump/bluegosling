@@ -211,9 +211,7 @@ public final class MoreIterables {
          } else {
             list = new ArrayList<>();
          }
-         while (iter.hasNext()) {
-            list.add(iter.next());
-         }
+         Iterators.addAll(list, iter);
          return CollectionUtils.reverseIterator(list.listIterator(list.size()));
       }
    }

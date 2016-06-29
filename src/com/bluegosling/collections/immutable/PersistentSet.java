@@ -73,7 +73,7 @@ public interface PersistentSet<E> extends Set<E>, PersistentCollection<E> {
     * {@link PersistentCollection}.
     */
    @Override default PersistentSet<E> withoutAny(Object o) {
-      // sets don't have duplicates, so this is the same as remove(Object)
+      // sets don't have duplicates, so this is the same as without(Object)
       return without(o);
    }
 
