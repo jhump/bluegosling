@@ -10,20 +10,17 @@ import java.util.concurrent.TimeUnit;
 /**
  * Represents a duration of time that is backed by an integral length and a unit.
  *
- * <p>
- * When two durations are added or subtracted, the result will convert to the finest common unit
+ * <p>When two durations are added or subtracted, the result will convert to the finest common unit
  * that won't result in overflow or underflow. If a result unit is {@link TimeUnit#DAYS} but still
  * overflows or underflows, the result will be clipped to {@link Long#MAX_VALUE} or
  * {@link Long#MIN_VALUE}, which mirrors the behavior of converting between units using
  * {@link TimeUnit#convert(long, TimeUnit)}.
  *
- * <p>
- * This provides a sane way to compare and use durations of varying units. To provide the duration
- * to APIs that accept a {@code long} and a {@code TimeUnit}, simply pass {@code duration.length()}
- * and {@code duration.unit()}.
+ * <p>This provides a sane way to compare and use durations of varying units. To provide the
+ * duration to APIs that accept a {@code long} and a {@code TimeUnit}, simply pass
+ * {@code duration.length()} and {@code duration.unit()}.
  *
- * <p>
- * <strong>Note</strong>: this class has a natural ordering that is inconsistent with equals. In
+ * <p><strong>Note</strong>: this class has a natural ordering that is inconsistent with equals. In
  * particular, two objects that represent the same amount of time are "equal" according to their
  * natural ordering but unequal according to the {@code equals} method if they have different units.
  * For example, a duration 2 seconds and one of 2,000 milliseconds are unequal but considered equal
@@ -32,8 +29,8 @@ import java.util.concurrent.TimeUnit;
 public class Duration implements Comparable<Duration> {
 
    /**
-    * Save a copy of this array instead of invoking TimeUnit.values() repeatedly (since it must
-    * create and return defensive copy).
+    * Cache of the time unit values. We don't invoke {@code TimeUnit.values()} repeatedly since it
+    * must create a defensive copy of the array every time.
     */
    private static final TimeUnit UNITS_BY_ORDINAL[] = TimeUnit.values();
 
@@ -257,7 +254,8 @@ public class Duration implements Comparable<Duration> {
    }
 
    /**
-    * Returns the length of this duration in the specified unit.
+    * Returns the length of this duration in the specified unit. This will return
+    * {@link Long#MAX_VALUE} or {@link Long#MIN_VALUE} if the conversion overflows or underflows.
     *
     * @param desiredUnit the unit to which the length is converted
     * @return the length of this duration in the specified unit
@@ -276,9 +274,9 @@ public class Duration implements Comparable<Duration> {
    }
 
    /**
-    * Returns the unit of this object's {@link #length}.
+    * Returns the unit of this object's {@link #length()}.
     *
-    * @return the unit of {@link #length}
+    * @return the unit of {@link #length()}
     */
    public TimeUnit unit() {
       return unit;
@@ -531,6 +529,7 @@ public class Duration implements Comparable<Duration> {
    }
    
    public static void main(String args[]) {
+      // TODO: move to unit tests
       long lo = Long.MIN_VALUE * Long.MIN_VALUE;
       long hi = int128_multiply64x64High(Long.MIN_VALUE, Long.MIN_VALUE);
       System.out.println(Long.toHexString(Long.MIN_VALUE) + " * " + Long.toHexString(Long.MIN_VALUE)
@@ -617,10 +616,24 @@ public class Duration implements Comparable<Duration> {
          return Long.compare(length, o.length);
       } else if (c > 0) {
          long theirs = unit.convert(o.length, o.unit);
-         return Long.compare(length, theirs);
-      } else {
+         c = Long.compare(length, theirs);
+         if (c != 0) {
+            return c;
+         }
+         // It is possible they are actually different but, when converted to common unit and
+         // truncated to integer, have the same magnitude. So check in the other unit.
          long ours = o.unit.convert(length, unit);
          return Long.compare(ours, o.length);
+      } else {
+         long ours = o.unit.convert(length, unit);
+         c = Long.compare(ours, o.length);
+         if (c != 0) {
+            return c;
+         }
+         // It is possible they are actually different but, when converted to common unit and
+         // truncated to integer, have the same magnitude. So check in the other unit.
+         long theirs = unit.convert(o.length, o.unit);
+         return Long.compare(length, theirs);
       }
    }
 

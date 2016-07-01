@@ -5,10 +5,7 @@ import com.google.common.collect.ImmutableMap;
 
 
 /**
- * Utility methods for creating immutable collections and maps and for viewing immutable collections
- * and maps using the standard JCF collection and map interfaces. Standard collection and map views
- * of immutable collections and maps throw {@link UnsupportedOperationException} from all mutation
- * methods.
+ * Utility methods related to immutable collections.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */

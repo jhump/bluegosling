@@ -530,8 +530,8 @@ public class DoubleInstanceLock<T> {
        * Indicates that a reader is releasing its shared hold.
        *
        * @param i the side that the reader is releasing
-       * @return true if a writer can subsequently acquire the side that was released (e.g. reads
-       *       have acquiesced on that side)
+       * @return always false since we use a different mechanism for notifying a waiting writer
+       *       that all readers from a side have released
        */
       @Override
       protected boolean tryReleaseShared(long i) {

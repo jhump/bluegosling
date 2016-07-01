@@ -68,7 +68,6 @@ public abstract class AbstractLockFreeBlockingQueue<E> extends AbstractQueue<E>
     * @return the item removed from the queue or {@code null} if the queue is empty
     * @throws InterruptedException if the operation was interrupted
     */
-   @SuppressWarnings("unused") // exception is present for overriding sub-classes
    protected E pollInterruptibly() throws InterruptedException {
       return poll();
    }
@@ -83,7 +82,6 @@ public abstract class AbstractLockFreeBlockingQueue<E> extends AbstractQueue<E>
     * @return true if the element was accepted or false if the queue is full
     * @throws InterruptedException if the operation was interrupted
     */
-   @SuppressWarnings("unused") // exception is present for overriding sub-classes
    protected boolean offerInterruptibly(E e) throws InterruptedException {
       return offer(e);
    }

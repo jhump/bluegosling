@@ -293,7 +293,22 @@ public interface CompletionStageFuture<T> extends CompletionStage<T>, Future<T> 
       } else if (stage instanceof CompletableFuture) {
          return fromCompletableFuture((CompletableFuture<T>) stage);
       } else {
-         return fromCompletableFuture(stage.toCompletableFuture());
+         try {
+            return fromCompletableFuture(stage.toCompletableFuture());
+         } catch (UnsupportedOperationException e) {
+            // given CompletionStage does not support #toCompletableFuture?
+            // mirror the stage into a future that implements the needed interface
+            class Result extends CompletableFuture<T> implements CompletionStageFuture<T> {}
+            Result result = new Result();
+            stage.whenComplete((v, th) -> {
+               if (th != null) {
+                  result.completeExceptionally(th);
+               } else {
+                  result.complete(v);
+               }
+            });
+            return result;
+         }
       }
    }
 }

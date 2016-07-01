@@ -11,7 +11,7 @@ import java.util.NoSuchElementException;
 
 /**
  * A very simple, thread-safe stack. This is a simpler and lighter weight version than
- * {@link TreiberStack}. It does not expose arbitrary remove operations, only {@link #pop}. All
+ * {@link TreiberStack}. It does not support arbitrary remove operations, only {@link #pop}. All
  * operations are atomic.
  * 
  * <p>This structure is safe to use concurrently from multiple threads. The iterator will never
