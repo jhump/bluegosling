@@ -28,7 +28,7 @@ public class RateLimitedBlockingQueue<E> extends AbstractQueue<E> implements Blo
       this.queue = queue;
    }
    
-   protected int measure(@SuppressWarnings("unused") E element) {
+   protected int measure(E element) {
       return 1;
    }
    

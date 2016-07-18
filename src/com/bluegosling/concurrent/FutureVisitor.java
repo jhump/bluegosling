@@ -5,7 +5,7 @@ import com.bluegosling.concurrent.fluent.FluentFuture;
 import java.util.function.Consumer;
 
 /**
- * Interface for the visitor pattern with {@link FluentFuture}s. When a visitor is passed to
+ * Interface for the visitor pattern with {@link Future}s. When a visitor is passed to
  * {@link FluentFuture#visit(FutureVisitor)}, the future calls one of these methods, depending
  * on the actual disposition of the future.
  * 

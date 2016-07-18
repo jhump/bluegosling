@@ -30,7 +30,7 @@ public abstract class AbstractLockFreeBlockingQueue<E> extends AbstractQueue<E>
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
-   private static class WaitingThread {
+   static class WaitingThread {
       /**
        * The thread that is waiting.
        */
@@ -50,13 +50,13 @@ public abstract class AbstractLockFreeBlockingQueue<E> extends AbstractQueue<E>
     * The threads that are waiting for an element. These threads are signaled when this blocking
     * queue becomes non-empty. 
     */
-   private final ConcurrentLinkedQueue<WaitingThread> awaitingElement = new ConcurrentLinkedQueue<>();
+   final ConcurrentLinkedQueue<WaitingThread> awaitingElement = new ConcurrentLinkedQueue<>();
    
    /**
     * The threads that are waiting for available capacity. These threads are signaled when this
     * blocking queue is no longer full. 
     */
-   private final ConcurrentLinkedQueue<WaitingThread> awaitingCapacity = new ConcurrentLinkedQueue<>();
+   final ConcurrentLinkedQueue<WaitingThread> awaitingCapacity = new ConcurrentLinkedQueue<>();
 
    /**
     * Removes the first element in the queue, allowing interruption. Since most lock-free queues

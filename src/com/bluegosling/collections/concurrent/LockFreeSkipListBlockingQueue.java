@@ -1,11 +1,12 @@
 package com.bluegosling.collections.concurrent;
 
-import com.bluegosling.collections.OrderedQueue;
+import com.bluegosling.collections.OrderedDeque;
 import com.bluegosling.collections.views.TransformingIterator;
 
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.Map;
+import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -16,8 +17,8 @@ import java.util.concurrent.atomic.AtomicLong;
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public class LockFreeSkipListBlockingQueue<E> extends AbstractLockFreeBlockingQueue<E>
-      implements OrderedQueue<E> {
+public class LockFreeSkipListBlockingQueue<E> extends AbstractLockFreeBlockingOrderedDeque<E>
+      implements OrderedDeque<E> {
    
    /**
     * An entry in the queue. The underlying storage is a set, but an ordered queue allows
@@ -59,22 +60,22 @@ public class LockFreeSkipListBlockingQueue<E> extends AbstractLockFreeBlockingQu
       }
    }
    
-   private final ConcurrentSkipListSet<Entry<E>> skipList;
+   private final ConcurrentSkipListMap<Entry<E>, Boolean> skipList;
    private final Comparator<? super E> comparator; 
    
    public LockFreeSkipListBlockingQueue() {
-      this.skipList = new ConcurrentSkipListSet<>();
+      this.skipList = new ConcurrentSkipListMap<>();
       this.comparator = null;
    }
    
    public LockFreeSkipListBlockingQueue(Comparator<? super E> comparator) {
-      this.skipList = new ConcurrentSkipListSet<>(Entry.comparator(comparator));
+      this.skipList = new ConcurrentSkipListMap<>(Entry.comparator(comparator));
       this.comparator = comparator;
    }
 
    @Override
    public boolean offer(E e) {
-      skipList.add(new Entry<>(e));
+      skipList.put(new Entry<>(e), Boolean.TRUE);
       // We have no correct way of knowing exactly when to signal, unless we introduced additional
       // book-keeping. Always signaling should be fine. When a no-op, it amounts to a couple of
       // volatile reads, which would typically be cheaper than the CAS we'd need for book-keeping.
@@ -83,25 +84,47 @@ public class LockFreeSkipListBlockingQueue<E> extends AbstractLockFreeBlockingQu
    }
 
    @Override
-   public E poll() {
-      Entry<E> entry = skipList.pollFirst();
-      return entry == null ? null : entry.value;
-   }
-
-   @Override
-   public E peek() {
-      Iterator<Entry<E>> iter = skipList.iterator();
-      return iter.hasNext() ? iter.next().value : null;
-   }
-
-   @Override
    public Comparator<? super E> comparator() {
       return comparator;
    }
 
    @Override
+   public E pollFirst() {
+      Map.Entry<Entry<E>, Boolean> e = skipList.pollFirstEntry();
+      Entry<E> entry = e == null ? null : e.getKey();
+      return entry == null ? null : entry.value;
+   }
+
+   @Override
+   public E peekFirst() {
+      Map.Entry<Entry<E>, Boolean> e = skipList.firstEntry();
+      Entry<E> entry = e == null ? null : e.getKey();
+      return entry == null ? null : entry.value;
+   }
+
+   @Override
+   public E pollLast() {
+      Map.Entry<Entry<E>, Boolean> e = skipList.pollLastEntry();
+      Entry<E> entry = e == null ? null : e.getKey();
+      return entry == null ? null : entry.value;
+   }
+
+   @Override
+   public E peekLast() {
+      Map.Entry<Entry<E>, Boolean> e = skipList.lastEntry();
+      Entry<E> entry = e == null ? null : e.getKey();
+      return entry == null ? null : entry.value;
+   }
+
+   @Override
    public Iterator<E> iterator() {
-      return new TransformingIterator<>(skipList.iterator(), e -> e.value);
+      return new TransformingIterator<>(skipList.keySet().iterator(), e -> e.value);
+   }
+
+   @Override
+   public Iterator<E> descendingIterator() {
+      return new TransformingIterator<>(skipList.navigableKeySet().descendingIterator(),
+            e -> e.value);
    }
 
    @Override
