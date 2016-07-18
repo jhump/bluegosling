@@ -1,16 +1,17 @@
 package com.bluegosling.collections.concurrent;
 
-import com.bluegosling.collections.OrderedQueue;
+import com.bluegosling.collections.OrderedDeque;
 import com.bluegosling.collections.views.TransformingIterator;
 
 import java.util.AbstractQueue;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.Map;
+import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 
-public class ConcurrentSkipListOrderedQueue<E> extends AbstractQueue<E> implements OrderedQueue<E> {
+public class ConcurrentSkipListOrderedQueue<E> extends AbstractQueue<E> implements OrderedDeque<E> {
    
    private static class Entry<E> implements Comparable<Entry<E>> {
       private static final AtomicLong idGenerator = new AtomicLong();
@@ -38,35 +39,23 @@ public class ConcurrentSkipListOrderedQueue<E> extends AbstractQueue<E> implemen
       }
    }
    
-   private final ConcurrentSkipListSet<Entry<E>> skipList;
+   private final ConcurrentSkipListMap<Entry<E>, Boolean> skipList;
    private final Comparator<? super E> comparator;
    
    public ConcurrentSkipListOrderedQueue() {
-      this.skipList = new ConcurrentSkipListSet<>();
+      this.skipList = new ConcurrentSkipListMap<>();
       this.comparator = null;
    }
    
    public ConcurrentSkipListOrderedQueue(Comparator<? super E> comparator) {
-      this.skipList = new ConcurrentSkipListSet<>(Entry.comparator(comparator));
+      this.skipList = new ConcurrentSkipListMap<>(Entry.comparator(comparator));
       this.comparator = comparator;
    }
 
    @Override
    public boolean offer(E e) {
-      skipList.add(new Entry<>(e));
+      skipList.put(new Entry<>(e), Boolean.TRUE);
       return true;
-   }
-
-   @Override
-   public E poll() {
-      Entry<E> entry = skipList.pollFirst();
-      return entry == null ? null : entry.value;
-   }
-
-   @Override
-   public E peek() {
-      Entry<E> entry = skipList.first();
-      return entry == null ? null : entry.value;
    }
 
    @Override
@@ -75,8 +64,42 @@ public class ConcurrentSkipListOrderedQueue<E> extends AbstractQueue<E> implemen
    }
 
    @Override
+   public E pollFirst() {
+      Map.Entry<Entry<E>, Boolean> e = skipList.pollFirstEntry();
+      Entry<E> entry = e == null ? null : e.getKey();
+      return entry == null ? null : entry.value;
+   }
+
+   @Override
+   public E peekFirst() {
+      Map.Entry<Entry<E>, Boolean> e = skipList.firstEntry();
+      Entry<E> entry = e == null ? null : e.getKey();
+      return entry == null ? null : entry.value;
+   }
+
+   @Override
+   public E pollLast() {
+      Map.Entry<Entry<E>, Boolean> e = skipList.pollLastEntry();
+      Entry<E> entry = e == null ? null : e.getKey();
+      return entry == null ? null : entry.value;
+   }
+
+   @Override
+   public E peekLast() {
+      Map.Entry<Entry<E>, Boolean> e = skipList.lastEntry();
+      Entry<E> entry = e == null ? null : e.getKey();
+      return entry == null ? null : entry.value;
+   }
+
+   @Override
    public Iterator<E> iterator() {
-      return new TransformingIterator<>(skipList.iterator(), e -> e.value);
+      return new TransformingIterator<>(skipList.keySet().iterator(), e -> e.value);
+   }
+
+   @Override
+   public Iterator<E> descendingIterator() {
+      return new TransformingIterator<>(skipList.navigableKeySet().descendingIterator(),
+            e -> e.value);
    }
 
    @Override

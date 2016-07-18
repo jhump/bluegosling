@@ -1,38 +1,25 @@
 package com.bluegosling.concurrent.executors;
 
+import java.util.Comparator;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.concurrent.AbstractExecutorService;
 import java.util.concurrent.ConcurrentLinkedDeque;
-import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.locks.LockSupport;
 
+import com.bluegosling.collections.OrderedDeque;
+import com.bluegosling.collections.concurrent.ConcurrentSkipListOrderedQueue;
 
 public class WorkSharingThreadPool extends AbstractExecutorService {
    
-   private static class QueueKey implements Comparable<QueueKey> {
-      private static final AtomicLong idGen = new AtomicLong();
-      
-      private final int sz;
-      private final long id;
-      
-      QueueKey(int queueSize) {
-         this.sz = queueSize;
-         this.id = idGen.getAndIncrement();
-      }
-
-      @Override
-      public int compareTo(QueueKey o) {
-         int c = Integer.compare(sz, o.sz);
-         return c == 0
-               ? Long.compare(id, o.id)
-               : c;
-      }
-   }
+   private final WorkSharingThread[] workers;
+   private final OrderedDeque<WorkSharingThread> orderedWorkers =
+         new ConcurrentSkipListOrderedQueue<>(Comparator.comparing(t -> t.workQueue.size()));
    
-   private final ConcurrentSkipListMap<QueueKey, ConcurrentLinkedDeque<Runnable>> queues =
-         new ConcurrentSkipListMap<>();
+   public WorkSharingThreadPool(int poolSize, ThreadFactory threadFactory) {
+      workers = new WorkSharingThread[poolSize];
+   }
 
    @Override
    public void shutdown() {
@@ -65,13 +52,13 @@ public class WorkSharingThreadPool extends AbstractExecutorService {
 
    @Override
    public void execute(Runnable command) {
-      Entry<QueueKey, ConcurrentLinkedDeque<Runnable>> shortest;
+      WorkSharingThread leastLoaded;
       while (true) {
          if (tryStartCoreThread(command)) {
             return;
          }
-         shortest = queues.pollFirstEntry();
-         if (shortest == null || shortest.getValue().isEmpty()) {
+         leastLoaded = orderedWorkers.pollFirst();
+         if (leastLoaded == null || leastLoaded.workQueue.isEmpty()) {
             if (tryStartWorker(command)) {
                return;
             }
@@ -79,9 +66,9 @@ public class WorkSharingThreadPool extends AbstractExecutorService {
             Thread.yield();
             continue;
          }
-         ConcurrentLinkedDeque<Runnable> queue = shortest.getValue();
-         queue.addLast(command);
-         queues.put(new QueueKey(queue.size()), queue);
+         leastLoaded.workQueue.addLast(command);
+         LockSupport.unpark(leastLoaded.thread);
+         orderedWorkers.add(leastLoaded);
          return;
       }
    }
@@ -94,5 +81,19 @@ public class WorkSharingThreadPool extends AbstractExecutorService {
    private boolean tryStartWorker(Runnable command) {
       // TODO: implement me
       return false;
+   }
+   
+   private class WorkSharingThread implements Runnable {
+      final ConcurrentLinkedDeque<Runnable> workQueue = new ConcurrentLinkedDeque<>();
+      final Thread thread;
+      
+      WorkSharingThread(ThreadFactory factory) {
+         this.thread = factory.newThread(this);
+      }
+      
+      @Override
+      public void run() {
+         // TODO
+      }
    }
 }

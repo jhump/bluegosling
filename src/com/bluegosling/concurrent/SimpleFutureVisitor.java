@@ -60,7 +60,6 @@ public class SimpleFutureVisitor<T> implements FutureVisitor<T> {
     *
     * @param <T> the type of future value that is visited
     */
-   @SuppressWarnings("hiding") // for convenience, using arg and param names same as fields
    public static class Builder<T> {
       private Runnable defaultAction;
       private Consumer<? super T> onSuccess;
