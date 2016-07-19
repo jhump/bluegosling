@@ -11,7 +11,7 @@ import java.util.function.ToIntFunction;
 /**
  * Allows adding/overriding {@code hashCode} and {@code equals} behavior for an object. The hasher
  * provides alternate computations for these operations than the original object. You can then wrap
- * the object using {@link #apply(Class, Object)}. The wrapped result uses the hasher's behavior for
+ * the object using {@link #wrap(Class, Object)}. The wrapped result uses the hasher's behavior for
  * implementing {@code hashCode} and {@code equals}, and the original value can be extracted via
  * the resulting object's {@link Supplier#get() get} method.
  *

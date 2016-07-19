@@ -9,7 +9,7 @@
  * 
  * <p>There are also utility classes related to {@linkplain com.bluegosling.util.IoStreams IO},
  * {@linkplain com.bluegosling.util.Throwables exceptions}, {@linkplain com.bluegosling.util.Cloner cloning},
- * {@linkplain com.bluegosling.util.Immediate immediate values} (which are something between a
+ * {@linkplain com.bluegosling.util.Result result values} (which are something between a
  * {@link java.util.concurrent.Future} and a {@link com.bluegosling.vars.Variable}), and a handful of
  * other random things.
  */

@@ -130,7 +130,7 @@ public abstract class Node<T> {
     * the graph is executed.
     * 
     * <p>An input can be optional. The node's operation is invoked even if computation of the
-    * optional input failed. The node's operation accepts an {@link Immediate} for optional inputs,
+    * optional input failed. The node's operation accepts a {@link Result} for optional inputs,
     * which can represent a successful value for the input or a failure.
     * 
     * <p>An input can also be asynchronous, which allows the execution one node's operation to run
@@ -198,7 +198,7 @@ public abstract class Node<T> {
 
       /**
        * Returns true if this is an optional input or not. An optional input's type is
-       * {@link Immediate}, so that the node can see if the associated operation was successful or
+       * {@link Result}, so that the node can see if the associated operation was successful or
        * not. 
        *
        * @return true if this is an optional input or not

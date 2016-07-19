@@ -2,6 +2,7 @@ package com.bluegosling.choice;
 
 import com.bluegosling.possible.Possible;
 
+import java.util.NoSuchElementException;
 import java.util.function.Function;
 
 /**

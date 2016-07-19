@@ -158,7 +158,7 @@ public class RateLimiter {
     * @param maxStoredPermits the maximum capacity for bursts
     * @param initialPermits the initial capacity, allowing for an initial burst if greater than zero
     * @param jitter the amount of jitter
-    * @param block the clock used to account for time and block until permits are ready
+    * @param clock the clock used to account for time and block until permits are ready
     * @throws IllegalArgumentException if the rate is non-positive or {@linkplain Double#NaN NaN},
     *       if the given maximum or initial capacity numbers are non-positive, or if the given
     *       amount of jitter is less than zero or greater than one 
