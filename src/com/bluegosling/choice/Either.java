@@ -21,7 +21,6 @@ import java.util.function.Function;
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-//TODO: tests
 @ValueType
 //For efficiency, we store the value in a single Object field and then must cast to type variable
 //A or B (which is an unchecked cast). This is safe due to the invariant ensured by the factory

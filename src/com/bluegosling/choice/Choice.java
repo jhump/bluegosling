@@ -14,14 +14,18 @@ import java.util.function.Function;
  * for example, for two of three options to be present in a choice out of three. This should be
  * intuitive for those with experience using union types in other languages.
  * 
- * <p>This base interface provides operations for a choice between at least two options. Also
- * included are sub-interfaces that extend the operations for choices of at least three or more
+ * <p>This base interface provides operations for a choice between <em>at least</em> two options.
+ * Also included are sub-interfaces, named like <tt>Ops<em>N</em></tt>, that extend the operations
+ * for choices of at least {@linkplain Ops3 three} {@linkplain Ops4 or} {@linkplain Ops5 more}
  * options. To prevent the onerousness of long-winded type declarations, five options is the limit.
+ * 
+ * <p>There are also more precise interfaces, named like <tt>Of<em>Num</em></tt>, for choices
+ * between <em>exactly</em> {@linkplain OfTwo two}, {@linkplain OfThree three},
+ * {@linkplain OfFour or} {@linkplain OfFive more} options.
  *
  * @param <A> the type of the first choice
  * @param <B> the type of the second choice
  * 
- * @see Choice.OfTwo
  * @see Choices
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)

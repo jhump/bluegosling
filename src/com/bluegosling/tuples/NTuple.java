@@ -3,6 +3,8 @@ package com.bluegosling.tuples;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
+import java.util.Iterator;
+import java.util.List;
 import java.util.function.Function;
 
 import com.bluegosling.util.ValueType;
@@ -25,8 +27,7 @@ import com.bluegosling.util.ValueType;
  * @param <E> the type of the fifth item
  */
 @ValueType
-public final class NTuple<A, B, C, D, E> extends AbstractTuple
-      implements Tuple.Ops5<A, B, C, D, E>, Serializable {
+public final class NTuple<A, B, C, D, E> implements Tuple.Ops5<A, B, C, D, E>, Serializable {
 
    private static final long serialVersionUID = 787923089202872798L;
    
@@ -443,7 +444,37 @@ public final class NTuple<A, B, C, D, E> extends AbstractTuple
       return new NTuple<Object, Object, Object, Object, Object>(
             setItem(array, index, function.apply(array[index])));
    }
+   
+   @Override
+   public Iterator<Object> iterator() {
+      return TupleUtils.iterator(this);
+   }
+   
+   @Override
+   public <T> T[] toArray(T[] a) {
+      return TupleUtils.toArray(this, a);
+   }
+   
+   @Override
+   public List<?> asList() {
+      return TupleUtils.asList(this);
+   }
+   
+   @Override
+   public boolean equals(Object o) {
+      return TupleUtils.equals(this, o);
+   }
 
+   @Override
+   public int hashCode() {
+      return TupleUtils.hashCode(this);
+   }
+
+   @Override
+   public String toString() {
+      return TupleUtils.toString(this);
+   }
+   
    /**
     * Customizes de-serialization to populate the typed (but transient) fields representing the
     * first five members of the tuple.
