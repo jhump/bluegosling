@@ -2,6 +2,7 @@ package com.bluegosling.concurrent;
 
 import com.bluegosling.concurrent.fluent.FluentFuture;
 
+import java.util.concurrent.Future;
 import java.util.function.Consumer;
 
 /**

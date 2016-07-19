@@ -338,9 +338,9 @@ public final class AnnotatedTypes {
 
    /**
     * Returns the set of all supertypes for the given type. This returned set has the same elements
-    * as if {@link #getDirectSupertypes(Type)} were invoked, and then repeatedly invoked recursively
-    * on the returned supertypes until the entire hierarchy is exhausted (e.g. reach {@code Object},
-    * which has no supertypes).
+    * as if {@link #getAnnotatedDirectSupertypes(AnnotatedType)} were invoked, and then repeatedly
+    * invoked recursively on the returned supertypes until the entire hierarchy is exhausted (e.g.
+    * reach {@code Object}, which has no supertypes).
     * 
     * <p>This method uses a breadth-first search and returns a set with deterministic iteration
     * order so that types "closer" to the given type appear first when iterating through the set.
