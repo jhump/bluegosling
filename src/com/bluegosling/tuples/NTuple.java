@@ -1,7 +1,5 @@
 package com.bluegosling.tuples;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
@@ -31,13 +29,17 @@ public final class NTuple<A, B, C, D, E> implements Tuple.Ops5<A, B, C, D, E>, S
 
    private static final long serialVersionUID = 787923089202872798L;
    
-   // ideally, these would all be final. but they can't be to support serialization
-   private transient A a;
-   private transient B b;
-   private transient C c;
-   private transient D d;
-   private transient E e;
+   private final transient A a;
+   private final transient B b;
+   private final transient C c;
+   private final transient D d;
+   private final transient E e;
    
+   /**
+    * An array that includes all members of the tuple (including those stored redundantly in the
+    * other member fields). This is the only thing serialized. The other fields are re-constituted
+    * via {@link #readResolve()}.
+    */
    private final Object[] array;
    
    private NTuple(A a, B b, C c, D d, E e, Object o, Object array[]) {
@@ -476,26 +478,11 @@ public final class NTuple<A, B, C, D, E> implements Tuple.Ops5<A, B, C, D, E>, S
    }
    
    /**
-    * Customizes de-serialization to populate the typed (but transient) fields representing the
+    * Customizes de-serialization to populate the typed (but un-serialized) fields representing the
     * first five members of the tuple.
-    * 
-    * @param in the stream from which the list is read
-    * @throws IOException if an exception is raised when reading from {@code in}
-    * @throws ClassNotFoundException if de-serializing an element fails to locate the element's
-    *            class
     */
-   @SuppressWarnings("unchecked") // deserializing is inherently unsafe, but this will be safe if
-                                  // an item is serialized and then deserialized back into the same
-                                  // types since construction of object enforces proper element
-                                  // types in the array
-   private void readObject(ObjectInputStream in) throws IOException,
-         ClassNotFoundException {
-      in.defaultReadObject();
-      // populate the redundant (but typesafe) members
-      a = (A) array[0];
-      b = (B) array[1];
-      c = (C) array[2];
-      d = (D) array[3];
-      e = (E) array[4];
+   private Object readResolve() {
+      // this copy populates the redundant (but typesafe) members
+      return new NTuple<>(array);
    }
 }
