@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -35,6 +34,12 @@ public class CategorizingDiagnosticCollector {
    private final Map<Diagnostic.Kind, List<Diagnostic<JavaFileObject>>> categorizedDiagnostics;
 
    /**
+    * Indicates whether this collector will print the messages it receives. If true, messages are
+    * printed to standard error.
+    */
+   private boolean verbose;
+
+   /**
     * Constructs a new collector. Diagnostics will be printed to {@code stderr}.
     */
    public CategorizingDiagnosticCollector() {
@@ -42,7 +47,15 @@ public class CategorizingDiagnosticCollector {
       categorizedDiagnostics = new HashMap<Diagnostic.Kind, List<Diagnostic<JavaFileObject>>>();
    }
    
-   public void reset() {
+   public synchronized void setVerbose(boolean verbose) {
+      this.verbose = verbose;
+   }
+   
+   public synchronized boolean isVerbose() {
+      return verbose;
+   }
+   
+   public synchronized void reset() {
       allDiagnostics.clear();
       categorizedDiagnostics.clear();
    }
@@ -82,9 +95,12 @@ public class CategorizingDiagnosticCollector {
                   categorizedDiagnostics.put(diagnostic.getKind(), category);
                }
                category.add(fileDiagnostic);
+               if (!verbose) {
+                  return;
+               }
             }
             try {
-               output.write(diagnostic.getMessage(null) + "\n");
+               output.write(diagnostic.toString() + "\n");
                output.flush();
             } catch (IOException e) {
                // Don't really want to throw here since we've captured
@@ -100,7 +116,7 @@ public class CategorizingDiagnosticCollector {
     * 
     * @return a collection of diagnostics
     */
-   public synchronized Collection<Diagnostic<JavaFileObject>> getAllDiagnostics() {
+   public synchronized List<Diagnostic<JavaFileObject>> getAllDiagnostics() {
       return Collections.unmodifiableList(allDiagnostics);
    }
    
@@ -110,7 +126,7 @@ public class CategorizingDiagnosticCollector {
     * @param kind the kind of diagnostic to return
     * @return a collection of diagnostics
     */
-   public synchronized Collection<Diagnostic<JavaFileObject>> getDiagnostics(Diagnostic.Kind kind) {
+   public synchronized List<Diagnostic<JavaFileObject>> getDiagnostics(Diagnostic.Kind kind) {
       List<Diagnostic<JavaFileObject>> category = categorizedDiagnostics.get(kind);
       if (category == null) {
          return Collections.emptyList();

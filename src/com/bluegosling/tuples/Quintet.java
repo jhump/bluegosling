@@ -22,8 +22,7 @@ import com.bluegosling.util.ValueType;
  * @param <E> the type of the fifth item
  */
 @ValueType
-public final class Quintet<A, B, C, D, E> extends AbstractTuple
-      implements Tuple.Ops5<A, B, C, D, E>, Serializable {
+public final class Quintet<A, B, C, D, E> implements Tuple.Ops5<A, B, C, D, E>, Serializable {
 
    private static final long serialVersionUID = -6961697944717178646L;
 
@@ -310,5 +309,35 @@ public final class Quintet<A, B, C, D, E> extends AbstractTuple
    @Override
    public <T> Quintet<A, B, C, D, T> transformFifth(Function<? super E, ? extends T> function) {
       return Quintet.<A, B, C, D, T>create(a, b, c, d, function.apply(e));
+   }
+   
+   @Override
+   public Iterator<Object> iterator() {
+      return TupleUtils.iterator(this);
+   }
+   
+   @Override
+   public <T> T[] toArray(T[] a) {
+      return TupleUtils.toArray(this, a);
+   }
+   
+   @Override
+   public List<?> asList() {
+      return TupleUtils.asList(this);
+   }
+   
+   @Override
+   public boolean equals(Object o) {
+      return TupleUtils.equals(this, o);
+   }
+
+   @Override
+   public int hashCode() {
+      return TupleUtils.hashCode(this);
+   }
+
+   @Override
+   public String toString() {
+      return TupleUtils.toString(this);
    }
 }

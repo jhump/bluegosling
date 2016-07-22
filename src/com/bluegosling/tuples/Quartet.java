@@ -21,8 +21,7 @@ import com.bluegosling.util.ValueType;
  * @param <D> the type of the fourth item
  */
 @ValueType
-public final class Quartet<A, B, C, D> extends AbstractTuple
-      implements Tuple.Ops4<A, B, C, D>, Serializable {
+public final class Quartet<A, B, C, D> implements Tuple.Ops4<A, B, C, D>, Serializable {
 
    private static final long serialVersionUID = -4005223210115823097L;
 
@@ -277,5 +276,35 @@ public final class Quartet<A, B, C, D> extends AbstractTuple
    @Override
    public <T> Quartet<A, B, C, T> transformFourth(Function<? super D, ? extends T> function) {
       return Quartet.<A, B, C, T>create(a, b, c, function.apply(d));
+   }
+   
+   @Override
+   public Iterator<Object> iterator() {
+      return TupleUtils.iterator(this);
+   }
+   
+   @Override
+   public <T> T[] toArray(T[] a) {
+      return TupleUtils.toArray(this, a);
+   }
+   
+   @Override
+   public List<?> asList() {
+      return TupleUtils.asList(this);
+   }
+   
+   @Override
+   public boolean equals(Object o) {
+      return TupleUtils.equals(this, o);
+   }
+
+   @Override
+   public int hashCode() {
+      return TupleUtils.hashCode(this);
+   }
+
+   @Override
+   public String toString() {
+      return TupleUtils.toString(this);
    }
 }

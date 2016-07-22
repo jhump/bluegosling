@@ -56,37 +56,42 @@ class TestMethodProcessor extends AbstractProcessor {
    
    /**
     * Returns the {@link Processor} under test. If necessary, this instance may be created. The
-    * {@link ProcessorUnderTest @ProcessorUnderTest} and {@link InitializeProcessorField @InitializeProcessorField}
+    * {@literal @}{@link ProcessorUnderTest} and {@literal @}{@link InitializeProcessorField}
     * annotations are used to determine the processor under test.
     * 
-    * <p>If no processor can be determined (i.e. there are no such annotations present), {@code null} is returned.
+    * <p>If no processor can be determined (i.e. there are no such annotations present) then
+    * {@code null} is returned.
     * 
     * @param method the method under test
     * @param test the test instance
     * @return the processor for this test or {@code null}
-    * @throws NoSuchFieldException if an {@link InitializeProcessorField} annotation refers to a non-existent field
-    * @throws IllegalAccessException if the processor class specified by a {@link ProcessorUnderTest} annotation
-    *       or its no-argument constructor is inaccessible 
-    * @throws InstantiationException if the processor class specified by a {@link ProcessorUnderTest} annotation is
-    *       abstract or an interface or if it does not have a no-argument constructor
-    * @throws ExceptionInInitializerError if an exception is thrown by the constructor when instantiating the
-    *       processor specified by a {@link ProcessorUnderTest} annotation
-    * @throws SecurityException if the current security manager denies access to reflectively instantiating the
-    *       class specified by a {@link ProcessorUnderTest} annotation or denies the call to
-    *       {@link Field#setAccessible(boolean)} prior to accessing the field specified by a
-    *       {@link InitializeProcessorField} annotation
+    * @throws NoSuchFieldException if an {@link InitializeProcessorField} annotation refers to a
+    *       non-existent field
+    * @throws IllegalAccessException if the processor class specified by a
+    *       {@link ProcessorUnderTest} annotation or its no-argument constructor is inaccessible 
+    * @throws InstantiationException if the processor class specified by a
+    *       {@link ProcessorUnderTest} annotation is abstract or an interface or if it does not have
+    *       a no-argument constructor
+    * @throws ExceptionInInitializerError if an exception is thrown by the constructor when
+    *       instantiating the processor specified by a {@link ProcessorUnderTest} annotation
+    * @throws SecurityException if the current security manager denies access to reflectively
+    *       instantiating the class specified by a {@link ProcessorUnderTest} annotation or denies
+    *       the call to {@link Field#setAccessible(boolean)} prior to accessing the field specified
+    *       by a {@link InitializeProcessorField} annotation
     */
    private static Processor determineProcessorUnderTest(FrameworkMethod method, Object test)
          throws NoSuchFieldException, IllegalAccessException, InstantiationException {
       // first look for an annotation on the test method
-      ProcessorUnderTest processorUnderTest = method.getMethod().getAnnotation(ProcessorUnderTest.class);
+      ProcessorUnderTest processorUnderTest =
+            method.getMethod().getAnnotation(ProcessorUnderTest.class);
       if (processorUnderTest == null) {
          // failing that, look for an annotation on the test class
          processorUnderTest = test.getClass().getAnnotation(ProcessorUnderTest.class); 
       }
       if (processorUnderTest == null) {
          // no @ProcessorUnderTest annotations? then check for @InitializeProcessorField
-         InitializeProcessorField initField = test.getClass().getAnnotation(InitializeProcessorField.class);
+         InitializeProcessorField initField = 
+               test.getClass().getAnnotation(InitializeProcessorField.class);
          if (initField == null) {
             // no annotations, so no processor under test (test code will have to instantiate and
             // initialize any processors itself)
@@ -142,7 +147,8 @@ class TestMethodProcessor extends AbstractProcessor {
       if (processor != null) {
          ret = processor.getSupportedAnnotationTypes();
       } else {
-         SupportedAnnotationTypes annotations = findAnnotation(SupportedAnnotationTypes.class, test.getClass());
+         SupportedAnnotationTypes annotations =
+               findAnnotation(SupportedAnnotationTypes.class, test.getClass());
          if (annotations == null) {
             ret = Collections.singleton("*");
          } else {
@@ -150,7 +156,8 @@ class TestMethodProcessor extends AbstractProcessor {
          }
       }
       if (ret.isEmpty()) {
-         logger.warning("No supported annotations for test. Test method " + method.getName() + " will not get invoked.");
+         logger.warning("No supported annotations for test. Test method " + method.getName()
+               + " will not get invoked.");
       }
       return ret;
    }
@@ -174,7 +181,8 @@ class TestMethodProcessor extends AbstractProcessor {
       if (processor != null) {
          return processor.getSupportedSourceVersion();
       } else {
-         SupportedSourceVersion version = findAnnotation(SupportedSourceVersion.class, test.getClass());
+         SupportedSourceVersion version =
+               findAnnotation(SupportedSourceVersion.class, test.getClass());
          return version == null ? super.getSupportedSourceVersion() : version.value();
       }
    }
@@ -189,22 +197,24 @@ class TestMethodProcessor extends AbstractProcessor {
          }
          
          // create test environment
-         TestEnvironment testEnv = new TestEnvironment(fileManager, diagnosticCollector, processingEnv,
-               roundEnv, invocationCount, annotations, processor, test); 
+         TestEnvironment testEnv = new TestEnvironment(fileManager, diagnosticCollector,
+               processingEnv, roundEnv, invocationCount, annotations, processor, test); 
          // and call method
-         Object params[] =
-               TestMethodParameterInjectors.FOR_TEST_METHODS.getInjectedParameters(method.getMethod(), testEnv);
+         Object params[] = TestMethodParameterInjectors.FOR_TEST_METHODS
+               .getInjectedParameters(method.getMethod(), testEnv);
          Object result;
          result = method.invokeExplosively(test, params);
          
          // validate outputs
-         List<FileDefinition> filesToValidate = FileDefinition.getFilesToValidate(method.getMethod(), test.getClass());
+         List<FileDefinition> filesToValidate =
+               FileDefinition.getFilesToValidate(method.getMethod(), test.getClass());
          Set<String> usedPaths = new HashSet<String>();
          for (FileDefinition fileDef : filesToValidate) {
             String path = fileDef.getTargetPath();
             if (!usedPaths.contains(path)) {
                // validate this file
-               FileObject fileObject = fileManager.getFileForInput(fileDef.getTargetLocation(), "", fileDef.getFileName());
+               FileObject fileObject = fileManager.getFileForInput(fileDef.getTargetLocation(), "",
+                     fileDef.getFileName());
                String resourceName = fileDef.getResourcePath();
                testEnv.validateGeneratedFile(fileObject, resourceName, true);
             }

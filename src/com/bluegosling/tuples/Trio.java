@@ -22,7 +22,7 @@ import java.util.function.Function;
  * @param <C> the type of the third item
  */
 @ValueType
-public final class Trio<A, B, C> extends AbstractTuple implements Tuple.Ops3<A, B, C>, Serializable {
+public final class Trio<A, B, C> implements Tuple.Ops3<A, B, C>, Serializable {
 
    private static final long serialVersionUID = -2245545958928314038L;
 
@@ -261,5 +261,35 @@ public final class Trio<A, B, C> extends AbstractTuple implements Tuple.Ops3<A, 
     */
    public boolean test(TriPredicate<? super A, ? super B, ? super C> predicate) {
       return predicate.test(a, b, c);
+   }
+   
+   @Override
+   public Iterator<Object> iterator() {
+      return TupleUtils.iterator(this);
+   }
+   
+   @Override
+   public <T> T[] toArray(T[] a) {
+      return TupleUtils.toArray(this, a);
+   }
+   
+   @Override
+   public List<?> asList() {
+      return TupleUtils.asList(this);
+   }
+   
+   @Override
+   public boolean equals(Object o) {
+      return TupleUtils.equals(this, o);
+   }
+
+   @Override
+   public int hashCode() {
+      return TupleUtils.hashCode(this);
+   }
+
+   @Override
+   public String toString() {
+      return TupleUtils.toString(this);
    }
 }

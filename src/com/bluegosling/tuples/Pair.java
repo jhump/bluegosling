@@ -21,7 +21,7 @@ import com.bluegosling.util.ValueType;
  * @param <B> the type of the second item
  */
 @ValueType
-public final class Pair<A, B> extends AbstractTuple implements Tuple.Ops2<A, B>, Serializable {
+public final class Pair<A, B> implements Tuple.Ops2<A, B>, Serializable {
    
    private static final long serialVersionUID = 6469872298989893473L;
 
@@ -229,5 +229,35 @@ public final class Pair<A, B> extends AbstractTuple implements Tuple.Ops2<A, B>,
    // TODO: doc, test
    public Pair<B, A> swap() {
       return Pair.create(b, a);
+   }
+   
+   @Override
+   public Iterator<Object> iterator() {
+      return TupleUtils.iterator(this);
+   }
+   
+   @Override
+   public <T> T[] toArray(T[] a) {
+      return TupleUtils.toArray(this, a);
+   }
+   
+   @Override
+   public List<?> asList() {
+      return TupleUtils.asList(this);
+   }
+   
+   @Override
+   public boolean equals(Object o) {
+      return TupleUtils.equals(this, o);
+   }
+
+   @Override
+   public int hashCode() {
+      return TupleUtils.hashCode(this);
+   }
+
+   @Override
+   public String toString() {
+      return TupleUtils.toString(this);
    }
 }

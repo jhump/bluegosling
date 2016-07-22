@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -18,7 +19,7 @@ import com.bluegosling.util.ValueType;
  * @param <A> the element type
  */
 @ValueType
-public final class Unit<A> extends AbstractTuple implements Tuple.Ops1<A>, Serializable {
+public final class Unit<A> implements Tuple.Ops1<A>, Serializable {
 
    private static final long serialVersionUID = -9201943154135089064L;
    
@@ -81,7 +82,7 @@ public final class Unit<A> extends AbstractTuple implements Tuple.Ops1<A>, Seria
    @Override
    @SuppressWarnings("unchecked") // its only element is an A, so cast is safe
    public List<A> asList() {
-      return (List<A>) super.asList();
+      return (List<A>) TupleUtils.asList(this);
    }
    
    @Override
@@ -163,5 +164,30 @@ public final class Unit<A> extends AbstractTuple implements Tuple.Ops1<A>, Seria
     */
    public boolean test(Predicate<? super A> predicate) {
       return predicate.test(a);
+   }
+   
+   @Override
+   public Iterator<Object> iterator() {
+      return TupleUtils.iterator(this);
+   }
+   
+   @Override
+   public <T> T[] toArray(T[] a) {
+      return TupleUtils.toArray(this, a);
+   }
+   
+   @Override
+   public boolean equals(Object o) {
+      return TupleUtils.equals(this, o);
+   }
+
+   @Override
+   public int hashCode() {
+      return TupleUtils.hashCode(this);
+   }
+
+   @Override
+   public String toString() {
+      return TupleUtils.toString(this);
    }
 }

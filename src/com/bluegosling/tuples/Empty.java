@@ -1,6 +1,8 @@
 package com.bluegosling.tuples;
 
 import java.io.Serializable;
+import java.util.Iterator;
+import java.util.List;
 import java.util.function.Function;
 
 import com.bluegosling.util.ValueType;
@@ -12,7 +14,7 @@ import com.bluegosling.util.ValueType;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 @ValueType
-public final class Empty extends AbstractTuple implements Serializable {
+public final class Empty implements Tuple, Serializable {
 
    private static final long serialVersionUID = -8355558216675899868L;
 
@@ -59,6 +61,36 @@ public final class Empty extends AbstractTuple implements Serializable {
    @Override
    public <T> Empty transformAll(Function<Object, ? extends T> function) {
       return this;
+   }
+   
+   @Override
+   public Iterator<Object> iterator() {
+      return TupleUtils.iterator(this);
+   }
+   
+   @Override
+   public <T> T[] toArray(T[] a) {
+      return TupleUtils.toArray(this, a);
+   }
+   
+   @Override
+   public List<?> asList() {
+      return TupleUtils.asList(this);
+   }
+   
+   @Override
+   public boolean equals(Object o) {
+      return TupleUtils.equals(this, o);
+   }
+
+   @Override
+   public int hashCode() {
+      return TupleUtils.hashCode(this);
+   }
+
+   @Override
+   public String toString() {
+      return TupleUtils.toString(this);
    }
 
    /**

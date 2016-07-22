@@ -98,8 +98,8 @@ public class TestJavaFileManager implements JavaFileManager {
    }
    
    /**
-    * Constructs a new file manager. The specified class loader will be used as the parent class loader
-    * for any {@linkplain #getClassLoader class loaders created by the file manager}.
+    * Constructs a new file manager. The specified class loader will be used as the parent class
+    * loader for any {@linkplain #getClassLoader class loaders created by the file manager}.
     * 
     * @param platformFileManager the platform file manager
     *    (see {@link JavaCompiler#getStandardFileManager})

@@ -6,57 +6,54 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import com.bluegosling.util.ValueType;
+
 /**
- * Abstract base class for implementations of {@code Tuple}.
+ * Contains methods for implementations of {@code Tuple}. This is not an abstract base class because
+ * the concrete tuple classes are {@linkplain ValueType value types}, so may not have super-classes.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-abstract class AbstractTuple implements Tuple {
+final class TupleUtils {
 
-   @Override
-   public Iterator<Object> iterator() {
-      return Arrays.asList(toArray()).iterator();
-   }
-   
-   @Override
-   public List<?> asList() {
-      return Collections.unmodifiableList(Arrays.asList(toArray()));
+   static Iterator<Object> iterator(Tuple t) {
+      return Arrays.asList(t.toArray()).iterator();
    }
 
-   @Override
+   static List<?> asList(Tuple t) {
+      return Collections.unmodifiableList(Arrays.asList(t.toArray()));
+   }
+
    @SuppressWarnings("unchecked") // reflective creation of array requires cast but is safe
-   public <T> T[] toArray(T[] a) {
-      int size = size();
+   static <T> T[] toArray(Tuple t, T[] a) {
+      int size = t.size();
       if (a.length < size) {
          a = (T[]) Array.newInstance(a.getClass().getComponentType(), size);
       }
-      System.arraycopy(toArray(), 0, a, 0, size);
+      System.arraycopy(t.toArray(), 0, a, 0, size);
       if (a.length > size) {
          a[size] = null;
       }
       return a;
    }
    
-   @Override
-   public boolean equals(Object o) {
+   static boolean equals(Tuple t, Object o) {
       if (o instanceof Tuple) {
-         return Arrays.equals(toArray(), ((Tuple) o).toArray());
+         return Arrays.equals(t.toArray(), ((Tuple) o).toArray());
       }
       return false;
    }
    
-   @Override
-   public int hashCode() {
-      return Arrays.hashCode(toArray());
+   static int hashCode(Tuple t) {
+      return Arrays.hashCode(t.toArray());
    }
    
-   @Override
-   public String toString() {
+   static String toString(Tuple t) {
       StringBuilder sb = new StringBuilder();
-      sb.append(getClass().getSimpleName());
+      sb.append(t.getClass().getSimpleName());
       sb.append("(");
       boolean first = true;
-      for (Object o : toArray()) {
+      for (Object o : t.toArray()) {
          if (first) {
             first = false;
          } else {

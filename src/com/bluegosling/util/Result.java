@@ -32,8 +32,8 @@ import java.util.function.Supplier;
  * {@link FluentFuture}.
  * 
  * @param <T> the type of value, for successful results
- * @param <E> the type of error, for failed results (typically but not necessarily a sub-type of
- *       {@link Throwable}
+ * @param <E> the type of error, for failed results (typically, but not necessarily, a sub-type of
+ *       {@link Throwable})
  */
 @ValueType
 //For efficiency, we store the value or error in a single Object field and then must cast to type
@@ -50,10 +50,29 @@ public final class Result<T, E> implements Serializable {
       this.success = success;
       this.value = value;
    }
-   
-   // TODO: doc
+
+   /**
+    * A visitor of results, for implementing the visitor pattern (double-dispatch) with results.
+    *
+    * @param <T> the type of result value
+    * @param <E> the type of result error
+    * @param <R> the type returned by the visitor
+    */
    public interface Visitor<T, E, R> {
+      /**
+       * Visits the value of a successful result.
+       * 
+       * @param t the result value
+       * @return the product of the visit (can be {@code null})
+       */
       R visitValue(T t);
+
+      /**
+       * Visits the value of a failed result.
+       * 
+       * @param t the result error
+       * @return the product of the visit (can be {@code null})
+       */
       R visitError(E e);
    }
 
@@ -232,7 +251,7 @@ public final class Result<T, E> implements Serializable {
     * @param fn mapping function, from one cause of failure to another
     * @return a new result whose cause of failure is mapped via the given function
     */
-   public <F> Result<T, F> mapException(Function<? super E, ? extends F> fn) {
+   public <F> Result<T, F> mapError(Function<? super E, ? extends F> fn) {
       return success ? (Result<T, F>) this : error(fn.apply((E) value));
    }
 
@@ -356,8 +375,8 @@ public final class Result<T, E> implements Serializable {
     *       the same cause of failure as one of the given results
     */
    @SafeVarargs
-   static <T, X extends Throwable> Result<List<T>, X> join(
-         Result<? extends T, ? extends X>... results) {
+   public static <T, E> Result<List<T>, E> join(
+         Result<? extends T, ? extends E>... results) {
       return join(Arrays.asList(results));
    }
    
@@ -369,11 +388,11 @@ public final class Result<T, E> implements Serializable {
     * @return a new result whose value is the list of values for the given results or has
     *       the same cause of failure as one of the given results
     */
-   static <T, X extends Throwable> Result<List<T>, X> join(
-         Iterable<? extends Result<? extends T, ? extends X>> results) {
+   public static <T, E> Result<List<T>, E> join(
+         Iterable<? extends Result<? extends T, ? extends E>> results) {
       List<T> l = new ArrayList<>();
-      Result<?, ? extends X> failure = null;
-      for (Result<? extends T, ? extends X> i : results) {
+      Result<?, ? extends E> failure = null;
+      for (Result<? extends T, ? extends E> i : results) {
          if (i.isFailed()) {
             failure = i;
             break;
@@ -383,34 +402,39 @@ public final class Result<T, E> implements Serializable {
       }
          
       if (failure != null) {
-         return (Result<List<T>, X>) failure;
+         return (Result<List<T>, E>) failure;
       }
       
       return Result.ok(Collections.unmodifiableList(l));
    }
    
    /**
-    * Returns the first successful result from the given array.
+    * Returns the first successful result from the given array. If none are successful then the last
+    * one is returned.
     * 
     * @param results an array of results
-    * @return the first successful result
+    * @return the first successful result or the last result if none are successful
+    * @throws NoSuchElementException if the given array is empty
     */
    @SafeVarargs
-   static <T, X extends Throwable> Result<T, X> firstSuccessfulOf(
-         Result<? extends T, ? extends X>... results) {
+   public static <T, E> Result<T, E> firstSuccessfulOf(
+         Result<? extends T, ? extends E>... results) {
       return firstSuccessfulOf(Arrays.asList(results));
    }
 
    /**
-    * Returns the first successful result from the given collection.
+    * Returns the first successful result from the given collection. If none are successful then the
+    * last one is returned.
     * 
     * @param results a collection of results
-    * @return the first successful result as returned by the given collection's iteration order
+    * @return the first successful result as returned by the given collection's iteration order or
+    *       the last given result if none are successful
+    * @throws NoSuchElementException if the given iterable has no results
     */
-   static <T, X extends Throwable> Result<T, X> firstSuccessfulOf(
-         Iterable<? extends Result<? extends T, ? extends X>> results) {
-      Result<T, X> failure = null;
-      for (Result<? extends T, ? extends X> i : results) {
+   public static <T, E> Result<T, E> firstSuccessfulOf(
+         Iterable<? extends Result<? extends T, ? extends E>> results) {
+      Result<T, E> failure = null;
+      for (Result<? extends T, ? extends E> i : results) {
          if (i.isFailed()) {
             failure = cast(i);
          } else {
@@ -425,6 +449,15 @@ public final class Result<T, E> implements Serializable {
       throw new NoSuchElementException();
    }
 
+   /**
+    * Returns a list of the given results' values, substituting {@code null} as the value for any
+    * failed result. The values in the returned list are in the same order as iteration order of the
+    * given collection. The returned list is always the same size as the given collection.
+    * 
+    * @param results the result objects
+    * @return the list of result values, which may contain {@code null} placeholders for
+    *       failed results
+    */
    public static <T> List<T> nullIfFailed(
          Collection<? extends Result<? extends T, ?>> results) {
       List<T> present = new ArrayList<T>(results.size());
@@ -434,7 +467,16 @@ public final class Result<T, E> implements Serializable {
       return Collections.unmodifiableList(present);
    }
    
-   static <T> List<T> successfulOnly(Collection<? extends Result<? extends T, ?>> results) {
+   /**
+    * Returns a list of the given results' values, omitting values for any failed results. The
+    * values in the returned list are in the same order as iteration order of the given collection.
+    * The returned list may be smaller than the given collection, and can even be empty if the
+    * given collection contained no successful result objects.
+    * 
+    * @param results the result objects
+    * @return the list of result values, containing values only for the given successful results
+    */
+   public static <T> List<T> successfulOnly(Collection<? extends Result<? extends T, ?>> results) {
       List<T> present = new ArrayList<>(results.size());
       for (Result<? extends T, ?> o : results) {
          if (o.isSuccessful()) {
@@ -444,7 +486,16 @@ public final class Result<T, E> implements Serializable {
       return Collections.unmodifiableList(present);
    }
 
-   static <E> List<E> failedOnly(Collection<? extends Result<?, ? extends E>> results) {
+   /**
+    * Returns a list of the given results' errors, omitting errors for any successful results. The
+    * errors in the returned list are in the same order as iteration order of the given collection.
+    * The returned list may be smaller than the given collection, and can even be empty if the
+    * given collection contained no failed result objects.
+    * 
+    * @param results the result objects
+    * @return the list of result errors, containing values only for the given failed results
+    */
+   public static <E> List<E> failedOnly(Collection<? extends Result<?, ? extends E>> results) {
       List<E> present = new ArrayList<>(results.size());
       for (Result<?, ? extends E> o : results) {
          if (o.isFailed()) {
@@ -462,10 +513,10 @@ public final class Result<T, E> implements Serializable {
     * @return a result whose value is extracted from the given object or whose cause of failure is
     *       the same as the given result
     */
-   static <T, X extends Throwable> Result<T, X> dereference(
-         Result<? extends Result<T, X>, ? extends X> result) {
+   public static <T, E> Result<T, E> dereference(
+         Result<? extends Result<T, E>, ? extends E> result) {
       if (result.isFailed()) {
-         return (Result<T, X>) result;
+         return (Result<T, E>) result;
       } else {
          return result.get();
       }
@@ -478,21 +529,43 @@ public final class Result<T, E> implements Serializable {
     * @param immediate an immediate value
     * @return the same immediate value, but with its type parameter as a super-type of the original
     */
-   static <T, U extends T, E, F extends E> Result<T, E> cast(
+   public static <T, U extends T, E, F extends E> Result<T, E> cast(
          Result<U, F> result) {
       // co-variance makes it safe since all operations return a T or E, none take a T or E
       return  (Result<T, E>) result;
    }
    
-   // TODO: doc
+   /**
+    * Visits this result using the given visitor. If this is a successful result then 
+    * {@link Visitor#visitValue(Object) visitor.visitValue(v)} is invoked. Otherwise,
+    * {@link Visitor#visitError(Object) visitor.visitError(e)} is invoked.
+    * 
+    * @param visitor the visitor
+    * @return the product of the visit
+    */
    public <R> R visit(Visitor<? super T, ? super E, ? extends R> visitor) {
       return success ? visitor.visitValue((T) value) : visitor.visitError((E) value);
    }
 
+   /**
+    * Returns the result's value, as an optional. If this is a failed result or a successful result
+    * whose value is {@code null}, this returns {@linkplain Optional#empty() empty}. Otherwise, the
+    * returned optional value holds the result's value.
+    * 
+    * @return an optional values that represents this result's value
+    */
    public Optional<T> asOptional() {
       return success ? Optional.ofNullable((T) value) : Optional.empty();
    }
 
+   /**
+    * Returns the result's value, as a possible. If this is a failed result, this returns an
+    * empty/unset value. Otherwise, the returned possible value holds the result's value. Unlike
+    * {@link #asOptional()}, a possible can represent a successful {@code null} value and is thus
+    * distinguishable from the possible value of a failed result.
+    * 
+    * @return a possible values that represents this result's value
+    */
    public Possible<T> asPossible() {
       return success ? Reference.setTo((T) value) : Reference.unset();
    }
