@@ -73,7 +73,8 @@ final class TestMethodParameterInjectors {
    private interface Provider<T> extends Function<TestEnvironment, T> {
    }
    
-   static final Map<TypeRef<?>, Provider<?>> providers = new LinkedHashMap<TypeRef<?>, Provider<?>>();
+   static final Map<TypeRef<?>, Provider<?>> providers =
+         new LinkedHashMap<TypeRef<?>, Provider<?>>();
    static {
       // update javadoc for AnnotationProcessorTestRunner whenever you add anything new here!!!
       addProvider(new TypeRef<TestEnvironment>() {}, env -> env);
@@ -132,7 +133,8 @@ final class TestMethodParameterInjectors {
                return ret;
             }
             @Override
-            public void validateParameterTypes(Method m, List<Throwable> errors) {
+            public void validateParameterTypes(Method m,
+                  List<? super IllegalArgumentException> errors) {
                Class<?> argClasses[] = m.getParameterTypes();
                Type argTypes[] = m.getGenericParameterTypes();
                for (int i = 0, len = argClasses.length; i < len; i++) {
@@ -174,7 +176,8 @@ final class TestMethodParameterInjectors {
                return ret;
             }
             @Override
-            public void validateParameterTypes(Method m, List<Throwable> errors) {
+            public void validateParameterTypes(Method m,
+                  List<? super IllegalArgumentException> errors) {
                Class<?> argClasses[] = m.getParameterTypes();
                for (int i = 0, len = argClasses.length; i < len; i++) {
                   if (!allowedBeforeClasses.contains(argClasses[i])) {

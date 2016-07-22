@@ -1,12 +1,16 @@
 package com.bluegosling.apt;
 
 import java.lang.annotation.Annotation;
+import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Set;
 
-import javax.annotation.processing.ProcessingEnvironment;
+import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
+import javax.lang.model.element.TypeElement;
+import javax.tools.Diagnostic;
+
+import com.google.common.collect.Sets;
 
 /**
  * An abstract annotation processor that makes for a better base class than the standard. This
@@ -24,21 +28,33 @@ import javax.annotation.processing.SupportedAnnotationTypes;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 public abstract class AbstractProcessor extends javax.annotation.processing.AbstractProcessor {
-
    /**
-    * {@inheritDoc}
-    * 
-    * <p>In addition to setting a protected field for access by the processor, this also sets up
-    * thread-local state with the current environment.
+    * This method sets up thread-local state for the current environment and then delegates to
+    * {@link #doProcess(Set, RoundEnvironment)}. On return, the thread-local state is reset.
     *
     * @see ProcessingEnvironments
     */
    @Override
-   public final void init(ProcessingEnvironment env) {
-      super.init(env);
-      ProcessingEnvironments.setup(env);
+   public final boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+      ProcessingEnvironments.setup(processingEnv);
+      try {
+         return doProcess(annotations, roundEnv);
+      } finally {
+         ProcessingEnvironments.reset();
+      }
    }
    
+   /**
+    * Processes the given annotations for the given round. This perform the work of the processor.
+    * 
+    * @param annotations annotations that the processor supports
+    * @param roundEnv information about this round of processing
+    * @return true if the processor claims the annotations, false otherwise
+    * @see javax.annotation.processing.AbstractProcessor#process(Set, RoundEnvironment)
+    */
+   protected abstract boolean doProcess(Set<? extends TypeElement> annotations,
+         RoundEnvironment roundEnv);
+
    /**
     * Returns the set of annotations supported by this processor. If the processor class is
     * annotated with {@link SupportedAnnotationTypes} or {@link SupportedAnnotationClasses} then
@@ -49,10 +65,24 @@ public abstract class AbstractProcessor extends javax.annotation.processing.Abst
     */
    @Override
    public Set<String> getSupportedAnnotationTypes() {
-      Set<String> ret = new HashSet<String>(super.getSupportedAnnotationTypes());
-      SupportedAnnotationClasses ann = getClass().getAnnotation(SupportedAnnotationClasses.class);
-      if (ann != null) {
-         for (java.lang.Class<? extends Annotation> annClass : ann.value()) {
+      SupportedAnnotationTypes ann1 = getClass().getAnnotation(SupportedAnnotationTypes.class);
+      SupportedAnnotationClasses ann2 = getClass().getAnnotation(SupportedAnnotationClasses.class);
+      if (ann1 == null && ann2 == null && isInitialized()) {
+         processingEnv.getMessager().printMessage(Diagnostic.Kind.WARNING,
+               "No SupportedAnnotationTypes or SupportedAnnotationClasses annotation" +
+                     "found on " + this.getClass().getName() + ", returning an empty set.");
+      }
+      int sz = (ann1 == null ? 0 : ann1.value().length)
+            + (ann2 == null ? 0 : ann2.value().length);
+      if (sz == 0) {
+         return Collections.emptySet();
+      }
+      Set<String> ret = Sets.newLinkedHashSetWithExpectedSize(sz);
+      if (ann1 != null) {
+         ret.addAll(Arrays.asList(ann1.value()));
+      }
+      if (ann2 != null) {
+         for (Class<? extends Annotation> annClass : ann2.value()) {
             ret.add(annClass.getName());
          }
       }

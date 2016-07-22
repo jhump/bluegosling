@@ -14,7 +14,7 @@ public abstract class ArProcessor extends AbstractProcessor {
    protected ArRoundEnvironment roundEnv;
    
    @Override
-   public final boolean process(Set<? extends TypeElement> annotations, RoundEnvironment env) {
+   protected final boolean doProcess(Set<? extends TypeElement> annotations, RoundEnvironment env) {
       roundEnv = new ArRoundEnvironment(env);
       try {
          Set<ArClass> classes = new HashSet<ArClass>();

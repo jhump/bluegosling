@@ -41,6 +41,6 @@ interface TestMethodParameterInjector<C> {
     * @param m the method to verify
     * @param errors the list of errors to which to add validation errors
     */
-   void validateParameterTypes(Method m, List<Throwable> errors);
+   void validateParameterTypes(Method m, List<? super IllegalArgumentException> errors);
    
 }
