@@ -122,12 +122,6 @@ public class LockFreeSkipListBlockingQueue<E> extends AbstractLockFreeBlockingOr
    }
 
    @Override
-   public Iterator<E> descendingIterator() {
-      return new TransformingIterator<>(skipList.navigableKeySet().descendingIterator(),
-            e -> e.value);
-   }
-
-   @Override
    public boolean isEmpty() {
       return skipList.isEmpty();
    }

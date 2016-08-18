@@ -1691,7 +1691,7 @@ public class ArrayBackedLinkedList<E> extends AbstractList<E>
    }
 
    private ListIterator<E> reverseIterator(int idx) {
-      return CollectionUtils.reverseIterator(listIterator(idx));
+      return MoreIterators.reverseListIterator(listIterator(idx));
    }
 
    /** {@inheritDoc} */

@@ -119,7 +119,7 @@ public class RandomAccessSetList<E> implements List<E>, RandomAccess {
 
    @Override
    public int lastIndexOf(Object o) {
-      return CollectionUtils.findObject(o, CollectionUtils.reverseIterator(listIterator(size())));      
+      return CollectionUtils.findObject(o, MoreIterators.reverseListIterator(listIterator(size())));      
    }
 
    @Override

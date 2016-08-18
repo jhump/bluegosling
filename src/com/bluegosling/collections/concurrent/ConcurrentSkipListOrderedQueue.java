@@ -97,12 +97,6 @@ public class ConcurrentSkipListOrderedQueue<E> extends AbstractQueue<E> implemen
    }
 
    @Override
-   public Iterator<E> descendingIterator() {
-      return new TransformingIterator<>(skipList.navigableKeySet().descendingIterator(),
-            e -> e.value);
-   }
-
-   @Override
    public int size() {
       return skipList.size();
    }

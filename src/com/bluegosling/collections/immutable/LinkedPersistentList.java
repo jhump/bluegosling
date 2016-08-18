@@ -3,6 +3,7 @@ package com.bluegosling.collections.immutable;
 import static com.bluegosling.collections.immutable.Immutables.cast;
 
 import com.bluegosling.collections.MoreIterables;
+import com.bluegosling.collections.MoreIterators;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 
@@ -409,7 +410,7 @@ implements PersistentList<E>, Serializable {
 
       @Override
       public ListIterator<E> listIterator() {
-         return MoreIterables.unmodifiableIterator(Collections.emptyListIterator());
+         return MoreIterators.unmodifiableListIterator(Collections.emptyListIterator());
       }
 
       @Override
@@ -417,7 +418,7 @@ implements PersistentList<E>, Serializable {
          if (pos != 0) {
             throw new IndexOutOfBoundsException("" + pos);
          }
-         return MoreIterables.unmodifiableIterator(Collections.emptyListIterator());
+         return MoreIterators.unmodifiableListIterator(Collections.emptyListIterator());
       }
 
       @Override

@@ -464,7 +464,7 @@ public class UnrolledLinkedList<E> extends AbstractSequentialList<E> implements 
 
    @Override
    public Iterator<E> descendingIterator() {
-      return CollectionUtils.reverseIterator(listIterator(size()));
+      return MoreIterators.reverseListIterator(listIterator(size()));
    }
 
    @Override

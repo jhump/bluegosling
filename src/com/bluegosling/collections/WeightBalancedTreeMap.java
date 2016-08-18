@@ -2481,7 +2481,7 @@ public class WeightBalancedTreeMap<K, V>
       @Override
       public Iterator<K> descendingIterator() {
          return new TransformingIterator<Entry<K, V>, K>(
-                  CollectionUtils.reverseIterator(map.listIterator(map.size())),
+                  MoreIterators.reverseListIterator(map.listIterator(map.size())),
                   (entry) -> entry.getKey());
       }
 
