@@ -79,12 +79,14 @@ public final class MoreMaps {
 
    public static <K extends Comparable<K>, V> NavigableMap<K, V> zipSorted(
          Iterable<? extends K> keys, Iterable<? extends V> values) {
-      return Collections.unmodifiableNavigableMap(zipInternal(keys, values, TreeMap::new));
+      return Collections.unmodifiableNavigableMap(
+            MoreMaps.<K, V, NavigableMap<K, V>>zipInternal(keys, values, TreeMap::new));
    }
 
    public static <K extends Comparable<K>, V> NavigableMap<K, V> zipSortedExact(
          Iterable<? extends K> keys, Iterable<? extends V> values) {
-      return Collections.unmodifiableNavigableMap(zipExactInternal(keys, values, TreeMap::new));
+      return Collections.unmodifiableNavigableMap(
+            MoreMaps.<K, V, NavigableMap<K, V>>zipExactInternal(keys, values, TreeMap::new));
    }
 
    public static <K, V> NavigableMap<K, V> zipSorted(Iterable<? extends K> keys,

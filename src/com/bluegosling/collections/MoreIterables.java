@@ -302,12 +302,14 @@ public final class MoreIterables {
    }
 
    @SafeVarargs
+   @SuppressWarnings("varargs")
    public static <T> Iterable<List<T>> zip(Iterable<? extends T>... colls) {
       return zip(Arrays.asList(colls));
    }
 
    public static <T> Iterable<List<T>> zip(Iterable<? extends Iterable<? extends T>> colls) {
       return new Iterable<List<T>>() {
+         @SuppressWarnings("varargs")
          @Override
          public Iterator<List<T>> iterator() {
             return MoreIterators.zip(new TransformingIterator<>(colls.iterator(), Iterable::iterator),
