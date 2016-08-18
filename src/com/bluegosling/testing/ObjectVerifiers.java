@@ -1,5 +1,12 @@
 package com.bluegosling.testing;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -7,14 +14,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import junit.framework.Assert;
-
 /**
  * Utility methods and constants for using and creating {@code ObjectVerifier} instances.
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public final class ObjectVerifiers extends Assert {
+public final class ObjectVerifiers {
    /**
     * Prevents instantiation.
     */
