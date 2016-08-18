@@ -1,6 +1,6 @@
 package com.bluegosling.collections.tables;
 
-import com.bluegosling.collections.MoreIterables;
+import com.bluegosling.collections.MoreIterators;
 import com.bluegosling.collections.tables.Table2D.Cell2D;
 import com.bluegosling.collections.tables.Tables.ImmutableCell2D;
 import com.bluegosling.collections.tables.Tables.MapWithoutPut;
@@ -314,7 +314,7 @@ final class Tables3D {
          return new AbstractCollection<Set<C>>() {
             @Override
             public Iterator<Set<C>> iterator() {
-               return MoreIterables.flatMap(base.asMap().values().iterator(),
+               return MoreIterators.flatMap(base.asMap().values().iterator(),
                      (Table2D<R, C, ?> t) -> new TransformingIterator<>(
                            t.asMap().values().iterator(), (Map<C, ?> m) -> m.keySet()));
             }
@@ -331,7 +331,7 @@ final class Tables3D {
          return new AbstractSet<Cell2D<P, R, Set<C>>>() {
             @Override
             public Iterator<Cell2D<P, R, Set<C>>> iterator() {
-               return MoreIterables.flatMap(base.asMap().entrySet().iterator(),
+               return MoreIterators.flatMap(base.asMap().entrySet().iterator(),
                      (Entry<P, Table2D<R, C, V>> e1) ->
                            new TransformingIterator<>(e1.getValue().asMap().entrySet().iterator(),
                                  (Entry<R, Map<C, V>> e2) ->

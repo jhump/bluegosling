@@ -583,38 +583,43 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
          if (fromIndex < 0 || fromIndex > size()) {
             throw new IndexOutOfBoundsException();
          }
-         // TODO
-         //return new ModifiableSubList(this, fromIndex, -1);
+         //return new ModifiableSubList(fromIndex, -1);
          return null;
       }
 
       private abstract class ModifiableSubList implements ConcurrentList<E> {
          private final int from;
          private final int to;
-         private final AtomicReference<Pair<List<E>, List<E>>> memoized;
+         private volatile Pair<List<E>, List<E>> memoized;
          
          ModifiableSubList(int from, int to) {
             this.from = from;
             this.to = to;
-            memoized = new AtomicReference<>();
+            memoized = null;
+         }
+         
+         private List<E> underlyingSublistLocked() {
+            List<E> l = underlying;
+            Pair<List<E>, List<E>> m = memoized;
+            if (m != null && m.getFirst() == l) {
+               return m.getSecond();
+            }
+            int start = from > l.size() ? l.size() : from;
+            int end = to > l.size() ? l.size() : to;
+            List<E> subList = l.subList(start, end);
+            memoized = Pair.create(l, subList);
+            return subList;
          }
          
          private List<E> underlyingSublist() {
-            // TODO
-            /*while (true) {
-               Pair<ImmutableList<E>, ImmutableList<E>> pair = memoized.get();
-               ImmutableList<E> l = underlying.get();
-               if (pair != null && l == pair.getFirst()) {
-                  return pair.getSecond();
-               }
-               int start = from > l.size() ? l.size() : from;
-               int end = to > l.size() ? l.size() : to;
-               ImmutableList<E> subList = l.subList(start, end);
-               if (memoized.compareAndSet(pair, Pair.create(l, subList))) {
-                  return subList;
-               }
-            }*/
-            return null;
+            List<E> l = underlying;
+            Pair<List<E>, List<E>> m = memoized;
+            if (m != null && m.getFirst() == l) {
+               return m.getSecond();
+            }
+            synchronized (lock) {
+               return underlyingSublistLocked();
+            }
          }
          
          @Override

@@ -1,6 +1,6 @@
 package com.bluegosling.collections.immutable;
 
-import com.bluegosling.collections.MoreIterables;
+import com.bluegosling.collections.MoreIterators;
 import com.google.common.collect.Iterators;
 
 import java.util.AbstractList;
@@ -127,11 +127,11 @@ public abstract class AbstractImmutableList<E> extends AbstractList<E> {
 
    @Override
    public ListIterator<E> listIterator() {
-      return MoreIterables.unmodifiableIterator(super.listIterator());
+      return MoreIterators.unmodifiableListIterator(super.listIterator());
    }
 
    @Override
    public ListIterator<E> listIterator(int pos) {
-      return MoreIterables.unmodifiableIterator(super.listIterator(pos));
+      return MoreIterators.unmodifiableListIterator(super.listIterator(pos));
    }
 }

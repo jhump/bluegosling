@@ -111,8 +111,7 @@ public interface PersistentSet<E> extends Set<E>, PersistentCollection<E> {
    /**
     * Returns a persistent set that is backed by the given persistent map. Elements present in the
     * set are the keys that are present in the map. Changes to the map are visible through the
-    * returned set and vice versa. If an element is added to the set, it is visible as a new key in
-    * the map and mapped to {@link Boolean#TRUE}.
+    * returned set and vice versa.
     *
     * @param map a persistent map whose keys are the elements present in the resulting set
     * @return a persistent set backed by the given map
