@@ -24,9 +24,4 @@ public interface BlockingOrderedDeque<E> extends BlockingQueue<E>, OrderedDeque<
    default E poll(long timeout, TimeUnit unit) throws InterruptedException {
       return pollFirst(timeout, unit);
    }
-   
-   @Override
-   default boolean remove(Object o) {
-      return OrderedDeque.super.remove(o);
-   }
 }

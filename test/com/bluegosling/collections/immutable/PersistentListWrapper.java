@@ -1,6 +1,7 @@
 package com.bluegosling.collections.immutable;
 
 import com.bluegosling.collections.MoreIterables;
+import com.bluegosling.collections.MoreIterators;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,12 +43,12 @@ implements PersistentList<E> {
 
    @Override
    public ListIterator<E> listIterator() {
-      return MoreIterables.unmodifiableIterator(collection.listIterator());
+      return MoreIterators.unmodifiableListIterator(collection.listIterator());
    }
 
    @Override
    public ListIterator<E> listIterator(int index) {
-      return MoreIterables.unmodifiableIterator(collection.listIterator(index));
+      return MoreIterators.unmodifiableListIterator(collection.listIterator(index));
    }
 
    @Override

@@ -1,10 +1,9 @@
 package com.bluegosling.collections.views;
 
+import com.bluegosling.collections.MoreIterators;
 import com.bluegosling.collections.RandomAccessNavigableMap;
 import com.bluegosling.collections.RandomAccessNavigableSet;
 import com.bluegosling.collections.RandomAccessSet;
-
-import com.bluegosling.collections.CollectionUtils;
 
 import java.util.List;
 import java.util.ListIterator;
@@ -29,12 +28,12 @@ public class DescendingRandomAccessMap<K, V> extends DescendingMap<K, V>
 
    @Override
    public ListIterator<Map.Entry<K, V>> listIterator() {
-      return CollectionUtils.reverseIterator(base().listIterator(size()));
+      return MoreIterators.reverseListIterator(base().listIterator(size()));
    }
 
    @Override
    public ListIterator<Map.Entry<K, V>> listIterator(int index) {
-      return CollectionUtils.reverseIterator(base().listIterator(size() - index));
+      return MoreIterators.reverseListIterator(base().listIterator(size() - index));
    }
 
    @Override

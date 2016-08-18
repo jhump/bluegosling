@@ -90,7 +90,7 @@ public interface Stack<T> extends Collection<T> {
       return new Stack<T>() {
          @Override
          public Iterator<T> iterator() {
-            return CollectionUtils.reverseIterator(list.listIterator(list.size()));
+            return MoreIterators.reverseListIterator(list.listIterator(list.size()));
          }
 
          @Override

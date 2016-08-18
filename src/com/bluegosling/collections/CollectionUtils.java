@@ -405,7 +405,7 @@ public final class CollectionUtils {
     * @param coll a collection of elements
     * @param array an array to populate
     */
-   public static void copyToArray(Iterable<?> coll, Object[] array) {
+   static void copyToArray(Iterable<?> coll, Object[] array) {
       int idx = 0;
       for (Object o : coll) {
          array[idx++] = o;
@@ -449,88 +449,6 @@ public final class CollectionUtils {
          array[size] = null;
       }
       return array;
-   }
-
-   /**
-    * Returns an iterator that traverses elements in the opposite order of the specified iterator.
-    * In other words, {@link ListIterator#next()} return the <em>previous</em> element and vice
-    * versa.
-    * 
-    * <p>The returned iterator will support all operations that the underlying iterator supports,
-    * including {@code add} and {@code remove}. Adding multiple elements in a row from the reversed
-    * iterator effectively adds them in reverse order.
-    * 
-    * @param iter an iterator
-    * @return a reversed iterator
-    */
-   public static <E> ListIterator<E> reverseIterator(final ListIterator<E> iter) {
-      // wrap the list iterator with a simple version that
-      // just iterates backwards
-      return new ListIterator<E>() {
-         private boolean added;
-         
-         @Override
-         public void add(E e) {
-            iter.add(e);
-            // Add places item before the result returned by subsequent call to next() which means
-            // newly added element is returned by call to previous(). To reverse (and make sure
-            // multiple additions effectively inserts items in the right place in reverse order),
-            // we have to adjust the cursor:
-            iter.previous();
-            // Underlying iterator would now allow a remove() or set() operation and act on the item
-            // we just added, but proper behavior is to disallow the operation. We have to manage
-            // that ourselves.
-            added = true;
-         }
-   
-         @Override
-         public boolean hasNext() {
-            return iter.hasPrevious();
-         }
-   
-         @Override
-         public boolean hasPrevious() {
-            return iter.hasNext();
-         }
-   
-         @Override
-         public E next() {
-            added = false; // reset
-            return iter.previous();
-         }
-   
-         @Override
-         public int nextIndex() {
-            return iter.previousIndex();
-         }
-   
-         @Override
-         public E previous() {
-            added = false; // reset
-            return iter.next();
-         }
-   
-         @Override
-         public int previousIndex() {
-            return iter.nextIndex();
-         }
-   
-         @Override
-         public void remove() {
-            if (added) {
-               throw new IllegalStateException("Cannot remove item after call to add()");
-            }
-            iter.remove();
-         }
-   
-         @Override
-         public void set(E e) {
-            if (added) {
-               throw new IllegalStateException("Cannot set item after call to add()");
-            }
-            iter.set(e);
-         }
-      };
    }
 
    /**

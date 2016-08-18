@@ -777,7 +777,7 @@ class NestedMap<K, V> {
    }
    
    /**
-    * A non-leaf level in a nested map. The values in this level of the map are values, not
+    * A leaf level in a nested map. The values in this level of the map are values, not
     * subsequent levels.
     *
     * @param <K> the type of keys in this level
