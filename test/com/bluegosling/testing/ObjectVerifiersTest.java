@@ -1,5 +1,13 @@
 package com.bluegosling.testing;
 
+import static com.bluegosling.testing.MoreAsserts.assertThrows;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Proxy;
@@ -9,15 +17,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import junit.framework.AssertionFailedError;
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * Tests the functionality in {@link ObjectVerifiers}.
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public class ObjectVerifiersTest extends TestCase {
+public class ObjectVerifiersTest {
 
    /**
     * A verifier that always raises an assertion error.
@@ -110,13 +117,7 @@ public class ObjectVerifiersTest extends TestCase {
    }
 
    private static <T> void assertFails(ObjectVerifier<? super T> v, T o1, T o2) {
-      try {
-         v.verify(o1, o2);
-      }
-      catch (AssertionFailedError e) {
-         return; // expected
-      }
-      fail(); // should have throw exception
+      assertThrows(AssertionError.class, () -> v.verify(o1, o2));
    }
 
    private static <T> void doNullTests(ObjectVerifier<? super T> v, T o1, T o2) {
@@ -128,7 +129,7 @@ public class ObjectVerifiersTest extends TestCase {
    /**
     * Tests {@link ObjectVerifiers#NO_OP}.
     */
-   public void testNoOp() {
+   @Test public void testNoOp() {
       ObjectVerifier<Object> v = ObjectVerifiers.NO_OP;
       MockObject o1 = new MockObject();
       MockObject o2 = new MockObject();
@@ -151,7 +152,7 @@ public class ObjectVerifiersTest extends TestCase {
    /**
     * Tests {@link ObjectVerifiers#NULLS}.
     */
-   public void testNulls() {
+   @Test public void testNulls() {
       ObjectVerifier<Object> v = ObjectVerifiers.NULLS;
       MockObject o1 = new MockObject();
       MockObject o2 = new MockObject();
@@ -170,7 +171,7 @@ public class ObjectVerifiersTest extends TestCase {
    /**
     * Tests {@link ObjectVerifiers#EQUALS}.
     */
-   public void testEquals() {
+   @Test public void testEquals() {
       ObjectVerifier<Object> v = ObjectVerifiers.EQUALS;
       MockObject o1 = new MockObject();
       MockObject o2 = new MockObject();
@@ -215,7 +216,7 @@ public class ObjectVerifiersTest extends TestCase {
    /**
     * Tests {@link ObjectVerifiers#HASH_CODES}.
     */
-   public void testHashCodes() {
+   @Test public void testHashCodes() {
       ObjectVerifier<Object> v = ObjectVerifiers.HASH_CODES;
 
       MockObject o1 = new MockObject();
@@ -236,7 +237,7 @@ public class ObjectVerifiersTest extends TestCase {
    /**
     * Tests {@link ObjectVerifiers#SAME}.
     */
-   public void testSame() {
+   @Test public void testSame() {
       ObjectVerifier<Object> v = ObjectVerifiers.SAME;
 
       MockObject o1 = new MockObject();
@@ -256,7 +257,7 @@ public class ObjectVerifiersTest extends TestCase {
    /**
     * Tests {@link ObjectVerifiers#STRICT_EXCEPTIONS}.
     */
-   public void testStrictExceptions() {
+   @Test public void testStrictExceptions() {
       ObjectVerifier<Throwable> v = ObjectVerifiers.STRICT_EXCEPTIONS;
 
       Throwable t1 = new IllegalArgumentException();
@@ -296,8 +297,7 @@ public class ObjectVerifiersTest extends TestCase {
    /**
     * Tests {@link ObjectVerifiers#relaxedExceptions(Class...)}.
     */
-   @SuppressWarnings("unchecked")
-   public void testRelaxedExceptionsVarArgs() {
+   @Test public void testRelaxedExceptionsVarArgs() {
       ObjectVerifier<Throwable> v =
             ObjectVerifiers.relaxedExceptions(IOException.class, RuntimeException.class);
 
@@ -343,7 +343,7 @@ public class ObjectVerifiersTest extends TestCase {
    /**
     * Tests {@link ObjectVerifiers#relaxedExceptions(java.util.Set)}.
     */
-   public void testRelaxedExceptionsSet() {
+   @Test public void testRelaxedExceptionsSet() {
       HashSet<Class<? extends Throwable>> set = new HashSet<Class<? extends Throwable>>();
       set.add(IOException.class);
       set.add(RuntimeException.class);
@@ -427,7 +427,7 @@ public class ObjectVerifiersTest extends TestCase {
    /**
     * Tests {@link ObjectVerifiers#checkInstance}.
     */
-   public void testCheckInstance() {
+   @Test public void testCheckInstance() {
       MockObject o1 = new MockObject();
       MockObject o2 = new MockObject();
 
@@ -457,7 +457,7 @@ public class ObjectVerifiersTest extends TestCase {
    /**
     * Tests {@link ObjectVerifiers#forComparable}.
     */
-   public void testForComparable() {
+   @Test public void testForComparable() {
       ObjectVerifier<MockObject> v = ObjectVerifiers.forComparable();
       MockObject o1 = new MockObject();
       MockObject o2 = new MockObject();
@@ -480,7 +480,7 @@ public class ObjectVerifiersTest extends TestCase {
    /**
     * Tests {@link ObjectVerifiers#fromComparator}.
     */
-   public void testFromComparator() {
+   @Test public void testFromComparator() {
       MockComparator c = new MockComparator();
       ObjectVerifier<Object> v = ObjectVerifiers.fromComparator(c);
       MockObject o1 = new MockObject();
@@ -506,8 +506,7 @@ public class ObjectVerifiersTest extends TestCase {
       boolean caught = false;
       try {
          v = ObjectVerifiers.fromComparator(null);
-      }
-      catch (NullPointerException e) {
+      } catch (NullPointerException e) {
          caught = true;
       }
       assertTrue(caught);
@@ -516,8 +515,7 @@ public class ObjectVerifiersTest extends TestCase {
    /**
     * Tests {@link ObjectVerifiers#compositeVerifier(ObjectVerifier...)}.
     */
-   @SuppressWarnings("unchecked")
-   public void testCompositeVerifier() {
+   @Test public void testCompositeVerifier() {
       MockObject o1 = new MockObject();
       MockObject o2 = new MockObject();
       MockObject other = new MockObject();
@@ -563,7 +561,7 @@ public class ObjectVerifiersTest extends TestCase {
    /**
     * Tests {@link ObjectVerifiers#forTesting}.
     */
-   public void testForTesting() {
+   @Test public void testForTesting() {
       ObjectVerifier<TestInterface> v = ObjectVerifiers.forTesting(TestInterface.class);
 
       // use arrays so we can change the value below w/out reconstructing
@@ -593,14 +591,7 @@ public class ObjectVerifiersTest extends TestCase {
       assertEquals(0, proxy.getIntForString("test"));
 
       i2val[0] = 1; // cause them to return different values
-      boolean caught = false;
-      try {
-         proxy.getIntForString("test");
-      }
-      catch (AssertionFailedError e) {
-         caught = true;
-      }
-      assertTrue(caught);
+      assertThrows(AssertionError.class, () -> proxy.getIntForString("test"));
 
       // no class loader specified (so make sure to use an interface that the
       // bootstrap classloader can see)
@@ -614,32 +605,11 @@ public class ObjectVerifiersTest extends TestCase {
       doNullTests(v, i1, i2);
 
       // should throw NPE with null input
-      caught = false;
-      try {
-         ObjectVerifiers.forTesting(null);
-      }
-      catch (NullPointerException e) {
-         caught = true;
-      }
-      assertTrue(caught);
-
-      caught = false;
-      try {
-         ObjectVerifiers.forTesting(null, TestInterface.class.getClassLoader());
-      }
-      catch (NullPointerException e) {
-         caught = true;
-      }
-      assertTrue(caught);
+      assertThrows(NullPointerException.class, () -> ObjectVerifiers.forTesting(null));
+      assertThrows(NullPointerException.class, 
+            () -> ObjectVerifiers.forTesting(null, TestInterface.class.getClassLoader()));
 
       // with bad class token (not an interface)
-      caught = false;
-      try {
-         ObjectVerifiers.forTesting(Object.class);
-      }
-      catch (IllegalArgumentException e) {
-         caught = true;
-      }
-      assertTrue(caught);
+      assertThrows(IllegalArgumentException.class, () -> ObjectVerifiers.forTesting(Object.class));
    }
 }

@@ -1,5 +1,15 @@
 package com.bluegosling.testing;
 
+import static com.bluegosling.testing.MoreAsserts.assertThrows;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import com.bluegosling.reflect.MethodCapturer;
 import com.bluegosling.reflect.MethodSignature;
 import com.bluegosling.testing.InterfaceVerifier.MethodConfiguration;
@@ -14,15 +24,14 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import junit.framework.AssertionFailedError;
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * Tests the functionality in {@link InterfaceVerifier}.
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public class InterfaceVerifierTest extends TestCase {
+public class InterfaceVerifierTest {
 
    /*
     * Interfaces for testing verifier logic. These have numerous combinations of overloaded methods,
@@ -110,7 +119,7 @@ public class InterfaceVerifierTest extends TestCase {
    /**
     * Tests constructing an {@link InterfaceVerifier} with invalid arguments.
     */
-   public void testConstructorThrowsException() {
+   @Test public void testConstructorThrowsException() {
       // no interfaces specified - var arg
       boolean caught = false;
       try {
@@ -176,7 +185,7 @@ public class InterfaceVerifierTest extends TestCase {
    /**
     * Tests {@link InterfaceVerifier#getInterfaces()}.
     */
-   public void testGetInterfaces() {
+   @Test public void testGetInterfaces() {
       // single class constructor
       @SuppressWarnings("rawtypes")
       InterfaceVerifier<List> ivList = new InterfaceVerifier<List>(List.class);
@@ -205,7 +214,7 @@ public class InterfaceVerifierTest extends TestCase {
     * @throws Exception if an exception occurs during a reflective call when determining expected
     *            return values for method under test
     */
-   public void testAllMethods() throws Exception {
+   @Test public void testAllMethods() throws Exception {
       // one interface
       InterfaceVerifier<TestInterface2> iv1 = new InterfaceVerifier<>(TestInterface2.class);
       Set<Method> methods = iv1.allMethods();
@@ -232,7 +241,7 @@ public class InterfaceVerifierTest extends TestCase {
    /**
     * Tests {@link InterfaceVerifier#allMethodSignatures()}.
     */
-   public void testAllMethodSignatures() {
+   @Test public void testAllMethodSignatures() {
       // one interface
       InterfaceVerifier<TestInterface2> iv1 = new InterfaceVerifier<TestInterface2>(
             TestInterface2.class);
@@ -272,7 +281,7 @@ public class InterfaceVerifierTest extends TestCase {
    /**
     * Tests {@link InterfaceVerifier#findMethod(String)}.
     */
-   public void testFindMethod() {
+   @Test public void testFindMethod() {
       InterfaceVerifier<Object> iv = new InterfaceVerifier<Object>(TestInterface1.class,
             TestInterface2.class);
 
@@ -306,7 +315,7 @@ public class InterfaceVerifierTest extends TestCase {
    /**
     * Tests {@link InterfaceVerifier#findMethods(String)}.
     */
-   public void testFindMethods() {
+   @Test public void testFindMethods() {
       InterfaceVerifier<Object> iv = new InterfaceVerifier<Object>(TestInterface1.class,
             TestInterface2.class);
 
@@ -355,7 +364,7 @@ public class InterfaceVerifierTest extends TestCase {
    /**
     * Tests {@link InterfaceVerifier#getMethodNamed(String)}.
     */
-   public void testGetMethodNamed() {
+   @Test public void testGetMethodNamed() {
       InterfaceVerifier<Object> iv = new InterfaceVerifier<Object>(TestInterface1.class,
             TestInterface2.class);
 
@@ -378,7 +387,7 @@ public class InterfaceVerifierTest extends TestCase {
    /**
     * Tests {@link InterfaceVerifier#getMethodsNamed(String)}.
     */
-   public void testGetMethodsNamed() {
+   @Test public void testGetMethodsNamed() {
       InterfaceVerifier<Object> iv = new InterfaceVerifier<Object>(TestInterface1.class,
             TestInterface2.class);
 
@@ -399,7 +408,7 @@ public class InterfaceVerifierTest extends TestCase {
    /**
     * Tests {@link InterfaceVerifier#getMethod(String, Class...)}.
     */
-   public void testGetMethod() {
+   @Test public void testGetMethod() {
       InterfaceVerifier<Object> iv = new InterfaceVerifier<Object>(TestInterface1.class,
             TestInterface2.class);
 
@@ -421,7 +430,7 @@ public class InterfaceVerifierTest extends TestCase {
     * documentation. This covers attributes of the verifier itself as well as attributes for each
     * method configuration.
     */
-   public void testDefaultConfiguration() {
+   @Test public void testDefaultConfiguration() {
       InterfaceVerifier<TestInterface1> iv = new InterfaceVerifier<TestInterface1>(
             TestInterface1.class);
 
@@ -497,7 +506,7 @@ public class InterfaceVerifierTest extends TestCase {
     * well as the interpretation of the flag by the proxy invocation handler. Testing the invocation
     * handler also verifies the behavior of {@link InterfaceVerifier#getLastException()}.
     */
-   public void testSuppressingExceptions() {
+   @Test public void testSuppressingExceptions() {
       InterfaceVerifier<Runnable> iv = new InterfaceVerifier<Runnable>(Runnable.class);
 
       Runnable rGood = new Runnable() {
@@ -532,20 +541,11 @@ public class InterfaceVerifierTest extends TestCase {
 
       // ref throws
       proxy = iv.createProxy(rGood, rBad);
-      try {
-         proxy.run();
-         fail("Expected exception");
-      }
-      catch (AssertionFailedError expected) {}
-      assertNull(iv.getLastException());
+      assertThrows(AssertionError.class, proxy::run);
 
       // test throws
       proxy = iv.createProxy(rBad, rGood);
-      try {
-         proxy.run();
-         fail("Expected exception");
-      }
-      catch (AssertionFailedError expected) {}
+      assertThrows(AssertionError.class, proxy::run);
       assertNotNull(iv.getLastException());
       assertSame(RuntimeException.class, iv.getLastException().getClass());
 
@@ -559,11 +559,7 @@ public class InterfaceVerifierTest extends TestCase {
 
       // both throw
       proxy = iv.createProxy(rBad, rBad);
-      try {
-         proxy.run();
-         fail("Expected exception");
-      }
-      catch (RuntimeException expected) {}
+      assertThrows(RuntimeException.class, proxy::run);
       assertNotNull(iv.getLastException());
       assertSame(RuntimeException.class, iv.getLastException().getClass());
 
@@ -574,20 +570,12 @@ public class InterfaceVerifierTest extends TestCase {
 
       // ref throws
       proxy = iv.createProxy(rGood, rBad);
-      try {
-         proxy.run();
-         fail("Expected exception");
-      }
-      catch (AssertionFailedError expected) {}
+      assertThrows(AssertionError.class, proxy::run);
       assertNull(iv.getLastException());
 
       // test throws
       proxy = iv.createProxy(rBad, rGood);
-      try {
-         proxy.run();
-         fail("Expected exception");
-      }
-      catch (AssertionFailedError expected) {}
+      assertThrows(AssertionError.class, proxy::run);
       assertNotNull(iv.getLastException());
       assertSame(RuntimeException.class, iv.getLastException().getClass());
    }
@@ -598,7 +586,7 @@ public class InterfaceVerifierTest extends TestCase {
     * configured verifier is also used, by default, when invoking mutator methods on a verifying
     * proxy.
     */
-   public void testDefaultMutatorVerifier() {
+   @Test public void testDefaultMutatorVerifier() {
       // mutator verifier
       final boolean used[] = { false };
       ObjectVerifier<TestSimpleInterface> verifier = new ObjectVerifier<TestSimpleInterface>() {
@@ -636,7 +624,7 @@ public class InterfaceVerifierTest extends TestCase {
     * {@link InterfaceVerifier#setCheckHashCodesAfterMutation(boolean)}. Also tests that hash codes
     * are examined and used properly in verification depending on the setting of this flag.
     */
-   public void testCheckingHashCodesAfterMutation() {
+   @Test public void testCheckingHashCodesAfterMutation() {
       // super-simple implementation to verify
       class TestHashCodeChecker extends TestSimpleInterfaceAdapter {
          private final int hashCode[];
@@ -698,11 +686,7 @@ public class InterfaceVerifierTest extends TestCase {
       // verify failure when hash codes don't match
       hashCode1[0] = 123;
       hashCode2[0] = 234;
-      try {
-         proxy.returnsVoid();
-         fail("Expecting assertion failure");
-      }
-      catch (AssertionFailedError expected) {}
+      assertThrows(AssertionError.class, proxy::returnsVoid);
       assertEquals(124, hashCode1[0]);
       assertEquals(235, hashCode2[0]);
 
@@ -711,11 +695,7 @@ public class InterfaceVerifierTest extends TestCase {
       equals[0] = false;
       hashCode1[0] = 999;
       hashCode2[0] = 999;
-      try {
-         proxy.returnsVoid();
-         fail("Expecting assertion failure");
-      }
-      catch (AssertionFailedError expected) {}
+      assertThrows(AssertionError.class, proxy::returnsVoid);
       // verify methods were not called
       assertEquals(999, hashCode1[0]);
       assertEquals(999, hashCode2[0]);
@@ -730,26 +710,26 @@ public class InterfaceVerifierTest extends TestCase {
       assertEquals(999, hashCode2[0]);
    }
 
-   public void testDefaultExceptionVerifier() {
+   @Test public void testDefaultExceptionVerifier() {
       // test get and set default exception verifier.
       // test that default is actually used by default.
       // test for expected NPE -- or change to allow null to mean relaxed?
       // TODO
    }
 
-   public void testSetStrictDefaultExceptionVerifier() {
+   @Test public void testSetStrictDefaultExceptionVerifier() {
       // test set strict exceptions w/ get default exception verifier.
       // verify strict exceptions used by default.
       // TODO
    }
 
-   public void testSetRelaxedDefaultExceptionVerifier() {
+   @Test public void testSetRelaxedDefaultExceptionVerifier() {
       // test set relaxed exceptions w/ get default exception verifier.
       // verify relaxed exceptions used by default.
       // TODO
    }
 
-   public void testCreatingProxies() {
+   @Test public void testCreatingProxies() {
       // test createProxy and verifierFor (don't test all invocation handler functions though).
       // also test edge cases that are expected to throw exceptions (including classloader issue?)
       // TODO
@@ -759,7 +739,7 @@ public class InterfaceVerifierTest extends TestCase {
     * Tests {@link InterfaceVerifier#methodCapturer()}.
     */
    @SuppressWarnings({ "rawtypes", "unchecked" })
-   public void testMethodCapturer() {
+   @Test public void testMethodCapturer() {
       InterfaceVerifier<List> iv = new InterfaceVerifier<List>(List.class);
       MethodCapturer<List> cap = iv.methodCapturer();
       List list = cap.capture();
@@ -772,7 +752,7 @@ public class InterfaceVerifierTest extends TestCase {
       iv.configureMethod(sig);
    }
 
-   public void testCopyFrom() {
+   @Test public void testCopyFrom() {
       // test copyFrom (this could be ugly/hard... how can we simplify this?
       // maybe implement InterfaceVerifier.equals [and method configurator impl]
       // and use that?)
@@ -781,71 +761,71 @@ public class InterfaceVerifierTest extends TestCase {
 
    // now configuration for single methods...
 
-   public void testConfigGetMethods() {
+   @Test public void testConfigGetMethods() {
       // just getMethods
       // TODO
    }
 
-   public void testConfigGetReturnType() {
+   @Test public void testConfigGetReturnType() {
       // just getReturnType (include test of overloaded
       // methods w/ covariant return types)
       // TODO
    }
 
-   public void testConfigGetSignature() {
+   @Test public void testConfigGetSignature() {
       // just getSignature
       // TODO
    }
 
-   public void testConfigGetCheckedExceptions() {
+   @Test public void testConfigGetCheckedExceptions() {
       // just getCheckedExceptions (include test of overloaded
       // methods w/ differing declared exceptions)
       // TODO
    }
 
-   public void testConfigMutatorVerifier() {
+   @Test public void testConfigMutatorVerifier() {
       // test both variants + notMutator + getMutatorVerifier + isMutator
       // TODO
    }
 
-   public void testConfigReturnVerifier() {
+   @Test public void testConfigReturnVerifier() {
       // test both variants + getReturnVerifier
       // TODO
    }
 
-   public void testConfigExceptionVerifier() {
+   @Test public void testConfigExceptionVerifier() {
       // test exceptionVerifier and getExceptionVerifier
       // TODO
    }
 
-   public void testConfigStrictExceptionVerifier() {
+   @Test public void testConfigStrictExceptionVerifier() {
       // test strictExceptionVerifier and getExceptionVerifier
       // TODO
    }
 
-   public void testConfigRelaxedExceptionVerifier() {
+   @Test public void testConfigRelaxedExceptionVerifier() {
       // test relaxedExceptionVerifier and getExceptionVerifier
       // TODO
    }
 
-   public void testConfigUncheckedExceptions() {
+   @Test public void testConfigUncheckedExceptions() {
       // also test getAllExceptions
       // TODO
    }
 
-   public void testConfigCloneAndVerifyArguments() {
+   @Test public void testConfigCloneAndVerifyArguments() {
       // also test noCloneAndVerifyArguments + isCloningArguments
       // + isVerifyingArguments
       // TODO
    }
 
-   public void testConfigCloningArguments() {
+   @Test public void testConfigCloningArguments() {
       // test all four variants + noCloneAndVerifyArguments
       // + getArgumentCloners + isCloningArguments
       // TODO
    }
 
-   public void testConfigVerifyingArguments() {
+   @Test public void testConfigVerifyingArguments() {
       // test all four variants + noVerifyArguments
       // + getArgumentVerifiers + isVerifyingArguments
       // TODO
@@ -853,58 +833,58 @@ public class InterfaceVerifierTest extends TestCase {
 
    // and configuring multiple methods at once
 
-   public void testConfigMultiMutatorVerifier() {
+   @Test public void testConfigMultiMutatorVerifier() {
       // two variants + notMutator.
       // can use getMutatorVerifier() on individual
       // method configs to verify
       // TODO
    }
 
-   public void testConfigMultiReturnVerifier() {
+   @Test public void testConfigMultiReturnVerifier() {
       // two variants.
       // can use getReturnVerifier() on individual
       // method configs to verify
       // TODO
    }
 
-   public void testConfigMultiExceptionVerifier() {
+   @Test public void testConfigMultiExceptionVerifier() {
       // can use getExceptionVerifier() on individual
       // method configs to verify
       // TODO
    }
 
-   public void testConfigMultiStrictExceptionVerifier() {
+   @Test public void testConfigMultiStrictExceptionVerifier() {
       // can use getExceptionVerifier() on individual
       // method configs to verify
       // TODO
    }
 
-   public void testConfigMultiRelaxedExceptionVerifier() {
+   @Test public void testConfigMultiRelaxedExceptionVerifier() {
       // can use getExceptionVerifier() on individual
       // method configs to verify
       // TODO
    }
 
-   public void testConfigMultiUncheckedExceptions() {
+   @Test public void testConfigMultiUncheckedExceptions() {
       // can use getUncheckedExceptions() and getAllExceptions()
       // on individual method configs to verify
       // TODO
    }
 
-   public void testConfigMultiCloneAndVerifyArguments() {
+   @Test public void testConfigMultiCloneAndVerifyArguments() {
       // can use getUncheckedExceptions() and getAllExceptions()
       // on individual method configs to verify
       // TODO
    }
 
-   public void testConfigMultiCloningArguments() {
+   @Test public void testConfigMultiCloningArguments() {
       // four variants + noCloneAndVerifyArguments
       // can use isCloningArguments and getArgumentCloners on
       // individual method configs to verify
       // TODO
    }
 
-   public void testConfigMultiVerifyingArguments() {
+   @Test public void testConfigMultiVerifyingArguments() {
       // four variants + noVerifyArguments
       // can use isCloningArguments and getArgumentCloners on
       // individual method configs to verify
