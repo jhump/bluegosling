@@ -26,8 +26,8 @@ import java.util.function.Supplier;
 /**
  * The result of an operation, which can either represent a successful value or a cause of failure.
  * 
- * <p>In some respects, this like a {@link Future}, except the result is available immediately. In
- * other respects, it is like an {@link Optional} with extra information (cause of failure) when
+ * <p>In some respects, this is like a {@link Future}, except the result is available immediately.
+ * In other respects, it is like an {@link Optional} with extra information (cause of failure) when
  * the value is not present. Its API has similarities with both {@link Optional} and
  * {@link FluentFuture}.
  * 
@@ -91,7 +91,6 @@ public final class Result<T, E> implements Serializable {
     *
     * @param failure the cause of failure
     * @return a failed result
-    * @throws NullPointerException if the given failure is null
     */
    public static <T, E> Result<T, E> error(E failure) {
       return new Result<>(false, failure);
@@ -154,7 +153,7 @@ public final class Result<T, E> implements Serializable {
    public FluentFuture<T> asFuture() {
       if (isFailed()) {
          E e = getFailure();
-         return Throwable.class.isInstance(e)
+         return e instanceof Throwable
                ? FluentFuture.failedFuture((Throwable) e)
                : FluentFuture.failedFuture(new FailedResultException(e));
       }
@@ -180,6 +179,8 @@ public final class Result<T, E> implements Serializable {
     * @param r the result
     * @return the result's value, if present
     * @throws E the cause of failure if this result is not successful
+    * @throws NullPointerException if the result is not successful and its cause of failure is
+    *       {@code null}
     */
    public static <T, E extends Throwable> T checkedGet(Result<? extends T, ? extends E> r)
          throws E {
@@ -532,7 +533,7 @@ public final class Result<T, E> implements Serializable {
    public static <T, U extends T, E, F extends E> Result<T, E> cast(
          Result<U, F> result) {
       // co-variance makes it safe since all operations return a T or E, none take a T or E
-      return  (Result<T, E>) result;
+      return (Result<T, E>) result;
    }
    
    /**

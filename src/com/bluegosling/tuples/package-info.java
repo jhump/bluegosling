@@ -5,8 +5,8 @@
  * more generic and functional way of combining objects.
  * 
  * <p>This package includes typesafe APIs for tuples with up to 5 elements. It does support tuples
- * with {@linkplain com.bluegosling.tuples.NTuple greater than 5 elements}, but items after the fifth
- * receive no special API and thus are not typesafe (e.g. require downcasting from
+ * with {@linkplain com.bluegosling.tuples.NTuple greater than 5 elements}, but items after the
+ * fifth receive no special API and thus are not generically typed (e.g. require downcasting from
  * {@link java.lang.Object}).
  */
 package com.bluegosling.tuples;

@@ -11,7 +11,10 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 /**
- * Numerous utility methods for using {@link Function}s.
+ * Numerous utility methods for using {@link Function}s. This is quite similar to Guava's class of
+ * the {@linkplain com.google.common.base.Functions same name}, except these utility methods are for
+ * the Java 8 {@link Function} functional interface as opposed to Guava's interface of the
+ * {@linkplain com.google.common.base.Function same name}.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  * 

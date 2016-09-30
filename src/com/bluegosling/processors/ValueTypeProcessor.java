@@ -31,7 +31,8 @@ import com.bluegosling.util.ValueType;
  * <li>Value types must be immutable (e.g. all member fields must be final).</li>
  * <li>Value types cannot have a super-class, other than {@code java.lang.Object}.</li>
  * <li>Value types may not use the default implementations for {@link Object#equals(Object)},
- * {@link Object#hashCode()}, or {@link Object#toString()}.</li>
+ * {@link Object#hashCode()}, or {@link Object#toString()} since they leak information about the
+ * instance's identity.</li>
  * </ul>
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
