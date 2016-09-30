@@ -13,11 +13,11 @@ import java.util.Set;
  * Utility methods for determining if types are derived from one another. A type, {@code TypeA}, is
  * derived from another type, {@code TypeB}, if any of the following are true:
  * <ul>
- * <li>{@code TypeA} implements {@link DerivedFrom DerivedFrom}{@code <TypeB>}</li>
- * <li>{@code TypeA} implements {@link DerivedFrom DerivedFrom}{@code <TypeC>} and {@code TypeC} is
+ * <li>{@code TypeA} implements {@link DerivedFrom}{@code <TypeB>}</li>
+ * <li>{@code TypeA} implements {@link DerivedFrom}{@code <TypeC>} and {@code TypeC} is
  * derived from {@code TypeB}</li>
- * <li>{@code TypeA} is annotated with {@link IsDerivedFrom @IsDerivedFrom(TypeB.class)}</li>
- * <li>{@code TypeA} is annotated with {@link IsDerivedFrom @IsDerivedFrom(TypeC.class)} and
+ * <li>{@code TypeA} is annotated with {@code @}{@link IsDerivedFrom}{@code (TypeB.class)}</li>
+ * <li>{@code TypeA} is annotated with {@code @}{@link IsDerivedFrom}{@code (TypeC.class)} and
  * {@code TypeC} is derived from {@code TypeB}</li>
  * </ul>
  */

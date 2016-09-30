@@ -54,7 +54,6 @@ public interface TypeVisitor<R, P> {
     * @param param the context parameter
     * @return the result of visiting the given type
     */
-   @SuppressWarnings("unused") // arguments are for the benefit of sub-classes
    default R defaultAction(Type type, P param) {
       return null;
    }
@@ -125,7 +124,7 @@ public interface TypeVisitor<R, P> {
     * @param param the context parameter
     * @return the result of visiting the given type
     */
-   default R visitUnknownType(Type type, @SuppressWarnings("unused") P param) {
+   default R visitUnknownType(Type type, P param) {
       throw new UnknownTypeException(type);
    }
    

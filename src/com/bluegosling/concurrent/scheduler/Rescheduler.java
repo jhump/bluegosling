@@ -68,8 +68,8 @@ public interface Rescheduler<T> {
 
    /**
     * Creates a rescheduler that schedules tasks at a fixed rate. If invocations of the task run
-    * too slowly and fall behind the fixed rate, they may be scheduled more frequently so the task
-    * can catch up.
+    * too slowly and fall behind the fixed rate, any missed invocations will be skipped, and the
+    * schedule will not be allowed to catch up.
     *
     * @param period the period between task starts
     * @param unit the delay unit
@@ -81,8 +81,8 @@ public interface Rescheduler<T> {
 
    /**
     * Creates a rescheduler that schedules tasks at a fixed rate. If invocations of the task run
-    * too slowly and fall behind the fixed rate, any missed invocations will be skipped, and the
-    * schedule will not be allowed to catch up.
+    * too slowly and fall behind the fixed rate, they may be scheduled more frequently so the task
+    * can catch up.
     *
     * @param period the period between task starts
     * @param unit the delay unit

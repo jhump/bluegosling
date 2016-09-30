@@ -1,10 +1,15 @@
 package com.bluegosling.function;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.concurrent.Callable;
 import java.util.function.Supplier;
 
 /**
- * Utility methods for constructing and using {@link Supplier}s.
+ * Utility methods for constructing and using {@link Supplier}s. This is quite similar to Guava's
+ * class of the {@linkplain com.google.common.base.Suppliers same name}, except these utility
+ * methods are for the Java 8 {@link Supplier} functional interface as opposed to Guava's interface
+ * of the {@linkplain com.google.common.base.Supplier same name}.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
@@ -21,6 +26,7 @@ public final class Suppliers {
     * @return a supplier that invokes the specified callable
     */
    public static <T> Supplier<T> fromCallable(final Callable<? extends T> callable) {
+      requireNonNull(callable);
       return () ->
          {
             try {
@@ -47,6 +53,7 @@ public final class Suppliers {
     *       memo-ize the result
     */
    public static <T> Supplier<T> memoize(Supplier<T> supplier) {
+      requireNonNull(supplier);
       return new Supplier<T>() {
          private volatile boolean invoked;
          private T result; // visibility piggy-backs on invoked

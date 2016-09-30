@@ -45,8 +45,7 @@ public final class Cloners {
     * instance as the original object and also assert that its class is identical to that of the
     * original.
     * 
-    * <p>
-    * The utility method is used by implementations of {@code Cloner} in this class and is
+    * <p>The utility method is used by implementations of {@code Cloner} in this class and is
     * recommended for use by other custom implementations of {@code Cloner}.
     * 
     * @param orig The original object
@@ -946,7 +945,7 @@ public final class Cloners {
     * <p>So it is more flexible than {@link #defaultClonerFor(Class)} since you don't have to know
     * the runtime type of objects being cloned ahead of time. But its performance is worse and
     * cloning may result in runtime exceptions during the cloning operation, instead of when
-    * creating the cloner. This occurs if a given object to be cloned is not array and implements
+    * creating the cloner. This occurs if a given object to be cloned is not an array and implements
     * neither {@code Cloneable} nor {@code Serializable} and whose class does not provide a suitable
     * copy constructor.
     */

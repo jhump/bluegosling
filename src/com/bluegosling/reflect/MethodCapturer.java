@@ -228,7 +228,7 @@ public class MethodCapturer<E> {
     *           single method on the proxy interface, like in the example above
     * @return the last method called on the proxy
     */
-   public Method getMethod(@SuppressWarnings("unused") Object o) {
+   public Method getMethod(Object o) {
       return getMethod();
    }
 
@@ -250,7 +250,7 @@ public class MethodCapturer<E> {
     *           single method on the proxy interface for improved readability
     * @return the last method called on the proxy
     */
-   public MethodSignature getSignature(@SuppressWarnings("unused") Object o) {
+   public MethodSignature getSignature(Object o) {
       return getSignature();
    }
 }
