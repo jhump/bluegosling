@@ -11,8 +11,10 @@ import java.util.Iterator;
  * another type {@code @A2 T2} as long as {@code T1} is assignable to {@code T2} according to the
  * Java type system. (See {@link Types#isAssignable} for more info.)
  * 
- * <p>This provides functionality similar to the Checker Framework, except that it works at runtime
- * instead of compile-time and is backed by core reflection.
+ * <p>This can provide functionality similar to the Checker Framework, except that it works at
+ * runtime instead of compile-time and is backed by core reflection.
+ * 
+ * @see TypeAnnotationHierarchy
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
@@ -23,9 +25,9 @@ public interface TypeAnnotationChecker {
     * Determines if the given annotation is assignable to the other. Either or both annotations
     * could be {@code null}, indicating unannotated types.
     * 
-    * <p>Note that two equivalent types are mutually assignable. So if two annotations indicate
-    * the same type, then this method should return true regardless of the order of arguments.
-    * 
+    * <p>Note that two equivalent types are mutually assignable. So if two annotations indicate the
+    * same type, then this method should return true regardless of the order of arguments.
+    *
     * @param from annotation that appears on the type of the assignment source (RHS)
     * @param to annotation that appears on the type of the assignment target (LHS)
     * @return true if a type annotated with {@code to} is assignable from a type annotated with
@@ -34,8 +36,8 @@ public interface TypeAnnotationChecker {
    boolean isAssignable(Annotation from, Annotation to);
    
    /**
-    * Determines if the given two annotations are equivalent. Either or both annotations
-    * could be {@code null}, indicating unannotated types.
+    * Determines if the given two annotations are equivalent. Either or both annotations could be
+    * {@code null}, indicating unannotated types.
     * 
     * <p>The default implementation verifies that the first annotation is assignable to the second
     * and vice versa: that the second is assignable to the first.
@@ -55,9 +57,9 @@ public interface TypeAnnotationChecker {
     * assignable from {@code T2} according to the Java type system. (See {@link Types#isAssignable}
     * for more info.) 
     * 
-    * <p>Note that two equivalent types are mutually assignable. So if two annotations indicate
-    * the same type, then this method should return true regardless of the order of arguments.
-    * 
+    * <p>Note that two equivalent types are mutually assignable. So if two annotations indicate the
+    * same type, then this method should return true regardless of the order of arguments.
+    *
     * <p>An argument that is empty indicates the absence of any type annotations.
     * 
     * <p>The default implementation reduces the two sets of annotations to single annotations. If
@@ -118,9 +120,28 @@ public interface TypeAnnotationChecker {
    default boolean isAssignable(Annotation[] from, Annotation[] to) {
       return isAssignable(Arrays.asList(from), Arrays.asList(to));
    }
-
-   // TODO: doc
    
+   /**
+    * Determines if a given set of annotations is equivalent to a second set of annotations. Note
+    * that two equivalent types are mutually assignable. So if two annotations indicate the same
+    * type, then this method should return true regardless of the order of arguments.
+    * 
+    * <p>An argument that is empty indicates the absence of any type annotations.
+    * 
+    * <p>The default implementation reduces the two sets of annotations to single annotations. If
+    * either set contains more than one annotation which is not equivalent to the others, then an
+    * exception is thrown since this indicates an invalid (or incompatible) set of annotations. Upon
+    * reduction, the single from and to annotations are checked via
+    * {@link #isEquivalent(Annotation, Annotation)}.
+    * 
+    * @param a1 a set of annotations associated with a type
+    * @param a2 another set of annotations associated with a type
+    * @return true if a type annotated with {@code a1} annotations is equivalent to a type
+    *       annotated with {@code a2} annotations
+    * @throws IllegalArgumentException if either collection of annotations represents an illegal
+    *       combination of type annotations (for example, contains both {@code NotNull} and
+    *       {@code Nullable})
+    */
    default boolean isEquivalent(Collection<? extends Annotation> a1,
          Collection<? extends Annotation> a2) {
       Iterator<? extends Annotation> iter1 = a1.iterator();
@@ -148,6 +169,20 @@ public interface TypeAnnotationChecker {
       return isEquivalent(anno1, anno2);
    }
    
+   /**
+    * Determines if a given set of annotations is equivalent to a second set of annotations. This is
+    * a convenience method for use with core reflection, where most methods that query annotations
+    * return arrays, not collections.
+    *
+    * @param a1 a set of annotations associated with a type
+    * @param a2 another set of annotations associated with a type
+    * @return true if a type annotated with {@code a1} annotations is equivalent to a type
+    *       annotated with {@code a2} annotations
+    * @throws IllegalArgumentException if either collection of annotations represents an illegal
+    *       combination of type annotations (for example, contains both {@code NotNull} and
+    *       {@code Nullable})
+    * @see #isEquivalent(Collection, Collection)
+    */
    default boolean isEquivalent(Annotation[] a1, Annotation[] a2) {
       return isEquivalent(Arrays.asList(a1), Arrays.asList(a2));
    }

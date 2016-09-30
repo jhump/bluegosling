@@ -26,11 +26,48 @@ import com.bluegosling.collections.views.FilteringMap;
 import com.bluegosling.collections.views.TransformingMap;
 import com.google.common.collect.Collections2;
 
-// TODO: more tests, doc
+/**
+ * Models a type hierarchy for type annotations. The same basic assignability concepts apply as for
+ * a {@link TypeAnnotationChecker} except that a hierarchy can be queried for all super-types of a
+ * given type.
+ *  
+ * @author Joshua Humphries (jhumphries131@gmail.com)
+ */
+// TODO: more tests
 public interface TypeAnnotationHierarchy extends TypeAnnotationChecker {
    
+   /**
+    * Returns the set of type annotations that qualify supertypes of types with the given
+    * annotation. If an annotation {@code A1} is a supertype annotation of an annotation {@code A2},
+    * then for any type {@code T}, {@code A1 T} is a supertype of {@code A2 T}.
+    * 
+    * <p>If two annotations are equivalent, they are each supertypes of the other (and thus also
+    * subtypes of the other).
+    * 
+    * <p>If this hierarchy does not have knowledge of the given annotation, it should return an
+    * empty set. If an unqualified type (e.g. without annotations) is a direct supertype of one
+    * with the given annotation, the returned set should include a {@code null}. Similarly, if the
+    * provided annotation is {@code null}, the returned set should be annotations for the direct
+    * supertypes of an unqualified type.
+    * 
+    * @param annotation a type annotation
+    * @return the supertype annotations of the given annotation 
+    */
    Set<Annotation> getDirectSupertypeAnnotations(Annotation annotation);
    
+   /**
+    * Returns the set of supertypes of the given annotated type. This includes all
+    * {@linkplain AnnotatedTypes#getAnnotatedDirectSupertypes(AnnotatedType) supertypes} with the
+    * same annotations as given. It also includes formulations of the same type, but with
+    * {@linkplain #getDirectSupertypeAnnotations(Annotation) supertype annotations}.
+    * 
+    * <p>The default implementation uses {@link #getDirectSupertypeAnnotations(Annotation)} and
+    * {@link AnnotatedTypes#getAnnotatedDirectSupertypes(AnnotatedType)} to compute the full set
+    * of supertypes.
+    * 
+    * @param type an annotated type
+    * @return the annotated supertypes of the given type
+    */
    default Set<AnnotatedType> getDirectSupertypes(AnnotatedType type) {
       Set<AnnotatedType> supertypes = new LinkedHashSet<>();
       supertypes.addAll(Arrays.asList(AnnotatedTypes.getAnnotatedDirectSupertypes(type)));
@@ -40,14 +77,16 @@ public interface TypeAnnotationHierarchy extends TypeAnnotationChecker {
       return Collections.unmodifiableSet(supertypes);
    }
    
-   // TODO: fix javadoc
-
    /**
-    * A builder for creating instances of {@link TypeAnnotationChecker}. This provides a simple
-    * API for defining assignment compatibility of type annotations. Assignability is defined in
-    * terms of pairs of annotation types: an assignment target and an assignment source. Annotations
-    * with fields are further checked for value compatibility by checking that the values on a
-    * target annotation match those of a source annotation.
+    * A builder for creating instances of {@link TypeAnnotationHierarchy}. This provides a simple
+    * API for defining the hierarchy via assignment compatibility of type annotations. Assignability
+    * is defined in terms of pairs of annotation types: an assignment target and an assignment
+    * source. In the hierarchy, if an annotation {@code A1} is assignable from another {@code A2}
+    * then {@code A1} is a super-type of {@code A2}. Conversely, {@code A2} is a sub-type of
+    * {@code A1} in that example.
+    * 
+    * <p>Annotations with fields are further checked for value compatibility by checking that
+    * the values on a target annotation match those of a source annotation.
     * 
     * <p>It is valid to pass {@code null} as an annotation type to the builder methods. A
     * {@code null} type annotation corresponds to an unannotated type, or an "unqualified" type. A
@@ -545,8 +584,8 @@ public interface TypeAnnotationHierarchy extends TypeAnnotationChecker {
       private static <T extends Annotation> T computeAnnotation(Annotation source, Class<T> target,
             Function<String, String> attributeMapper) {
          Map<String, Object> asMap = Annotations.toMap(source);
-         asMap = FilteringMap.filteringKeys(asMap, t -> attributeMapper.apply(t) != null);
          asMap = TransformingMap.transformingKeys(asMap, attributeMapper::apply);
+         asMap = FilteringMap.filteringKeys(asMap, t -> t != null);
          return Annotations.create(target, asMap);
       }
       
@@ -650,7 +689,32 @@ public interface TypeAnnotationHierarchy extends TypeAnnotationChecker {
          return true;
       }
       
-      // TODO: doc
+      /**
+       * Computes known permutations of annotations that represent supertype annotations of the
+       * given annotated type. The specified hierarchy is consulted to find supertype annotations.
+       * 
+       * <p>The given list of annotations is a mutable copy of the type's annotations. (This
+       * function is recursive and the list will be perturbed with each recursive invocation.) The
+       * given iterator indicates this invocation's starting point in the list. It will proceed
+       * from this point, replacing annotations with their direct supertype annotations to compute
+       * supertype permutations. The given set of supertypes is the result set. As new supertypes
+       * are computed, they are added to the set.
+       * 
+       * <p>The method iterates through the given iterator. For each element (a type annotation),
+       * the hierarchy is queried for its supertype annotations. If any, the list is updated to
+       * reflect the given annotation being replaced with its supertype. The resulting list of
+       * annotations is used to construct an annotated type and added to the list of supertype
+       * results. The method then recurses, with the subsequent invocation having an iterator that
+       * starts at the next element in the list.
+       * 
+       * @param hierarchy the hierarchy which can provide direct supertype annotations
+       * @param annotations the list of annotations for the type and its computed supertypes
+       * @param iter an iterator which enumerates the elements of the given list of annotations
+       *       whose supertype annotations are to be explored
+       * @param type the type whose supertypes are being computed
+       * @param supertypes the result set of supertypes, to which supertypes are added as they
+       *       are computed
+       */
       private static void exhaustAllAnnotationSupertypes(TypeAnnotationHierarchy hierarchy,
             List<Annotation> annotations, ListIterator<Annotation> iter, AnnotatedType type,
             Set<AnnotatedType> supertypes) {

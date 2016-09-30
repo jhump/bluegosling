@@ -1,46 +1,50 @@
 package com.bluegosling.reflect;
 
-import java.lang.reflect.GenericArrayType;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.lang.reflect.TypeVariable;
-import java.lang.reflect.WildcardType;
+import java.lang.reflect.AnnotatedArrayType;
+import java.lang.reflect.AnnotatedParameterizedType;
+import java.lang.reflect.AnnotatedType;
+import java.lang.reflect.AnnotatedTypeVariable;
+import java.lang.reflect.AnnotatedWildcardType;
 import java.util.function.BiFunction;
 
 /**
- * A visitor for generic types. This enables dynamic-dispatch-like algorithms without the
+ * A visitor for annotated types. This enables dynamic-dispatch-like algorithms without the
  * {@code if-else} boiler-plate with {@code instanceof} checks and casts. To visit a type, use
- * the main entry-point method: {@link #visit(Type, Object)}.
+ * the main entry-point method: {@link #visit(AnnotatedType, Object)}.
  *
  * @param <R> the type of value returned from visiting a type
  * @param <P> an optional context parameter that is supplied to the visitor when visiting a type
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public interface TypeVisitor<R, P> {
+public interface AnnotatedTypeVisitor<R, P> {
    
    /**
     * Visits the given type. This is the entry point and generally need not be overridden by
     * implementing classes. This method will re-dispatch to one of the other visit methods based on
     * the kind of given type.
+    * 
+    * <p>If the given type is not a known sub-interface of {@link AnnotatedType} then the
+    * {@linkplain #defaultAction(AnnotatedType, Object) default action} is invoked. This is the
+    * expected case when the annotated type is a non-generic declared type, a raw type (e.g. an
+    * instance of a generic declared type with no type parameters), or a primitive type. It could
+    * also happen for unknown kinds of annotated types.
     *
     * @param type the type
     * @param param the context parameter
     * @return the result of visiting the given type
     */
-   default R visit(Type type, P param) {
-      if (type instanceof Class) {
-         return visitClass((Class<?>) type, param);
-      } else if (type instanceof ParameterizedType) {
-         return visitParameterizedType((ParameterizedType) type, param);
-      } else if (type instanceof GenericArrayType) {
-         return visitGenericArrayType((GenericArrayType) type, param);
-      } else if (type instanceof WildcardType) {
-         return visitWildcardType((WildcardType) type, param);
-      } else if (type instanceof TypeVariable) {
-         return visitTypeVariable((TypeVariable<?>) type, param);
+   default R visit(AnnotatedType type, P param) {
+      if (type instanceof AnnotatedParameterizedType) {
+         return visitParameterizedType((AnnotatedParameterizedType) type, param);
+      } else if (type instanceof AnnotatedArrayType) {
+         return visitArrayType((AnnotatedArrayType) type, param);
+      } else if (type instanceof AnnotatedWildcardType) {
+         return visitWildcardType((AnnotatedWildcardType) type, param);
+      } else if (type instanceof AnnotatedTypeVariable) {
+         return visitTypeVariable((AnnotatedTypeVariable) type, param);
       } else {
-         return visitUnknownType(type, param);
+         return defaultAction(type, param);
       }
    }
    
@@ -50,25 +54,14 @@ public interface TypeVisitor<R, P> {
     * 
     * <p>The default implementation returns {@code null}.
     *
-    * @param type a generic type
+    * @param type an annotated type
     * @param param the context parameter
     * @return the result of visiting the given type
     */
-   default R defaultAction(Type type, P param) {
+   default R defaultAction(AnnotatedType type, P param) {
       return null;
    }
    
-   /**
-    * Invoked when the visited type is a class token.
-    *
-    * @param clazz the class token
-    * @param param the context parameter
-    * @return the result of visiting the given class
-    */
-   default R visitClass(Class<?> clazz, P param) {
-      return defaultAction(clazz, param);
-   }
-
    /**
     * Invoked when the visited type is a parameterized type.
     *
@@ -76,7 +69,7 @@ public interface TypeVisitor<R, P> {
     * @param param the context parameter
     * @return the result of visiting the given parameterized type
     */
-   default R visitParameterizedType(ParameterizedType parameterizedType, P param) {
+   default R visitParameterizedType(AnnotatedParameterizedType parameterizedType, P param) {
       return defaultAction(parameterizedType, param);
    }
 
@@ -87,7 +80,7 @@ public interface TypeVisitor<R, P> {
     * @param param the context parameter
     * @return the result of visiting the given generic array type
     */
-   default R visitGenericArrayType(GenericArrayType arrayType, P param) {
+   default R visitArrayType(AnnotatedArrayType arrayType, P param) {
       return defaultAction(arrayType, param);
    }
 
@@ -98,7 +91,7 @@ public interface TypeVisitor<R, P> {
     * @param param the context parameter
     * @return the result of visiting the given wildcard type
     */
-   default R visitWildcardType(WildcardType wildcardType, P param) {
+   default R visitWildcardType(AnnotatedWildcardType wildcardType, P param) {
       return defaultAction(wildcardType, param);
    }
 
@@ -109,23 +102,23 @@ public interface TypeVisitor<R, P> {
     * @param param the context parameter
     * @return the result of visiting the given type variable
     */
-   default R visitTypeVariable(TypeVariable<?> typeVariable, P param) {
+   default R visitTypeVariable(AnnotatedTypeVariable typeVariable, P param) {
       return defaultAction(typeVariable, param);
    }
    
    /**
-    * Invoked when the visited type is not a known sub-type of the {@link Type} interface.
+    * Invoked when the visited type is not suitable for one of the more specific {@code visit*}
+    * methods. This happens when the underlying type is a non-generic declared type, a raw type
+    * (a generic type with no type arguments), or a primitive type.
     * 
-    * <p>Other {@code visit*} methods have a default implementation that calls
-    * {@link #defaultAction(Type, Object)}. But the default implementation of this method is
-    * different. Instead, it throws an {@link UnknownTypeException}. 
-    *
-    * @param type the type
+    * <p>This could also happen for unknown or unexpected kinds of {@link AnnotatedType}.
+    * 
+    * @param type an annotated type
     * @param param the context parameter
     * @return the result of visiting the given type
     */
-   default R visitUnknownType(Type type, P param) {
-      throw new UnknownTypeException(type);
+   default R visitOtherType(AnnotatedType type, P param) {
+      return defaultAction(type, param);
    }
    
    /**
@@ -137,14 +130,13 @@ public interface TypeVisitor<R, P> {
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    public static class Builder<R, P> {
-      private BiFunction<? super Type, ? super P, ? extends R> defaultAction; 
-      private BiFunction<? super Class<?>, ? super P, ? extends R> classAction; 
-      private BiFunction<? super ParameterizedType, ? super P, ? extends R> paramTypeAction; 
-      private BiFunction<? super GenericArrayType, ? super P, ? extends R> arrayAction; 
-      private BiFunction<? super WildcardType, ? super P, ? extends R> wildcardAction; 
-      private BiFunction<? super TypeVariable<?>, ? super P, ? extends R> typeVarAction;
-      private BiFunction<? super Type, ? super P, ? extends R> unknownTypeAction;
-
+      private BiFunction<? super AnnotatedType, ? super P, ? extends R> defaultAction; 
+      private BiFunction<? super AnnotatedParameterizedType, ? super P, ? extends R> paramTypeAction; 
+      private BiFunction<? super AnnotatedArrayType, ? super P, ? extends R> arrayAction; 
+      private BiFunction<? super AnnotatedWildcardType, ? super P, ? extends R> wildcardAction; 
+      private BiFunction<? super AnnotatedTypeVariable, ? super P, ? extends R> typeVarAction;
+      private BiFunction<? super AnnotatedType, ? super P, ? extends R> otherTypeAction;
+      
       /**
        * Defines the default action, invoked for types where no other, more specific action has been
        * configured.
@@ -152,22 +144,12 @@ public interface TypeVisitor<R, P> {
        * @param action the default action
        * @return {@code this}, for method chaining
        */
-      public Builder<R, P> defaultAction(BiFunction<? super Type, ? super P, ? extends R> action) {
+      public Builder<R, P> defaultAction(
+            BiFunction<? super AnnotatedType, ? super P, ? extends R> action) {
          this.defaultAction = action;
          return this;
       }
       
-      /**
-       * Defines the action taken when visiting a class token.
-       *
-       * @param action the action taken when visiting a class token
-       * @return {@code this}, for method chaining
-       */
-      public Builder<R, P> onClass(BiFunction<? super Class<?>, ? super P, ? extends R> action) {
-         this.classAction = action;
-         return this;
-      }
-
       /**
        * Defines the action taken when visiting a parameterized type.
        *
@@ -175,7 +157,7 @@ public interface TypeVisitor<R, P> {
        * @return {@code this}, for method chaining
        */
       public Builder<R, P> onParameterizedType(
-            BiFunction<? super ParameterizedType, ? super P, ? extends R> action) {
+            BiFunction<? super AnnotatedParameterizedType, ? super P, ? extends R> action) {
          this.paramTypeAction = action;
          return this;
       }
@@ -186,8 +168,8 @@ public interface TypeVisitor<R, P> {
        * @param action the action taken when visiting a generic array type
        * @return {@code this}, for method chaining
        */
-      public Builder<R, P> onGenericArrayType(
-            BiFunction<? super GenericArrayType, ? super P, ? extends R> action) {
+      public Builder<R, P> onArrayType(
+            BiFunction<? super AnnotatedArrayType, ? super P, ? extends R> action) {
          this.arrayAction = action;
          return this;
       }
@@ -199,7 +181,7 @@ public interface TypeVisitor<R, P> {
        * @return {@code this}, for method chaining
        */
       public Builder<R, P> onWildcardType(
-            BiFunction<? super WildcardType, ? super P, ? extends R> action) {
+            BiFunction<? super AnnotatedWildcardType, ? super P, ? extends R> action) {
          this.wildcardAction = action;
          return this;
       }
@@ -211,88 +193,85 @@ public interface TypeVisitor<R, P> {
        * @return {@code this}, for method chaining
        */
       public Builder<R, P> onTypeVariable(
-            BiFunction<? super TypeVariable<?>, ? super P, ? extends R> action) {
+            BiFunction<? super AnnotatedTypeVariable, ? super P, ? extends R> action) {
          this.typeVarAction = action;
          return this;
       }
-
+      
       /**
-       * Defines the action taken when visiting an unrecognized type.
+       * Defines the action taken when visiting a type that is not any of the known sub-interfaces
+       * of {@link AnnotatedType}.
        *
-       * @param action the action taken when visiting an unrecognized type
+       * @param action the action taken when visiting the type
        * @return {@code this}, for method chaining
+       * 
+       * @see AnnotatedTypeVisitor#visitOtherType(AnnotatedType, Object)
        */
-      public Builder<R, P> onUnknownType(BiFunction<? super Type, ? super P, ? extends R> action) {
-         this.unknownTypeAction = action;
+      public Builder<R, P> onOtherType(
+            BiFunction<? super AnnotatedType, ? super P, ? extends R> action) {
+         this.otherTypeAction = action;
          return this;
       }
-      
+
       /**
        * Builds a visitor using the actions defined so far. Any actions not defined will behave the
        * same as their default implementations.
        *
        * @return a visitor that uses the configured actions when visiting a type
        */
-      public TypeVisitor<R, P> build() {
-         final BiFunction<? super Type, ? super P, ? extends R> def = defaultAction; 
-         final BiFunction<? super Class<?>, ? super P, ? extends R> onClass = classAction; 
-         final BiFunction<? super ParameterizedType, ? super P, ? extends R> onParamType =
+      public AnnotatedTypeVisitor<R, P> build() {
+         final BiFunction<? super AnnotatedType, ? super P, ? extends R> def = defaultAction; 
+         final BiFunction<? super AnnotatedParameterizedType, ? super P, ? extends R> onParamType =
                paramTypeAction; 
-         final BiFunction<? super GenericArrayType, ? super P, ? extends R> onArray = arrayAction; 
-         final BiFunction<? super WildcardType, ? super P, ? extends R> onWildcard = wildcardAction; 
-         final BiFunction<? super TypeVariable<?>, ? super P, ? extends R> onTypeVar =
+         final BiFunction<? super AnnotatedArrayType, ? super P, ? extends R> onArray = arrayAction; 
+         final BiFunction<? super AnnotatedWildcardType, ? super P, ? extends R> onWildcard =
+               wildcardAction; 
+         final BiFunction<? super AnnotatedTypeVariable, ? super P, ? extends R> onTypeVar =
                typeVarAction;
-         final BiFunction<? super Type, ? super P, ? extends R> onUnknownType = unknownTypeAction;
+         final BiFunction<? super AnnotatedType, ? super P, ? extends R> onOtherType =
+               otherTypeAction; 
          
-         return new TypeVisitor<R, P>() {
+         return new AnnotatedTypeVisitor<R, P>() {
             @Override
-            public R defaultAction(Type type, P param) {
+            public R defaultAction(AnnotatedType type, P param) {
                return def != null
                      ? def.apply(type, param)
                      : null;
             }
             
             @Override
-            public R visitClass(Class<?> clazz, P param) {
-               return onClass != null
-                     ? onClass.apply(clazz, param)
-                     : defaultAction(clazz, param);
-            }
-
-            @Override
-            public R visitParameterizedType(ParameterizedType parameterizedType, P param) {
+            public R visitParameterizedType(AnnotatedParameterizedType parameterizedType, P param) {
                return onParamType != null
                      ? onParamType.apply(parameterizedType, param)
                      : defaultAction(parameterizedType, param);
             }
 
             @Override
-            public R visitGenericArrayType(GenericArrayType arrayType, P param) {
+            public R visitArrayType(AnnotatedArrayType arrayType, P param) {
                return onArray != null
                      ? onArray.apply(arrayType, param)
                      : defaultAction(arrayType, param);
             }
 
             @Override
-            public R visitWildcardType(WildcardType wildcardType, P param) {
+            public R visitWildcardType(AnnotatedWildcardType wildcardType, P param) {
                return onWildcard != null
                      ? onWildcard.apply(wildcardType, param)
                      : defaultAction(wildcardType, param);
             }
 
             @Override
-            public R visitTypeVariable(TypeVariable<?> typeVariable, P param) {
+            public R visitTypeVariable(AnnotatedTypeVariable typeVariable, P param) {
                return onTypeVar != null
                      ? onTypeVar.apply(typeVariable, param)
                      : defaultAction(typeVariable, param);
             }
             
             @Override
-            public R visitUnknownType(Type type, P param) {
-               if (onUnknownType != null) {
-                  return onUnknownType.apply(type, param);
-               }
-               throw new UnknownTypeException(type);
+            public R visitOtherType(AnnotatedType type, P param) {
+               return onOtherType != null
+                     ? onOtherType.apply(type, param)
+                     : defaultAction(type, param);
             }
          };
       }

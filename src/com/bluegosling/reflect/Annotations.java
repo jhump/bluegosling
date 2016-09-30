@@ -5,7 +5,6 @@ import static com.bluegosling.function.Predicates.alwaysAccept;
 import java.lang.annotation.Annotation;
 import java.lang.annotation.Inherited;
 import java.lang.reflect.Array;
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.ArrayDeque;

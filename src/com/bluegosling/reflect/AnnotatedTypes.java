@@ -8,9 +8,6 @@ import com.bluegosling.collections.views.FilteringCollection;
 import com.bluegosling.collections.views.TransformingCollection;
 import com.bluegosling.collections.views.TransformingMap;
 import com.bluegosling.function.Predicates;
-import com.bluegosling.reflect.Types.ParameterizedTypeImpl;
-import com.bluegosling.reflect.Types.TypePathElement;
-import com.bluegosling.reflect.Types.WildcardTypeImpl;
 import com.google.common.collect.Iterators;
 
 import java.io.Serializable;
@@ -54,11 +51,14 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 /**
- * Numerous utility methods for using, constructing, and inspecting annotated types.
+ * Numerous utility methods for using, constructing, and inspecting {@linkplain AnnotatedType
+ * annotated types}.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  * 
  * @see AnnotatedType
+ * @see AnnotatedTypeRef
+ * @see Types
  */
 // TODO: tests, fix up javadoc
 public final class AnnotatedTypes {
@@ -67,13 +67,19 @@ public final class AnnotatedTypes {
    static final AnnotatedType EXTENDS_ANY =
          new AnnotatedWildcardTypeImpl(OBJECT, true, Collections.emptyList());
    static final AnnotatedType[] EMPTY_TYPES = new AnnotatedType[0];
-   private static final AnnotatedType[] ARRAY_INTERFACES = new AnnotatedType[] {
+   static final AnnotatedType[] ARRAY_INTERFACES = new AnnotatedType[] {
       newAnnotatedType(Cloneable.class), newAnnotatedType(Serializable.class)
    };
-   private static final AnnotatedType[] ARRAY_SUPERTYPES = new AnnotatedType[] {
-      newAnnotatedType(Object.class), ARRAY_INTERFACES[0], ARRAY_INTERFACES[1]
-   };
+   private static final AnnotatedType[] ARRAY_SUPERTYPES =
+         concat(newAnnotatedType(Object.class), ARRAY_INTERFACES);
    private static final Annotation[] EMPTY_ANNOTATIONS = new Annotation[0];
+   
+   private static AnnotatedType[] concat(AnnotatedType type, AnnotatedType[] otherTypes) {
+      AnnotatedType[] ret = new AnnotatedType[otherTypes.length + 1];
+      ret[0] = type;
+      System.arraycopy(otherTypes, 0, ret, 1, otherTypes.length);
+      return ret;
+   }
 
    private AnnotatedTypes() {}
    
@@ -119,12 +125,17 @@ public final class AnnotatedTypes {
     * interface, is its superclass. If the first upper bound is an interface then, like other
     * interface types, {@code null} is returned.
     *
-    * @param type a generic type
+    * <p>The type annotations on the returned type will be the union of the type annotations
+    * on the given type plus the type annotations on the super, as it appears in the given
+    * type's {@code extends} clause. For example, given a class declared as
+    * {@code class Baz extends @Frobnitz Object}, an annotated type {@code @Foobar Baz} will return
+    * the annotated supertype {@code @Foobar @Frobnitz Object}.
+    * 
+    * @param type an annotated type
     * @return the superclass of the given type
     * 
     * @see Class#getAnnotatedSuperclass()
     */
-   // TODO: revise doc
    public static AnnotatedType getAnnotatedSuperclass(AnnotatedType type) {
       requireNonNull(type);
       if (type instanceof AnnotatedParameterizedType) {
@@ -161,7 +172,7 @@ public final class AnnotatedTypes {
    }
    
    /**
-    * Returns the generic interfaces implemented by the given type. If the given type is an
+    * Returns the annotated interfaces implemented by the given type. If the given type is an
     * interface then the interfaces it directly extends are returned. If the given type is an array
     * then an array containing {@code Serializable} and {@code Cloneable} is returned. If the given
     * type is a class that does not directly implement any interfaces (including primitive types)
@@ -169,13 +180,18 @@ public final class AnnotatedTypes {
     * 
     * <p>If the given type is a wildcard or type variable, then this returns an array containing any
     * upper bounds that are interfaces.
+    * 
+    * <p>The type annotations on the returned interfaces will be the union of the type annotations
+    * on the given type plus the type annotations on the interface, as it appears in the given
+    * type's {@code implements} clause. For example, given a class declared as
+    * {@code class Baz implements @Frobnitz List<String>}, an annotated type {@code @Foobar Baz}
+    * will return the annotated interface {@code @Foobar @Frobnitz List<String>}.  
     *
-    * @param type a generic type
-    * @return the interfaces directly implemented by the given type
+    * @param type an annotated type
+    * @return the annotated interfaces directly implemented by the given type
     * 
     * @see Class#getAnnotatedInterfaces()
     */
-   // TODO: revise doc
    public static AnnotatedType[] getAnnotatedInterfaces(AnnotatedType type) {
       requireNonNull(type);
       if (type instanceof AnnotatedParameterizedType) {
@@ -235,17 +251,21 @@ public final class AnnotatedTypes {
    }
 
    /**
-    * Returns the set of direct supertypes for the given type. The direct supertypes are determined
-    * using the rules described in <em>Subtyping</em>
+    * Returns the set of annotated direct supertypes for the given type. The direct supertypes are
+    * determined using the rules described in <em>Subtyping</em>
     * (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.10">JLS
     * 4.10</a>).
     * 
     * <p>If invoked for the type {@code Object}, an empty array is returned.
     *
-    * @param type a type
+    * <p>For direct supertypes that are interfaces directly implemented by the given type or
+    * supertypes directly extended by the given type, the annotations on the returned types are
+    * computed exactly as described for {@link #getAnnotatedInterfaces(AnnotatedType)} and
+    * {@link #getAnnotatedSuperclass(AnnotatedType)}.
+    *   
+    * @param type an annotated type
     * @return its direct supertypes
     */
-   // TODO: revise doc
    public static AnnotatedType[] getAnnotatedDirectSupertypes(AnnotatedType type) {
       Annotation[] annotations = type.getDeclaredAnnotations();
       Type theType = type.getType();
@@ -337,36 +357,42 @@ public final class AnnotatedTypes {
    }
 
    /**
-    * Returns the set of all supertypes for the given type. This returned set has the same elements
-    * as if {@link #getAnnotatedDirectSupertypes(AnnotatedType)} were invoked, and then repeatedly
-    * invoked recursively on the returned supertypes until the entire hierarchy is exhausted (e.g.
-    * reach {@code Object}, which has no supertypes).
+    * Returns the set of all supertypes for the given annotated type. This returned set has the same
+    * elements as if {@link #getAnnotatedDirectSupertypes(AnnotatedType)} were invoked, and then
+    * repeatedly invoked recursively on the returned supertypes until the entire hierarchy is
+    * exhausted (e.g. reach {@code Object}, which has no supertypes).
     * 
     * <p>This method uses a breadth-first search and returns a set with deterministic iteration
     * order so that types "closer" to the given type appear first when iterating through the set.
     * 
     * <p>If invoked for the type {@code Object}, an empty set is returned.
+    * 
+    * <p>If this enumeration of all supertypes yields the same type multiple time but with different
+    * annotations, that type will be present only once in the returned set and will have the union
+    * of all such annotations. For example, given the declarations of two classes
+    * {@code class Baz extends Bar implements @Frobnitz List<String>} and
+    * {@code class Bar implements @Gyzmeaux List<String>}, fetching all annotated supertypes for the
+    * type {@code @Foobar Baz} would include {@code @Foobar @Frobnitz @Gyzmeaux List<String>}.
     *
-    * @param type a type
+    * @param type an annotated type
     * @return the set all of the given type's supertypes
     */
-   // TODO: revise doc
    public static Set<AnnotatedType> getAllAnnotatedSupertypes(AnnotatedType type) {
       return Collections.unmodifiableSet(
             new LinkedHashSet<>(getAllAnnotatedSupertypesInternal(type, false, false).values()));
    }
    
    /**
-    * Breadth-first searches the type hierarchy, returning all supertypes for the given type. If
-    * so instructed, the returned set will also include the given type. If so instructed, all types
-    * in the returned set will be erased (e.g. raw) types.
+    * Breadth-first searches the type hierarchy, returning all supertypes for the given annotated
+    * type. If so instructed, the returned set will also include the given type. If so instructed,
+    * all types in the returned set will be erased (e.g. raw) types.
     *
-    * @param type a type
+    * @param type an annotated type
     * @param includeType if true, the given type is included in the returned set
     * @param erased if true, only erasures for the supertypes are included in the returned set
-    * @return the set of all of the given type's supertypes
+    * @return all of the given type's supertypes, as a map with raw types as keys and annotated
+    *       types of that raw type as values
     */
-   // TODO: revise doc
    private static Map<Class<?>, AnnotatedType> getAllAnnotatedSupertypesInternal(AnnotatedType type,
          boolean includeType, boolean erased) {
       Queue<AnnotatedType> pending = new ArrayDeque<>();
@@ -403,20 +429,19 @@ public final class AnnotatedTypes {
    
    /**
     * Computes least upper bounds for the given array of types. This is a convenience method that is
-    * shorthand for {@code Types.getLeastUpperBounds(Arrays.asList(types))}.
+    * shorthand for {@code AnnotatedTypes.getAnnotatedLeastUpperBounds(Arrays.asList(types))}.
     *
     * @param types the types whose least upper bounds are computed
     * @return the least upper bounds for the given types
     * 
     * @see #getAnnotatedLeastUpperBounds(Iterable)
     */
-   // TODO: revise doc
    public static AnnotatedType[] getAnnotatedLeastUpperBounds(AnnotatedType... types) {
       return getAnnotatedLeastUpperBounds(Arrays.asList(types));
    }
 
    /**
-    * Computes least upper bounds for the given types. The algorithm used is detailed in
+    * Computes least upper bounds for the given annotated types. The algorithm used is detailed in
     * <em>Least Upper Bound</em>
     * (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.10.4">JLS
     * 4.10.4</a>).
@@ -451,38 +476,45 @@ public final class AnnotatedTypes {
       }
       
       // Move the types into a set to de-dup. Even if given iterable is a set, we still do this so
-      // we have a defensive copy of the set for all subsequent operations.
+      // we have a defensive copy of the set for all subsequent operations. We first index into a
+      // map, keyed by distinct type, and then compute an annotated type for each entry that has
+      // the intersection of annotations.
       OptionalInt numTypes = MoreIterables.trySize(types);
-      Set<AnnotatedType> typesSet = new LinkedHashSet<>(numTypes.orElse(6) * 4 / 3);
-      typesSet.add(wrap(first));
+      Map<AnnotatedType, Set<AnnotatedType>> typesMap =
+            new LinkedHashMap<>(numTypes.orElse(6) * 4 / 3);
+      typesMap.computeIfAbsent(replaceAnnotations(first), t -> new HashSet<>()).add(wrap(first));
       while (iter.hasNext()) {
-         typesSet.add(wrap(iter.next()));
+         AnnotatedType next = iter.next();
+         typesMap.computeIfAbsent(replaceAnnotations(next), t -> new HashSet<>()).add(wrap(next));
       }
-      if (typesSet.size() == 1) {
+      if (typesMap.size() == 1) {
          // all other types were duplicates of the first, so least upper bound is the one type
          return new AnnotatedType[] { first };
       }
+      Set<AnnotatedType> typesSet = new LinkedHashSet<>(typesMap.size() * 4 / 3);
+      typesMap.values().forEach(ats -> {
+         typesSet.add(replaceAnnotations(ats.iterator().next(), intersectAnnotations(ats)));
+      });
       
       return leastUpperBounds(typesSet, new HashMap<>());
    }
 
    /**
-    * Computes least upper bounds for the given types, using the given sets to track recursion and
-    * prevent recursive types from causing infinite recursion.
+    * Computes least upper bounds for the given annotated types, using the given sets to track
+    * recursion and prevent recursive types from causing infinite recursion.
     *
     * @param types the types whose least upper bounds are computed
     * @param setsSeen sets of types already observed, mapped to memoized results (to prevent
     *       duplicated work during recursion and also to prevent infinite recursion)
     * @return the least upper bounds for the given types
     */
-   // TODO: revise doc
    private static AnnotatedType[] leastUpperBounds(Set<AnnotatedType> types,
          Map<Set<AnnotatedType>, AnnotatedType[]> setsSeen) {
       return leastUpperBounds(types, setsSeen, false);
    }
 
    /**
-    * Computes least upper bounds for the given types or reduces them via similar logic.
+    * Computes least upper bounds for the given annotated types or reduces them via similar logic.
     * 
     * <p>In addition to computing least upper bounds, it can also just reduce the given types, using
     * the same logic in computing least upper bounds (as if given types are the intersection of
@@ -501,7 +533,6 @@ public final class AnnotatedTypes {
     * @return the least upper bounds for the given types (or the reduction of the given types using
     *       similar logic)
     */
-   // TODO: revise doc
    private static AnnotatedType[] leastUpperBounds(Set<AnnotatedType> types,
          Map<Set<AnnotatedType>, AnnotatedType[]> setsSeen, boolean reduceTypesDirectly) {
       AnnotatedType[] cachedResult = setsSeen.get(types);
@@ -538,6 +569,8 @@ public final class AnnotatedTypes {
                if (other == null) {
                   i.remove();
                } else {
+                  // TODO: this reduction isn't quite right in cases where the types could
+                  // be parameterized types with different type annotations on their parameters
                   AnnotatedType current = entry.getValue();
                   entry.setValue(replaceAnnotations(current,
                         intersectAnnotations(current, other)));
@@ -667,7 +700,6 @@ public final class AnnotatedTypes {
     *       eliminate duplicated work during recursion and also to prevent infinite recursion
     * @return the most specific parameterization that contains both given
     */
-   // TODO: revise doc
    private static AnnotatedType leastContainingInvocation(AnnotatedParameterizedType t1,
          AnnotatedParameterizedType t2, Map<Set<AnnotatedType>, AnnotatedType[]> setsSeen) {
       assert Types.getErasure(t1.getType()) == Types.getErasure(t2.getType());
@@ -708,7 +740,6 @@ public final class AnnotatedTypes {
     *       eliminate duplicated work during recursion and also to prevent infinite recursion
     * @return the most specific type argument that contains both the given values
     */
-   // TODO: revise doc
    private static AnnotatedType leastContainingTypeArgument(AnnotatedType t1, AnnotatedType t2,
          Map<Set<AnnotatedType>, AnnotatedType[]> setsSeen) {
       if (t1 instanceof AnnotatedWildcardType) {
@@ -739,7 +770,6 @@ public final class AnnotatedTypes {
     *       eliminate duplicated work during recursion and also to prevent infinite recursion
     * @return the most specific type argument that contains both the given values
     */
-   // TODO: revise doc
    private static AnnotatedType leastContainingTypeArgument(AnnotatedWildcardType t1,
          AnnotatedType t2, Map<Set<AnnotatedType>, AnnotatedType[]> setsSeen) {
       AnnotatedType[] superBounds = t1.getAnnotatedLowerBounds();
@@ -1386,7 +1416,6 @@ public final class AnnotatedTypes {
     * @param checker a type annotation checker
     * @return true if the assignment is allowed
     */
-   // TODO: revise doc
    public static boolean isAssignableStrict(AnnotatedType from, AnnotatedType to,
          TypeAnnotationChecker checker) {
       return isAssignableReference(from, Collections.emptyList(), to, Collections.emptyList(),
@@ -1617,6 +1646,91 @@ public final class AnnotatedTypes {
    }
    
    /**
+    * Determines if one type is a <em>proper</em> subtype of another. This uses the rules in
+    * <em>Subtyping</em>
+    * (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.10">JLS
+    * 4.10</a>) to decide if one type is a subtype of the other.
+    * 
+    * <p>As this checks if one types is a <strong>proper</strong> subtype, it will return false if
+    * the two types are the same. To check if a type is the same or a subtype, consider using
+    * {@link #isAssignable(Type, Type) Types.isAssignable(possibleSubtype, aType)}.
+    *
+    * @param possibleSubtype another type
+    * @param aType a type
+    * @return true if the second type is a subtype of the first
+    */
+   public static boolean isSubtype(AnnotatedType possibleSubtype, AnnotatedType aType,
+         TypeAnnotationChecker checker) {
+      if (isSubtypeStrict(possibleSubtype, aType, checker)) {
+         return true;
+      }
+      if (!Types.isPrimitive(aType.getType()) || !Types.isPrimitive(possibleSubtype.getType())) {
+         return false;
+      }
+      return Types.isSubtype(possibleSubtype.getType(), aType.getType())
+            && checkCompatible(possibleSubtype, aType, checker::isAssignable);
+   }
+   
+   /**
+    * Determines if one type is a <em>proper</em> subtype of another, with restrictions. The
+    * restrictions are the same as those observed in calls to {@link Class#isAssignableFrom(Class)}:
+    * primitive subtyping rules are ignored. So this will return false if given {@code int} and
+    * {@code short} (even though {@code short} is a subtype of {@code int} per primitive subtyping
+    * rules).
+    * 
+    * <p>So only the rules defined in <em>Subtyping among Class and Interface Types</em>
+    * (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.10.2">JLS
+    * 4.10.2</a>) and <em>Subtyping among Array Types</em>
+    * (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.10.3">JLS
+    * 4.10.3</a>) are used.
+    * 
+    * <p>As this checks if one types is a <strong>proper</strong> subtype, it will return false if
+    * the two types are the same. To check if a type is the same or a subtype, consider using
+    * {@link #isAssignableStrict(Type, Type) Types.isAssignable(possibleSubtype, aType)}.
+    *
+    * @param possibleSubtype another type
+    * @param aType a type
+    * @return true if the second type is a subtype of the first (but not according to primitive
+    *       subtyping rules)
+    */
+   // TODO: revise doc
+   public static boolean isSubtypeStrict(AnnotatedType possibleSubtype, AnnotatedType aType,
+         TypeAnnotationChecker checker) {
+      return !equivalent(possibleSubtype, aType, checker)
+            && isAssignableStrict(possibleSubtype, aType, checker);
+   }
+
+   /**
+    * Determines whether two given types represent the same type. This is like testing for the
+    * possibility of an <em>Identity Conversion</em>
+    * (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-5.html#jls-5.1.1">JLS
+    * 5.1.1</a>).
+    * 
+    * <p>It behaves the the same as {@link Types#equals(Type, Type)} with one important caveat: two
+    * wildcard types, even if they have identical bounds (and therefore are equal), are never the
+    * same type. This is because they represent unknown types. Since it cannot be known whether the
+    * types they represent are the same, this method assumes they are not. This behavior mirrors
+    * that of the annotation processing API's {@linkplain javax.lang.model.util.Types#isSameType(
+    * javax.lang.model.type.TypeMirror, javax.lang.model.type.TypeMirror) method of the same name}. 
+    *
+    * @param a a type
+    * @param b another type
+    * @return true if they represent the same type
+    */
+   // TODO: revise doc
+   public static boolean isSameType(AnnotatedType a, AnnotatedType b,
+         TypeAnnotationChecker checker) {
+      return !(a instanceof AnnotatedWildcardType || b instanceof AnnotatedWildcardType)
+            && equivalent(a, b, checker);
+   }
+
+   // TODO: doc
+   public static boolean isSameType(AnnotatedType a, AnnotatedType b) {
+      return !(a instanceof AnnotatedWildcardType || b instanceof AnnotatedWildcardType)
+            && equals(a, b);
+   }
+
+   /**
     * Resolves the given type variable in the context of the given type. For example, if the given
     * type variable is {@code Collection.<E>} and the given type is the parameterized type
     * {@code List<Optional<String>>}, then this will return {@code Optional<String>}.
@@ -1629,7 +1743,6 @@ public final class AnnotatedTypes {
     * @param variable the type variable to resolve
     * @return the resolved value of the given variable or {@code null} if it cannot be resolved
     */
-   // TODO: revise doc
    public static AnnotatedType resolveTypeVariable(AnnotatedType context,
          TypeVariable<?> variable) {
       GenericDeclaration declaration = variable.getGenericDeclaration();
@@ -1689,7 +1802,6 @@ public final class AnnotatedTypes {
     * @param typeToResolve the generic type to resolve
     * @return the resolved type
     */
-   // TODO: revise doc
    public static AnnotatedType resolveType(AnnotatedType context, AnnotatedType typeToResolve) {
       Map<TypeVariable<?>, AnnotatedType> resolvedVariableValues = new HashMap<>();
       Set<TypeVariable<?>> resolvedVariables = new HashSet<>();
@@ -1742,7 +1854,6 @@ public final class AnnotatedTypes {
     * @return the given type, but with references to the given type variable replaced with the given
     *       value
     */
-   // TODO: revise doc
    public static AnnotatedType replaceTypeVariable(AnnotatedType type, TypeVariable<?> typeVariable,
          AnnotatedType typeValue) {
       // wrap the variable to make sure its hashCode and equals are well-behaved
@@ -1766,7 +1877,6 @@ public final class AnnotatedTypes {
     * @return the given type, but with references to the given type variables replaced with the
     *       given mapped values
     */
-   // TODO: revise doc
    public static AnnotatedType replaceTypeVariables(AnnotatedType type,
          Map<TypeVariable<?>, AnnotatedType> typeVariables) {
       // wrap the variables to make sure their hashCode and equals are well-behaved
@@ -1892,9 +2002,9 @@ public final class AnnotatedTypes {
     * @throws IllegalArgumentException if the given argument is not a valid value for the given
     *       type variable
     */
-   // TODO: revise doc
    private static void checkTypeValue(TypeVariable<?> variable, AnnotatedType argument,
          Map<TypeVariable<?>, AnnotatedType> resolvedVariables) {
+      // TODO: use a TypeAnnotationChecker to validate argument against variable's annotated bounds
       Types.checkTypeValue(variable, argument.getType(),
             TransformingMap.transformingValues(resolvedVariables, AnnotatedType::getType));
    }
@@ -1911,17 +2021,17 @@ public final class AnnotatedTypes {
    }
    
    /**
-    * For the given generic type, computes the generic super-type corresponding to the given raw
-    * class token. If the given generic type is not actually assignable to the given super-type
-    * token then {@code null} is returned. 
+    * For the given annotated type, computes the annotated super-type corresponding to the given raw
+    * class token. If the given type is not actually assignable to the given super-type token then
+    * {@code null} is returned. 
     * 
-    * <p>For example, if the given generic type is {@code List<String>} and the given raw class
-    * token is {@code Collection.class}, then this method will resolve type parameters and return a
-    * parameterized type: {@code Collection<String>}.
+    * <p>For example, if the given annotated type is {@code @Foo List<@Bar String>} and the given
+    * raw class token is {@code Collection.class}, then this method will resolve type parameters and
+    * return a parameterized type: {@code @Foo Collection<@Bar String>}.
     * 
-    * <p>If the given generic type is a raw class token but represents a type with type parameters,
-    * then raw types are returned. For example, if the generic type is {@code HashMap.class} and
-    * the given raw class token is {@code Map.class}, then this method simply returns the raw type
+    * <p>If the given type is a raw class token but represents a type with type parameters, then raw
+    * types are returned. For example, if the generic type is {@code HashMap.class} and the given
+    * raw class token is {@code Map.class}, then this method simply returns the raw type
     * {@code Map.class}. This is also done if any super-type traversed uses raw types. For example,
     * if the given type's super-class were defined as {@code class Xyz extends HashMap}, then the
     * type arguments to {@code HashMap} are lost due to raw type usage and a raw type is returned.
@@ -1958,7 +2068,7 @@ public final class AnnotatedTypes {
    }
 
    /**
-    * Finds the generic super type for the given generic type and super-type token and accumulates
+    * Finds the generic super type for the given annotated type and super-type token and accumulates
     * type variables and actual type arguments in the given map.
     *
     * @param type the generic type
@@ -1968,7 +2078,6 @@ public final class AnnotatedTypes {
     * @return the generic type corresponding to the given super-type token as returned by
     *       {@link Class#getGenericSuperclass()} or {@link Class#getGenericInterfaces()} 
     */
-   // TODO: revise doc
    private static AnnotatedType findAnnotatedSupertype(AnnotatedType type, Class<?> superClass,
          Map<TypeVariable<?>, AnnotatedType> typeVariables) {
       if (type instanceof AnnotatedArrayType) {

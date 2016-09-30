@@ -62,7 +62,7 @@ public abstract class TaskImplementation<V> implements Callable<V> {
     * @param visitor the visitor
     * @return the value returned by the visitor method that gets invoked
     */
-   public abstract <R> R visit(Visitor<R, ? super V> visitor);
+   public abstract <R> R accept(Visitor<R, ? super V> visitor);
    
    /**
     * Returns a task for the specified callable implementation.
@@ -73,7 +73,7 @@ public abstract class TaskImplementation<V> implements Callable<V> {
    public static <V> TaskImplementation<V> forCallable(final Callable<V> callable) {
       return new TaskImplementation<V>() {
          @Override
-         public <R> R visit(Visitor<R, ? super V> visitor) {
+         public <R> R accept(Visitor<R, ? super V> visitor) {
             return visitor.visitCallable(callable);
          }
 
@@ -104,7 +104,7 @@ public abstract class TaskImplementation<V> implements Callable<V> {
    public static <V> TaskImplementation<V> forRunnable(final Runnable runnable, final V result) {
       return new TaskImplementation<V>() {
          @Override
-         public <R> R visit(Visitor<R, ? super V> visitor) {
+         public <R> R accept(Visitor<R, ? super V> visitor) {
             return visitor.visitRunnable(runnable, result);
          }
          
@@ -125,7 +125,7 @@ public abstract class TaskImplementation<V> implements Callable<V> {
    public static <V> TaskImplementation<V> forSupplier(final Supplier<V> source) {
       return new TaskImplementation<V>() {
          @Override
-         public <R> R visit(Visitor<R, ? super V> visitor) {
+         public <R> R accept(Visitor<R, ? super V> visitor) {
             return visitor.visitSource(source);
          }
 
