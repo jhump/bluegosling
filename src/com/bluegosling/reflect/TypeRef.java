@@ -40,6 +40,7 @@ import java.util.stream.Collectors;
  * @param <T> the type represented by this token
  * 
  * @see Types
+ * @see AnnotatedTypeRef
  */
 public abstract class TypeRef<T> implements AnnotatedElement {
    /**

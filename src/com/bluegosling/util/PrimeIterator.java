@@ -17,11 +17,11 @@ import java.util.PriorityQueue;
  * <p>This is implemented using a <a href="http://en.wikipedia.org/wiki/Sieve_of_Eratosthenes">Sieve
  * of Eratosthenes</a>. This implementation is an incremental sieve, so it has no fixed upper
  * bound other than being bound by heap space. Generating the {@code n}<sup>th</sup> prime requires
- * <em>O(n)</em> memory, so a lot of memory is required for very large {@code n}.
+ * <em>O(n)</em> memory, so a lot of memory can be required for very large {@code n}.
  * 
- * <p>The phrase "current numeric type" in the documentation refers to the concrete type for type
- * argument {@code T}. For example, with a {@code PrimeIterator<Long>}, the "current numeric type"
- * would be {@code long}.
+ * <p>The phrase "current numeric type" in the rest of this documentation refers to the concrete
+ * type for type argument {@code T}. For example, with a {@code PrimeIterator<Long>}, the "current
+ * numeric type" would be {@code long}.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
@@ -149,8 +149,11 @@ public abstract class PrimeIterator<T extends Number & Comparable<T>> implements
    static float MAX_FLOAT = 16_777_216f;
 
    /**
-    * Constructs an iterator of {@code float}s that are prime. There are enough primes in this range
-    * that the heap could be exhausted before enumerating all of them.
+    * Constructs an iterator of {@code float}s that are prime. This will not yield any primes that
+    * are larger than 2<sup>24</sup>. That is the size of the mantissa in a 32-bit float and thus
+    * also the largest integral value that can be perfectly represented (beyond that, large
+    * integers may lose precision). There are enough primes in this range that the heap could be
+    * exhausted before enumerating all of them.
     * 
     * @return an iterator of prime {@code float}s
     */
@@ -186,8 +189,11 @@ public abstract class PrimeIterator<T extends Number & Comparable<T>> implements
    static double MAX_DOUBLE = 9_007_199_254_740_992.0;
 
    /**
-    * Constructs an iterator of {@code double}s that are prime. There are enough primes in this
-    * range that the heap will likely be exhausted before enumerating all of them.
+    * Constructs an iterator of {@code double}s that are prime. This will not yield any primes that
+    * are larger than 2<sup>53</sup>. That is the size of the mantissa in a 64-bit float and thus
+    * also the largest integral value that can be perfectly represented (beyond that, large
+    * integers may lose precision). There are enough primes in this range that the heap will likely
+    * be exhausted before enumerating all of them.
     * 
     * @return an iterator of prime {@code double}s
     */

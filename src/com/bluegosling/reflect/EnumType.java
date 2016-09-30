@@ -163,9 +163,9 @@ public abstract class EnumType<T> implements Comparator<T> {
    }
    
    /**
-    * Create an {@link EnumType} that represent an actual {@linkplain Enum enum class}. The elements
-    * of the returned enum type correspond to enum constants for the given class. The value of an
-    * element in the returned enum type is an enum constant.
+    * Create an {@link EnumType} that represents an actual {@linkplain Enum enum class}. The
+    * elements of the returned enum type correspond to enum constants for the given class. The value
+    * of an element in the returned enum type is an enum constant.
     *
     * @param enumClass an enum class
     * @return an {@link EnumType} that represents all of the constants of the given enum
@@ -289,7 +289,8 @@ public abstract class EnumType<T> implements Comparator<T> {
       public EnumElement<T> valueOf(String name) {
          EnumElement<T> e = elementsByName.get(name);
          if (e == null) {
-            throw new IllegalArgumentException("No element named " + name + " in enum type " + this);
+            throw new IllegalArgumentException(
+                  "No element named " + name + " in enum type " + this);
          }
          return e;
       }
@@ -391,7 +392,7 @@ public abstract class EnumType<T> implements Comparator<T> {
       
       EnumWrapper(Class<T> enumClass) {
          this.enumClass = enumClass;
-         T vals[] = Enums.values(enumClass);
+         T vals[] = enumClass.getEnumConstants();
          List<EnumElement<T>> e = new ArrayList<>(vals.length);
          Set<T> s = new LinkedHashSet<>(vals.length * 4 / 3);
          for (T t : vals) {

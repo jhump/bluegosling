@@ -38,11 +38,13 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 /**
- * Numerous utility methods for using, constructing, and inspecting generic types.
+ * Numerous utility methods for using, constructing, and inspecting {@linkplain Type generic types}.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  * 
  * @see Type
+ * @see TypeRef
+ * @see AnnotatedTypes
  */
 public final class Types {
    static final Type EMPTY_TYPES[] = new Type[0];
@@ -1371,7 +1373,15 @@ public final class Types {
       return superTypes;
    }
    
-   // TODO: doc
+   /**
+    * Returns the primitive supertype of a given primitive type. Returns {@code null} if the given
+    * type is not a primitive or if it has no supertypes (such as {@code boolean} or
+    * {@code double}).
+    * 
+    * @param primitiveType a primitive type
+    * @return the direct primitive supertype of the given type or {@code null} if it does not have
+    *       one
+    */
    static Class<?> getPrimitiveSupertype(Class<?> primitiveType) {
       return PRIMITIVE_DIRECT_SUPERTYPES.get(primitiveType);
    }
