@@ -341,7 +341,7 @@ class ShardedConcurrentSortedSet<E> extends ShardedConcurrentSet<E>
             Object ret[] = new Object[sizeNoLocks()];
             int len = shards.length;
             @SuppressWarnings("unchecked")
-            SortedSet<E> shardSubSets[] = new SortedSet[len];
+            SortedSet<E> shardSubSets[] = (SortedSet<E>[]) new SortedSet<?>[len];
             for (int i = 0; i < len; i++) {
                shardSubSets[i] = subSet((SortedSet<E>) shards[i]);
             }
@@ -361,7 +361,7 @@ class ShardedConcurrentSortedSet<E> extends ShardedConcurrentSet<E>
             a = ArrayUtils.newArrayIfTooSmall(a, sz);
             int len = shards.length;
             @SuppressWarnings("unchecked")
-            SortedSet<E> shardSubSets[] = new SortedSet[len];
+            SortedSet<E> shardSubSets[] = (SortedSet<E>[]) new SortedSet<?>[len];
             for (int i = 0; i < len; i++) {
                shardSubSets[i] = subSet((SortedSet<E>) shards[i]);
             }

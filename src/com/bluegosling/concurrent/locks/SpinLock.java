@@ -16,10 +16,10 @@ import java.util.concurrent.locks.LockSupport;
  * unfair, possibly resulting in starvation if highly contended).
  * 
  * <p>Timed lock operations are discouraged unless the wait times are measured in microseconds or
- * smaller, since spinning for long periods of time is extremely wasteful of CPU compute capacity.
- * For that reason, this lock should only be used when the critical sections in which it is held are
- * very short/fast. Due to the use of spinning with periodic yields, timeout precision when
- * attempting a timed acquisition is limited.
+ * smaller, since spinning for long periods of time is extremely wasteful of CPU resources. For that
+ * reason, this lock should only be used when the critical sections in which it is held are very
+ * short/fast. Due to the use of spinning with periodic yields, timeout precision when attempting a
+ * timed acquisition is limited.
  * 
  * <p>This lock is non-reentrant and will deadlock if re-entrance is accidentally attempted. This
  * lock does not have an exclusive owner thread, so it can be locked in one thread and then unlocked

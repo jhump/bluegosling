@@ -25,9 +25,8 @@ import java.util.concurrent.locks.LockSupport;
  * value type. A reference to that value type is the managed state, not just a fixed-precision
  * numeric value.
  * 
- * <p>
- * Aside from the type of value used to represent synchronizer state, this class provides the same
- * API as its kin with one main exception: {@link Condition}s are not supported.
+ * <p>Aside from the type of value used to represent synchronizer state, this class provides the
+ * same API as its kin with one main exception: {@link Condition}s are not supported.
  *
  * @param <S> the type of state atomically maintained by the synchronizer
  * @param <R> the type of request used during acquisitions and releases
@@ -768,7 +767,7 @@ public class AbstractQueuedReferenceSynchronizer<S, R> extends AbstractOwnableSy
     *         work correctly.
     * @throws UnsupportedOperationException if exclusive mode is not supported
     */
-   protected boolean tryAcquire(@SuppressWarnings("unused") R arg) {
+   protected boolean tryAcquire(R arg) {
       throw new UnsupportedOperationException();
    }
 
@@ -791,7 +790,7 @@ public class AbstractQueuedReferenceSynchronizer<S, R> extends AbstractOwnableSy
     *         work correctly.
     * @throws UnsupportedOperationException if exclusive mode is not supported
     */
-   protected boolean tryRelease(@SuppressWarnings("unused") R arg) {
+   protected boolean tryRelease(R arg) {
       throw new UnsupportedOperationException();
    }
 
@@ -821,7 +820,7 @@ public class AbstractQueuedReferenceSynchronizer<S, R> extends AbstractOwnableSy
     *         work correctly.
     * @throws UnsupportedOperationException if shared mode is not supported
     */
-   protected int tryAcquireShared(@SuppressWarnings("unused") R arg) {
+   protected int tryAcquireShared(R arg) {
       throw new UnsupportedOperationException();
    }
 
@@ -844,7 +843,7 @@ public class AbstractQueuedReferenceSynchronizer<S, R> extends AbstractOwnableSy
     *         work correctly.
     * @throws UnsupportedOperationException if shared mode is not supported
     */
-   protected boolean tryReleaseShared(@SuppressWarnings("unused") R arg) {
+   protected boolean tryReleaseShared(R arg) {
       throw new UnsupportedOperationException();
    }
 

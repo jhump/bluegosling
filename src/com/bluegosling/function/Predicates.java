@@ -147,6 +147,7 @@ public final class Predicates {
    }
    
    @SafeVarargs
+   @SuppressWarnings("varargs") // for javac
    public static <T> Predicate<T> isOneOf(T... items) {
       return isOneOf(Arrays.asList(items));
    }

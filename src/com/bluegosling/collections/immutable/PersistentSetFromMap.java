@@ -14,6 +14,8 @@ import java.util.function.Predicate;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 // TODO: tests
+// javac warns because AbstractSet has methods deprecated by PersistentSet:
+@SuppressWarnings("deprecation")
 class PersistentSetFromMap<E> extends AbstractSet<E> implements PersistentSet<E> {
    
    private final PersistentMap<E, Boolean> map;

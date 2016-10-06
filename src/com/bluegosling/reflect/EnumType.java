@@ -252,7 +252,7 @@ public abstract class EnumType<T> implements Comparator<T> {
       BuiltEnumType(Map<String, T> elements) {
          int len = elements.size();
          @SuppressWarnings("unchecked")
-         BuiltEnumElement<T> array[] = new BuiltEnumElement[len];
+         BuiltEnumElement<T> array[] = (BuiltEnumElement<T>[]) new BuiltEnumElement<?>[len];
          this.elementsByName = new LinkedHashMap<>(len * 4 / 3);
          this.elementsByValue = new LinkedHashMap<>(len * 4 / 3);
          VariableInt i = new VariableInt();

@@ -164,6 +164,7 @@ public class MoreIterators {
     * @see #push(Iterator, Iterable)
     */
    @SafeVarargs
+   @SuppressWarnings("varargs") // for javac
    public static <E> Iterator<E> push(Iterator<? extends E> iterator, E... pushed) {
       return push(iterator, Arrays.asList(pushed));
    }
@@ -575,6 +576,7 @@ public class MoreIterators {
    }
 
    @SafeVarargs
+   @SuppressWarnings("varargs") // for javac
    public static <T> Iterator<List<T>> zip(Iterator<? extends T>... iterables) {
       return zip(Arrays.asList(iterables).iterator(), iterables.length);
    }

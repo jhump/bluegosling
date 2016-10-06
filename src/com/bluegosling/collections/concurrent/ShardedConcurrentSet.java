@@ -220,7 +220,7 @@ class ShardedConcurrentSet<E> implements Serializable, Cloneable, Set<E> {
       }
       S copy = makeClone(set);
       copy.clear(); // empty shard
-      shards = new Set[concurrencyPowerOfTwo];
+      shards = (Set<E>[]) new Set<?>[concurrencyPowerOfTwo];
       shards[0] = copy;
       for (int i = 1; i < concurrencyPowerOfTwo; i++) {
          shards[i] = makeClone(copy);
@@ -319,7 +319,7 @@ class ShardedConcurrentSet<E> implements Serializable, Cloneable, Set<E> {
       int len = shards.length;
       int initialShardSize = (coll.size() + len - 1) / len;
       @SuppressWarnings("unchecked")
-      Collection<T> ret[] = new Collection[len];
+      Collection<T> ret[] = (Collection<T>[]) new Collection<?>[len];
       // initialize shards
       for (int i = 0; i < len; i++) {
          ret[i] = new ArrayList<T>(initialShardSize);
@@ -441,7 +441,7 @@ class ShardedConcurrentSet<E> implements Serializable, Cloneable, Set<E> {
       try {
          int len = shards.length;
          @SuppressWarnings("unchecked")
-         Set<E> stableShards[] = new Set[len];
+         Set<E> stableShards[] = (Set<E>[]) new Set<?>[len];
          // get stable snapshot of references (individual shards may be cloned
          // on mutations after this point)
          System.arraycopy(shards, 0, stableShards, 0, len);
@@ -617,7 +617,7 @@ class ShardedConcurrentSet<E> implements Serializable, Cloneable, Set<E> {
       // build instance fields
       template = makeClone(template); // defensive copy
       template.clear();
-      shards = new Set[concurrency];
+      shards = (Set<E>[]) new Set<?>[concurrency];
       shards[0] = template;
       for (int i = 1; i < concurrency; i++) {
          shards[i] = makeClone(template);

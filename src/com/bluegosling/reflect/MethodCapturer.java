@@ -52,6 +52,7 @@ public class MethodCapturer<E> {
     * @throws NullPointerException if any of the specified class tokens is {@code null}
     */
    @SafeVarargs
+   @SuppressWarnings("varargs") // for javac
    public MethodCapturer(Class<? extends E>... interfaces) {
       this(new HashSet<>(Arrays.asList(interfaces)));
    }

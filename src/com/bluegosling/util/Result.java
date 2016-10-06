@@ -376,6 +376,7 @@ public final class Result<T, E> implements Serializable {
     *       the same cause of failure as one of the given results
     */
    @SafeVarargs
+   @SuppressWarnings("varargs") // for javac
    public static <T, E> Result<List<T>, E> join(
          Result<? extends T, ? extends E>... results) {
       return join(Arrays.asList(results));
@@ -418,6 +419,7 @@ public final class Result<T, E> implements Serializable {
     * @throws NoSuchElementException if the given array is empty
     */
    @SafeVarargs
+   @SuppressWarnings("varargs") // for javac
    public static <T, E> Result<T, E> firstSuccessfulOf(
          Result<? extends T, ? extends E>... results) {
       return firstSuccessfulOf(Arrays.asList(results));

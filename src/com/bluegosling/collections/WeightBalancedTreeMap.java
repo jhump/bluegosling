@@ -483,7 +483,8 @@ public class WeightBalancedTreeMap<K, V>
                   : comparator().equals(((SortedMap<?,?>) m).comparator()))) {
          // we can efficiently construct a balanced tree without rotations
          @SuppressWarnings("unchecked")
-         Entry<? extends K, ? extends V> entries[] = new Entry[m.size()];
+         Entry<? extends K, ? extends V> entries[] =
+               (Entry<? extends K, ?extends V>[]) new Entry<?, ?>[m.size()];
          entries = m.entrySet().toArray(entries);
          size = entries.length;
          root = balancedTreeFromArray(entries, 0, size);

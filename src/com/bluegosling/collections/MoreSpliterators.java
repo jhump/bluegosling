@@ -203,6 +203,7 @@ public final class MoreSpliterators {
     *       from the second given spliterator, and so on
     */
    @SafeVarargs
+   @SuppressWarnings("varargs") // for javac
    public static <T> Spliterator<T> concat(
          Spliterator<? extends T>... spliterators) {
       return concat(Arrays.asList(spliterators));
@@ -776,7 +777,7 @@ public final class MoreSpliterators {
       @SuppressWarnings("unchecked") // generic array creation
       ForkingSpliterator(Spliterator<? extends T> source, int numberOfForks, SplitNode<T> parent) {
          this.source = source;
-         this.buffers = (Queue<Object>[]) new Queue[numberOfForks];
+         this.buffers = (Queue<Object>[]) new Queue<?>[numberOfForks];
          for (int i = 0; i < buffers.length; i++) {
             buffers[i] = new ConcurrentLinkedQueue<>();
          }
@@ -904,8 +905,9 @@ public final class MoreSpliterators {
             return null;
          }
          // TODO(jh): dynamically sub in a Set instead of array if depth is high
-         @SuppressWarnings("unchecked")
-         ForkingSpliterator<T>[] ret = new ForkingSpliterator[parent.depth];
+         @SuppressWarnings("unchecked") // generic array creation
+         ForkingSpliterator<T>[] ret =
+               (ForkingSpliterator<T>[]) new ForkingSpliterator<?>[parent.depth];
          int i = 0;
          while (p != null) {
             ret[i++] = p.split;

@@ -35,7 +35,6 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 import com.bluegosling.function.Predicates;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 import com.google.common.util.concurrent.Uninterruptibles;
 
@@ -46,14 +45,42 @@ public class MoreSpliteratorsTest {
    private static final int FORK_PARALLEL_NUM_ELEMENTS = 100_000;
    private static final int FORK_PARALLEL_NUM_FORKS = 16;
    private static final float FORK_CHANCE_TO_SPLIT = 0.8f;
-   
+
+   /**
+    * We test spliterators with various characteristics by using different kinds of sources.
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
    private enum SourceType {
+      /**
+       * Array lists have ordered, sized, and sub-sized spliterators. 
+       */
       LIST(ArrayList::new, ArrayList<Integer>::new),
+      
+      /**
+       * Tree sets have ordered, sorted, distinct, and sized spliterators.
+       */
       TREE_SET(TreeSet::new, TreeSet<Integer>::new),
+      
+      /**
+       * Hash sets have distinct and sized spliterators.
+       */
       HASH_SET(HashSet::new, HashSet<Integer>::new),
+      
+      /**
+       * Hash sets have ordered, distinct, and sized spliterators.
+       */
       LINKED_HASH_SET(LinkedHashSet::new, LinkedHashSet<Integer>::new),
+      
+      /**
+       * Concurrent linked queues have concurrent, ordered, and non-null spliterators.
+       */
       CONCURRENT_QUEUE(ConcurrentLinkedQueue::new, ConcurrentLinkedQueue<Integer>::new,
             Iterables::elementsEqual),
+      
+      /**
+       * Concurrent hash map key sets have concurrent, distinct, non-null, and sized spliterators.
+       */
       CONCURRENT_SET(ConcurrentHashMap::newKeySet);
       
       private final Supplier<? extends Collection<Integer>> factory;
@@ -98,6 +125,9 @@ public class MoreSpliteratorsTest {
       }
    }
    
+   /**
+    * Some of the tests use this list of shuffled integers between 0 and 256.
+    */
    private static final List<Integer> INTS;
    static {
       List<Integer> ints = IntStream.range(0, 256)
@@ -107,6 +137,12 @@ public class MoreSpliteratorsTest {
       INTS = Collections.unmodifiableList(ints);
    }
    
+   /**
+    * Returns the set of spliterator sources as test parameters. We run tests for each kind of
+    * source.
+    * 
+    * @return the set of spliterator sources
+    */
    @Parameters
    public static List<Object[]> parameters() {
       return Arrays.stream(SourceType.values())

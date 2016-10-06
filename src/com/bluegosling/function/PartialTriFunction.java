@@ -52,7 +52,7 @@ public interface PartialTriFunction<T, U, V, R> extends TriFunction<T, U, V, Opt
     * applies the {@code after} function
     * @throws NullPointerException if after is null
     */
-   default <W> PartialTriFunction<T, U, V, W> maybeThen(
+   default <W> PartialTriFunction<T, U, V, W> maybeChain(
          PartialFunction<? super R, ? extends W> after) {
        Objects.requireNonNull(after);
        return (T t, U u, V v) -> {

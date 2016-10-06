@@ -86,6 +86,6 @@ public class FutureTuples {
    }
    
    public static FluentFuture<Tuple> join(Iterable<FluentFuture<?>> futures) {
-      return FluentFuture.join(futures).map((list) -> Tuples.fromCollection(list));
+      return FluentFuture.join(futures).map(Tuples::fromCollection);
    }
 }

@@ -774,20 +774,24 @@ abstract class AbstractNavigableSequenceTrie<K, V, N extends AbstractNavigableTr
                if (comp.compare(key, lowerBound) < 0) {
                   return false;
                }
+               break;
             case EXCLUSIVE:
                if (comp.compare(key, lowerBound) <= 0) {
                   return false;
                }
+               break;
          }
          switch (upperBoundType) {
             case INCLUSIVE:
                if (comp.compare(key, upperBound) > 0) {
                   return false;
                }
+               break;
             case EXCLUSIVE:
                if (comp.compare(key, upperBound) >= 0) {
                   return false;
                }
+               break;
          }
          return true;
       }

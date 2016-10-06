@@ -21,7 +21,7 @@ import java.util.function.Function;
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-//TODO: test serialization, apply
+//TODO: test serialization, apply, applyFilter
 public class HolderTest extends AbstractPossibleTest {
 
    @Override
