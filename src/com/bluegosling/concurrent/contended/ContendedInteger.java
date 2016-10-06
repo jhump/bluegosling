@@ -1,11 +1,9 @@
 package com.bluegosling.concurrent.contended;
 
-import com.bluegosling.concurrent.unsafe.UnsafeUtils;
 import com.bluegosling.util.IsDerivedFrom;
 
-import sun.misc.Unsafe;
-
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
 import java.util.function.IntBinaryOperator;
 import java.util.function.IntUnaryOperator;
 
@@ -21,17 +19,8 @@ public class ContendedInteger extends LhsPaddedInteger {
    // RHS padding
    long p9, p10, p11, p12, p13, p14, p15;
 
-   // setup to use Unsafe.compareAndSwapInt for updates
-   private static final Unsafe unsafe = UnsafeUtils.getUnsafe();
-   private static final long valueOffset;
-
-   static {
-      try {
-         valueOffset = unsafe.objectFieldOffset(LhsPaddedInteger.class.getDeclaredField("value"));
-      } catch (Exception ex) {
-         throw new Error(ex);
-      }
-   }
+   private static final AtomicIntegerFieldUpdater<LhsPaddedInteger> valueUpdater =
+         AtomicIntegerFieldUpdater.newUpdater(LhsPaddedInteger.class, "value");
 
    /**
     * Creates a new {@link ContendedInteger} with the given initial value.
@@ -70,10 +59,9 @@ public class ContendedInteger extends LhsPaddedInteger {
     * Eventually sets to the given value.
     *
     * @param newValue the new value
-    * @since 1.6
     */
    public final void lazySet(int newValue) {
-      unsafe.putOrderedInt(this, valueOffset, newValue);
+      valueUpdater.lazySet(this, newValue);
    }
 
    /**
@@ -83,7 +71,7 @@ public class ContendedInteger extends LhsPaddedInteger {
     * @return the previous value
     */
    public final int getAndSet(int newValue) {
-      return unsafe.getAndSetInt(this, valueOffset, newValue);
+      return valueUpdater.getAndSet(this, newValue);
    }
 
    /**
@@ -96,23 +84,21 @@ public class ContendedInteger extends LhsPaddedInteger {
     *         to the expected value.
     */
    public final boolean compareAndSet(int expect, int update) {
-      return unsafe.compareAndSwapInt(this, valueOffset, expect, update);
+      return valueUpdater.compareAndSet(this, expect, update);
    }
 
    /**
     * Atomically sets the value to the given updated value if the current value {@code ==} the
     * expected value.
     *
-    * <p>
-    * <a href="package-summary.html#weakCompareAndSet">May fail spuriously and does not provide
-    * ordering guarantees</a>, so is only rarely an appropriate alternative to {@code compareAndSet}.
-    *
     * @param expect the expected value
     * @param update the new value
     * @return {@code true} if successful
+    * 
+    * @see AtomicInteger#weakCompareAndSet(int, int)
     */
    public final boolean weakCompareAndSet(int expect, int update) {
-      return unsafe.compareAndSwapInt(this, valueOffset, expect, update);
+      return valueUpdater.weakCompareAndSet(this, expect, update);
    }
 
    /**
@@ -121,7 +107,7 @@ public class ContendedInteger extends LhsPaddedInteger {
     * @return the previous value
     */
    public final int getAndIncrement() {
-      return unsafe.getAndAddInt(this, valueOffset, 1);
+      return valueUpdater.getAndIncrement(this);
    }
 
    /**
@@ -130,7 +116,7 @@ public class ContendedInteger extends LhsPaddedInteger {
     * @return the previous value
     */
    public final int getAndDecrement() {
-      return unsafe.getAndAddInt(this, valueOffset, -1);
+      return valueUpdater.getAndDecrement(this);
    }
 
    /**
@@ -140,7 +126,7 @@ public class ContendedInteger extends LhsPaddedInteger {
     * @return the previous value
     */
    public final int getAndAdd(int delta) {
-      return unsafe.getAndAddInt(this, valueOffset, delta);
+      return valueUpdater.getAndAdd(this, delta);
    }
 
    /**
@@ -149,7 +135,7 @@ public class ContendedInteger extends LhsPaddedInteger {
     * @return the updated value
     */
    public final int incrementAndGet() {
-      return unsafe.getAndAddInt(this, valueOffset, 1) + 1;
+      return valueUpdater.incrementAndGet(this);
    }
 
    /**
@@ -158,7 +144,7 @@ public class ContendedInteger extends LhsPaddedInteger {
     * @return the updated value
     */
    public final int decrementAndGet() {
-      return unsafe.getAndAddInt(this, valueOffset, -1) - 1;
+      return valueUpdater.decrementAndGet(this);
    }
 
    /**
@@ -168,7 +154,7 @@ public class ContendedInteger extends LhsPaddedInteger {
     * @return the updated value
     */
    public final int addAndGet(int delta) {
-      return unsafe.getAndAddInt(this, valueOffset, delta) + delta;
+      return valueUpdater.addAndGet(this, delta);
    }
 
    /**
@@ -178,15 +164,9 @@ public class ContendedInteger extends LhsPaddedInteger {
     *
     * @param updateFunction a side-effect-free function
     * @return the previous value
-    * @since 1.8
     */
    public final int getAndUpdate(IntUnaryOperator updateFunction) {
-      int prev, next;
-      do {
-         prev = get();
-         next = updateFunction.applyAsInt(prev);
-      } while (!compareAndSet(prev, next));
-      return prev;
+      return valueUpdater.getAndUpdate(this, updateFunction);
    }
 
    /**
@@ -196,15 +176,9 @@ public class ContendedInteger extends LhsPaddedInteger {
     *
     * @param updateFunction a side-effect-free function
     * @return the updated value
-    * @since 1.8
     */
    public final int updateAndGet(IntUnaryOperator updateFunction) {
-      int prev, next;
-      do {
-         prev = get();
-         next = updateFunction.applyAsInt(prev);
-      } while (!compareAndSet(prev, next));
-      return next;
+      return valueUpdater.updateAndGet(this, updateFunction);
    }
 
    /**
@@ -217,15 +191,9 @@ public class ContendedInteger extends LhsPaddedInteger {
     * @param x the update value
     * @param accumulatorFunction a side-effect-free function of two arguments
     * @return the previous value
-    * @since 1.8
     */
    public final int getAndAccumulate(int x, IntBinaryOperator accumulatorFunction) {
-      int prev, next;
-      do {
-         prev = get();
-         next = accumulatorFunction.applyAsInt(prev, x);
-      } while (!compareAndSet(prev, next));
-      return prev;
+      return valueUpdater.getAndAccumulate(this, x, accumulatorFunction);
    }
 
    /**
@@ -238,15 +206,9 @@ public class ContendedInteger extends LhsPaddedInteger {
     * @param x the update value
     * @param accumulatorFunction a side-effect-free function of two arguments
     * @return the updated value
-    * @since 1.8
     */
    public final int accumulateAndGet(int x, IntBinaryOperator accumulatorFunction) {
-      int prev, next;
-      do {
-         prev = get();
-         next = accumulatorFunction.applyAsInt(prev, x);
-      } while (!compareAndSet(prev, next));
-      return next;
+      return valueUpdater.accumulateAndGet(this, x, accumulatorFunction);
    }
 
    /**

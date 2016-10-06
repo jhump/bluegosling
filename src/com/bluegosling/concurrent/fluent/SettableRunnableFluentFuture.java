@@ -1,9 +1,8 @@
 package com.bluegosling.concurrent.fluent;
 
-import com.bluegosling.concurrent.unsafe.UnsafeReferenceFieldUpdater;
-
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 
 /**
  * A {@link RunnableFluentFuture runnable} future that is also settable. Setting the value or
@@ -25,8 +24,9 @@ public class SettableRunnableFluentFuture<T> extends SettableFluentFuture<T>
       implements RunnableFluentFuture<T> {
 
    @SuppressWarnings("rawtypes")
-   public static final UnsafeReferenceFieldUpdater<SettableRunnableFluentFuture, Thread> runnerUpdater =
-         new UnsafeReferenceFieldUpdater<>(SettableRunnableFluentFuture.class, Thread.class, "runner");
+   public static final AtomicReferenceFieldUpdater<SettableRunnableFluentFuture, Thread>
+   runnerUpdater = AtomicReferenceFieldUpdater.newUpdater(SettableRunnableFluentFuture.class,
+         Thread.class, "runner");
    
    private final Callable<T> task;
    private volatile Thread runner;

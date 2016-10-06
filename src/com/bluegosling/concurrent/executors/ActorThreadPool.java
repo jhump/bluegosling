@@ -4,8 +4,6 @@ import static java.util.Objects.requireNonNull;
 
 import com.bluegosling.concurrent.Duration;
 import com.bluegosling.concurrent.contended.ContendedInteger;
-import com.bluegosling.concurrent.unsafe.UnsafeLongFieldUpdater;
-import com.bluegosling.concurrent.unsafe.UnsafeReferenceFieldUpdater;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -26,6 +24,8 @@ import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLongFieldUpdater;
+import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 import java.util.concurrent.atomic.LongAdder;
 import java.util.concurrent.locks.AbstractQueuedLongSynchronizer;
 import java.util.concurrent.locks.LockSupport;
@@ -67,12 +67,12 @@ import java.util.function.Consumer;
 public class ActorThreadPool<T> implements SerializingExecutor<T> {
    
    @SuppressWarnings("rawtypes")
-   private static UnsafeLongFieldUpdater<ActorThreadPool> poolSizeLimitsUpdater =
-         new UnsafeLongFieldUpdater<>(ActorThreadPool.class, "poolSizeLimits");
+   private static AtomicLongFieldUpdater<ActorThreadPool> poolSizeLimitsUpdater =
+         AtomicLongFieldUpdater.newUpdater(ActorThreadPool.class, "poolSizeLimits");
    
    @SuppressWarnings("rawtypes")
-   private static UnsafeLongFieldUpdater<ActorThreadPool> keepAliveNanosUpdater =
-         new UnsafeLongFieldUpdater<>(ActorThreadPool.class, "keepAliveNanos");
+   private static AtomicLongFieldUpdater<ActorThreadPool> keepAliveNanosUpdater =
+         AtomicLongFieldUpdater.newUpdater(ActorThreadPool.class, "keepAliveNanos");
    
    static final int DEFAULT_MAX_BATCH_SIZE = 32;
    static final Duration DEFAULT_MAX_BATCH_DURATION = Duration.millis(500);
@@ -1398,8 +1398,8 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
    private static class ActorQueue<T> {
       
       @SuppressWarnings("rawtypes")
-      private static UnsafeReferenceFieldUpdater<ActorQueue, Worker> workerUpdater =
-            new UnsafeReferenceFieldUpdater<>(ActorQueue.class, Worker.class, "worker");
+      private static AtomicReferenceFieldUpdater<ActorQueue, Worker> workerUpdater =
+            AtomicReferenceFieldUpdater.newUpdater(ActorQueue.class, Worker.class, "worker");
       
       private enum TaskResult {
          /**
@@ -1642,8 +1642,8 @@ public class ActorThreadPool<T> implements SerializingExecutor<T> {
    private static class Worker<T> implements Runnable {
       
       @SuppressWarnings("rawtypes")
-      private static UnsafeLongFieldUpdater<Worker> workerIndexAndStampUpdater =
-            new UnsafeLongFieldUpdater<>(Worker.class, "workerIndexAndStamp");
+      private static AtomicLongFieldUpdater<Worker> workerIndexAndStampUpdater =
+            AtomicLongFieldUpdater.newUpdater(Worker.class, "workerIndexAndStamp");
 
       private static final long WORKER_PARK_MASK =  0x0000000300000000L;
       private static final long WORKER_PARKED    =  0x0000000100000000L;
