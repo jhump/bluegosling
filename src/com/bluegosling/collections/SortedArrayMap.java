@@ -91,10 +91,11 @@ public class SortedArrayMap<K, V> extends AbstractNavigableMap<K, V>
       this(DEFAULT_INITIAL_CAPACITY, comparator);
    }
    
-   @SuppressWarnings("unchecked") // can't create init generic array member w/out unchecked cast...
+   // can't create init generic array member w/out unchecked cast...
+   @SuppressWarnings("unchecked")
    public SortedArrayMap(int initialCapacity, Comparator<? super K> comparator) {
       super(comparator);
-      data = new EntryImpl[initialCapacity];
+      data = (EntryImpl<K, V>[]) new EntryImpl<?, ?>[initialCapacity];
       entryComparator = entryComparator(this.comparator);
    }
 
@@ -278,7 +279,7 @@ public class SortedArrayMap<K, V> extends AbstractNavigableMap<K, V>
       in.defaultReadObject();
       // TODO: check that keys are in ascending order as they are read and, if not, sort the array
       // at the end
-      data = new EntryImpl[Math.max(size, 1)];
+      data = (EntryImpl<K, V>[]) new EntryImpl<?, ?>[Math.max(size, 1)];
       for (int i = 0; i < size; i++) {
          K key = (K) in.readObject();
          V val = (V) in.readObject();

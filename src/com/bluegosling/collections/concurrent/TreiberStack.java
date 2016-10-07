@@ -1,7 +1,5 @@
 package com.bluegosling.collections.concurrent;
 
-import com.bluegosling.concurrent.unsafe.UnsafeIntegerFieldUpdater;
-import com.bluegosling.concurrent.unsafe.UnsafeReferenceFieldUpdater;
 import com.bluegosling.vars.Variable;
 import com.bluegosling.vars.VariableInt;
 
@@ -13,7 +11,9 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Spliterator;
 import java.util.Spliterators;
+import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
 import java.util.concurrent.atomic.AtomicMarkableReference;
+import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
@@ -43,12 +43,12 @@ import java.util.function.Supplier;
 public class TreiberStack<T> extends AbstractCollection<T> implements ConcurrentStack<T> {
 
    @SuppressWarnings("rawtypes")
-   private static final UnsafeReferenceFieldUpdater<TreiberStack, Node> headUpdater =
-         new UnsafeReferenceFieldUpdater<>(TreiberStack.class, Node.class, "head");
+   private static final AtomicReferenceFieldUpdater<TreiberStack, Node> headUpdater =
+         AtomicReferenceFieldUpdater.newUpdater(TreiberStack.class, Node.class, "head");
 
    @SuppressWarnings("rawtypes")
-   private static final UnsafeIntegerFieldUpdater<TreiberStack> sizeUpdater =
-         new UnsafeIntegerFieldUpdater<>(TreiberStack.class, "size");
+   private static final AtomicIntegerFieldUpdater<TreiberStack> sizeUpdater =
+         AtomicIntegerFieldUpdater.newUpdater(TreiberStack.class, "size");
 
    /**
     * A node in a linked list. The node has a value, but it's also an atomic markable reference to

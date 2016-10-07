@@ -1,11 +1,9 @@
 package com.bluegosling.concurrent.contended;
 
-import com.bluegosling.concurrent.unsafe.UnsafeUtils;
 import com.bluegosling.util.IsDerivedFrom;
 
-import sun.misc.Unsafe;
-
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 import java.util.function.BinaryOperator;
 import java.util.function.UnaryOperator;
 
@@ -16,20 +14,14 @@ import java.util.function.UnaryOperator;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 @IsDerivedFrom(AtomicReference.class)
+@SuppressWarnings("unchecked") // must cast from Object to V for atomic access
 public class ContendedReference<V> extends LhsPaddedReference<V> {
    // RHS padding
    long p9, p10, p11, p12, p13, p14, p15;
 
-   private static final Unsafe unsafe = UnsafeUtils.getUnsafe();
-   private static final long valueOffset;
-
-   static {
-      try {
-         valueOffset = unsafe.objectFieldOffset(LhsPaddedReference.class.getDeclaredField("value"));
-      } catch (Exception ex) {
-         throw new Error(ex);
-      }
-   }
+   @SuppressWarnings("rawtypes")
+   private static final AtomicReferenceFieldUpdater<LhsPaddedReference, Object> valueUpdater =
+         AtomicReferenceFieldUpdater.newUpdater(LhsPaddedReference.class, Object.class, "value");
 
    /**
     * Creates a new {@link ContendedReference} with the given initial value.
@@ -68,10 +60,9 @@ public class ContendedReference<V> extends LhsPaddedReference<V> {
     * Eventually sets to the given value.
     *
     * @param newValue the new value
-    * @since 1.6
     */
    public final void lazySet(V newValue) {
-      unsafe.putOrderedObject(this, valueOffset, newValue);
+      valueUpdater.lazySet(this, newValue);
    }
 
    /**
@@ -84,23 +75,21 @@ public class ContendedReference<V> extends LhsPaddedReference<V> {
     *         to the expected value.
     */
    public final boolean compareAndSet(V expect, V update) {
-      return unsafe.compareAndSwapObject(this, valueOffset, expect, update);
+      return valueUpdater.compareAndSet(this, expect, update);
    }
 
    /**
     * Atomically sets the value to the given updated value if the current value {@code ==} the
     * expected value.
     *
-    * <p>
-    * <a href="package-summary.html#weakCompareAndSet">May fail spuriously and does not provide
-    * ordering guarantees</a>, so is only rarely an appropriate alternative to {@code compareAndSet}.
-    *
     * @param expect the expected value
     * @param update the new value
     * @return {@code true} if successful
+    * 
+    * @see AtomicReference#weakCompareAndSet(Object, Object)
     */
    public final boolean weakCompareAndSet(V expect, V update) {
-      return unsafe.compareAndSwapObject(this, valueOffset, expect, update);
+      return valueUpdater.weakCompareAndSet(this, expect, update);
    }
 
    /**
@@ -109,9 +98,8 @@ public class ContendedReference<V> extends LhsPaddedReference<V> {
     * @param newValue the new value
     * @return the previous value
     */
-   @SuppressWarnings("unchecked")
    public final V getAndSet(V newValue) {
-      return (V) unsafe.getAndSetObject(this, valueOffset, newValue);
+      return (V) valueUpdater.getAndSet(this, newValue);
    }
 
    /**
@@ -121,15 +109,9 @@ public class ContendedReference<V> extends LhsPaddedReference<V> {
     *
     * @param updateFunction a side-effect-free function
     * @return the previous value
-    * @since 1.8
     */
    public final V getAndUpdate(UnaryOperator<V> updateFunction) {
-      V prev, next;
-      do {
-         prev = get();
-         next = updateFunction.apply(prev);
-      } while (!compareAndSet(prev, next));
-      return prev;
+      return (V) valueUpdater.getAndUpdate(this, (UnaryOperator<Object>) updateFunction);
    }
 
    /**
@@ -139,15 +121,9 @@ public class ContendedReference<V> extends LhsPaddedReference<V> {
     *
     * @param updateFunction a side-effect-free function
     * @return the updated value
-    * @since 1.8
     */
    public final V updateAndGet(UnaryOperator<V> updateFunction) {
-      V prev, next;
-      do {
-         prev = get();
-         next = updateFunction.apply(prev);
-      } while (!compareAndSet(prev, next));
-      return next;
+      return (V) valueUpdater.updateAndGet(this, (UnaryOperator<Object>) updateFunction);
    }
 
    /**
@@ -160,15 +136,10 @@ public class ContendedReference<V> extends LhsPaddedReference<V> {
     * @param x the update value
     * @param accumulatorFunction a side-effect-free function of two arguments
     * @return the previous value
-    * @since 1.8
     */
    public final V getAndAccumulate(V x, BinaryOperator<V> accumulatorFunction) {
-      V prev, next;
-      do {
-         prev = get();
-         next = accumulatorFunction.apply(prev, x);
-      } while (!compareAndSet(prev, next));
-      return prev;
+      return (V) valueUpdater.getAndAccumulate(this, x,
+            (BinaryOperator<Object>) accumulatorFunction);
    }
 
    /**
@@ -181,15 +152,10 @@ public class ContendedReference<V> extends LhsPaddedReference<V> {
     * @param x the update value
     * @param accumulatorFunction a side-effect-free function of two arguments
     * @return the updated value
-    * @since 1.8
     */
    public final V accumulateAndGet(V x, BinaryOperator<V> accumulatorFunction) {
-      V prev, next;
-      do {
-         prev = get();
-         next = accumulatorFunction.apply(prev, x);
-      } while (!compareAndSet(prev, next));
-      return next;
+      return (V) valueUpdater.accumulateAndGet(this, x,
+            (BinaryOperator<Object>) accumulatorFunction);
    }
 
    /**

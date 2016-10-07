@@ -703,6 +703,7 @@ public interface FluentFuture<T> extends Future<T>, Cancellable, Awaitable {
     * @return a future list whose elements are the values from the specified futures
     */
    @SafeVarargs
+   @SuppressWarnings("varargs") // for javac
    static <T> FluentFuture<List<T>> join(FluentFuture<? extends T>... futures) {
       return join(Arrays.asList(futures));
    }
@@ -760,6 +761,7 @@ public interface FluentFuture<T> extends Future<T>, Cancellable, Awaitable {
     * @throws IllegalArgumentException if the given array of futures is empty
     */
    @SafeVarargs
+   @SuppressWarnings("varargs") // for javac
    static <T> FluentFuture<T> firstOf(FluentFuture<? extends T>... futures) {
       return firstOf(Arrays.asList(futures));
    }
@@ -849,6 +851,7 @@ public interface FluentFuture<T> extends Future<T>, Cancellable, Awaitable {
     * @throws IllegalArgumentException if the given array of futures is empty
     */
    @SafeVarargs
+   @SuppressWarnings("varargs") // for javac
    static <T> FluentFuture<T> firstSuccessfulOf(
          FluentFuture<? extends T>... futures) {
       return firstSuccessfulOf(Arrays.asList(futures));

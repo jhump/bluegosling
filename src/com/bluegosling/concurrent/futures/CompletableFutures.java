@@ -100,7 +100,6 @@ public final class CompletableFutures {
     * <p>This is like {@link CompletableFuture#supplyAsync(Supplier)} except that it takes a
     * {@link Callable}, which is allowed to throw checked exceptions.
     *
-    *
     * @param c the task to call
     * @return a future that completes with the value computed by the given task
     */
@@ -113,7 +112,6 @@ public final class CompletableFutures {
     * 
     * <p>This is like {@link CompletableFuture#supplyAsync(Supplier, Executor)} except that it takes
     * a {@link Callable}, which is allowed to throw checked exceptions.
-    *
     *
     * @param c the task to call
     * @param executor the executor that is used to run the task asynchronously

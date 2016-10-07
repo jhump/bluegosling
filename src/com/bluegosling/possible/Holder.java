@@ -108,7 +108,7 @@ public final class Holder<T> extends AbstractDynamicPossible<T> implements Seria
     *
     * @param predicate the predicate to apply
     */
-   public void apply(Predicate<? super T> predicate) {
+   public void applyFilter(Predicate<? super T> predicate) {
       if (isPresent && !predicate.test(value)) {
          isPresent = false;
          value = null;

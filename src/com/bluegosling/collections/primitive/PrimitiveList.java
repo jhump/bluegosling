@@ -74,8 +74,8 @@ public interface PrimitiveList<T, T_CONS, T_ITER extends PrimitiveIterator<T, T_
       int lastIndexOfBoolean(boolean value);
       boolean[] toBooleanArray();
       boolean removeBoolean(int index);
-      boolean removeIf(BooleanPredicate filter);
-      void replaceAll(BooleanUnaryOperator operator);
+      boolean removeBooleanIf(BooleanPredicate filter);
+      void replaceAllBooleans(BooleanUnaryOperator operator);
    }
 
    interface OfByte extends PrimitiveList<Byte, ByteConsumer, ByteIterator,
@@ -89,8 +89,8 @@ public interface PrimitiveList<T, T_CONS, T_ITER extends PrimitiveIterator<T, T_
       int lastIndexOfByte(byte value);
       byte[] toByteArray();
       byte removeByte(int index);
-      boolean removeIf(BytePredicate filter);
-      void replaceAll(ByteUnaryOperator operator);
+      boolean removeByteIf(BytePredicate filter);
+      void replaceAllBytes(ByteUnaryOperator operator);
    }
 
    interface OfChar extends PrimitiveList<Character, CharConsumer, CharIterator,
@@ -104,8 +104,8 @@ public interface PrimitiveList<T, T_CONS, T_ITER extends PrimitiveIterator<T, T_
       int lastIndexOfChar(char value);
       char[] toCharArray();
       char removeChar(int index);
-      boolean removeIf(CharPredicate filter);
-      void replaceAll(CharUnaryOperator operator);
+      boolean removeCharIf(CharPredicate filter);
+      void replaceAllChars(CharUnaryOperator operator);
    }
 
    interface OfShort extends PrimitiveList<Short, ShortConsumer, ShortIterator,
@@ -119,8 +119,8 @@ public interface PrimitiveList<T, T_CONS, T_ITER extends PrimitiveIterator<T, T_
       int lastIndexOfShort(short value);
       short[] toShortArray();
       short removeShort(int index);
-      boolean removeIf(ShortPredicate filter);
-      void replaceAll(ShortUnaryOperator operator);
+      boolean removeShortIf(ShortPredicate filter);
+      void replaceAllShorts(ShortUnaryOperator operator);
    }
 
    interface OfInt extends PrimitiveList<Integer, IntConsumer, PrimitiveIterator.OfInt,
@@ -134,8 +134,8 @@ public interface PrimitiveList<T, T_CONS, T_ITER extends PrimitiveIterator<T, T_
       int lastIndexOfInt(int value);
       int[] toIntArray();
       int removeInt(int index);
-      boolean removeIf(IntPredicate filter);
-      void replaceAll(IntUnaryOperator operator);
+      boolean removeIntIf(IntPredicate filter);
+      void replaceAllInts(IntUnaryOperator operator);
 
       @Override Spliterator.OfInt spliterator();
       IntStream streamOfInt();
@@ -153,8 +153,8 @@ public interface PrimitiveList<T, T_CONS, T_ITER extends PrimitiveIterator<T, T_
       int lastIndexOfLong(long value);
       long[] toLongArray();
       long removeLong(int index);
-      boolean removeIf(LongPredicate filter);
-      void replaceAll(LongUnaryOperator operator);
+      boolean removeLongIf(LongPredicate filter);
+      void replaceAllLongs(LongUnaryOperator operator);
 
       @Override Spliterator.OfLong spliterator();
       LongStream streamOfLong();
@@ -172,8 +172,8 @@ public interface PrimitiveList<T, T_CONS, T_ITER extends PrimitiveIterator<T, T_
       int lastIndexOfFloat(float value);
       float[] toFloatArray();
       float removeFloat(int index);
-      boolean removeIf(FloatPredicate filter);
-      void replaceAll(FloatUnaryOperator operator);
+      boolean removeFloatIf(FloatPredicate filter);
+      void replaceAllFloats(FloatUnaryOperator operator);
    }
 
    interface OfDouble extends PrimitiveList<Double, DoubleConsumer,
@@ -187,8 +187,8 @@ public interface PrimitiveList<T, T_CONS, T_ITER extends PrimitiveIterator<T, T_
       int lastIndexOfDouble(double value);
       double[] toDoubleArray();
       double removeDouble(int index);
-      boolean removeIf(DoublePredicate filter);
-      void replaceAll(DoubleUnaryOperator operator);
+      boolean removeDoubleIf(DoublePredicate filter);
+      void replaceAllDoubles(DoubleUnaryOperator operator);
 
       @Override Spliterator.OfDouble spliterator();
       DoubleStream streamOfDouble();

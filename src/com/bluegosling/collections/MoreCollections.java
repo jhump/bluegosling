@@ -63,11 +63,13 @@ public final class MoreCollections {
    }
    
    @SafeVarargs
+   @SuppressWarnings("varargs") // for javac
    public static <T> Collection<List<T>> zip(Collection<? extends T>... colls) {
       return zip(Arrays.asList(colls));
    }
 
    @SafeVarargs
+   @SuppressWarnings("varargs") // for javac
    public static <T> Collection<List<T>> zipExact(Collection<? extends T>... colls) {
       if (colls.length == 0) {
          return Collections.emptyList();
@@ -84,7 +86,9 @@ public final class MoreCollections {
          @Override
          public Iterator<List<T>> iterator() {
             Iterator<? extends Collection<? extends T>> i = colls.iterator();
-            return MoreIterators.zip(new TransformingIterator<>(i, Collection::iterator), 
+            return MoreIterators.zip(new TransformingIterator<>(i,
+                  // javac gives raw type warning if using method reference:
+                  c -> c.iterator()),
                   MoreIterables.trySize(colls).orElse(8));
          }
 

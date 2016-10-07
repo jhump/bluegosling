@@ -371,6 +371,7 @@ public class Blaster<T> {
       }
 
       @Override
+      @SuppressWarnings("fallthrough")
       public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
          // clear last results
          latestBlasted.set(null);

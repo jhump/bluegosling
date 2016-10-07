@@ -34,7 +34,8 @@ public interface StreamBridge<T, U> {
     * {@linkplain MoreSpliterators#lazySpliterator(Supplier, int) spliterator}.
     *  
     * @param source the data provided by the upstream stage
+    * @param parallel true if the source was configured to be processed in parallel
     * @return the resulting data that is fed to downstream stages
     */
-   Either<Stream<T>, Spliterator<T>> bridgeFrom(Spliterator<U> source);
+   Either<Stream<T>, Spliterator<T>> bridgeFrom(Spliterator<U> source, boolean parallel);
 }

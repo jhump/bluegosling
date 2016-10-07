@@ -224,7 +224,7 @@ implements PersistentMap<K, V> {
       
       @SuppressWarnings("unchecked")
       static <K, V> TrieNode<K, V>[] createChildren(int size) {
-         return new TrieNode[size];
+         return (TrieNode<K, V>[]) new TrieNode<?, ?>[size];
       }
 
       @Override

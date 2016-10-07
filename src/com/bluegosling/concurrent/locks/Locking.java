@@ -6,9 +6,9 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.StampedLock;
 
 /**
- * An interface that encapsulate typical locking patterns. This interface and the related enclosed
- * interfaces provide mechanisms to execute a block of code with a lock held and is implemented in a
- * way that will never "leak" a lock (e.g. fail to unlock).
+ * An interface that encapsulates typical locking patterns. This interface, and the related enclosed
+ * interfaces, provide mechanisms to execute a block of code with a lock held. It is implemented in
+ * a way that will never "leak" a lock (e.g. fail to unlock).
  * 
  * <p>For read-write and stamped locks, operations are also provided for demoting a held write lock
  * to a read lock. Stamped locks also include operations for promoting a read lock to a write lock

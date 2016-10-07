@@ -105,6 +105,7 @@ public interface Hasher<T> {
     * @return a hasher that uses the given functions to extract field values
     */
    @SafeVarargs
+   @SuppressWarnings("varargs") // for javac
    static <T> Hasher<T> forFields(Function<? super T, ?>... fieldAccessors) {
       return forFields(Arrays.asList(fieldAccessors));
    }

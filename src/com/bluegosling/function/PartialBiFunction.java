@@ -56,7 +56,7 @@ public interface PartialBiFunction<T, U, R> extends BiFunction<T, U, Optional<R>
     *
     * @see #andThen(Function)
     */
-   default <V> PartialBiFunction<T, U, V> maybeThen(PartialFunction<? super R, ? extends V> after) {
+   default <V> PartialBiFunction<T, U, V> maybeChain(PartialFunction<? super R, ? extends V> after) {
        Objects.requireNonNull(after);
        return (T t, U u) -> {
           Optional<R> r = apply(t, u);

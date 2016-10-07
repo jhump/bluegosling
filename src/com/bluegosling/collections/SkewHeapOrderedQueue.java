@@ -242,7 +242,7 @@ public class SkewHeapOrderedQueue<E> extends AbstractQueue<E>
       
       // now split tree by cutting each right-most path
       @SuppressWarnings("unchecked")
-      Node<E> roots[] = new Node[count];
+      Node<E> roots[] = (Node<E>[]) new Node<?>[count];
       int i = 0;
       while (p != null) {
          roots[i++] = p;

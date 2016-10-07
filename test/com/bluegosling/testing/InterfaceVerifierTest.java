@@ -229,6 +229,7 @@ public class InterfaceVerifierTest {
       assertEquals(expected, methods);
 
       // multiple interfaces, including overridden methods
+      @SuppressWarnings("unchecked") // for javac
       InterfaceVerifier<Object> iv2 = new InterfaceVerifier<>(TestInterface1.class,
             TestInterface2.class);
       methods = iv2.allMethods();

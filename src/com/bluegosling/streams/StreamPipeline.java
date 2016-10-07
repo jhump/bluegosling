@@ -56,13 +56,13 @@ import com.bluegosling.collections.CollectionUtils;
 import com.bluegosling.collections.MoreSpliterators;
 import com.bluegosling.function.TriFunction;
 import com.bluegosling.streams.StreamNode.Upstream;
-import com.bluegosling.tuples.Pair;
 import com.bluegosling.vars.Variable;
 import com.bluegosling.vars.VariableInt;
 import com.bluegosling.vars.VariableLong;
 import com.google.common.base.Objects;
 import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
 
 /**
@@ -76,7 +76,64 @@ import com.google.common.collect.Sets;
  * @param <U> the type produced by the upstream (aka predecessor) stage
  * @param <T> the type produced by this stage
  */
-abstract class StreamPipeline<S, U, T> implements FluentStream<T> {   
+abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
+   
+   /* 
+    * Implementation notes:
+    * ---------------------
+    * 
+    * The stream pipeline is effectively a linked list of operations. Each operation is an instance
+    * of StreamPipeline. A new operation is added to the end as intermediate operations are defined.
+    * 
+    * There are three kinds of operations in the stream: terminal operations and then two kinds of
+    * intermediate operations. Terminal operations must be careful to always #start() the last
+    * operation in the stream (which in turn must start all predecessor operations) and to always
+    * #close() when complete. Intermediate operations are marked as "linked", which prevents them
+    * from being re-used in other streams. The two kinds of intermediate operations are (1) those
+    * that can run independently in parallel, accepting and then emitting elements in the same
+    * encounter order as the stream source; and (2) those that may need to modify encounter order
+    * and/or consume the entire source stream before emitting elements to downstream operations. The
+    * latter kind includes sorting operations and transformations that require a non-trivial
+    * reduction of the input stream.
+    * 
+    * The three kinds of operations map to three concrete types. Intermediate is used for the first
+    * (and simpler) kind of intermediate operation. Head is used as both the source of a stream and
+    * is also used for the second kind of intermediate operation (where output of upstream operation
+    * is consumed and the new Head represents the resulting new source that is emitted to any
+    * subsequent operations). And Tail is used to execute many kinds of terminal operations. Some
+    * terminal operations have bespoke and simpler implementations that do not require an instance
+    * of Tail. The Tail class will submit processing to the ForkJoinPool#commonPool if the stream is
+    * parallel, using a simple divide-and-conquer recursive task that involves splitting the source
+    * spliterator and having each leaf ForkJoinTask process a split.
+    * 
+    * Implementations of methods that represent intermediate operations should *NOT* examine whether
+    * the stream is parallel or not. That attribute can change between the time the intermediate
+    * operation is created and the time the stream is actually processed. Instead, consulting this
+    * attribute should be deferred until the stream starts.
+    * 
+    * There are three different ways of getting a spliterator for this stream:
+    * 1) #spliterator()
+    *    This is a public method and a terminal operation. The stream is started when this method is
+    *    called. The returned spliterator will automatically call #close() on the stream when the
+    *    data is exhausted, to prevent leaks. The returned spliterator also has a finalizer so that
+    *    #close() can be called if it is garbage collected and never exhausted.
+    * 2) #autoStartSpliterator()
+    *    This is used for the second (heavier-weight) kind of intermediate operation. The call to
+    *    #start() on the stream is deferred until it is first used. The spliterator does not try
+    *    to automatically close the stream. Instead #attach() is called so that the subsequent
+    *    operation closes the stream when it is done.
+    * 3) #basicSpliterator()
+    *    This is the simplest kind of spliterator: no attempts to manage the stream lifecycle are
+    *    made. This is ideal for many terminal operations which explicitly start and then close the
+    *    stream.
+    *
+    * Intermediate operations may examine the stream's spliterator characteristics. It is worth
+    * noting, however, that with some kinds of streams this may cause the source of data to be
+    * initialized. If interference is expected to be an issue, the stream should be created with
+    * a supplier of the spliterator and the characteristics, which allows characteristics to be
+    * queried without initializing the source of data.
+    */
+   
    private static final Collector<Object, Object, Object> NO_OP = Collector.of(
          () -> null, (a, t) -> {}, (a1, a2) -> null);
    
@@ -131,6 +188,12 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
       return predecessor != null && predecessor.needNewSpliteratorIfOrdered();
    }
    
+   void checkState() {
+      if (linked || started || closed.get()) {
+         throw new IllegalStateException("Stream already used");
+      }
+   }
+   
    /**
     * Marks the stage as started, which makes it unusable for subsequent operations. This occurs
     * when a terminal operation for the stream begins.
@@ -145,16 +208,8 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
       }
    }
    
-   // TODO: call this when iteration (in basicIterator and basicSpliterator) commences
-   void safeStart() {
-      if (started) {
-         return;
-      }
-      start();
-   }
-   
    /**
-    * Returns a view of the given stage, backed by the given source, as an {@link Upstream}.
+    * Returns a view of this stage, backed by the given source, as an {@link Upstream}.
     * 
     * @param source the source of data to be used
     * @return a view of the given stage, backed by the given source, as an {@link Upstream}
@@ -201,6 +256,7 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
 
    @Override
    public IntStream mapToInt(ToIntFunction<? super T> mapper) {
+      checkState();
       linked = true;
       return StreamSupport
             .intStream(
@@ -212,6 +268,7 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
 
    @Override
    public LongStream mapToLong(ToLongFunction<? super T> mapper) {
+      checkState();
       linked = true;
       return StreamSupport
             .longStream(
@@ -223,6 +280,7 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
 
    @Override
    public DoubleStream mapToDouble(ToDoubleFunction<? super T> mapper) {
+      checkState();
       linked = true;
       return StreamSupport
             .doubleStream(
@@ -234,6 +292,7 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
 
    @Override
    public IntStream flatMapToInt(Function<? super T, ? extends IntStream> mapper) {
+      checkState();
       linked = true;
       return StreamSupport
             .stream(this::spliterator, spliteratorCharacteristics(), isParallel())
@@ -243,6 +302,7 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
    
    @Override
    public LongStream flatMapToLong(Function<? super T, ? extends LongStream> mapper) {
+      checkState();
       linked = true;
       return StreamSupport
             .stream(this::spliterator, spliteratorCharacteristics(), isParallel())
@@ -252,6 +312,7 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
 
    @Override
    public DoubleStream flatMapToDouble(Function<? super T, ? extends DoubleStream> mapper) {
+      checkState();
       linked = true;
       return StreamSupport
             .stream(this::spliterator, spliteratorCharacteristics(), isParallel())
@@ -261,6 +322,7 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
 
    @Override
    public void forEach(Consumer<? super T> action) {
+      checkState();
       new Tail<>(this, Collector.of(() -> null, (a, t) -> action.accept(t), (a1, a2) -> null))
             .execute();
    }
@@ -270,6 +332,7 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
       if ((spliteratorCharacteristics() & Spliterator.ORDERED) == 0) {
          forEach(action);
       }
+      checkState();
       collect(Collectors.toList()).forEach(action);
    }
 
@@ -328,6 +391,7 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
 
    @Override
    public <R, A> R collect(Collector<? super T, A, R> collector) {
+      checkState();
       return new Tail<>(this, collector).execute();
    }
 
@@ -343,6 +407,7 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
 
    @Override
    public long count() {
+      checkState();
       if ((spliteratorCharacteristics() & Spliterator.SIZED) != 0) {
          start();
          try {
@@ -367,6 +432,7 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
 
    @Override
    public boolean anyMatch(Predicate<? super T> predicate) {
+      checkState();
       if (isParallel()) {
          AtomicBoolean anyMatched = new AtomicBoolean();
          StreamPipeline<S, T, Void> matcher = new Intermediate<>(this,
@@ -406,6 +472,7 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
 
    @Override
    public boolean allMatch(Predicate<? super T> predicate) {
+      checkState();
       if (isParallel()) {
          AtomicBoolean allMatched = new AtomicBoolean(true);
          StreamPipeline<S, T, Void> matcher = new Intermediate<>(this,
@@ -445,6 +512,7 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
 
    @Override
    public boolean noneMatch(Predicate<? super T> predicate) {
+      checkState();
       if (isParallel()) {
          AtomicBoolean noneMatched = new AtomicBoolean(true);
          StreamPipeline<S, T, Void> matcher = new Intermediate<>(this,
@@ -484,6 +552,7 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
 
    @Override
    public Optional<T> findFirst() {
+      checkState();
       if ((spliteratorCharacteristics() & Spliterator.ORDERED) == 0) {
          return findAny();
       }
@@ -492,6 +561,7 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
    
    @Override
    public Optional<T> findAny() {
+      checkState();
       if (isParallel()) {
          AtomicMarkableReference<T> encountered = new AtomicMarkableReference<>(null, false);
          StreamPipeline<S, T, Void> matcher = new Intermediate<>(this,
@@ -517,6 +587,7 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
    }
 
    private Optional<T> getFirst() {
+      checkState();
       start();
       try {
          Iterator<T> iter = basicIterator();
@@ -528,6 +599,7 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
 
    @Override
    public Iterator<T> iterator() {
+      checkState();
       start();
       // The stream will be closed either when the iterator is exhausted or (if never exhausted)
       // when it is garbage collected. The latter is achieved via the use of a finalizer.
@@ -619,12 +691,17 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
 
    @Override
    public Spliterator<T> spliterator() {
+      checkState();
       start();
       return new ClosingPipelineSpliterator();
    }
    
    private Spliterator<T> basicSpliterator() {
       return new PipelineSpliterator();
+   }
+   
+   private Spliterator<T> autoStartSpliterator() {
+      return new AutoStartPipelineSpliterator();
    }
 
    @Override
@@ -720,6 +797,7 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
 
    @Override
    public FluentStream<T> filter(Predicate<? super T> predicate) {
+      checkState();
       return new Intermediate<>(this,
             () -> new AbstractStreamNode<T, T>() {
                @Override
@@ -740,6 +818,7 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
 
    @Override
    public <R> FluentStream<R> map(Function<? super T, ? extends R> mapper) {
+      checkState();
       return new Intermediate<>(this,
             () -> new AbstractStreamNode<R, T>() {
                @Override
@@ -757,6 +836,7 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
 
    @Override
    public <R> FluentStream<R> flatMap(Function<? super T, ? extends Stream<? extends R>> mapper) {
+      checkState();
       return new Intermediate<>(this,
             () -> new AbstractStreamNode<R, T>() {
                Spliterator<? extends R> current;
@@ -785,18 +865,18 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
 
    @Override
    public FluentStream<T> distinct() {
+      checkState();
       if ((spliteratorCharacteristics() & Spliterator.DISTINCT) != 0) {
          return this; // already distinct
       }
-      // TODO: can't access isParallel for intermediate ops
-      Set<T> set = isParallel() ? new LinkedHashSet<>() : ConcurrentHashMap.newKeySet();
-      return new Intermediate<>(this,
+      Variable<Set<T>> set = new Variable<>();
+      return new Intermediate<S, T, T>(this,
             () -> new AbstractStreamNode<T, T>() {
                @Override
                public boolean getNext(Upstream<T> upstream, Consumer<? super T> action) {
                   while (nextUpstream(upstream)) {
                      T t = latestUpstream();
-                     if (set.add(t)) {
+                     if (set.get().add(t)) {
                         action.accept(t);
                         return true;
                      }
@@ -805,7 +885,12 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
                }
             },
             ch -> ch & ~(Spliterator.SIZED | Spliterator.SUBSIZED) | Spliterator.DISTINCT,
-            LongUnaryOperator.identity());
+            LongUnaryOperator.identity()) {
+         @Override void start() {
+            super.start();
+            set.set(isParallel() ? new LinkedHashSet<>() : ConcurrentHashMap.newKeySet());
+         }
+      };
    }
 
    @Override
@@ -815,6 +900,7 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
 
    @Override
    public FluentStream<T> sorted(Comparator<? super T> comparator) {
+      checkState();
       if ((spliteratorCharacteristics() & Spliterator.SORTED) != 0) {
          if (Objects.equal(comparator == CollectionUtils.naturalOrder() ? null : comparator,
                spliteratorComparator())) {
@@ -822,11 +908,11 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
          }
       }
       linked = true;
-      return new AttachedHead<T>(this,
+      return attach(new Head<T>(
             () -> {
                // rely on the base implementation of sort
                Stream<T> sorted = StreamSupport.stream(
-                     this::basicSpliterator, spliteratorCharacteristics(), isParallel());
+                     this::autoStartSpliterator, spliteratorCharacteristics(), isParallel());
                if (comparator == CollectionUtils.naturalOrder()) {
                   sorted = sorted.sorted();
                } else {
@@ -836,11 +922,12 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
             },
             spliteratorCharacteristics() & ~(Spliterator.CONCURRENT)
                   | Spliterator.ORDERED | Spliterator.SORTED,
-            comparator);
+            comparator));
    }
 
    @Override
    public FluentStream<T> peek(Consumer<? super T> peeker) {
+      checkState();
       return new Intermediate<>(this,
             () -> new AbstractStreamNode<T, T>() {
                @Override
@@ -879,6 +966,7 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
 
    @Override
    public FluentStream<T> limit(long maxSize) {
+      checkState();
       Variable<Incrementer> counter = new Variable<>();
       return new LimitSkipIntermediate<>(this,
             () -> new AbstractStreamNode<T, T>() {
@@ -906,6 +994,7 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
 
    @Override
    public FluentStream<T> skip(long n) {
+      checkState();
       Variable<Incrementer> counter = new Variable<>();
       return new LimitSkipIntermediate<>(this,
             () -> new AbstractStreamNode<T, T>() {
@@ -938,6 +1027,7 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
       if (count <= 0) {
          throw new IllegalArgumentException();
       }
+      checkState();
       return new Intermediate<>(this,
             () -> new AbstractStreamNode<List<T>, T>() {
                @Override
@@ -960,22 +1050,53 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
    
    @Override
    public FluentStream<T> concat(Stream<? extends T> other) {
-      // TODO Auto-generated method stub
-      return null;
+      return new Head<>(Stream.concat(this, other));
    }
 
    @Override
    public FluentStream<T> concat(Iterable<? extends Stream<? extends T>> others) {
-      // TODO Auto-generated method stub
-      return null;
+      FluentStream<T> stream = new Head<T>(
+            () -> MoreSpliterators.concat(
+                  Iterables.transform(cons(this, others), Stream::spliterator)),
+            0);
+      stream.onClose(() -> {
+         close();
+         for (Stream<?> s : others) {
+            s.close();
+         }
+      });
+      return stream;
+   }
+   
+   private static <T> Iterable<T> cons(T car, Iterable<? extends T> cdr) {
+      return () -> new Iterator<T>() {
+         Iterator<? extends T> rest = cdr.iterator();
+         boolean consumedFirst;
+         
+         @Override
+         public boolean hasNext() {
+            return !consumedFirst || rest.hasNext();
+         }
+
+         @Override
+         public T next() {
+            if (!consumedFirst) {
+               consumedFirst = true;
+               return car;
+            }
+            return rest.next();
+         }
+      };
    }
 
    public <V> FluentStream<V> operator(StreamNode<V, T> operator) {
+      checkState();
       return new Intermediate<S, T, V>(this, () -> operator, IntUnaryOperator.identity(),
             LongUnaryOperator.identity());
    }
 
    public <V> FluentStream<V> operator(StreamOperator<V, T> operator) {
+      checkState();
       return new Intermediate<S, T, V>(this, operator::createNode,
             operator::spliteratorCharacteristics, operator::spliteratorEstimatedSize) {
          {
@@ -999,31 +1120,41 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
    }
    
    @Override
-   public <V> FluentStream<V> operator(StreamBridge<V, T> operator) {
-      Spliterator<T> split = basicSpliterator();
-      Either<Stream<V>, Spliterator<V>> result = operator.bridgeFrom(split);
+   public <V> FluentStream<V> operatorBridge(StreamBridge<V, T> operator) {
+      checkState();
+      Spliterator<T> split = autoStartSpliterator();
+      Either<Stream<V>, Spliterator<V>> result = operator.bridgeFrom(split, isParallel());
       if (result.hasFirst()) {
          Stream<V> stream = result.getFirst();
          if (stream == StreamPipeline.this) {
+            if (started) {
+               close();
+               throw new IllegalStateException("Operator incorrectly started stream");
+            }
             @SuppressWarnings("unchecked") // if result is us, we know V and T are same type
             FluentStream<V> ret = (FluentStream<V>) StreamPipeline.this;
             return ret;
          }
          linked = true;
-         return new AttachedHead<>(this, stream);
+         return attach(new Head<>(stream));
       }
       Spliterator<V> newSplit = result.getSecond();
       if (newSplit == split) {
+         if (started) {
+            close();
+            throw new IllegalStateException("Operator incorrectly started stream");
+         }
          @SuppressWarnings("unchecked") // if same spliterator, we know V and T are same type
          FluentStream<V> ret = (FluentStream<V>) StreamPipeline.this;
          return ret;
       }
       linked = true;
-      return new AttachedHead<>(this, newSplit);
+      return attach(new Head<>(newSplit));
    }
 
    @Override
-   public Pair<FluentStream<T>, FluentStream<T>> fork() {
+   public Supplier<FluentStream<T>> fork(int numForks) {
+      checkState();
       linked = true;
       Supplier<Spliterator<T>> forks = MoreSpliterators.fork(basicSpliterator(), 2);
       int characteristics = spliteratorCharacteristics();
@@ -1041,17 +1172,19 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
             }
          }
       };
-      FluentStream<T> stream1 = new ForkedHead(forks, characteristics);
-      FluentStream<T> stream2 = new ForkedHead(forks, characteristics);
-      return Pair.create(stream1, stream2);
+      return () -> {
+         Spliterator<T> forkedSpliterator = forks.get();
+         return new ForkedHead(() -> forkedSpliterator, characteristics);
+      };
    }
 
    @Override
    public <K, V> FluentStream<Entry<K, Collection<V>>> groupBy(
          Function<? super T, ? extends K> keyExtractor,
          Function<? super T, ? extends V> valueExtractor) {
+      checkState();
       linked = true;
-      return new AttachedHead<>(this,
+      return new Head<>(
             () -> {
                Map<K, Collection<V>> map = toMap(this, keyExtractor, valueExtractor);
                return map.entrySet().spliterator();
@@ -1063,8 +1196,9 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
    public <K, V> FluentStream<Entry<K, Collection<V>>> merge(Stream<? extends T> other,
          Function<? super T, ? extends K> keyExtractor,
          Function<? super T, ? extends V> valueExtractor) {
+      checkState();
       linked = true;
-      return new AttachedHead<>(this,
+      return new Head<>(
             () -> {
                Map<K, Collection<V>> map =
                      toMap(Stream.concat(this, other), keyExtractor, valueExtractor);
@@ -1075,13 +1209,15 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
 
    @Override
    public <K, O, V, W, X> FluentStream<X> join(
-         Stream<? extends O> other, Function<? super T, ? extends K> keyExtractor1,
+         Stream<? extends O> other,
+         Function<? super T, ? extends K> keyExtractor1,
          Function<? super T, ? extends V> valueExtractor1,
          Function<? super O, ? extends K> keyExtractor2,
          Function<? super O, ? extends W> valueExtractor2,
          TriFunction<? super K, ? super Collection<V>, ? super Collection<W>, ? extends X> combiner) {
+      checkState();
       linked = true;
-      return new AttachedHead<>(this,
+      return new Head<>(
             () -> {
                Map<K, Collection<V>> map1;
                Map<K, Collection<W>> map2;
@@ -1129,6 +1265,19 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
             (m1, m2) -> { m1.putAll(m2); return m1; },
             ch));
       return map;
+   }
+   
+   /**
+    * Attaches the given stream to this one by having the given stream close this one when it is
+    * closed. This is used to ensure that resources are freed by this stream after a dependent
+    * stream is closed.
+    *  
+    * @param newStream the new stream
+    * @return the given stream
+    */
+   private <V> FluentStream<V> attach(Head<V> newStream) {
+      newStream.onClose(this::close);
+      return newStream;
    }
 
    /**
@@ -1188,6 +1337,42 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
       @Override
       public int characteristics() {
          return characteristics;
+      }
+   }
+   
+   /**
+    * A spliterator for the stream pipeline that starts the pipeline on first use. This relies on
+    * downstream usages properly {@linkplain StreamPipeline#close() closing} after use in order to
+    * clean-up (e.g. no finalizers to ensure close is called). "First use" means the first time
+    * either {@link #tryAdvance(Consumer)} or {@link #trySplit()} is called. Other methods can be
+    * freely invoked without causing the pipeline to be started.
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   class AutoStartPipelineSpliterator extends PipelineSpliterator {
+      AutoStartPipelineSpliterator() {
+         super();
+      }
+      
+      AutoStartPipelineSpliterator(Spliterator<? extends S> spliterator, int characteristics,
+            long size) {
+         super(spliterator, characteristics, size);
+      }
+      
+      @Override
+      public boolean tryAdvance(Consumer<? super T> action) {
+         if (!StreamPipeline.this.started) {
+            start();
+         }
+         return super.tryAdvance(action);
+      }
+
+      @Override
+      public Spliterator<T> trySplit() {
+         if (!StreamPipeline.this.started) {
+            start();
+         }
+         return super.trySplit();
       }
    }
 
@@ -1332,58 +1517,11 @@ abstract class StreamPipeline<S, U, T> implements FluentStream<T> {
    }
    
    /**
-    * The head of a stream pipeline whose datasource is another {@link StreamPipeline}. This manages
-    * the lifecycle of the upstream datasource.
-    * 
-    * @author Joshua Humphries (jhumphries131@gmail.com)
-    *
-    * @param <S>
-    */
-   // TODO: this isn't good enough -- we need to auto-start the source from the spliterator, just
-   // in case a stage tries to use it in some way before downstream stage is started...
-   static class AttachedHead<S> extends Head<S> {
-      private final StreamPipeline<?, ?, ?> upstream;
-      
-      AttachedHead(StreamPipeline<?, ?, ?> upstream, Stream<? extends S> stream) {
-         super(stream);
-         this.upstream = upstream;
-         onClose(upstream::close);
-      }
-
-      AttachedHead(StreamPipeline<?, ?, ?> upstream, Spliterator<? extends S> source) {
-         super(source);
-         this.upstream = upstream;
-         onClose(upstream::close);
-      }
-      
-      AttachedHead(StreamPipeline<?, ?, ?> upstream,
-            Supplier<? extends Spliterator<? extends S>> source, int spliteratorCharacteristics) {
-         super(source, spliteratorCharacteristics);
-         this.upstream = upstream;
-         onClose(upstream::close);
-      }
-
-      AttachedHead(StreamPipeline<?, ?, ?> upstream,
-            Supplier<? extends Spliterator<? extends S>> source, int spliteratorCharacteristics,
-                  Comparator<? super S> spliteratorComparator) {
-         super(source, spliteratorCharacteristics, spliteratorComparator);
-         this.upstream = upstream;
-         onClose(upstream::close);
-      }
-      
-      @Override
-      void start() {
-         super.start();
-         upstream.start();
-      }
-   }
-   
-   /**
     * An intermediate stage in the pipeline. This kind of pipeline stage is backed by a predecessor
     * stage, vs. directly backed by a source of data.
     * 
-    * When this kind of stage is executed, one or more {@link AbstractStreamNode}s is created (one for
-    * each concurrently executing unit or thread, for parallel streams). These nodes then act to
+    * When this kind of stage is executed, one or more {@link AbstractStreamNode}s is created (one
+    * for each concurrently executing unit or thread, for parallel streams). These nodes then act to
     * apply the intermediate stage logic and deliver resulting data to any successor stages.
     *
     * @param <S> the type of the source of data

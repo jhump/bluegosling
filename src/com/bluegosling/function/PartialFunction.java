@@ -81,7 +81,7 @@ public interface PartialFunction<T, R> extends Function<T, Optional<R>> {
     *
     * @see #compose(Function)
     */
-   default <V> PartialFunction<T, V> maybeThen(PartialFunction<? super R, ? extends V> after) {
+   default <V> PartialFunction<T, V> maybeChain(PartialFunction<? super R, ? extends V> after) {
        Objects.requireNonNull(after);
        return (T t) -> {
           Optional<R> r = apply(t);

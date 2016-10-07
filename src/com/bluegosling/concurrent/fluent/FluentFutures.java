@@ -9,7 +9,6 @@ import com.bluegosling.concurrent.FutureListener;
 import com.bluegosling.concurrent.FutureVisitor;
 import com.bluegosling.concurrent.executors.SameThreadExecutor;
 import com.bluegosling.concurrent.futures.CompletionStageFuture;
-import com.bluegosling.concurrent.unsafe.UnsafeReferenceFieldUpdater;
 import com.bluegosling.tuples.Pair;
 import com.google.common.collect.Iterables;
 
@@ -32,6 +31,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -218,8 +218,8 @@ final class FluentFutures {
     */
    static class CompletionStageWrapper<T> implements FluentFuture<T> {
       @SuppressWarnings("rawtypes")
-      private static final UnsafeReferenceFieldUpdater<CompletionStageWrapper, CompletableFuture>
-      cfUpdater = new UnsafeReferenceFieldUpdater<>(
+      private static final AtomicReferenceFieldUpdater<CompletionStageWrapper, CompletableFuture>
+      cfUpdater = AtomicReferenceFieldUpdater.newUpdater(
             CompletionStageWrapper.class, CompletableFuture.class, "cf");
       
       private final CompletionStage<T> stage;

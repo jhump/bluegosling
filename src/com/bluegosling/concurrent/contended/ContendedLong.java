@@ -1,11 +1,9 @@
 package com.bluegosling.concurrent.contended;
 
-import com.bluegosling.concurrent.unsafe.UnsafeUtils;
 import com.bluegosling.util.IsDerivedFrom;
 
-import sun.misc.Unsafe;
-
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicLongFieldUpdater;
 import java.util.function.LongBinaryOperator;
 import java.util.function.LongUnaryOperator;
 
@@ -20,17 +18,8 @@ public class ContendedLong extends LhsPaddedLong {
    // RHS padding
    long p9, p10, p11, p12, p13, p14, p15;
 
-   // setup to use Unsafe.compareAndSwapLong for updates
-   private static final Unsafe unsafe = UnsafeUtils.getUnsafe();
-   private static final long valueOffset;
-
-   static {
-      try {
-         valueOffset = unsafe.objectFieldOffset(LhsPaddedLong.class.getDeclaredField("value"));
-      } catch (Exception ex) {
-         throw new Error(ex);
-      }
-   }
+   private static final AtomicLongFieldUpdater<LhsPaddedLong> valueUpdater =
+         AtomicLongFieldUpdater.newUpdater(LhsPaddedLong.class, "value");
 
    /**
     * Creates a new {@link ContendedLong} with the given initial value.
@@ -69,10 +58,9 @@ public class ContendedLong extends LhsPaddedLong {
     * Eventually sets to the given value.
     *
     * @param newValue the new value
-    * @since 1.6
     */
    public final void lazySet(long newValue) {
-      unsafe.putOrderedLong(this, valueOffset, newValue);
+      valueUpdater.lazySet(this, newValue);
    }
 
    /**
@@ -82,7 +70,7 @@ public class ContendedLong extends LhsPaddedLong {
     * @return the previous value
     */
    public final long getAndSet(long newValue) {
-      return unsafe.getAndSetLong(this, valueOffset, newValue);
+      return valueUpdater.getAndSet(this, newValue);
    }
 
    /**
@@ -95,23 +83,21 @@ public class ContendedLong extends LhsPaddedLong {
     *         to the expected value.
     */
    public final boolean compareAndSet(long expect, long update) {
-      return unsafe.compareAndSwapLong(this, valueOffset, expect, update);
+      return valueUpdater.compareAndSet(this, expect, update);
    }
 
    /**
     * Atomically sets the value to the given updated value if the current value {@code ==} the
     * expected value.
     *
-    * <p>
-    * <a href="package-summary.html#weakCompareAndSet">May fail spuriously and does not provide
-    * ordering guarantees</a>, so is only rarely an appropriate alternative to {@code compareAndSet}.
-    *
     * @param expect the expected value
     * @param update the new value
     * @return {@code true} if successful
+    * 
+    * @see AtomicLong#weakCompareAndSet(long, long)
     */
    public final boolean weakCompareAndSet(long expect, long update) {
-      return unsafe.compareAndSwapLong(this, valueOffset, expect, update);
+      return valueUpdater.weakCompareAndSet(this, expect, update);
    }
 
    /**
@@ -120,7 +106,7 @@ public class ContendedLong extends LhsPaddedLong {
     * @return the previous value
     */
    public final long getAndIncrement() {
-      return unsafe.getAndAddLong(this, valueOffset, 1L);
+      return valueUpdater.getAndIncrement(this);
    }
 
    /**
@@ -129,7 +115,7 @@ public class ContendedLong extends LhsPaddedLong {
     * @return the previous value
     */
    public final long getAndDecrement() {
-      return unsafe.getAndAddLong(this, valueOffset, -1L);
+      return valueUpdater.getAndDecrement(this);
    }
 
    /**
@@ -139,7 +125,7 @@ public class ContendedLong extends LhsPaddedLong {
     * @return the previous value
     */
    public final long getAndAdd(long delta) {
-      return unsafe.getAndAddLong(this, valueOffset, delta);
+      return valueUpdater.getAndAdd(this, delta);
    }
 
    /**
@@ -148,7 +134,7 @@ public class ContendedLong extends LhsPaddedLong {
     * @return the updated value
     */
    public final long incrementAndGet() {
-      return unsafe.getAndAddLong(this, valueOffset, 1L) + 1L;
+      return valueUpdater.incrementAndGet(this);
    }
 
    /**
@@ -157,7 +143,7 @@ public class ContendedLong extends LhsPaddedLong {
     * @return the updated value
     */
    public final long decrementAndGet() {
-      return unsafe.getAndAddLong(this, valueOffset, -1L) - 1L;
+      return valueUpdater.decrementAndGet(this);
    }
 
    /**
@@ -167,7 +153,7 @@ public class ContendedLong extends LhsPaddedLong {
     * @return the updated value
     */
    public final long addAndGet(long delta) {
-      return unsafe.getAndAddLong(this, valueOffset, delta) + delta;
+      return valueUpdater.addAndGet(this, delta);
    }
 
    /**
@@ -177,15 +163,9 @@ public class ContendedLong extends LhsPaddedLong {
     *
     * @param updateFunction a side-effect-free function
     * @return the previous value
-    * @since 1.8
     */
    public final long getAndUpdate(LongUnaryOperator updateFunction) {
-      long prev, next;
-      do {
-         prev = get();
-         next = updateFunction.applyAsLong(prev);
-      } while (!compareAndSet(prev, next));
-      return prev;
+      return valueUpdater.getAndUpdate(this, updateFunction);
    }
 
    /**
@@ -195,15 +175,9 @@ public class ContendedLong extends LhsPaddedLong {
     *
     * @param updateFunction a side-effect-free function
     * @return the updated value
-    * @since 1.8
     */
    public final long updateAndGet(LongUnaryOperator updateFunction) {
-      long prev, next;
-      do {
-         prev = get();
-         next = updateFunction.applyAsLong(prev);
-      } while (!compareAndSet(prev, next));
-      return next;
+      return valueUpdater.updateAndGet(this, updateFunction);
    }
 
    /**
@@ -216,15 +190,9 @@ public class ContendedLong extends LhsPaddedLong {
     * @param x the update value
     * @param accumulatorFunction a side-effect-free function of two arguments
     * @return the previous value
-    * @since 1.8
     */
    public final long getAndAccumulate(long x, LongBinaryOperator accumulatorFunction) {
-      long prev, next;
-      do {
-         prev = get();
-         next = accumulatorFunction.applyAsLong(prev, x);
-      } while (!compareAndSet(prev, next));
-      return prev;
+      return valueUpdater.getAndAccumulate(this, x, accumulatorFunction);
    }
 
    /**
@@ -237,15 +205,9 @@ public class ContendedLong extends LhsPaddedLong {
     * @param x the update value
     * @param accumulatorFunction a side-effect-free function of two arguments
     * @return the updated value
-    * @since 1.8
     */
    public final long accumulateAndGet(long x, LongBinaryOperator accumulatorFunction) {
-      long prev, next;
-      do {
-         prev = get();
-         next = accumulatorFunction.applyAsLong(prev, x);
-      } while (!compareAndSet(prev, next));
-      return next;
+      return valueUpdater.accumulateAndGet(this, x, accumulatorFunction);
    }
 
    /**

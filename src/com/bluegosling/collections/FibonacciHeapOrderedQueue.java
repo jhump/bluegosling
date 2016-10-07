@@ -232,8 +232,11 @@ public class FibonacciHeapOrderedQueue<E> extends AbstractCollection<E>
    private void consolidate() {
       // The degree of a tree is log-base-2 of its size. Largest possible heap has MAX_INTEGER
       // elements, and log(MAX_INTEGER) == 31. So that's the largest possible degree for a tree.
-      @SuppressWarnings("unchecked") // can't create generic array, so we must cast from raw type
-      Node<E> degrees[] = new Node[MAX_DEGREE + 1];
+      
+      // can't create generic array, so we must cast
+      @SuppressWarnings("unchecked")
+      Node<E> degrees[] = (Node<E>[]) new Node<?>[MAX_DEGREE + 1];
+      
       Node<E> done = minRoot;
       Node<E> current = minRoot;
       do {
@@ -648,7 +651,8 @@ public class FibonacciHeapOrderedQueue<E> extends AbstractCollection<E>
    }
 
    
-   
+   @SuppressWarnings("unused") // was used in some testing
+   // TODO: remove this and write real unit test
    private void printState(String title) {
       System.out.println("*** " + title.toUpperCase() + " ***");
       AtomicInteger id = new AtomicInteger();

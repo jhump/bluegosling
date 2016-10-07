@@ -30,8 +30,7 @@ public abstract class AbstractTestConcurrentStack extends AbstractTestStack {
       Object[] elements = getFullElements();
       ArrayUtils.reverse(elements);
 
-      ConcurrentStack<Object> stack = (ConcurrentStack<Object>) makeFullCollection();
-      
+      ConcurrentStack<Object> stack = makeFullCollection();
       Collection<Object> coll = new ArrayList<>();
       
       stack.drainTo(coll);
@@ -49,8 +48,7 @@ public abstract class AbstractTestConcurrentStack extends AbstractTestStack {
       Object[] elements = getFullElements();
       ArrayUtils.reverse(elements);
       
-      ConcurrentStack<Object> stack = (ConcurrentStack<Object>) makeFullCollection();
-      
+      ConcurrentStack<Object> stack = makeFullCollection();
       ConcurrentStack<Object> copy = stack.removeAll();
       
       assertTrue(stack.isEmpty());

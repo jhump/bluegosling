@@ -1561,6 +1561,7 @@ public class TypesTest {
    }
    
    @SafeVarargs
+   @SuppressWarnings("varargs") // for javac
    private static <T> Set<T> asSet(T... array) {
       return new LinkedHashSet<>(Arrays.asList(array));
    }

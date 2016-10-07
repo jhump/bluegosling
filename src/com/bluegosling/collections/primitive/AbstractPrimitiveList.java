@@ -297,7 +297,7 @@ public abstract class AbstractPrimitiveList<T, T_CONS,
       }
       
       @Override
-      public boolean removeIf(BooleanPredicate filter) {
+      public boolean removeBooleanIf(BooleanPredicate filter) {
          boolean ret = false;
          for (BooleanIterator iter = iterator(); iter.hasNext();) {
             boolean i = iter.nextBoolean();
@@ -310,7 +310,7 @@ public abstract class AbstractPrimitiveList<T, T_CONS,
       }
 
       @Override
-      public void replaceAll(BooleanUnaryOperator operator) {
+      public void replaceAllBooleans(BooleanUnaryOperator operator) {
          for (int i = 0, len = size(); i < len; i++) {
             boolean o = getBoolean(i);
             boolean n = operator.applyAsBoolean(o);
@@ -573,7 +573,7 @@ public abstract class AbstractPrimitiveList<T, T_CONS,
       }
       
       @Override
-      public boolean removeIf(BytePredicate filter) {
+      public boolean removeByteIf(BytePredicate filter) {
          boolean ret = false;
          for (ByteIterator iter = iterator(); iter.hasNext();) {
             byte i = iter.nextByte();
@@ -586,7 +586,7 @@ public abstract class AbstractPrimitiveList<T, T_CONS,
       }
 
       @Override
-      public void replaceAll(ByteUnaryOperator operator) {
+      public void replaceAllBytes(ByteUnaryOperator operator) {
          for (int i = 0, len = size(); i < len; i++) {
             byte o = getByte(i);
             byte n = operator.applyAsByte(o);
@@ -849,7 +849,7 @@ public abstract class AbstractPrimitiveList<T, T_CONS,
       }
       
       @Override
-      public boolean removeIf(CharPredicate filter) {
+      public boolean removeCharIf(CharPredicate filter) {
          boolean ret = false;
          for (CharIterator iter = iterator(); iter.hasNext();) {
             char i = iter.nextChar();
@@ -862,7 +862,7 @@ public abstract class AbstractPrimitiveList<T, T_CONS,
       }
 
       @Override
-      public void replaceAll(CharUnaryOperator operator) {
+      public void replaceAllChars(CharUnaryOperator operator) {
          for (int i = 0, len = size(); i < len; i++) {
             char o = getChar(i);
             char n = operator.applyAsChar(o);
@@ -1125,7 +1125,7 @@ public abstract class AbstractPrimitiveList<T, T_CONS,
       }
       
       @Override
-      public boolean removeIf(ShortPredicate filter) {
+      public boolean removeShortIf(ShortPredicate filter) {
          boolean ret = false;
          for (ShortIterator iter = iterator(); iter.hasNext();) {
             short i = iter.nextShort();
@@ -1138,7 +1138,7 @@ public abstract class AbstractPrimitiveList<T, T_CONS,
       }
 
       @Override
-      public void replaceAll(ShortUnaryOperator operator) {
+      public void replaceAllShorts(ShortUnaryOperator operator) {
          for (int i = 0, len = size(); i < len; i++) {
             short o = getShort(i);
             short n = operator.applyAsShort(o);
@@ -1401,7 +1401,7 @@ public abstract class AbstractPrimitiveList<T, T_CONS,
       }
       
       @Override
-      public boolean removeIf(IntPredicate filter) {
+      public boolean removeIntIf(IntPredicate filter) {
          boolean ret = false;
          for (PrimitiveIterator.OfInt iter = iterator(); iter.hasNext();) {
             int i = iter.nextInt();
@@ -1414,7 +1414,7 @@ public abstract class AbstractPrimitiveList<T, T_CONS,
       }
 
       @Override
-      public void replaceAll(IntUnaryOperator operator) {
+      public void replaceAllInts(IntUnaryOperator operator) {
          for (int i = 0, len = size(); i < len; i++) {
             int o = getInt(i);
             int n = operator.applyAsInt(o);
@@ -1698,7 +1698,7 @@ public abstract class AbstractPrimitiveList<T, T_CONS,
       }
       
       @Override
-      public boolean removeIf(LongPredicate filter) {
+      public boolean removeLongIf(LongPredicate filter) {
          boolean ret = false;
          for (PrimitiveIterator.OfLong iter = iterator(); iter.hasNext();) {
             long i = iter.nextLong();
@@ -1711,7 +1711,7 @@ public abstract class AbstractPrimitiveList<T, T_CONS,
       }
 
       @Override
-      public void replaceAll(LongUnaryOperator operator) {
+      public void replaceAllLongs(LongUnaryOperator operator) {
          for (int i = 0, len = size(); i < len; i++) {
             long o = getLong(i);
             long n = operator.applyAsLong(o);
@@ -1989,7 +1989,7 @@ public abstract class AbstractPrimitiveList<T, T_CONS,
       }
       
       @Override
-      public boolean removeIf(FloatPredicate filter) {
+      public boolean removeFloatIf(FloatPredicate filter) {
          boolean ret = false;
          for (FloatIterator iter = iterator(); iter.hasNext();) {
             float i = iter.nextFloat();
@@ -2002,7 +2002,7 @@ public abstract class AbstractPrimitiveList<T, T_CONS,
       }
 
       @Override
-      public void replaceAll(FloatUnaryOperator operator) {
+      public void replaceAllFloats(FloatUnaryOperator operator) {
          for (int i = 0, len = size(); i < len; i++) {
             float o = getFloat(i);
             float n = operator.applyAsFloat(o);
@@ -2265,7 +2265,7 @@ public abstract class AbstractPrimitiveList<T, T_CONS,
       }
       
       @Override
-      public boolean removeIf(DoublePredicate filter) {
+      public boolean removeDoubleIf(DoublePredicate filter) {
          boolean ret = false;
          for (PrimitiveIterator.OfDouble iter = iterator(); iter.hasNext();) {
             double i = iter.nextDouble();
@@ -2278,7 +2278,7 @@ public abstract class AbstractPrimitiveList<T, T_CONS,
       }
 
       @Override
-      public void replaceAll(DoubleUnaryOperator operator) {
+      public void replaceAllDoubles(DoubleUnaryOperator operator) {
          for (int i = 0, len = size(); i < len; i++) {
             double o = getDouble(i);
             double n = operator.applyAsDouble(o);

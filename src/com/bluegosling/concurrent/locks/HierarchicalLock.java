@@ -4,7 +4,6 @@ import static com.bluegosling.concurrent.ManagedBlockers.managedBlockFor;
 import static com.bluegosling.concurrent.ManagedBlockers.managedBlockUninterruptiblyFor;
 
 import com.bluegosling.concurrent.DeadlockException;
-import com.bluegosling.concurrent.unsafe.UnsafeReferenceFieldUpdater;
 
 import java.io.Serializable;
 import java.util.AbstractCollection;
@@ -20,6 +19,7 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinPool.ManagedBlocker;
 import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 import java.util.concurrent.locks.AbstractQueuedLongSynchronizer;
 import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 
@@ -49,13 +49,14 @@ import java.util.concurrent.locks.AbstractQueuedSynchronizer;
  * object cannot be used to release it; it will be released implicitly when the lock on the child is
  * released.
  * 
- * <p>This lock places a limit on the number of simultaneously held locks. Up to 32,767 (2^15 - 1)
- * exclusive locks can be held simultaneously. Since only one thread can hold the lock exclusively,
- * this allows for that thread to acquire/re-enter the lock 32k times before an error occurs. And
- * up to {@link Integer#MAX_VALUE} (2^31 - 1) shared locks can be held simultaneously. This limit
- * is the total of acquisitions, be it in the form of one thread acquiring/re-entering the lock 2
- * billion times, or 2 billion threads each acquiring it once. (These limits are intentionally very
- * high such that no practical use of the lock will ever bump into them.)
+ * <p>This lock places a limit on the number of simultaneously held locks. Up to 32,767
+ * (2<sup>15</sup> - 1) exclusive locks can be held simultaneously. Since only one thread can hold
+ * the lock exclusively, this allows for that thread to acquire/re-enter the lock 32k times before
+ * an error occurs. And up to {@link Integer#MAX_VALUE} (2<sup>31</sup> - 1) shared locks can be
+ * held simultaneously. This limit is the total of acquisitions, be it in the form of one thread
+ * acquiring/re-entering the lock 2 billion times, or 2 billion threads each acquiring it once.
+ * (These limits are intentionally very high such that no practical use of the lock will ever bump
+ * into them.)
  * 
  * <p>This lock is safe to use in a {@link ForkJoinPool}. If blocking methods are invoked from such
  * a pool then a {@link ManagedBlocker} is used.
@@ -92,7 +93,7 @@ public class HierarchicalLock implements Serializable {
    /**
     * The result of acquiring a {@link HierarchicalLock}. After acquisition, this object can be used
     * to release, demote, or promote the held lock. This API just contains methods in common to both
-    * types of acquired locks. Both concrete acquired locks provide a wider API, with method that
+    * types of acquired locks. Both concrete acquired locks provide a wider API, with methods that
     * are specific to them. 
     *
     * @see ExclusiveLock
@@ -749,8 +750,8 @@ public class HierarchicalLock implements Serializable {
       private static final long STAMP_MASK = 0xffffc00000000000L;
       private static final long STAMP_UNIT = 0x0000400000000000L;
       
-      private static final UnsafeReferenceFieldUpdater<Sync, HolderNode> holdersUpdater =
-            new UnsafeReferenceFieldUpdater<>(Sync.class, HolderNode.class, "holders");
+      private static final AtomicReferenceFieldUpdater<Sync, HolderNode> holdersUpdater =
+            AtomicReferenceFieldUpdater.newUpdater(Sync.class, HolderNode.class, "holders");
       
       private static long exclusiveCount(long state) {
          return (state & EXCLUSIVE_MASK) >>> EXCLUSIVE_SHIFT;
@@ -1617,7 +1618,6 @@ public class HierarchicalLock implements Serializable {
        *    this thread holds a lock for which another thread is waiting, and that thread, or some
        *    other thread that directly or indirectly is waiting on it, is holding the parent lock)
        */
-      @SuppressWarnings("unused") // needed by sub-class ChildExclusiveLock
       public ExclusiveLock promoteToParentInterruptibly() throws InterruptedException {
          throw new IllegalStateException("this lock has no parent");
       }
@@ -1660,7 +1660,6 @@ public class HierarchicalLock implements Serializable {
        *    this thread holds a lock for which another thread is waiting, and that thread, or some
        *    other thread that directly or indirectly is waiting on it, is holding the parent lock)
        */
-      @SuppressWarnings("unused") // needed by sub-class ChildExclusiveLock
       public ExclusiveLock tryPromoteToParent(long timeLimit, TimeUnit unit)
             throws InterruptedException {
          throw new IllegalStateException("this lock has no parent");

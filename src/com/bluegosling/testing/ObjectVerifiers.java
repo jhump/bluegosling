@@ -183,6 +183,7 @@ public final class ObjectVerifiers {
     * @see #relaxedExceptions(Set)
     */
    @SafeVarargs
+   @SuppressWarnings("varargs") // for javac
    public static ObjectVerifier<Throwable> relaxedExceptions(
          Class<? extends Throwable>... exceptions) {
       return relaxedExceptions(new HashSet<Class<? extends Throwable>>(Arrays.asList(exceptions)));
@@ -296,6 +297,7 @@ public final class ObjectVerifiers {
     * @throws NullPointerException if any of the specified verifiers is {@code null}
     */
    @SafeVarargs
+   @SuppressWarnings("varargs") // for javac
    public static <T> ObjectVerifier<T> compositeVerifier(ObjectVerifier<T>... verifiers) {
       return compositeVerifier(new ArrayList<ObjectVerifier<T>>(Arrays.asList(verifiers)));
    }

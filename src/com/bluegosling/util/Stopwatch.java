@@ -1,8 +1,7 @@
 package com.bluegosling.util;
 
-import com.bluegosling.concurrent.unsafe.UnsafeReferenceFieldUpdater;
-
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 
 /**
  * A utility for measuring elapsed time. It can be stopped and restarted and the resulting elapsed
@@ -16,8 +15,8 @@ import java.util.concurrent.TimeUnit;
 // TODO: tests
 public class Stopwatch {
 
-   private static final UnsafeReferenceFieldUpdater<Stopwatch, State> stateUpdater =
-         new UnsafeReferenceFieldUpdater<>(Stopwatch.class, State.class, "state");
+   private static final AtomicReferenceFieldUpdater<Stopwatch, State> stateUpdater =
+         AtomicReferenceFieldUpdater.newUpdater(Stopwatch.class, State.class, "state");
 
    private static final long[] EMPTY_LAPS = new long[0];
 

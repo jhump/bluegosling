@@ -1,12 +1,12 @@
 package com.bluegosling.concurrent;
 
-import com.bluegosling.concurrent.unsafe.UnsafeIntegerFieldUpdater;
-import com.bluegosling.concurrent.unsafe.UnsafeReferenceFieldUpdater;
 import com.bluegosling.util.IsDerivedFrom;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
+import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 import java.util.concurrent.locks.AbstractOwnableSynchronizer;
 import java.util.concurrent.locks.AbstractQueuedLongSynchronizer;
 import java.util.concurrent.locks.AbstractQueuedSynchronizer;
@@ -25,9 +25,8 @@ import java.util.concurrent.locks.LockSupport;
  * value type. A reference to that value type is the managed state, not just a fixed-precision
  * numeric value.
  * 
- * <p>
- * Aside from the type of value used to represent synchronizer state, this class provides the same
- * API as its kin with one main exception: {@link Condition}s are not supported.
+ * <p>Aside from the type of value used to represent synchronizer state, this class provides the
+ * same API as its kin with one main exception: {@link Condition}s are not supported.
  *
  * @param <S> the type of state atomically maintained by the synchronizer
  * @param <R> the type of request used during acquisitions and releases
@@ -48,25 +47,25 @@ public class AbstractQueuedReferenceSynchronizer<S, R> extends AbstractOwnableSy
    private static final long serialVersionUID = 2087545583039578782L;
 
    @SuppressWarnings("rawtypes")
-   static final UnsafeReferenceFieldUpdater<AbstractQueuedReferenceSynchronizer, Object>
-   stateUpdater = new UnsafeReferenceFieldUpdater<>(AbstractQueuedReferenceSynchronizer.class,
+   static final AtomicReferenceFieldUpdater<AbstractQueuedReferenceSynchronizer, Object>
+   stateUpdater = AtomicReferenceFieldUpdater.newUpdater(AbstractQueuedReferenceSynchronizer.class,
          Object.class, "state");
 
    @SuppressWarnings("rawtypes")
-   static final UnsafeReferenceFieldUpdater<AbstractQueuedReferenceSynchronizer, Node> headUpdater =
-         new UnsafeReferenceFieldUpdater<>(AbstractQueuedReferenceSynchronizer.class, Node.class,
-               "head");
+   static final AtomicReferenceFieldUpdater<AbstractQueuedReferenceSynchronizer, Node> headUpdater =
+         AtomicReferenceFieldUpdater.newUpdater(AbstractQueuedReferenceSynchronizer.class,
+               Node.class, "head");
 
    @SuppressWarnings("rawtypes")
-   static final UnsafeReferenceFieldUpdater<AbstractQueuedReferenceSynchronizer, Node> tailUpdater =
-         new UnsafeReferenceFieldUpdater<>(AbstractQueuedReferenceSynchronizer.class, Node.class,
-               "tail");
+   static final AtomicReferenceFieldUpdater<AbstractQueuedReferenceSynchronizer, Node> tailUpdater =
+         AtomicReferenceFieldUpdater.newUpdater(AbstractQueuedReferenceSynchronizer.class,
+               Node.class, "tail");
 
-   static final UnsafeIntegerFieldUpdater<Node> waitStatusUpdater =
-         new UnsafeIntegerFieldUpdater<>(Node.class, "waitStatus");
+   static final AtomicIntegerFieldUpdater<Node> waitStatusUpdater =
+         AtomicIntegerFieldUpdater.newUpdater(Node.class, "waitStatus");
 
-   static final UnsafeReferenceFieldUpdater<Node, Node> nextUpdater =
-         new UnsafeReferenceFieldUpdater<>(Node.class, Node.class, "next");
+   static final AtomicReferenceFieldUpdater<Node, Node> nextUpdater =
+         AtomicReferenceFieldUpdater.newUpdater(Node.class, Node.class, "next");
 
    /**
     * Creates a new instance with initial synchronization state of {@code null}.
@@ -768,7 +767,7 @@ public class AbstractQueuedReferenceSynchronizer<S, R> extends AbstractOwnableSy
     *         work correctly.
     * @throws UnsupportedOperationException if exclusive mode is not supported
     */
-   protected boolean tryAcquire(@SuppressWarnings("unused") R arg) {
+   protected boolean tryAcquire(R arg) {
       throw new UnsupportedOperationException();
    }
 
@@ -791,7 +790,7 @@ public class AbstractQueuedReferenceSynchronizer<S, R> extends AbstractOwnableSy
     *         work correctly.
     * @throws UnsupportedOperationException if exclusive mode is not supported
     */
-   protected boolean tryRelease(@SuppressWarnings("unused") R arg) {
+   protected boolean tryRelease(R arg) {
       throw new UnsupportedOperationException();
    }
 
@@ -821,7 +820,7 @@ public class AbstractQueuedReferenceSynchronizer<S, R> extends AbstractOwnableSy
     *         work correctly.
     * @throws UnsupportedOperationException if shared mode is not supported
     */
-   protected int tryAcquireShared(@SuppressWarnings("unused") R arg) {
+   protected int tryAcquireShared(R arg) {
       throw new UnsupportedOperationException();
    }
 
@@ -844,7 +843,7 @@ public class AbstractQueuedReferenceSynchronizer<S, R> extends AbstractOwnableSy
     *         work correctly.
     * @throws UnsupportedOperationException if shared mode is not supported
     */
-   protected boolean tryReleaseShared(@SuppressWarnings("unused") R arg) {
+   protected boolean tryReleaseShared(R arg) {
       throw new UnsupportedOperationException();
    }
 

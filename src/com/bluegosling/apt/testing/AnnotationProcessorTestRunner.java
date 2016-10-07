@@ -303,6 +303,7 @@ public class AnnotationProcessorTestRunner extends BlockJUnit4ClassRunner {
    // This method is supposedly deprecated, but there is no replacement for intercepting the
    // validation of @Before and @After methods
    @Override
+   @SuppressWarnings("deprecation") // for javac
    protected void validateInstanceMethods(List<Throwable> errors) {
       // Do not call super since it performs overly strict validation on methods.
       

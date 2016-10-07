@@ -210,8 +210,8 @@ public class InterfaceVerifier<T> {
        * @see #uncheckedExceptions(Collection)
        */
       //@SafeVarargs -- can't use SafeVarargs on non-final instance methods (and thus interfaces)
-      MethodConfigurator<T> uncheckedExceptions(
-            @SuppressWarnings("unchecked") Class<? extends Throwable>... throwables);
+      @SuppressWarnings({"unchecked", "varargs"}) // javac wants "varargs"
+      MethodConfigurator<T> uncheckedExceptions(Class<? extends Throwable>... throwables);
 
       /**
        * Indicates the set of unchecked exceptoins thrown by a method. These include
@@ -511,9 +511,9 @@ public class InterfaceVerifier<T> {
        * method chaining.
        */
       //@SafeVarargs -- can't use SafeVarargs on non-final instance methods (and thus interfaces)
+      @SuppressWarnings({"unchecked", "varargs"}) // javac wants "varargs"
       @Override
-      MethodConfiguration<T> uncheckedExceptions(
-            @SuppressWarnings("unchecked") Class<? extends Throwable>... throwables);
+      MethodConfiguration<T> uncheckedExceptions(Class<? extends Throwable>... throwables);
 
       /**
        * {@inheritDoc}
@@ -1030,6 +1030,7 @@ public class InterfaceVerifier<T> {
       }
 
       @SafeVarargs
+      @SuppressWarnings("varargs") // for javac
       @Override
       public final MethodConfiguration<T> uncheckedExceptions(
             Class<? extends Throwable>... throwables) {
@@ -1632,6 +1633,7 @@ public class InterfaceVerifier<T> {
     * @throws NullPointerException If any of the specified interfaces are {@code null}
     */
    @SafeVarargs
+   @SuppressWarnings("varargs") // for javac
    public InterfaceVerifier(Class<? extends T>... interfaces) {
       this(Arrays.asList(interfaces));
    }

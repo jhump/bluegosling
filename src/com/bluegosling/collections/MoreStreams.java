@@ -97,6 +97,7 @@ public final class MoreStreams {
     *       into lists
     */
    @SafeVarargs
+   @SuppressWarnings("varargs") // for javac
    public static <T> Stream<List<T>> zip(Stream<? extends T>... streams) {
       return zip(Arrays.asList(streams));
    }
