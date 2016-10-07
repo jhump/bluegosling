@@ -244,7 +244,7 @@ public final class MoreSpliterators {
     * Flattens the given spliterator so that all elements from its constituent spliterators are
     * concatenated together.
     * 
-    * @param spliterators a spliterator that yields spliterators
+    * @param nested a spliterator that yields spliterators
     * @return a spliterator that emits the concatenation of all elements emitted by spliterators
     *       that are emitted by the given spliterator  
     */
@@ -362,9 +362,9 @@ public final class MoreSpliterators {
     * 
     * <p>For extremely large sources of data, caution must be used to avoid excessive heap usage.
     * Whenever data is requested from a fork, it is retrieved from the given source spliterator (via
-    * {@link #tryAdvance(Consumer)}) and then buffered in queues (one per fork) so that all of the
-    * other forks can also retrieve the same item. So if the forks are used sequentially, the
-    * entirety of the data will end up queued in buffers after the first fork is used, and then
+    * {@link Spliterator#tryAdvance(Consumer)}) and then buffered in queues (one per fork) so that
+    * all of the other forks can also retrieve the same item. So if the forks are used sequentially,
+    * the entirety of the data will end up queued in buffers after the first fork is used, and then
     * flushed as the other forks are used. For limited exposure to this buffering, all consumers of
     * the data should be scheduled to run concurrently. That way queued data is quickly consumed by
     * concurrent consumers.

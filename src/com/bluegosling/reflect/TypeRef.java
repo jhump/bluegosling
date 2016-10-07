@@ -556,7 +556,7 @@ public abstract class TypeRef<T> implements AnnotatedElement {
     * Compares this object to another. This object is equal to another object if they are both
     * {@link TypeRef}s and represent the same types.
     * 
-    * @see Types#equals(Object) 
+    * @see Types#equals(Type, Type) 
     */
    @Override
    public boolean equals(Object other) {

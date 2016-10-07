@@ -23,7 +23,7 @@ public interface StreamNode<T, U> {
    /**
     * Called by a downstream consumer to pull an element from this node. This node uses the given
     * upstream producer to pull data and then given consumer to push a result. This method should
-    * invoke the given consumer <em>at most once<em>. If it does invoke the consumer, it must
+    * invoke the given consumer <em>at most once</em>. If it does invoke the consumer, it must
     * return {@code true}; otherwise it must return {@code false}. Returning false indicates to the
     * downstream consumer that there is no more data to be produced.
     * 

@@ -1653,7 +1653,8 @@ public final class AnnotatedTypes {
     * 
     * <p>As this checks if one types is a <strong>proper</strong> subtype, it will return false if
     * the two types are the same. To check if a type is the same or a subtype, consider using
-    * {@link #isAssignable(Type, Type) Types.isAssignable(possibleSubtype, aType)}.
+    * {@link #isAssignable(AnnotatedType, AnnotatedType, TypeAnnotationChecker)
+    * AnnotatedTypes.isAssignable(possibleSubtype, aType)}.
     *
     * @param possibleSubtype another type
     * @param aType a type
@@ -1686,7 +1687,8 @@ public final class AnnotatedTypes {
     * 
     * <p>As this checks if one types is a <strong>proper</strong> subtype, it will return false if
     * the two types are the same. To check if a type is the same or a subtype, consider using
-    * {@link #isAssignableStrict(Type, Type) Types.isAssignable(possibleSubtype, aType)}.
+    * {@link #isAssignableStrict(AnnotatedType, AnnotatedType, TypeAnnotationChecker)
+    * AnnotatedTypes.isAssignableStrict(possibleSubtype, aType)}.
     *
     * @param possibleSubtype another type
     * @param aType a type
