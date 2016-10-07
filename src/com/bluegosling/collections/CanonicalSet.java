@@ -29,6 +29,7 @@ public interface CanonicalSet<E> extends Set<E> {
     * The values in the map are also used to {@linkplain #canonicalize(Object) canonicalize} the
     * contents of the set.
     *
+    * @param <E> the type of elements in the set
     * @param map a map
     * @return a canonical set backed by the given map
     */

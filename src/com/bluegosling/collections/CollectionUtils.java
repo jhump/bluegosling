@@ -324,6 +324,7 @@ public final class CollectionUtils {
     * parameters {@code o} and {@code oIncluded}) lies above the lower bound
     * of another range (specified by {@code from} and {@code fromInclusive}).
     *
+    * @param <T> the type of the element
     * @param o the object
     * @param oIncluded true if {@code o} needs to be included in the range
     * @param from the lower bound of the range
@@ -356,6 +357,7 @@ public final class CollectionUtils {
     * parameters {@code o} and {@code oIncluded}) falls under the upper bound
     * of another range (specified by {@code to} and {@code toInclusive}).
     *
+    * @param <T> the type of the element
     * @param o the object
     * @param oIncluded true if {@code o} needs to be included in the range
     * @param to the upper bound of the range
@@ -381,6 +383,7 @@ public final class CollectionUtils {
    /**
     * Checks if the given object is within the given bounds.
     *
+    * @param <T> the type of the element
     * @param o the object
     * @param from the lower bound of the range
     * @param fromInclusive true if {@code from} is included in the range; false
@@ -472,7 +475,8 @@ public final class CollectionUtils {
     * Removes a specified object using an iterator. This helper method implements
     * {@code remove(Object)}, {@code removeAll(Collection<?>)}, {@code removeFirstOccurrence(Object)},
     * and even {code removeLastOccurrence(Object)} (the lattermost of which uses a
-    * {@link reverseIterator} to find the last occurrence instead of the first).
+    * {@link MoreIterators#reverseListIterator(ListIterator)} to find the last occurrence instead
+    * of the first).
     * 
     * @param item the item to remove
     * @param iter the iterator from which to remove the item

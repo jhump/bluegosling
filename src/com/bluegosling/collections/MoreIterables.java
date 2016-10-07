@@ -266,13 +266,13 @@ public final class MoreIterables {
    }
 
    /**
-    * Expands the given sequence using the given function. Each element in the given iterator is
-    * transformed into another sequence via the function. The resulting iterator concatenates all
+    * Expands the given sequence using the given function. Each element in the given iterable is
+    * transformed into another sequence via the function. The resulting iterable concatenates all
     * such resulting sequences.
     *
-    * @param iterator an iterator
+    * @param iterable an iterable
     * @param fn a function that expands each element into another sequence
-    * @return an iterator that the results of expanding each element
+    * @return an iterable that has the results of expanding each element
     */
    public static <T, U> Iterable<U> flatMap(Iterable<T> iterable,
          Function<? super T, ? extends Iterator<? extends U>> fn) {

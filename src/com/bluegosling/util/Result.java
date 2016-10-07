@@ -70,7 +70,7 @@ public final class Result<T, E> implements Serializable {
       /**
        * Visits the value of a failed result.
        * 
-       * @param t the result error
+       * @param e the result error
        * @return the product of the visit (can be {@code null})
        */
       R visitError(E e);
@@ -529,7 +529,7 @@ public final class Result<T, E> implements Serializable {
     * Casts an immediate value to a super-type. The compiler enforces invariance on generic types,
     * but this method allows immediate values to be treated as covariant.
     *
-    * @param immediate an immediate value
+    * @param result a result value
     * @return the same immediate value, but with its type parameter as a super-type of the original
     */
    public static <T, U extends T, E, F extends E> Result<T, E> cast(

@@ -21,8 +21,8 @@ import com.bluegosling.tuples.Trio;
 
 /**
  * A fluent stream is a {@link Stream} that provides extra operations, including extensibility in
- * the ability to define {@linkplain #operator(StreamBridge) new} {@linkplain #operator(StreamNode)
- * intermediate} {@linkplain #operator(StreamOperator) operators}.
+ * the ability to define {@linkplain #operatorBridge(StreamBridge) new}
+ * {@linkplain #operator(StreamNode) intermediate} {@linkplain #operator(StreamOperator) operators}.
  *  
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *

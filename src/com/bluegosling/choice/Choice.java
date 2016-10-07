@@ -295,8 +295,9 @@ public interface Choice<A, B> {
    }
    
    /**
-    * A visitor for a choice with two options. When passed to {@link OfTwo#visit(VisitorOfTwo)},
-    * one of the {@code visit*} methods will be invoked, depending on which option is present.
+    * A visitor for a choice with two options. When passed to
+    * {@link OfTwo#visit(Choice.VisitorOfTwo)}, one of the {@code visit*} methods will be invoked,
+    * depending on which option is present.
     *
     * @param <A> the type of the choice's first option
     * @param <B> the type of the choice's second option
@@ -323,8 +324,9 @@ public interface Choice<A, B> {
    }
    
    /**
-    * A visitor for a choice with three options. When passed to {@link OfThree#visit(VisitorOfThree)},
-    * one of the {@code visit*} methods will be invoked, depending on which option is present.
+    * A visitor for a choice with three options. When passed to
+    * {@link OfThree#visit(Choice.VisitorOfThree)}, one of the {@code visit*} methods will be
+    * invoked, depending on which option is present.
     *
     * @param <A> the type of the choice's first option
     * @param <B> the type of the choice's second option
@@ -344,8 +346,9 @@ public interface Choice<A, B> {
    }
 
    /**
-    * A visitor for a choice with four options. When passed to {@link OfFour#visit(VisitorOfFour)},
-    * one of the {@code visit*} methods will be invoked, depending on which option is present.
+    * A visitor for a choice with four options. When passed to
+    * {@link OfFour#visit(Choice.VisitorOfFour)}, one of the {@code visit*} methods will be invoked,
+    * depending on which option is present.
     *
     * @param <A> the type of the choice's first option
     * @param <B> the type of the choice's second option
@@ -366,8 +369,9 @@ public interface Choice<A, B> {
    }
 
    /**
-    * A visitor for a choice with five options. When passed to {@link OfFive#visit(VisitorOfFive)},
-    * one of the {@code visit*} methods will be invoked, depending on which option is present.
+    * A visitor for a choice with five options. When passed to
+    * {@link OfFive#visit(Choice.VisitorOfFive)}, one of the {@code visit*} methods will be invoked,
+    * depending on which option is present.
     *
     * @param <A> the type of the choice's first option
     * @param <B> the type of the choice's second option

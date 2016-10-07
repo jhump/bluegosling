@@ -85,6 +85,8 @@ public interface MapBuilder<K, V, M extends Map<K, V>, B extends MapBuilder<K, V
     * Returns a map builder that constructs unmodifiable maps. Iteration order of the returned map
     * is deterministic and is the same order as elements are added to the builder.
     *
+    * @param <K> the type of keys in the map
+    * @param <V> the type of values in the map
     * @return a map builder that builds unmodifiable maps
     */
    static <K, V> MapBuilder<K, V, ?, ?> forUnmodifiableMap() {
@@ -95,6 +97,9 @@ public interface MapBuilder<K, V, M extends Map<K, V>, B extends MapBuilder<K, V
     * Returns a map builder that constructs unmodifiable maps. The underlying map is built using
     * the given builder and then wrapped via {@link Collections#unmodifiableMap(Map)}.
     *
+    * @param <K> the type of keys in the map
+    * @param <V> the type of values in the map
+    * @param base the builder of the underlying (modifiable) map implementation
     * @return a map builder that builds unmodifiable maps
     */
    static <K, V> MapBuilder<K, V, ?, ?> forUnmodifiableMap(MapBuilder<K, V, ?, ?> base) {
@@ -127,6 +132,8 @@ public interface MapBuilder<K, V, M extends Map<K, V>, B extends MapBuilder<K, V
    /**
     * Returns a map builder that constructs {@link HashMap} instances.
     *
+    * @param <K> the type of keys in the map
+    * @param <V> the type of values in the map
     * @return a map builder that constructs {@link HashMap} instances
     */
    static <K, V> MapBuilder<K, V, HashMap<K, V>, ?> forHashMap() {
@@ -137,6 +144,8 @@ public interface MapBuilder<K, V, M extends Map<K, V>, B extends MapBuilder<K, V
     * Returns a map builder that constructs {@link LinkedHashMap} instances. Iteration order of the
     * built map is the same as the order that elements are added to the builder.
     *
+    * @param <K> the type of keys in the map
+    * @param <V> the type of values in the map
     * @return a map builder that constructs {@link LinkedHashMap} instances
     */
    static <K, V> MapBuilder<K, V, LinkedHashMap<K, V>, ?> forLinkedHashMap() {
@@ -146,6 +155,8 @@ public interface MapBuilder<K, V, M extends Map<K, V>, B extends MapBuilder<K, V
    /**
     * Returns a map builder that constructs {@link TreeMap} instances.
     *
+    * @param <K> the type of keys in the map
+    * @param <V> the type of values in the map
     * @return a map builder that constructs {@link TreeMap} instances
     */
    static <K extends Comparable<K>, V> MapBuilder<K, V, TreeMap<K, V>, ?> forTreeMap() {
@@ -156,6 +167,8 @@ public interface MapBuilder<K, V, M extends Map<K, V>, B extends MapBuilder<K, V
     * Returns a map builder that constructs {@link TreeMap} instances that orders elements per the
     * given comparator.
     *
+    * @param <K> the type of keys in the map
+    * @param <V> the type of values in the map
     * @return a map builder that constructs {@link TreeMap} instances
     */
    static <K, V> MapBuilder<K, V, TreeMap<K, V>, ?> forTreeMap(Comparator<? super K> comparator) {
@@ -165,6 +178,8 @@ public interface MapBuilder<K, V, M extends Map<K, V>, B extends MapBuilder<K, V
    /**
     * Returns a map builder that constructs {@link HamtMap} instances.
     *
+    * @param <K> the type of keys in the map
+    * @param <V> the type of values in the map
     * @return a map builder that constructs {@link HamtMap} instances
     */
    static <K, V> MapBuilder<K, V, HamtMap<K, V>, ?> forHamtMap() {
@@ -174,6 +189,8 @@ public interface MapBuilder<K, V, M extends Map<K, V>, B extends MapBuilder<K, V
    /**
     * Returns a map builder that constructs {@link LinearHashingMap} instances.
     *
+    * @param <K> the type of keys in the map
+    * @param <V> the type of values in the map
     * @return a map builder that constructs {@link LinearHashingMap} instances
     */
    static <K, V> MapBuilder<K, V, LinearHashingMap<K, V>, ?> forLinearHashingMap() {
@@ -183,6 +200,8 @@ public interface MapBuilder<K, V, M extends Map<K, V>, B extends MapBuilder<K, V
    /**
     * Returns a map builder that constructs {@link ConcurrentHashMap} instances.
     *
+    * @param <K> the type of keys in the map
+    * @param <V> the type of values in the map
     * @return a map builder that constructs {@link ConcurrentHashMap} instances
     */
    static <K, V> MapBuilder<K, V, ConcurrentHashMap<K, V>, ?> forConcurrentHashMap() {
@@ -192,6 +211,8 @@ public interface MapBuilder<K, V, M extends Map<K, V>, B extends MapBuilder<K, V
    /**
     * Returns a map builder that constructs {@link ConcurrentSkipListMap} instances.
     *
+    * @param <K> the type of keys in the map
+    * @param <V> the type of values in the map
     * @return a map builder that constructs {@link ConcurrentSkipListMap} instances
     */
    static <K extends Comparable<K>, V> MapBuilder<K, V, ConcurrentSkipListMap<K, V>, ?>
@@ -204,6 +225,8 @@ public interface MapBuilder<K, V, M extends Map<K, V>, B extends MapBuilder<K, V
     * Returns a map builder that constructs {@link ConcurrentSkipListMap} instances that orders
     * elements per the given comparator.
     *
+    * @param <K> the type of keys in the map
+    * @param <V> the type of values in the map
     * @return a map builder that constructs {@link ConcurrentSkipListMap} instances
     */
    static <K, V> MapBuilder<K, V, ConcurrentSkipListMap<K, V>, ?> forConcurrentSkipListMap(
@@ -217,6 +240,9 @@ public interface MapBuilder<K, V, M extends Map<K, V>, B extends MapBuilder<K, V
     * builder will throw {@link IllegalStateException} during a reset if the given supplier returns
     * a non-empty map.
     *
+    * @param <K> the type of keys in the map
+    * @param <V> the type of values in the map
+    * @param <M> the type of the built map
     * @param mapConstructor a supplier of a new, empty map
     * @return a map builder that constructs maps using the given supplier
     * @throws IllegalStateException if the given supplier returns a non-empty map the first time it

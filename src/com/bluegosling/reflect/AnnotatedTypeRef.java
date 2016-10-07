@@ -280,7 +280,7 @@ public abstract class AnnotatedTypeRef<T> implements AnnotatedElement {
     * type is not an array type then {@code null} is returned.
     *
     * @return the component type of this array type or {@code null} if this is not an array type
-    * @see Types#getComponentType(Type)
+    * @see AnnotatedTypes#getComponentType(AnnotatedType)
     */
    public AnnotatedTypeRef<?> getComponentTypeRef() {
       AnnotatedType componentType = AnnotatedTypes.getComponentType(type); 
@@ -325,7 +325,7 @@ public abstract class AnnotatedTypeRef<T> implements AnnotatedElement {
     * 
     * @return the current type's superclass or {@code null} if the current type has no superclass
     *         (like if it is {@code Object}, an interface, a primitive, or {@code void})
-    * @see Types#getGenericSuperclass(Type)
+    * @see AnnotatedTypes#getAnnotatedSuperclass(AnnotatedType)
     */
    public AnnotatedTypeRef<? super T> getSuperclassTypeRef() {
       AnnotatedType superClass = AnnotatedTypes.getAnnotatedSuperclass(type);
@@ -347,7 +347,7 @@ public abstract class AnnotatedTypeRef<T> implements AnnotatedElement {
     * 
     * @return the current type's interfaces or an empty list if the current type does not directly
     *         implement any interfaces
-    * @see Types#getGenericInterfaces(Type)
+    * @see AnnotatedTypes#getAnnotatedInterfaces(AnnotatedType)
     */
    public List<AnnotatedTypeRef<? super T>> getInterfaceTypeRefs() {
       AnnotatedType ifaces[] = AnnotatedTypes.getAnnotatedInterfaces(type);
@@ -360,15 +360,12 @@ public abstract class AnnotatedTypeRef<T> implements AnnotatedElement {
     * Returns a supertype of the current type, as a {@code TypeRef}. This could be an ancestor
     * class of the current type or an interface implemented by the current type.
     * 
-    * <p>Limitations on the expressiveness of method type variables prevent a more precise return
-    * type. Consider instead using the static version, {@link #resolveSupertypeRef(TypeRef, Class)}. 
-    * 
     * @param superclass the supertype
     * @return a {@code TypeRef} representation of the specified supertype
     * @throws NullPointerException if the specified type is {@code null}
     * @throws IllegalArgumentException if the specified type is not actually a supertype of the
     *       current type
-    * @see Types#resolveSupertype(Type, Class)
+    * @see AnnotatedTypes#resolveSupertype(AnnotatedType, Class)
     */
    public AnnotatedTypeRef<? super T> resolveSupertypeRef(Class<?> superclass) {
       AnnotatedType supertype = AnnotatedTypes.resolveSupertype(type, superclass);
@@ -384,7 +381,7 @@ public abstract class AnnotatedTypeRef<T> implements AnnotatedElement {
     * 
     * @param ref a {@code TypeRef}
     * @return true if this represents a subtype of the given type
-    * @see Types#isSubtype(Type, Type)
+    * @see AnnotatedTypes#isSubtype(AnnotatedType, AnnotatedType, TypeAnnotationChecker)
     */
    public boolean isSubtypeOf(AnnotatedTypeRef<?> ref, TypeAnnotationChecker checker) {
       return AnnotatedTypes.isSubtype(this.type, ref.type, checker);
@@ -402,7 +399,7 @@ public abstract class AnnotatedTypeRef<T> implements AnnotatedElement {
     * 
     * @param ref a {@code TypeRef}
     * @return true if this type is assignable from the given type
-    * @see Types#isAssignableStrict(Type, Type)
+    * @see AnnotatedTypes#isAssignableStrict(AnnotatedType, AnnotatedType, TypeAnnotationChecker)
     */
    public boolean isAssignableStrictFrom(AnnotatedTypeRef<?> ref, TypeAnnotationChecker checker) {
       return AnnotatedTypes.isAssignableStrict(ref.type, this.type, checker);
@@ -433,7 +430,7 @@ public abstract class AnnotatedTypeRef<T> implements AnnotatedElement {
     * Compares this object to another. This object is equal to another object if they are both
     * {@link TypeRef}s and represent the same types.
     * 
-    * @see Types#equals(Object) 
+    * @see AnnotatedTypes#equals(AnnotatedType, AnnotatedType) 
     */
    @Override
    public boolean equals(Object other) {
