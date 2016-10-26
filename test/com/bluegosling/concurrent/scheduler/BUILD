@@ -1,7 +1,7 @@
 # Generated BUILD file for test/com/bluegosling/concurrent/scheduler
 java_tests(name='scheduler',
   sources=globs('*.java'),
-  dependencies=['test/com/bluegosling/concurrent/fluent',
-      'src/com/bluegosling/time',
+  dependencies=['3rdparty:junit',
       'src/com/bluegosling/concurrent/scheduler',
-      '3rdparty:junit'])
+      'src/com/bluegosling/time',
+      'test/com/bluegosling/concurrent/fluent'])
