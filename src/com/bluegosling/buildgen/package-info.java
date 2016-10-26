@@ -3,6 +3,6 @@
  * {@code BUILD} files based on those dependencies.
  * 
  * @see com.bluegosling.buildgen.BuildGen
- * @see com.bluegosling.buildgen.SourceDependencyAnalysis.Analyzer
+ * @see com.bluegosling.buildgen.SourceDependencyAnalyzer
  */
 package com.bluegosling.buildgen;
