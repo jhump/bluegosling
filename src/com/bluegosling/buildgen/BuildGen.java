@@ -10,13 +10,13 @@ import java.util.Collections;
 import java.util.Formatter;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import com.bluegosling.buildgen.SourceDependencyAnalysis.Analyzer;
@@ -75,7 +75,7 @@ public class BuildGen {
       }
       Model model = new Model(searchPaths);
       for (PackageDirectory dir : analysis.getPackages()) {
-         Set<String> deps = new LinkedHashSet<>();
+         Set<String> deps = new TreeSet<>();
          for (PackageDirectory dep : analysis.getPackageDependencies(dir)) {
             if (dep.equals(dir)) {
                continue;
@@ -298,8 +298,8 @@ public class BuildGen {
                writeTarget(fmt, "lib", TargetType.JAVA_LIBRARY);
                fmt.format("\n"
                      + "jvm_binary(name='%s',\n"
-                     + "  dependencies=[':lib'],"
-                     + "  main='%s')",
+                     + "  dependencies=[':lib'],\n"
+                     + "  main='%s')\n",
                      path.getName(),
                      mainClass);
             } else {
@@ -312,7 +312,7 @@ public class BuildGen {
          fmt.format("# Generated BUILD file for %s\n"
                + "%s(name='%s',\n"
                + "  sources=globs('*.java'),\n"
-               + "  dependencies=[%s])",
+               + "  dependencies=[%s])\n",
                path,
                type.name().toLowerCase(),
                targetName,

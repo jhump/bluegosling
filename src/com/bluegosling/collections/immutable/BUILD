@@ -1,8 +1,8 @@
 # Generated BUILD file for src/com/bluegosling/collections/immutable
 java_library(name='immutable',
   sources=globs('*.java'),
-  dependencies=['src/com/bluegosling/collections',
-      'src/com/bluegosling/vars',
+  dependencies=['3rdparty:guava',
+      '3rdparty:jsr305',
+      'src/com/bluegosling/collections',
       'src/com/bluegosling/collections/maps',
-      '3rdparty:guava',
-      '3rdparty:jsr305'])
+      'src/com/bluegosling/vars'])

@@ -1,10 +1,10 @@
 # Generated BUILD file for test/com/bluegosling/collections/concurrent
 java_tests(name='concurrent',
   sources=globs('*.java'),
-  dependencies=['test/com/bluegosling/collections',
+  dependencies=['3rdparty:commons-collections-testframework',
+      '3rdparty:junit',
       'src/com/bluegosling/collections',
       'src/com/bluegosling/collections/concurrent',
-      'test/com/bluegosling/testing',
       'src/com/bluegosling/collections/immutable',
-      '3rdparty:junit',
-      '3rdparty:commons-collections-testframework'])
+      'test/com/bluegosling/collections',
+      'test/com/bluegosling/testing'])
