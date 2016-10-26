@@ -1,9 +1,11 @@
 package com.bluegosling.apt.testing;
 
-import com.bluegosling.util.IoStreams;
+import com.google.common.io.ByteStreams;
+import com.google.common.io.CharStreams;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -196,14 +198,14 @@ public class TestEnvironment {
       }
       try {
          if (binary) {
-            byte genBytes[] = IoStreams.toByteArray(in);
+            byte genBytes[] = ByteStreams.toByteArray(in);
             byte goldenBytes[];
             if (file instanceof TestJavaFileObject) {
                goldenBytes = ((TestJavaFileObject) file).getByteContents();
             } else {
                InputStream goldenIn = file.openInputStream();
                try {
-                  goldenBytes = IoStreams.toByteArray(goldenIn);
+                  goldenBytes = ByteStreams.toByteArray(goldenIn);
                } finally {
                   goldenIn.close();
                }
@@ -215,7 +217,8 @@ public class TestEnvironment {
          } else {
             org.junit.Assert.assertEquals("Output " + file.getName()
                   + " does not match contents of resource " + resourcePath,
-                  IoStreams.toString(in, TestJavaFileObject.DEFAULT_CHARSET), 
+                  CharStreams.toString(
+                        new InputStreamReader(in, TestJavaFileObject.DEFAULT_CHARSET)), 
                   file.getCharContent(true));
          }
       } finally {

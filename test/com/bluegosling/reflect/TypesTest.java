@@ -21,7 +21,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
-import com.bluegosling.collections.AssociativeArrayList;
+import com.bluegosling.collections.lists.AssociativeArrayList;
 import com.bluegosling.reflect.TypeTesting.Dummy;
 import com.bluegosling.reflect.TypeTesting.InvalidType;
 

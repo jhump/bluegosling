@@ -1,7 +1,5 @@
 package com.bluegosling.function;
 
-import com.bluegosling.reflect.ArrayUtils;
-
 import java.lang.reflect.Array;
 import java.util.AbstractList;
 import java.util.List;
@@ -54,7 +52,7 @@ public final class Operators {
       return (a1, a2) -> {
          int a1len = Array.getLength(a1);
          int a2len = Array.getLength(a2);
-         Object result = ArrayUtils.newInstance(elementType, a1len + a2len);
+         Object result = Array.newInstance(elementType, a1len + a2len);
          System.arraycopy(a1, 0, result, 0, a1len);
          System.arraycopy(a2, 0, result, a1len, a2len);
          return result;

@@ -1,11 +1,11 @@
 package com.bluegosling.concurrent.contended;
 
-import com.bluegosling.util.IsDerivedFrom;
-
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
 import java.util.function.IntBinaryOperator;
 import java.util.function.IntUnaryOperator;
+
+import com.bluegosling.util.IsDerivedFrom;
 
 
 /**

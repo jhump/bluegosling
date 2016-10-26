@@ -1,7 +1,5 @@
 package com.bluegosling.function;
 
-import com.bluegosling.possible.Optionals;
-
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
@@ -57,7 +55,7 @@ public interface PartialTriFunction<T, U, V, R> extends TriFunction<T, U, V, Opt
        Objects.requireNonNull(after);
        return (T t, U u, V v) -> {
           Optional<R> r = apply(t, u, v);
-          return r.isPresent() ? Optionals.upcast(after.apply(r.get())) : Optional.empty();
+          return r.isPresent() ? PartialFunctions.cast(after.apply(r.get())) : Optional.empty();
        };
    }
 }

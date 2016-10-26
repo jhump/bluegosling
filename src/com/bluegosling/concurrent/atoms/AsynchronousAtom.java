@@ -2,15 +2,14 @@ package com.bluegosling.concurrent.atoms;
 
 import static com.bluegosling.concurrent.ThreadFactories.newGroupingDaemonThreadFactory;
 
-import com.bluegosling.concurrent.FutureListener;
-import com.bluegosling.concurrent.FutureVisitor;
 import com.bluegosling.concurrent.executors.ActorThreadPool;
 import com.bluegosling.concurrent.executors.SerializingExecutor;
 import com.bluegosling.concurrent.fluent.FluentFuture;
 import com.bluegosling.concurrent.fluent.FluentFutureTask;
+import com.bluegosling.concurrent.fluent.FutureListener;
+import com.bluegosling.concurrent.fluent.FutureVisitor;
 import com.bluegosling.concurrent.fluent.RunnableFluentFuture;
 import com.bluegosling.function.TriFunction;
-import com.bluegosling.possible.Reference;
 
 import java.util.LinkedList;
 import java.util.concurrent.Callable;
@@ -251,7 +250,7 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
     *       actually blocked
     */
    public boolean restart() {
-      return restart(Reference.<T>unset(), false);
+      return restart(null, false, false);
    }
    
    /**
@@ -268,7 +267,7 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
     *       current validator
     */
    public boolean restart(T newSeed, boolean cancelPending) {
-      return restart(Reference.setTo(newSeed), cancelPending);
+      return restart(newSeed, true, cancelPending);
    }
    
    /**
@@ -281,9 +280,9 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
     * @return true if the atom was restarted or false if it was not because the atom wasn't
     *       actually blocked
     */
-   private boolean restart(final Reference<T> newSeed, final boolean cancelPending) {
-      if (newSeed.isPresent()) {
-         validate(newSeed.get());
+   private boolean restart(T newSeed, boolean seedPresent, boolean cancelPending) {
+      if (seedPresent) {
+         validate(newSeed);
       }
       AtomicBoolean success = new AtomicBoolean();
       CountDownLatch latch = new CountDownLatch(1);
@@ -292,8 +291,8 @@ public class AsynchronousAtom<T> extends AbstractAtom<T> {
          latch.countDown();
          if (blocked) {
             blocked = false;
-            if (newSeed.isPresent()) {
-               seedValue = value = newSeed.get();
+            if (seedPresent) {
+               seedValue = value = newSeed;
             } else {
                value = seedValue;
             }

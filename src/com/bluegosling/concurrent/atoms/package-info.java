@@ -1,8 +1,8 @@
 /**
  * A set of classes for managing mutable thread-safe references. These are similar in many ways to
  * an {@link java.util.concurrent.atomic.AtomicReference}, but an {@link
- * com.bluegosling.concurrent.atoms.Atom Atom} includes some additional APIs for atomic operations and
- * allows for some asynchronous processing in the form of "watchers".
+ * com.bluegosling.concurrent.atoms.Atom Atom} includes some additional APIs for atomic operations
+ * and allows for some asynchronous processing in the form of "watchers".
  * 
  * <p>Another key difference is that this package provides a variety of implementations regarding
  * how a reference value is mutated:

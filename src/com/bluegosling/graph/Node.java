@@ -17,7 +17,7 @@ import com.bluegosling.graph.NodeOperations.Operation7;
 import com.bluegosling.graph.NodeOperations.Operation8;
 import com.bluegosling.graph.NodeOperations.Operation9;
 import com.bluegosling.reflect.TypeRef;
-import com.bluegosling.util.Result;
+import com.bluegosling.result.Result;
 
 import java.util.Arrays;
 import java.util.Collections;

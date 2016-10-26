@@ -3,9 +3,9 @@ package com.bluegosling.reflect;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import com.bluegosling.collections.MapBuilder;
-
 import org.junit.Test;
+
+import com.bluegosling.collections.maps.MapBuilder;
 
 import java.lang.annotation.Annotation;
 import java.lang.annotation.Retention;

@@ -1,14 +1,13 @@
 package com.bluegosling.collections.tries;
 
-import com.bluegosling.collections.BitConverter;
-import com.bluegosling.collections.BitSequence;
-import com.bluegosling.collections.BitSequences;
-import com.bluegosling.collections.BitSequence.BitOrder;
-
 import java.text.Collator;
 import java.util.Comparator;
 import java.util.Locale;
 import java.util.Map;
+
+import com.bluegosling.collections.bits.BitSequence;
+import com.bluegosling.collections.bits.BitSequences;
+import com.bluegosling.collections.bits.BitSequence.BitOrder;
 
 //TODO: javadoc
 //TODO: serialization and cloning

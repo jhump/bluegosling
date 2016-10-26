@@ -12,7 +12,7 @@ import java.util.NoSuchElementException;
  * methods (for readability in specific use cases), so this base class implements them to delegate
  * to the appropriate method.
  * 
- * <p>Sub-classes need only operate the handful of core operations without the boiler-plate of
+ * <p>Sub-classes need only provide the handful of core operations without the boiler-plate of
  * implementing these other alias methods.
  *
  * @param <E> the type of element stored in the deque

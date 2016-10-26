@@ -4,6 +4,7 @@ import com.bluegosling.concurrent.fluent.FluentExecutors.FluentExecutorServiceWr
 import com.bluegosling.concurrent.fluent.FluentExecutors.FluentScheduledExecutorServiceSchedulingWrapper;
 import com.bluegosling.concurrent.fluent.FluentExecutors.FluentScheduledExecutorServiceWrapper;
 import com.bluegosling.concurrent.fluent.FluentExecutors.SameThreadExecutorService;
+import com.google.common.util.concurrent.ListeningExecutorService;
 
 import java.util.Collection;
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public interface FluentExecutorService extends ExecutorService {
+public interface FluentExecutorService extends ListeningExecutorService {
    /**
     * {@inheritDoc}
     * 

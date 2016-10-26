@@ -1,6 +1,6 @@
 package com.bluegosling.collections.tables;
 
-import com.bluegosling.collections.views.FilteringIterator;
+import com.bluegosling.collections.FilteringIterator;
 import com.google.common.collect.Iterators;
 
 import java.util.AbstractCollection;

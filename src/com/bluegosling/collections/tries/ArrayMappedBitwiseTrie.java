@@ -2,7 +2,6 @@ package com.bluegosling.collections.tries;
 
 import static com.bluegosling.collections.tries.SimpleBitwiseTrie.COMPONENT_COMPARATOR;
 
-import com.bluegosling.collections.BitConverter;
 import com.bluegosling.collections.CollectionUtils;
 import com.bluegosling.collections.tries.SimpleBitwiseTrie.WrappedComparator;
 

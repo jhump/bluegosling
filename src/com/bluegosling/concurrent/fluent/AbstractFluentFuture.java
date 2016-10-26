@@ -1,8 +1,6 @@
 package com.bluegosling.concurrent.fluent;
 
 import com.bluegosling.concurrent.AbstractQueuedReferenceSynchronizer;
-import com.bluegosling.concurrent.FutureListener;
-import com.bluegosling.concurrent.FutureVisitor;
 
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.CompletionException;

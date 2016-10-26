@@ -1,11 +1,11 @@
 package com.bluegosling.collections.tables;
 
+import com.bluegosling.collections.TransformingIterator;
+import com.bluegosling.collections.TransformingMap;
 import com.bluegosling.collections.tables.Table2D.Cell2D;
 import com.bluegosling.collections.tables.Table3D.Cell3D;
 import com.bluegosling.collections.tables.Table4D.Cell4D;
 import com.bluegosling.collections.tables.Table5D.Cell5D;
-import com.bluegosling.collections.views.TransformingIterator;
-import com.bluegosling.collections.views.TransformingMap;
 
 import java.util.AbstractMap;
 import java.util.Collection;

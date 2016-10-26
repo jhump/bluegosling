@@ -20,10 +20,11 @@ public final class ArrayUtils {
    }
 
    /**
-    * Insert an item into an array, shifting elements around if necessary. If
-    * the array is not large enough to fit another element, a larger array will
-    * be allocated and its contents will be populated. The array with the new
-    * element will be returned, be that the original object or a new, larger one.
+    * Insert an item into an array, shifting elements around if necessary. If the array is not large
+    * enough to fit another element, a larger array will be allocated and its contents will be
+    * populated. The array with the new element will be returned, be that the original object or a
+    * new, larger one. If a larger array is created, it is grown by 50% of the given array's size,
+    * just like as performed by {@link #maybeGrowBy(Object[], int, int)}.
     *
     * @param element the element to insert into the array
     * @param index the index at which the specified item will be inserted
@@ -88,7 +89,10 @@ public final class ArrayUtils {
    }
 
    /**
-    * Returns the specified array if it has sufficient capacity or a new larger array otherwise.
+    * Returns the specified array if it has sufficient capacity or a new larger array otherwise. If
+    * a larger array is created and returned, it will have all {@code null} values. In other words,
+    * no copying is performed from the given array to the new array in the case that a new array is
+    * created.
     * 
     * @param array the array
     * @param requiredCapacity the required capacity
@@ -114,7 +118,8 @@ public final class ArrayUtils {
     * @param extraCapacityNeeded the number of additional items for which room in the array is
     *       needed, above and beyond its used size
     * @return the specified array if it already has sufficient capacity or a new, larger array
-    *       that is initialized with the same elements (from index 0 to index {@code actualSize - 1})
+    *       that is initialized with the same elements (from index 0 to index
+    *       {@code actualSize - 1})
     */
    public static <T> T[] maybeGrowBy(T[] array, int actualSize, int extraCapacityNeeded) {
       int totalCapacity = array.length;

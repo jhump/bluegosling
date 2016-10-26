@@ -6,7 +6,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import com.bluegosling.concurrent.executors.SameThreadExecutor;
+import com.bluegosling.concurrent.SameThreadExecutor;
 import com.bluegosling.concurrent.fluent.AbstractFluentFuture;
 import com.bluegosling.concurrent.fluent.FluentFuture;
 import com.bluegosling.concurrent.fluent.FluentFutures;

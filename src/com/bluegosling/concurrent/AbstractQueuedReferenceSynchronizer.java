@@ -1,7 +1,5 @@
 package com.bluegosling.concurrent;
 
-import com.bluegosling.util.IsDerivedFrom;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
@@ -13,6 +11,8 @@ import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.LockSupport;
+
+import com.bluegosling.util.IsDerivedFrom;
 
 /**
  * Provides a framework for implementing blocking locks and related synchronizer that rely on FIFO

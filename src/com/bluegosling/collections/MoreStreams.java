@@ -10,7 +10,6 @@ import java.util.function.BiFunction;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import com.bluegosling.collections.views.TransformingIterator;
 import com.bluegosling.function.TriFunction;
 
 /**

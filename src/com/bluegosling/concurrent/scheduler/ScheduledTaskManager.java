@@ -1,10 +1,11 @@
 package com.bluegosling.concurrent.scheduler;
 
-import com.bluegosling.collections.views.TransformingList;
-import com.bluegosling.concurrent.FutureListener;
+import com.bluegosling.collections.TransformingList;
 import com.bluegosling.concurrent.Scheduled;
 import com.bluegosling.concurrent.fluent.FluentFuture;
 import com.bluegosling.concurrent.fluent.FluentScheduledExecutorService;
+import com.bluegosling.concurrent.fluent.FutureListener;
+import com.bluegosling.concurrent.fluent.Rescheduler;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.ArrayList;

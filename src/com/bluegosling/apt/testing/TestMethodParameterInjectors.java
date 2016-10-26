@@ -1,6 +1,6 @@
 package com.bluegosling.apt.testing;
 
-import com.bluegosling.collections.views.TransformingSet;
+import com.bluegosling.collections.TransformingSet;
 import com.bluegosling.reflect.TypeRef;
 
 import java.lang.reflect.Method;

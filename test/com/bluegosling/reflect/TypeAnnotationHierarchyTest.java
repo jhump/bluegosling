@@ -12,9 +12,9 @@ import static java.util.Collections.emptyMap;
 import static java.util.Collections.singleton;
 import static java.util.Collections.singletonMap;
 
-import com.bluegosling.collections.MapBuilder;
-
 import org.junit.Test;
+
+import com.bluegosling.collections.maps.MapBuilder;
 
 import java.lang.annotation.Annotation;
 import java.util.Arrays;

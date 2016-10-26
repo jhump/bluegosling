@@ -1,8 +1,5 @@
 package com.bluegosling.concurrent.fluent;
 
-import com.bluegosling.concurrent.FutureListener;
-import com.bluegosling.concurrent.scheduler.Rescheduler;
-
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicInteger;

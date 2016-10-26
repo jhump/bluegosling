@@ -407,8 +407,10 @@ public final class CollectionUtils {
     * 
     * @param coll a collection of elements
     * @param array an array to populate
+    * @throws ArrayIndexOutOfBoundsException if the given collection has more elements than fit in
+    *       the given array
     */
-   static void copyToArray(Iterable<?> coll, Object[] array) {
+   public static void copyToArray(Iterable<?> coll, Object[] array) {
       int idx = 0;
       for (Object o : coll) {
          array[idx++] = o;

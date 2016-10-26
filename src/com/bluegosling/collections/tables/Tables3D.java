@@ -1,6 +1,9 @@
 package com.bluegosling.collections.tables;
 
 import com.bluegosling.collections.MoreIterators;
+import com.bluegosling.collections.TransformingIterator;
+import com.bluegosling.collections.TransformingMap;
+import com.bluegosling.collections.TransformingSet;
 import com.bluegosling.collections.tables.Table2D.Cell2D;
 import com.bluegosling.collections.tables.Tables.ImmutableCell2D;
 import com.bluegosling.collections.tables.Tables.MapWithoutPut;
@@ -16,9 +19,6 @@ import com.bluegosling.collections.tables.Tables2D.Table2DImpl;
 import com.bluegosling.collections.tables.Tables2D.TransformingTable2D;
 import com.bluegosling.collections.tables.Tables2D.UnmodifiableTable2D;
 import com.bluegosling.collections.tables.Tables4D.Table4DImpl;
-import com.bluegosling.collections.views.TransformingIterator;
-import com.bluegosling.collections.views.TransformingMap;
-import com.bluegosling.collections.views.TransformingSet;
 import com.google.common.collect.Iterators;
 
 import java.util.AbstractCollection;

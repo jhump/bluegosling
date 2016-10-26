@@ -1,7 +1,5 @@
 package com.bluegosling.vars;
 
-import com.bluegosling.concurrent.atoms.Atom;
-
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
@@ -10,13 +8,12 @@ import java.util.function.UnaryOperator;
 
 /**
  * A simple variable reference. This can be useful for simulating "out" parameters to a function or
- * for simulating non-final values being mutated from within an anonymous class or lambda. This is
- * lighter-weight than using a single element array as the container and provides an API that is
- * easier to read.
+ * for simulating non-final values being mutated from within an anonymous class or lambda. This
+ * makes for easier to read code than using a single element array as the container.
  * 
- * <p>In many respects, this is similar to an {@link Atom} except that it is <strong>not</strong>
- * thread-safe. If the variable is being accessed from multiple threads, use an {@link Atom} or an
- * {@link AtomicReference}.
+ * <p>Though its API is very similar to {@link AtomicReference}, this class is <em>not</em>
+ * thread-safe. If the variable is being accessed from multiple threads, consider using an
+ * {@link AtomicReference} instead.
  *
  * @param <T> the type value held by this variable
  * 

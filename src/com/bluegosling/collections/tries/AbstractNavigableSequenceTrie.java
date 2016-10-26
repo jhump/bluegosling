@@ -2,10 +2,9 @@ package com.bluegosling.collections.tries;
 
 import com.bluegosling.collections.AbstractNavigableMap;
 import com.bluegosling.collections.BoundType;
+import com.bluegosling.collections.DescendingSet;
 import com.bluegosling.collections.MapUtils;
 import com.bluegosling.collections.MoreIterables;
-import com.bluegosling.collections.views.DescendingSequenceTrie;
-import com.bluegosling.collections.views.DescendingSet;
 import com.bluegosling.possible.Reference;
 import com.google.common.collect.Iterables;
 

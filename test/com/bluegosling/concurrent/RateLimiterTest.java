@@ -1,8 +1,8 @@
 package com.bluegosling.concurrent;
 
-import com.bluegosling.util.Stopwatch;
-
 import org.junit.Test;
+
+import com.bluegosling.time.Stopwatch;
 
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;

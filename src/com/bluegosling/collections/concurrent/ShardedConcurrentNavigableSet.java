@@ -2,7 +2,7 @@
 package com.bluegosling.collections.concurrent;
 
 import com.bluegosling.collections.CollectionUtils;
-import com.bluegosling.collections.views.DescendingSet;
+import com.bluegosling.collections.DescendingSet;
 
 import java.util.Comparator;
 import java.util.Iterator;

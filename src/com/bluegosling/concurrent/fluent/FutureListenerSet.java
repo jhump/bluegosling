@@ -1,7 +1,5 @@
 package com.bluegosling.concurrent.fluent;
 
-import com.bluegosling.concurrent.FutureListener;
-
 import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicMarkableReference;
 

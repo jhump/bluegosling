@@ -2,7 +2,9 @@ package com.bluegosling.collections;
 
 import static org.junit.Assert.assertEquals;
 
-import com.bluegosling.collections.BitSequence.BitOrder;
+import com.bluegosling.collections.bits.BitSequence;
+import com.bluegosling.collections.bits.BitSequences;
+import com.bluegosling.collections.bits.BitSequence.BitOrder;
 import com.bluegosling.collections.primitive.BooleanIterator;
 
 import org.junit.Test;

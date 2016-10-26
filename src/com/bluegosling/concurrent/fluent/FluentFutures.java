@@ -1,16 +1,17 @@
 package com.bluegosling.concurrent.fluent;
 
-import static com.bluegosling.concurrent.FutureTuples.asPair;
+import static com.bluegosling.concurrent.extras.FutureTuples.asPair;
 import static com.bluegosling.concurrent.fluent.FluentFuture.cast;
 import static com.bluegosling.concurrent.fluent.FluentFuture.makeFluent;
 
 import com.bluegosling.collections.MoreIterables;
-import com.bluegosling.concurrent.FutureListener;
-import com.bluegosling.concurrent.FutureVisitor;
-import com.bluegosling.concurrent.executors.SameThreadExecutor;
+import com.bluegosling.concurrent.SameThreadExecutor;
 import com.bluegosling.concurrent.futures.CompletionStageFuture;
 import com.bluegosling.tuples.Pair;
 import com.google.common.collect.Iterables;
+import com.google.common.util.concurrent.ListenableFuture;
+import com.google.common.util.concurrent.ListenableScheduledFuture;
+import com.google.common.util.concurrent.Uninterruptibles;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -149,6 +150,174 @@ final class FluentFutures {
       ArrayList<T> ret = new ArrayList<T>(MoreIterables.trySize(values).orElse(16));
       Iterables.addAll(ret, values);
       return Collections.unmodifiableList(ret);
+   }
+   
+   /**
+    * A fluent future that wraps a listenable one. This can implement all abstract methods in terms
+    * of {@link ListenableFuture} by delegation.
+    *
+    * @param <T> the type of the future value
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   static class FluentListenableFutureWrapper<T> implements FluentFuture<T> {
+      final ListenableFuture<T> future;
+      
+      FluentListenableFutureWrapper(ListenableFuture<T> future) {
+         this.future = future;
+      }
+
+      @Override
+      public void addListener(Runnable listener, Executor executor) {
+         future.addListener(listener, executor);
+      }
+
+      @Override
+      public boolean cancel(boolean mayInterruptIfRunning) {
+         return future.cancel(mayInterruptIfRunning);
+      }
+
+      @Override
+      public boolean isCancelled() {
+         return future.isCancelled();
+      }
+
+      @Override
+      public boolean isDone() {
+         return future.isDone();
+      }
+
+      @Override
+      public T get() throws InterruptedException, ExecutionException {
+         return future.get();
+      }
+
+      @Override
+      public T get(long timeout, TimeUnit unit)
+            throws InterruptedException, ExecutionException, TimeoutException {
+         return future.get(timeout, unit);
+      }
+
+      @Override
+      public void await() throws InterruptedException {
+         try {
+            get();
+         } catch (ExecutionException | CancellationException e) {
+            // ignored
+         }
+      }
+
+      @Override
+      public boolean await(long limit, TimeUnit unit) throws InterruptedException {
+         try {
+            get(limit, unit);
+            return true;
+         } catch (TimeoutException e) {
+            return false;
+         } catch (ExecutionException | CancellationException e) {
+            return true;
+         }
+      }
+
+      @Override
+      public boolean isSuccessful() {
+         if (!future.isDone() || future.isCancelled()) {
+            return false;
+         }
+         try {
+            Uninterruptibles.getUninterruptibly(future);
+            return true;
+         } catch (ExecutionException | CancellationException e) {
+            return false;
+         }
+      }
+
+      @Override
+      public T getResult() {
+         if (!future.isDone()) {
+            throw new IllegalStateException("future is not done");
+         }
+         try {
+            return Uninterruptibles.getUninterruptibly(future);
+         } catch (ExecutionException | CancellationException e) {
+            throw new IllegalStateException("future did not complete successfully");
+         }
+      }
+
+      @Override
+      public boolean isFailed() {
+         if (!future.isDone() || future.isCancelled()) {
+            return false;
+         }
+         try {
+            Uninterruptibles.getUninterruptibly(future);
+            return false;
+         } catch (CancellationException e) {
+            return false;
+         } catch (ExecutionException e) {
+            return true;
+         }
+      }
+
+      @Override
+      public Throwable getFailure() {
+         if (!future.isDone()) {
+            throw new IllegalStateException("future is not done");
+         }
+         try {
+            Uninterruptibles.getUninterruptibly(future);
+            throw new IllegalStateException("future completed successfully");
+         } catch (CancellationException e) {
+            throw new IllegalStateException("future was cancelled");
+         } catch (ExecutionException e) {
+            return e.getCause();
+         }
+      }
+
+      @Override
+      public void addListener(FutureListener<? super T> listener, Executor executor) {
+         addListener(() -> listener.onCompletion(this), executor);
+      }
+
+      @Override
+      public void visit(FutureVisitor<? super T> visitor) {
+         if (!future.isDone()) {
+            throw new IllegalStateException("future is not done");
+         }
+         try {
+            visitor.successful(Uninterruptibles.getUninterruptibly(future));
+         } catch (ExecutionException e) {
+            visitor.failed(e.getCause());
+         } catch (CancellationException e) {
+            visitor.cancelled();
+         }
+      }
+   }
+   
+   /**
+    * A fluent scheduled future that wraps a non-fluent one. This creates a new thread to
+    * block until the input future completes.
+    *
+    * @param <T> the type of the future value
+    * 
+    * @author Joshua Humphries (jhumphries131@gmail.com)
+    */
+   static class FluentListenableScheduledFutureWrapper<T> extends FluentListenableFutureWrapper<T>
+         implements FluentScheduledFuture<T> {
+      
+      FluentListenableScheduledFutureWrapper(ListenableScheduledFuture<T> future) {
+         super(future);
+      }
+      
+      @Override
+      public long getDelay(TimeUnit unit) {
+         return ((ListenableScheduledFuture<T>) future).getDelay(unit);
+      }
+
+      @Override
+      public int compareTo(Delayed o) {
+         return ((ListenableScheduledFuture<T>) future).compareTo(o);
+      }
    }
    
    /**

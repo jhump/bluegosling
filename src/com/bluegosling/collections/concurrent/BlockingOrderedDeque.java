@@ -3,7 +3,7 @@ package com.bluegosling.collections.concurrent;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-import com.bluegosling.collections.OrderedDeque;
+import com.bluegosling.collections.queues.OrderedDeque;
 
 public interface BlockingOrderedDeque<E> extends BlockingQueue<E>, OrderedDeque<E> {
    

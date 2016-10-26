@@ -1,7 +1,5 @@
 package com.bluegosling.possible;
 
-import com.bluegosling.possible.Fulfillables.FulfillableImpl;
-
 import java.util.Collections;
 import java.util.Set;
 import java.util.function.Consumer;

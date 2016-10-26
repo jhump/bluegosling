@@ -4,11 +4,9 @@ import static com.bluegosling.concurrent.fluent.FluentFuture.cancelledFuture;
 import static com.bluegosling.concurrent.fluent.FluentFuture.completedFuture;
 import static com.bluegosling.concurrent.fluent.FluentFuture.failedFuture;
 
-import com.bluegosling.collections.views.TransformingList;
-import com.bluegosling.concurrent.FutureListener;
+import com.bluegosling.collections.TransformingList;
+import com.bluegosling.concurrent.SameThreadExecutor;
 import com.bluegosling.concurrent.Scheduled;
-import com.bluegosling.concurrent.executors.SameThreadExecutor;
-import com.bluegosling.concurrent.scheduler.Rescheduler;
 
 import java.util.ArrayList;
 import java.util.Collection;

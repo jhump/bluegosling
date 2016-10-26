@@ -1,10 +1,7 @@
 package com.bluegosling.tuples;
 
-import com.bluegosling.collections.PriorityQueue;
-
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.Map;
 
 /**
  * Utility methods for creating and using {@link Tuple} instances.
@@ -68,28 +65,6 @@ public final class Tuples {
          System.arraycopy(array, startingAt, ret, 0, len);
       }
       return ret;
-   }
-
-   /**
-    * Converts a map entry into a pair of key and value.
-    *
-    * @param entry a map entry
-    * @return a pair of the entry's key and its value
-    * @throws NullPointerException if the given entry is {@code null}
-    */
-   public <K, V> Pair<K, V> fromEntry(Map.Entry<? extends K, ? extends V> entry) {
-      return Pair.<K, V>create(entry.getKey(), entry.getValue());
-   }
-
-   /**
-    * Converts a priority queue entry into a pair of element and priority.
-    *
-    * @param entry a priority queue entry
-    * @return a pair of the entry's element and priority
-    * @throws NullPointerException if the given entry is {@code null}
-    */
-   public <E, P> Pair<E, P> fromEntry(PriorityQueue.Entry<? extends E, ? extends P> entry) {
-      return Pair.<E, P>create(entry.getElement(), entry.getPriority());
    }
    
    // TODO: javadoc & tests

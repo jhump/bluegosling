@@ -21,9 +21,9 @@ import java.util.Map.Entry;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import com.bluegosling.collections.views.FilteringCollection;
-import com.bluegosling.collections.views.FilteringMap;
-import com.bluegosling.collections.views.TransformingMap;
+import com.bluegosling.collections.FilteringCollection;
+import com.bluegosling.collections.FilteringMap;
+import com.bluegosling.collections.TransformingMap;
 import com.google.common.collect.Collections2;
 
 /**
