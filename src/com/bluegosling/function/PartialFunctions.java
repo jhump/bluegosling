@@ -1,7 +1,5 @@
 package com.bluegosling.function;
 
-import com.bluegosling.possible.Optionals;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
@@ -30,7 +28,7 @@ public final class PartialFunctions {
     */
    public static <I, O> PartialFunction<I, O> fromFunction(
          Function<? super I, Optional<? extends O>> function) {
-      return (o) -> Optionals.upcast(function.apply(o));
+      return (o) -> cast(function.apply(o));
    }
    
    /**
@@ -41,7 +39,7 @@ public final class PartialFunctions {
     */
    public static <I1, I2, O> PartialBiFunction<I1, I2, O> fromFunction(
          BiFunction<? super I1, ? super I2, Optional<? extends O>> function) {
-      return (o1, o2) -> Optionals.upcast(function.apply(o1, o2));
+      return (o1, o2) -> cast(function.apply(o1, o2));
    }
 
    /**
@@ -53,7 +51,7 @@ public final class PartialFunctions {
     */
    public static <I1, I2, I3, O> PartialTriFunction<I1, I2, I3, O> fromFunction(
          TriFunction<? super I1, ? super I2, ? super I3, Optional<? extends O>> function) {
-      return (o1, o2, o3) -> Optionals.upcast(function.apply(o1, o2, o3));
+      return (o1, o2, o3) -> cast(function.apply(o1, o2, o3));
    }
 
    /**
@@ -87,7 +85,7 @@ public final class PartialFunctions {
          if (!result.isPresent()) {
             result = function2.apply(o);
          }
-         return Optionals.upcast(result);
+         return cast(result);
       };
    }
 
@@ -110,7 +108,7 @@ public final class PartialFunctions {
          if (!result.isPresent()) {
             result = function2.apply(o1, o2);
          }
-         return Optionals.upcast(result);
+         return cast(result);
       };
    }
 
@@ -133,7 +131,7 @@ public final class PartialFunctions {
          if (!result.isPresent()) {
             result = function2.apply(o1, o2, o3);
          }
-         return Optionals.upcast(result);
+         return cast(result);
       };
    }
    
@@ -405,33 +403,38 @@ public final class PartialFunctions {
    // TODO: javadoc
    public static <I, O> Supplier<Optional<O>> curry(
          PartialFunction<? super I, ? extends O> function, I arg) {
-      return () -> Optionals.upcast(function.apply(arg));
+      return () -> cast(function.apply(arg));
    }
 
    public static <I1, I2, O> Supplier<Optional<O>> curry(
          PartialBiFunction<? super I1, ? super I2, ? extends O> function, I1 arg1, I2 arg2) {
-      return () -> Optionals.upcast(function.apply(arg1, arg2));
+      return () -> cast(function.apply(arg1, arg2));
    }
 
    public static <I1, I2, O> PartialFunction<I2, O> curry(
          PartialBiFunction<? super I1, ? super I2, ? extends O> function, I1 arg1) {
-      return (arg2) -> Optionals.upcast(function.apply(arg1, arg2));
+      return (arg2) -> cast(function.apply(arg1, arg2));
    }
 
    public static <I1, I2, I3, O> Supplier<Optional<O>> curry(
          PartialTriFunction<? super I1, ? super I2, ? super I3, ? extends O> function,
          I1 arg1, I2 arg2, I3 arg3) {
-      return () -> Optionals.upcast(function.apply(arg1, arg2, arg3));
+      return () -> cast(function.apply(arg1, arg2, arg3));
    }
    
    public static <I1, I2, I3, O> PartialFunction<I3, O> curry(
          PartialTriFunction<? super I1, ? super I2, ? super I3, ? extends O> function,
          I1 arg1, I2 arg2) {
-      return (arg3) -> Optionals.upcast(function.apply(arg1, arg2, arg3));
+      return (arg3) -> cast(function.apply(arg1, arg2, arg3));
    }
    
    public static <I1, I2, I3, O> PartialBiFunction<I2, I3, O> curry(
          PartialTriFunction<? super I1, ? super I2, ? super I3, ? extends O> function, I1 arg1) {
-      return (arg2, arg3) -> Optionals.upcast(function.apply(arg1, arg2, arg3));
+      return (arg2, arg3) -> cast(function.apply(arg1, arg2, arg3));
+   }
+   
+   @SuppressWarnings("unchecked") // safe because optional is immutable
+   static <T, U extends T> Optional<T> cast(Optional<U> opt) {
+      return (Optional<T>) opt;
    }
 }

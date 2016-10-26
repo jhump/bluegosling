@@ -1,8 +1,9 @@
 package com.bluegosling.concurrent.fluent;
 
 import java.util.concurrent.Callable;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import com.google.common.util.concurrent.ListeningScheduledExecutorService;
 
 /**
  * A scheduled executor service that returns {@link FluentFuture}s.
@@ -10,7 +11,7 @@ import java.util.concurrent.TimeUnit;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
 public interface FluentScheduledExecutorService
-      extends FluentExecutorService, ScheduledExecutorService {
+      extends FluentExecutorService, ListeningScheduledExecutorService {
    /**
     * {@inheritDoc}
     * 

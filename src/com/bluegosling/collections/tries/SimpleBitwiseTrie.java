@@ -1,9 +1,8 @@
 package com.bluegosling.collections.tries;
 
-import com.bluegosling.collections.BitConverter;
-import com.bluegosling.collections.BitSequence;
-import com.bluegosling.collections.BitStream;
-import com.bluegosling.collections.BitSequence.BitOrder;
+import com.bluegosling.collections.bits.BitSequence;
+import com.bluegosling.collections.bits.BitStream;
+import com.bluegosling.collections.bits.BitSequence.BitOrder;
 import com.bluegosling.collections.primitive.BooleanIterator;
 
 import java.util.AbstractMap;

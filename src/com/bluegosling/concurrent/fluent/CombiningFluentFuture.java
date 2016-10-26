@@ -1,8 +1,5 @@
 package com.bluegosling.concurrent.fluent;
 
-import com.bluegosling.concurrent.FutureVisitor;
-import com.bluegosling.possible.Fulfillable;
-
 import java.util.Collection;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -69,11 +66,11 @@ public abstract class CombiningFluentFuture<T> extends AbstractFluentFuture<T> {
    }
    
    /**
-    * A visitor used in conjunction with {@link CombiningFluentFuture} to produce future values that are
-    * the results of combining other component futures. The general use pattern is that a visitor
-    * is created for each component future and added to that component as a listener. The underlying
-    * {@link Fulfillable} is fulfilled when the component calls the listener. The combined result
-    * is then computed from all of the fulfilled results.
+    * A visitor used in conjunction with {@link CombiningFluentFuture} to produce future values that
+    * are the results of combining other component futures. The general use pattern is that a
+    * visitor is created for each component future and added to that component as a listener. The
+    * future is {@linkplain CombiningFluentFuture#mark() marked} as each component future is
+    * visited.
     * 
     * <p>If a component future is cancelled or fails, this visitor will mark the combined result as
     * cancelled or failed also.

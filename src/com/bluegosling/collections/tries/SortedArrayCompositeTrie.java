@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Map;
 
-import com.bluegosling.collections.SortedArrayMap;
+import com.bluegosling.collections.maps.SortedArrayMap;
 
 //TODO: javadoc
 //TODO: don't forget serialization and cloning

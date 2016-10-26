@@ -2,6 +2,8 @@ package com.bluegosling.concurrent.fluent;
 
 import java.util.concurrent.ScheduledFuture;
 
+import com.google.common.util.concurrent.ListenableScheduledFuture;
+
 /**
  * A future that is both {@linkplain ScheduledFuture scheduled} and {@linkplain FluentFuture
  * fluent}.
@@ -10,5 +12,5 @@ import java.util.concurrent.ScheduledFuture;
  *
  * @param <T> the type of the future result
  */
-public interface FluentScheduledFuture<T> extends FluentFuture<T>, ScheduledFuture<T> {
+public interface FluentScheduledFuture<T> extends FluentFuture<T>, ListenableScheduledFuture<T> {
 }

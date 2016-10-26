@@ -1,8 +1,5 @@
 package com.bluegosling.concurrent.fluent;
 
-import com.bluegosling.concurrent.FutureListener;
-import com.bluegosling.concurrent.FutureVisitor;
-
 import java.util.concurrent.Callable;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;

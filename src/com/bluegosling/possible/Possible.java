@@ -1,9 +1,5 @@
 package com.bluegosling.possible;
 
-import com.bluegosling.concurrent.fluent.FluentFuture;
-import com.bluegosling.possible.Possibles.FuturePossible;
-import com.bluegosling.possible.Possibles.FluentFuturePossible;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -11,7 +7,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
-import java.util.concurrent.Future;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -150,11 +145,12 @@ public interface Possible<T> {
     */
    static <T> Possible<T> notNull(final Possible<T> possible) {
       if (possible instanceof Optionals.OptionalPossible) {
+         // This kind of possible wraps an Optional, which does not support null values
          return possible;
       }
       if (possible instanceof Reference) {
          // References are immutable, so this is easy.
-         return possible.isPresent() ? Optionals.ofNullable(possible.get()) : Optionals.empty();
+         return possible.isPresent() && possible.get() != null ? possible : Reference.unset();
       }
       // Given instance could be mutable, so we need to wrap it.
       return new AbstractDynamicPossible<T>() {
@@ -176,22 +172,6 @@ public interface Possible<T> {
             throw new NoSuchElementException();
          }
       };
-   }
-   
-   /**
-    * Returns a view of a future as a possible value. If the future is incomplete, has failed, or
-    * has been cancelled then the value is not present. If and when the future completes
-    * successfully, the value will become present. The actual value is the future's result.
-    * 
-    * @param future the future
-    * @return a view of the future as a {@link Possible}
-    */
-   static <T> Possible<T> fromFuture(Future<? extends T> future) {
-      if (future instanceof FluentFuture) {
-         return new FluentFuturePossible<T>((FluentFuture<? extends T>) future);
-      } else {
-         return new FuturePossible<T>(future);
-      }
    }
 
    /**

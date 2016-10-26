@@ -8,6 +8,8 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
+import com.bluegosling.concurrent.fluent.Rescheduler;
+
 /**
  * The definition for a task that will be executed by a {@link ScheduledTaskManager}.
  * This includes several configuration options that are not possible using a normal

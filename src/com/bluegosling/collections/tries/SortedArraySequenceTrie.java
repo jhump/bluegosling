@@ -1,11 +1,11 @@
 package com.bluegosling.collections.tries;
 
-import com.bluegosling.collections.SortedArrayMap;
-
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import com.bluegosling.collections.maps.SortedArrayMap;
 
 //TODO: javadoc
 //TODO: don't forget serialization and cloning

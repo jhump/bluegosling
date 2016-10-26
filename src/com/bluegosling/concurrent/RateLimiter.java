@@ -5,7 +5,6 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.Delayed;
-import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -13,10 +12,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
-import com.bluegosling.concurrent.fluent.FluentScheduledExecutorService;
-import com.bluegosling.concurrent.fluent.FluentScheduledFuture;
-import com.bluegosling.util.Clock;
-import com.bluegosling.util.SystemClock;
+import com.bluegosling.time.Clock;
+import com.bluegosling.time.SystemClock;
 import com.google.common.util.concurrent.ForwardingFuture;
 import com.google.common.util.concurrent.ForwardingListenableFuture;
 import com.google.common.util.concurrent.ListenableScheduledFuture;
@@ -398,9 +395,8 @@ public class RateLimiter {
     * <p>Note that if the returned future is cancelled before the task is called, the reserved
     * permit is {@linkplain #putBack(long) put back}.
     * 
-    * <p>If the given executor is a {@link FluentScheduledExecutorService} or a
-    * {@link ListeningScheduledExecutorService} then the returned future will actually implement
-    * {@link FluentScheduledFuture} or {@link ListenableScheduledFuture} respectively.
+    * <p>If the given executor is a {@link ListeningScheduledExecutorService} then the returned
+    * future will actually implement {@link ListenableScheduledFuture}.
     * 
     * @param task the task that is called
     * @param scheduler the executor used to schedule the task
@@ -418,9 +414,8 @@ public class RateLimiter {
     * <p>Note that if the returned future is cancelled before the task is called, the reserved
     * permits are {@linkplain #putBack(long) put back}.
     * 
-    * <p>If the given executor is a {@link FluentScheduledExecutorService} or a
-    * {@link ListeningScheduledExecutorService} then the returned future will actually implement
-    * {@link FluentScheduledFuture} or {@link ListenableScheduledFuture} respectively.
+    * <p>If the given executor is a {@link ListeningScheduledExecutorService} then the returned
+    * future will actually implement {@link ListenableScheduledFuture}.
     * 
     * @param permits the number of permits being acquired
     * @param task the task that is called
@@ -456,11 +451,8 @@ public class RateLimiter {
    
    /**
     * Wraps the given future with one that will automatically put back the given permits if
-    * cancelled before the scheduled task has started. The wrapper may implement a broader interface
-    * than just {@link ScheduledFuture}, based on what the given future implements. In particular,
-    * if the given future implements {@link FluentScheduledFuture}, so will the returned future.
-    * Or if it implements {@link ListenableScheduledFuture}, so will the returned future. And
-    * orthogonally, if it implements {@link Scheduled}, so will the returned future.
+    * cancelled before the scheduled task has started. If the given future implements
+    * {@link ListenableScheduledFuture} then so will the returned wrapper.
     * 
     * The returned future just delegates all method calls to the given future. But it will also
     * put back the given number of permits if the task is
@@ -474,28 +466,11 @@ public class RateLimiter {
     */
    private <T> ScheduledFuture<T> wrap(ScheduledFuture<T> future,
          AtomicReference<TaskState> taskState, long permits) {
-      if (future instanceof FluentScheduledFuture) {
-         if (future instanceof Scheduled) {
-            return new CancellingScheduledFluentFuture<>(
-                  (FluentScheduledFuture<T>) future, taskState, permits);
-         } else {
-            return new CancellingFluentFuture<>(
-                  (FluentScheduledFuture<T>) future, taskState, permits);
-         }
-      } else if (future instanceof ListenableScheduledFuture) {
-         if (future instanceof Scheduled) {
-            return new CancellingScheduledListenableFuture<>(
-                  (ListenableScheduledFuture<T>) future, taskState, permits);
-         } else {
-            return new CancellingListenableFuture<>(
-                  (ListenableScheduledFuture<T>) future, taskState, permits);
-         }
+      if (future instanceof ListenableScheduledFuture) {
+         return new CancellingListenableFuture<>(
+               (ListenableScheduledFuture<T>) future, taskState, permits);
       } else {
-         if (future instanceof Scheduled) {
-            return new CancellingScheduledFuture<>(future, taskState, permits);
-         } else {
-            return new CancellingFuture<>(future, taskState, permits);
-         }
+         return new CancellingFuture<>(future, taskState, permits);
       }
    }
 
@@ -507,9 +482,8 @@ public class RateLimiter {
     * <p>Note that if the returned future is cancelled before the task is run, the reserved permit
     * is {@linkplain #putBack(long) put back}.
     * 
-    * <p>If the given executor is a {@link FluentScheduledExecutorService} or a
-    * {@link ListeningScheduledExecutorService} then the returned future will actually implement
-    * {@link FluentScheduledFuture} or {@link ListenableScheduledFuture} respectively.
+    * <p>If the given executor is a {@link ListeningScheduledExecutorService} then the returned
+    * future will actually implement {@link ListenableScheduledFuture}.
     * 
     * @param task the task that is run
     * @param scheduler the executor used to schedule the task
@@ -527,9 +501,8 @@ public class RateLimiter {
     * <p>Note that if the returned future is cancelled before the task is run, the reserved permits
     * are {@linkplain #putBack(long) put back}.
     * 
-    * <p>If the given executor is a {@link FluentScheduledExecutorService} or a
-    * {@link ListeningScheduledExecutorService} then the returned future will actually implement
-    * {@link FluentScheduledFuture} or {@link ListenableScheduledFuture} respectively.
+    * <p>If the given executor is a {@link ListeningScheduledExecutorService} then the returned
+    * future will actually implement {@link ListenableScheduledFuture}.
     * 
     * @param permits the number of permits being acquired
     * @param task the task that is run
@@ -790,114 +763,6 @@ public class RateLimiter {
       double j = jtr * Math.pow(r.nextDouble() * 2 - 1, timePeriodSeconds);
       return rate * (1.0 + j);
    }
-   
-   /**
-    * A {@link FluentScheduledFuture} that returns permits if cancelled before the associated task
-    * starts.
-    * 
-    * @author Joshua Humphries (jhumphries131@gmail.com)
-    *
-    * @param <T> the type of future result
-    */
-   private class CancellingFluentFuture<T> extends ForwardingFuture<T>
-   implements FluentScheduledFuture<T> {
-      private final FluentScheduledFuture<T> delegate;
-      private final AtomicReference<TaskState> taskState;
-      private final long permits;
-      
-      CancellingFluentFuture(FluentScheduledFuture<T> delegate,
-            AtomicReference<TaskState> taskState, long permits) {
-         this.delegate = delegate;
-         this.taskState = taskState;
-         this.permits = permits;
-      }
-
-      @Override
-      protected FluentScheduledFuture<T> delegate() {
-         return delegate;
-      }
-      
-      @Override
-      public boolean cancel(boolean mayInterruptIfRunning) {
-         boolean ret = super.cancel(mayInterruptIfRunning);
-         if (ret && taskState.compareAndSet(TaskState.NOT_STARTED, TaskState.CANCELLED)) {
-            // CAS succeeded means task hasn't started
-            putBack(permits);
-         }
-         return ret;
-      }
-
-      @Override
-      public boolean isSuccessful() {
-         return delegate.isSuccessful();
-      }
-
-      @Override
-      public T getResult() {
-         return delegate.getResult();
-      }
-
-      @Override
-      public boolean isFailed() {
-         return delegate.isFailed();
-      }
-
-      @Override
-      public Throwable getFailure() {
-         return delegate.getFailure();
-      }
-
-      @Override
-      public void addListener(FutureListener<? super T> listener, Executor executor) {
-         delegate.addListener(listener, executor);
-      }
-
-      @Override
-      public void visit(FutureVisitor<? super T> visitor) {
-         delegate.visit(visitor);
-      }
-
-      @Override
-      public void await() throws InterruptedException {
-         delegate.await();
-      }
-
-      @Override
-      public boolean await(long limit, TimeUnit unit) throws InterruptedException {
-         return delegate.await(limit, unit);
-      }
-
-      @Override
-      public long getDelay(TimeUnit unit) {
-         return delegate.getDelay(unit);
-      }
-
-      @Override
-      public int compareTo(Delayed o) {
-         return delegate.compareTo(o);
-      }
-   }
-   
-   /**
-    * A {@link CancellingFluentFuture} that also implements the {@link Scheduled} interface.
-    * 
-    * @author Joshua Humphries (jhumphries131@gmail.com)
-    *
-    * @param <T> the type of future result
-    */
-   private class CancellingScheduledFluentFuture<T> extends CancellingFluentFuture<T> 
-   implements Scheduled {
-      CancellingScheduledFluentFuture(FluentScheduledFuture<T> delegate,
-            AtomicReference<TaskState> taskState, long permits) {
-         super(delegate, taskState, permits);
-         assert delegate instanceof Scheduled;
-      }
-
-      @Override
-      public long getScheduledNanoTime() {
-         return ((Scheduled) delegate()).getScheduledNanoTime();
-      }
-   }
 
    /**
     * A {@link ListenableScheduledFuture} that returns permits if cancelled before the associated
@@ -947,27 +812,6 @@ public class RateLimiter {
    }
    
    /**
-    * A {@link CancellingListenableFuture} that also implements the {@link Scheduled} interface.
-    * 
-    * @author Joshua Humphries (jhumphries131@gmail.com)
-    *
-    * @param <T> the type of future result
-    */
-   private class CancellingScheduledListenableFuture<T> extends CancellingListenableFuture<T> 
-   implements Scheduled {
-      CancellingScheduledListenableFuture(ListenableScheduledFuture<T> delegate,
-            AtomicReference<TaskState> taskState, long permits) {
-         super(delegate, taskState, permits);
-         assert delegate instanceof Scheduled;
-      }
-
-      @Override
-      public long getScheduledNanoTime() {
-         return ((Scheduled) delegate()).getScheduledNanoTime();
-      }
-   }
-   
-   /**
     * A scheduled future that returns permits if cancelled before the associated
     * task starts.
     * 
@@ -1010,27 +854,6 @@ public class RateLimiter {
       @Override
       public int compareTo(Delayed o) {
          return delegate.compareTo(o);
-      }
-   }
-   
-   /**
-    * A {@link CancellingFuture} that also implements the {@link Scheduled} interface.
-    * 
-    * @author Joshua Humphries (jhumphries131@gmail.com)
-    *
-    * @param <T> the type of future result
-    */
-   private class CancellingScheduledFuture<T> extends CancellingFuture<T> 
-   implements Scheduled {
-      CancellingScheduledFuture(ScheduledFuture<T> delegate, AtomicReference<TaskState> taskState,
-            long permits) {
-         super(delegate, taskState, permits);
-         assert delegate instanceof Scheduled;
-      }
-
-      @Override
-      public long getScheduledNanoTime() {
-         return ((Scheduled) delegate()).getScheduledNanoTime();
       }
    }
 }

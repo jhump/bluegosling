@@ -1,7 +1,7 @@
 package com.bluegosling.collections.concurrent;
 
-import com.bluegosling.collections.OrderedDeque;
-import com.bluegosling.collections.views.TransformingIterator;
+import com.bluegosling.collections.TransformingIterator;
+import com.bluegosling.collections.queues.OrderedDeque;
 
 import java.util.AbstractQueue;
 import java.util.Comparator;

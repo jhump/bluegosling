@@ -2,11 +2,11 @@ package com.bluegosling.reflect;
 
 import static java.util.Objects.requireNonNull;
 
+import com.bluegosling.collections.FilteringCollection;
 import com.bluegosling.collections.MoreIterables;
-import com.bluegosling.collections.MapBuilder;
-import com.bluegosling.collections.views.FilteringCollection;
-import com.bluegosling.collections.views.TransformingCollection;
-import com.bluegosling.collections.views.TransformingMap;
+import com.bluegosling.collections.TransformingCollection;
+import com.bluegosling.collections.TransformingMap;
+import com.bluegosling.collections.maps.MapBuilder;
 import com.bluegosling.function.Predicates;
 import com.google.common.collect.Iterators;
 

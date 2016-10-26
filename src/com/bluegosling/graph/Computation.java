@@ -3,11 +3,11 @@ package com.bluegosling.graph;
 import static com.bluegosling.concurrent.fluent.FluentFuture.dereference;
 import static com.bluegosling.concurrent.fluent.FluentFuture.join;
 
-import com.bluegosling.concurrent.FutureListener;
 import com.bluegosling.concurrent.fluent.FluentFuture;
+import com.bluegosling.concurrent.fluent.FutureListener;
 import com.bluegosling.concurrent.fluent.SettableRunnableFluentFuture;
 import com.bluegosling.reflect.TypeRef;
-import com.bluegosling.util.Result;
+import com.bluegosling.result.Result;
 
 import java.util.ArrayList;
 import java.util.HashMap;

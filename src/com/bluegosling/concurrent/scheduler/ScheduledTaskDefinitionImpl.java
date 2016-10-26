@@ -2,6 +2,7 @@ package com.bluegosling.concurrent.scheduler;
 
 import com.bluegosling.concurrent.fluent.FluentRepeatingFuture;
 import com.bluegosling.concurrent.fluent.FluentScheduledFutureTask;
+import com.bluegosling.concurrent.fluent.Rescheduler;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.ArrayDeque;

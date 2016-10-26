@@ -2,8 +2,8 @@
 package com.bluegosling.collections.concurrent;
 
 import com.bluegosling.collections.CollectionUtils;
-import com.bluegosling.collections.SortedArraySet;
-import com.bluegosling.collections.views.DescendingSet;
+import com.bluegosling.collections.DescendingSet;
+import com.bluegosling.collections.sets.SortedArraySet;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

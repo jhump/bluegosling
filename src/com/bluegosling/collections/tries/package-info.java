@@ -54,7 +54,7 @@
  *    there are bits set in the bitmask. To determine the index of a child in that array, just count
  *    the number of set bits in the bitmask that are less significant than the one of interest.
  *    (Also see {@link com.bluegosling.collections.immutable.AmtPersistentList},
- *    {@link com.bluegosling.collections.HamtMap}, and
+ *    {@link com.bluegosling.collections.maps.HamtMap}, and
  *    {@link com.bluegosling.collections.immutable.HamtPersistentMap}.)</li>
  * </ol>
  */

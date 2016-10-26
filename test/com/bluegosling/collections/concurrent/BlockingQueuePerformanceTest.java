@@ -1,6 +1,5 @@
 package com.bluegosling.collections.concurrent;
 
-import com.bluegosling.collections.ArrayBlockingDeque;
 import com.bluegosling.collections.concurrent.LockFreeArrayBlockingQueue;
 import com.bluegosling.collections.concurrent.LockFreeLinkedBlockingDeque;
 import com.bluegosling.collections.concurrent.LockFreeLinkedBlockingQueue;

@@ -1,14 +1,12 @@
 package com.bluegosling.concurrent.fluent;
 
-import static com.bluegosling.concurrent.FutureListener.forVisitor;
 import static com.bluegosling.concurrent.fluent.FluentFutures.immediateCopy;
 import static com.bluegosling.concurrent.fluent.FluentFutures.snapshot;
+import static com.bluegosling.concurrent.fluent.FutureListener.forVisitor;
 
 import com.bluegosling.concurrent.Awaitable;
 import com.bluegosling.concurrent.Cancellable;
-import com.bluegosling.concurrent.FutureListener;
-import com.bluegosling.concurrent.FutureVisitor;
-import com.bluegosling.concurrent.executors.SameThreadExecutor;
+import com.bluegosling.concurrent.SameThreadExecutor;
 import com.bluegosling.concurrent.fluent.FluentFutures.CancelledFuture;
 import com.bluegosling.concurrent.fluent.FluentFutures.CompletedFuture;
 import com.bluegosling.concurrent.fluent.FluentFutures.CompletionStageWrapper;
@@ -18,11 +16,15 @@ import com.bluegosling.concurrent.fluent.FluentFutures.DeferredFuture;
 import com.bluegosling.concurrent.fluent.FluentFutures.FailedFuture;
 import com.bluegosling.concurrent.fluent.FluentFutures.FluentCompletionStage;
 import com.bluegosling.concurrent.fluent.FluentFutures.FluentFutureWrapper;
+import com.bluegosling.concurrent.fluent.FluentFutures.FluentListenableFutureWrapper;
+import com.bluegosling.concurrent.fluent.FluentFutures.FluentListenableScheduledFutureWrapper;
 import com.bluegosling.concurrent.fluent.FluentFutures.FluentScheduledFutureWrapper;
 import com.bluegosling.concurrent.fluent.FluentFutures.UnfinishableFuture;
 import com.bluegosling.concurrent.futures.CompletionStageFuture;
 import com.bluegosling.function.TriFunction;
 import com.bluegosling.vars.VariableBoolean;
+import com.google.common.util.concurrent.ListenableFuture;
+import com.google.common.util.concurrent.ListenableScheduledFuture;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -72,7 +74,7 @@ import java.util.function.Function;
  * @param <T> the type of the future value
  */
 // TODO: more tests
-public interface FluentFuture<T> extends Future<T>, Cancellable, Awaitable {
+public interface FluentFuture<T> extends ListenableFuture<T>, Cancellable, Awaitable {
    /**
     * Returns true if the future is done and was successful.
     * 
@@ -85,7 +87,7 @@ public interface FluentFuture<T> extends Future<T>, Cancellable, Awaitable {
     * done and was successful.
     * 
     * @return the result
-    * @throws IllegalArgumentException if the future is not complete or was not successful
+    * @throws IllegalStateException if the future is not complete or was not successful
     */
    T getResult();
    
@@ -116,6 +118,10 @@ public interface FluentFuture<T> extends Future<T>, Cancellable, Awaitable {
     * @param executor the executor used when calling the listener
     */
    void addListener(FutureListener<? super T> listener, Executor executor);
+   
+   @Override default void addListener(Runnable r, Executor executor) {
+      addListener(f -> r.run(), executor);
+   }
    
    /**
     * Invokes applicable methods on the specified visitor, depending on the disposition of this
@@ -540,7 +546,7 @@ public interface FluentFuture<T> extends Future<T>, Cancellable, Awaitable {
          // unwrap if we can
          return ((FluentCompletionStage<T>) stage).future;
       }
-      return new CompletionStageWrapper<T>(stage); 
+      return new CompletionStageWrapper<>(stage); 
    }
    
    /**
@@ -564,6 +570,9 @@ public interface FluentFuture<T> extends Future<T>, Cancellable, Awaitable {
       if (future instanceof FluentFuture) {
          return (FluentFuture<T>) future;
       }
+      if (future instanceof ListenableFuture) {
+         return new FluentListenableFutureWrapper<>((ListenableFuture<T>) future);
+      }
       if (future instanceof CompletableFuture) {
          return fromCompletionStage((CompletableFuture<T>) future);
       }
@@ -571,7 +580,7 @@ public interface FluentFuture<T> extends Future<T>, Cancellable, Awaitable {
          // can get the value immediately
          return immediateCopy(future);
       }
-      return new FluentFutureWrapper<T>(future);
+      return new FluentFutureWrapper<>(future);
    }
    
    /**
@@ -592,11 +601,14 @@ public interface FluentFuture<T> extends Future<T>, Cancellable, Awaitable {
       if (future instanceof FluentScheduledFuture) {
          return (FluentScheduledFuture<T>) future;
       }
+      if (future instanceof ListenableScheduledFuture) {
+         return new FluentListenableScheduledFutureWrapper<>((ListenableScheduledFuture<T>) future);
+      }
       if (future.isDone()) {
          // can get the value immediately
          return immediateCopy(future);
       }
-      return new FluentScheduledFutureWrapper<T>(future);
+      return new FluentScheduledFutureWrapper<>(future);
    }
 
    /**

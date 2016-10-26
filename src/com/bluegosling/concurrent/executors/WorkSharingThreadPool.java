@@ -8,8 +8,8 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.LockSupport;
 
-import com.bluegosling.collections.OrderedDeque;
 import com.bluegosling.collections.concurrent.ConcurrentSkipListOrderedQueue;
+import com.bluegosling.collections.queues.OrderedDeque;
 
 public class WorkSharingThreadPool extends AbstractExecutorService {
    

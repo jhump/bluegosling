@@ -1,9 +1,8 @@
 package com.bluegosling.concurrent.fluent;
 
-import com.bluegosling.concurrent.FutureListener;
-import com.bluegosling.concurrent.executors.SameThreadExecutor;
-
 import java.util.concurrent.Executor;
+
+import com.bluegosling.concurrent.SameThreadExecutor;
 
 /**
  * A {@link FluentScheduledFuture} that represents a repeating task. The future is not completed

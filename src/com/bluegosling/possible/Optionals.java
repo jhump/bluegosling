@@ -55,37 +55,13 @@ public final class Optionals {
    }
    
    public static <T> Possible<T> toPossible(Optional<T> optional) {
-      return ofNullable(optional.orElse(null));
+      return optional.isPresent()
+            ? new OptionalPossible<>(optional)
+            : OptionalPossible.empty();
    }
 
    public static <T> Optional<T> fromPossible(Possible<T> possible) {
       return Optional.ofNullable(possible.orElse(null));
-   }
-
-   /**
-    * Casts an optional value to a different type. The present value must be assignable to the new
-    * type. Using this method is much more efficient than creating a new optional value with a
-    * different type. Since optional values are immutable, the type on an existing instance can
-    * safely be re-cast when a present value is an instance of the cast type.
-    * 
-    * @param from the optional value from which we are casting
-    * @param target the type to which the value will be cast
-    * @return {@code this} but re-cast to an {@code Optional<T>} where {@code T} is the target type
-    * @throws ClassCastException if the optional value is present and is not an instance of the
-    *       specified type
-    */
-   @SuppressWarnings("unchecked") // we're doing a type check using the token, so it will be safe
-   public static <S, T> Optional<T> cast(Optional<S> from, Class<T> target) {
-      if (from.isPresent()) {
-         S s = from.get();
-         if (target.isInstance(s)) {
-            return (Optional<T>) from;
-         } else {
-            throw new ClassCastException(target.getName());
-         }
-      } else {
-         return Optional.empty();
-      }
    }
 
    /**
@@ -95,42 +71,14 @@ public final class Optionals {
     * 
     * @param from the optional value from which we are casting
     * @return {@code this} but re-cast to an {@code Optional<S>} where {@code S} is the super-type
-    * @see #cast(Optional, Class)
     */
    @SuppressWarnings("unchecked") // since Optionals are immutable, upcast is always safe
-   public static <S, T extends S> Optional<S> upcast(Optional<T> from) {
+   public static <S, T extends S> Optional<S> cast(Optional<T> from) {
       return (Optional<S>) from;
-   }
-   
-   /**
-    * Returns an object with no value present.
-    * 
-    * @return an object with no value present
-    */
-   @SuppressWarnings("unchecked")
-   static <T> Possible<T> empty() {
-      return (Possible<T>) OptionalPossible.NONE;
-   }
-   
-   /**
-    * Creates an object that represents the specified value. If the value is not {@code null} then
-    * {@linkplain #some(Object) some value} is returned, otherwise {@linkplain #none() none}.
-    * 
-    * @param t the value
-    * @return {@linkplain #some(Object) some value} with the specified value if not {@code null},
-    *       otherwise {@linkplain #none() none}
-    */
-   static <T> Possible<T> of(T t) {
-      return new OptionalPossible<>(Objects.requireNonNull(t));
-   }
-   
-   // TODO: doc
-   static <T> Possible<T> ofNullable(T t) {
-      return t == null ? empty() : of(t);
    }
 
    /**
-    * An possible that wraps an {@link Optional}..
+    * A possible that wraps an {@link Optional}.
     *
     * @author Joshua Humphries (jhumphries131@gmail.com)
     *
@@ -140,107 +88,101 @@ public final class Optionals {
    static final class OptionalPossible<T> implements Possible<T>, Serializable {
       private static final long serialVersionUID = 1511876184470865192L;
       
-      private static final OptionalPossible<?> NONE = new OptionalPossible<>(null);
+      private static final OptionalPossible<?> EMPTY = new OptionalPossible<>(Optional.empty());
       
-      private final T t;
+      @SuppressWarnings("unchecked") // safe because EMPTY is immutable and valueless
+      static <T> Possible<T> empty() {
+         return (Possible<T>) EMPTY;
+      }
       
-      OptionalPossible(T t) {
-         this.t = t;
+      private final Optional<T> o;
+      
+      OptionalPossible(Optional<T> o) {
+         this.o = o;
       }
 
       @Override
       public boolean isPresent() {
-         return t != null;
+         return o.isPresent();
       }
       
       @Override
       public void ifPresent(Consumer<? super T> consumer) {
-         if (t != null) {
-            consumer.accept(t);
-         }
+         o.ifPresent(consumer);
       }
 
       @Override
       public T get() {
-         if (t == null) {
-            throw new NoSuchElementException();
-         }
-         return t;
+         return o.get();
       }
 
       @Override
       public T orElse(T alternate) {
-         return t == null ? alternate : t;
+         return o.orElse(alternate);
       }
       
       @Override
       public T orElseGet(Supplier<? extends T> supplier) {
-         return t == null ? supplier.get() : t;
+         return o.orElseGet(supplier);
       }
 
       @Override
       public <X extends Throwable> T orElseThrow(Supplier<? extends X> throwable) throws X {
-         if (t == null) {
-            throw throwable.get();
-         }
-         return t;
+         return o.orElseThrow(throwable);
       }
 
       @Override
       public Possible<T> or(Possible<T> alternate) {
-         return t == null ? alternate : this;
+         return o.isPresent() ? this : alternate;
       }
       
       @SuppressWarnings("unchecked")
       @Override
       public <U> Possible<U> map(Function<? super T, ? extends U> function) {
-         if (t == null) {
-            return (Possible<U>) this;
-         }
-         return ofNullable(function.apply(t));
+         return o.isPresent()
+               ? toPossible(o.map(function))
+               : (Possible<U>) this;
       }
 
       @SuppressWarnings("unchecked")
       @Override
       public <U> Possible<U> flatMap(Function<? super T, ? extends Possible<U>> function) {
-         return t != null
-               ? Objects.requireNonNull(function.apply(t))
+         return o.isPresent()
+               ? Objects.requireNonNull(function.apply(o.get()))
                : (Possible<U>) this;
       }
 
       @Override
       public Possible<T> filter(Predicate<? super T> predicate) {
-         return t != null && predicate.test(t) ? this : empty();
+         return o.isPresent() && predicate.test(o.get()) ? this : empty();
       }
 
       @Override
       public Set<T> asSet() {
-         return t != null ? Collections.singleton(t) : Collections.emptySet();
+         return o.isPresent() ? Collections.singleton(o.get()) : Collections.emptySet();
       }
 
       @Override
       public <R> R visit(Possible.Visitor<? super T, R> visitor) {
-         return t != null
-               ? visitor.present(t)
+         return o.isPresent()
+               ? visitor.present(o.get())
                : visitor.absent();
       }
       
       @Override
       public boolean equals(Object other) {
          return other instanceof OptionalPossible
-               && Objects.equals(t, ((OptionalPossible<?>) other).t);
+               && Objects.equals(o, ((OptionalPossible<?>) other).o);
       }
       
       @Override
       public int hashCode() {
-         return Objects.hashCode(t);
+         return o.hashCode();
       }
       
       @Override
       public String toString() {
-         return t != null
-               ? "Possible[" + t + "]"
-               : "Possible.empty";
+         return o.toString();
       }
    }
 }

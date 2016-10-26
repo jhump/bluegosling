@@ -8,7 +8,7 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import com.bluegosling.concurrent.DeadlockException;
-import com.bluegosling.concurrent.executors.SameThreadExecutor;
+import com.bluegosling.concurrent.SameThreadExecutor;
 import com.bluegosling.generator.Generator;
 import com.bluegosling.generator.Sequence;
 import com.bluegosling.generator.SequenceAbandonedException;

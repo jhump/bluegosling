@@ -1,7 +1,7 @@
 package com.bluegosling.apt.testing;
 
-import com.bluegosling.collections.views.TransformingList;
-import com.bluegosling.util.IoStreams;
+import com.bluegosling.collections.TransformingList;
+import com.google.common.io.ByteStreams;
 
 import org.junit.After;
 import org.junit.Before;
@@ -487,7 +487,7 @@ public class AnnotationProcessorTestRunner extends BlockJUnit4ClassRunner {
       }
       try {
          return fileManager.createFileObject(fileDef.getTargetLocation(), "", fileDef.getFileName(),
-               IoStreams.toByteArray(in));
+               ByteStreams.toByteArray(in));
       } finally {
          in.close();
       }

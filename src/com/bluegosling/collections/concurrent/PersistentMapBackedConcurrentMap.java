@@ -1,9 +1,9 @@
 package com.bluegosling.collections.concurrent;
 
 import com.bluegosling.collections.MapUtils;
+import com.bluegosling.collections.TransformingCollection;
+import com.bluegosling.collections.TransformingSet;
 import com.bluegosling.collections.immutable.PersistentMap;
-import com.bluegosling.collections.views.TransformingCollection;
-import com.bluegosling.collections.views.TransformingSet;
 
 import java.util.AbstractMap;
 import java.util.AbstractSet;

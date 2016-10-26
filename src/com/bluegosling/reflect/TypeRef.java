@@ -2,9 +2,6 @@ package com.bluegosling.reflect;
 
 import static java.util.Objects.requireNonNull;
 
-import com.bluegosling.collections.views.TransformingCollection;
-import com.bluegosling.collections.views.TransformingList;
-
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
@@ -19,6 +16,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import com.bluegosling.collections.TransformingCollection;
+import com.bluegosling.collections.TransformingList;
 
 /**
  * A type token that represents a generic type. Unlike class tokens, which don't adequately support

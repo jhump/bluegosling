@@ -16,7 +16,6 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.function.Supplier;
 
-import com.bluegosling.collections.views.TransformingSet;
 import com.google.common.collect.ForwardingSet;
 import com.google.common.collect.Maps;
 

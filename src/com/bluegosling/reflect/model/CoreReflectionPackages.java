@@ -1,15 +1,15 @@
 package com.bluegosling.reflect.model;
 
-import com.bluegosling.reflect.PackageScanner;
-import com.bluegosling.reflect.PackageScanner.ClassInfo;
-import com.bluegosling.reflect.PackageScanner.ScanResult;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
 import javax.lang.model.element.Element;
+
+import com.bluegosling.reflect.scanner.PackageScanner;
+import com.bluegosling.reflect.scanner.PackageScanner.ClassInfo;
+import com.bluegosling.reflect.scanner.PackageScanner.ScanResult;
 
 /**
  * Utility functions for performing a package scan (via reflection over the class path), for

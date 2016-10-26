@@ -1,6 +1,5 @@
 package com.bluegosling.collections.concurrent;
 
-import com.bluegosling.collections.ArrayBlockingDeque;
 import com.bluegosling.testing.BulkTestRunner;
 
 import org.junit.runner.RunWith;

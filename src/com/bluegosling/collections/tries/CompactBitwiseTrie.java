@@ -2,15 +2,13 @@ package com.bluegosling.collections.tries;
 
 import static com.bluegosling.collections.tries.SimpleBitwiseTrie.COMPONENT_COMPARATOR;
 
-import com.bluegosling.collections.BitConverter;
-import com.bluegosling.collections.BitSequence;
-import com.bluegosling.collections.BitSequences;
-import com.bluegosling.collections.BitStream;
 import com.bluegosling.collections.CollectionUtils;
 import com.bluegosling.collections.MapUtils;
+import com.bluegosling.collections.bits.BitSequence;
+import com.bluegosling.collections.bits.BitSequences;
+import com.bluegosling.collections.bits.BitStream;
 import com.bluegosling.collections.tries.SimpleBitwiseTrie.ValueNode;
 import com.bluegosling.collections.tries.SimpleBitwiseTrie.WrappedComparator;
-import com.bluegosling.collections.views.DescendingCompositeTrie;
 
 import java.util.Collection;
 import java.util.Comparator;

@@ -10,7 +10,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.BiFunction;
 
-import com.bluegosling.collections.views.TransformingIterator;
 import com.bluegosling.function.TriFunction;
 
 public final class MoreCollections {

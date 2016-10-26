@@ -1,6 +1,9 @@
 package com.bluegosling.collections.tables;
 
 import com.bluegosling.collections.MapUtils;
+import com.bluegosling.collections.TransformingCollection;
+import com.bluegosling.collections.TransformingMap;
+import com.bluegosling.collections.TransformingSet;
 import com.bluegosling.collections.tables.Tables.MapWithoutPut;
 import com.bluegosling.collections.tables.Tables.SynchronizedCollection;
 import com.bluegosling.collections.tables.Tables.SynchronizedMap;
@@ -9,9 +12,6 @@ import com.bluegosling.collections.tables.Tables.SynchronizedTableMapView;
 import com.bluegosling.collections.tables.Tables.TransformingTableMapView;
 import com.bluegosling.collections.tables.Tables.UnmodifiableTableMapView;
 import com.bluegosling.collections.tables.Tables3D.Table3DImpl;
-import com.bluegosling.collections.views.TransformingCollection;
-import com.bluegosling.collections.views.TransformingMap;
-import com.bluegosling.collections.views.TransformingSet;
 
 import java.util.AbstractMap;
 import java.util.AbstractSet;

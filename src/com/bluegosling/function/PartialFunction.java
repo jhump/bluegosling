@@ -1,7 +1,5 @@
 package com.bluegosling.function;
 
-import com.bluegosling.possible.Optionals;
-
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
@@ -85,7 +83,7 @@ public interface PartialFunction<T, R> extends Function<T, Optional<R>> {
        Objects.requireNonNull(after);
        return (T t) -> {
           Optional<R> r = apply(t);
-          return r.isPresent() ? Optionals.upcast(after.apply(r.get())) : Optional.empty();
+          return r.isPresent() ? PartialFunctions.cast(after.apply(r.get())) : Optional.empty();
        };
    }
 }

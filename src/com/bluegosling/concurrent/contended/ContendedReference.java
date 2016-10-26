@@ -1,11 +1,11 @@
 package com.bluegosling.concurrent.contended;
 
-import com.bluegosling.util.IsDerivedFrom;
-
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 import java.util.function.BinaryOperator;
 import java.util.function.UnaryOperator;
+
+import com.bluegosling.util.IsDerivedFrom;
 
 /**
  * Like an {@link AtomicReference}, except uses padding to reduce cache contention (aka

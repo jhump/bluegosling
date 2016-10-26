@@ -8,7 +8,7 @@ package com.bluegosling.collections;
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-enum IteratorModifiedState {
+public enum IteratorModifiedState {
    /**
     * Indicates that no structural modifications have been made at the current location from this
     * iterator. The {@code set()} method does not count as a structural modification.

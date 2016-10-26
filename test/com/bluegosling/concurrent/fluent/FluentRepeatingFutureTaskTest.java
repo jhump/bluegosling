@@ -1,18 +1,15 @@
 package com.bluegosling.concurrent.fluent;
 
-import static com.bluegosling.concurrent.FutureListener.forRunnable;
-
+import static com.bluegosling.concurrent.fluent.FutureListener.forRunnable;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import com.bluegosling.concurrent.SimpleFutureVisitor;
-import com.bluegosling.concurrent.executors.SameThreadExecutor;
+import com.bluegosling.concurrent.SameThreadExecutor;
 import com.bluegosling.concurrent.fluent.FluentRepeatingFutureTask;
-import com.bluegosling.concurrent.scheduler.Rescheduler;
-import com.bluegosling.util.Clock;
+import com.bluegosling.time.Clock;
 
 import org.junit.Test;
 

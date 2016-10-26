@@ -1,7 +1,5 @@
 package com.bluegosling.function;
 
-import com.bluegosling.possible.Optionals;
-
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.BiFunction;
@@ -60,7 +58,7 @@ public interface PartialBiFunction<T, U, R> extends BiFunction<T, U, Optional<R>
        Objects.requireNonNull(after);
        return (T t, U u) -> {
           Optional<R> r = apply(t, u);
-          return r.isPresent() ? Optionals.upcast(after.apply(r.get())) : Optional.empty();
+          return r.isPresent() ? PartialFunctions.cast(after.apply(r.get())) : Optional.empty();
        };
    }
 }

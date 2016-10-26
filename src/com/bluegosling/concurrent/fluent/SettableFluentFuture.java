@@ -1,15 +1,7 @@
 package com.bluegosling.concurrent.fluent;
 
-import com.bluegosling.concurrent.FutureListener;
-import com.bluegosling.concurrent.FutureVisitor;
-import com.bluegosling.possible.AbstractDynamicPossible;
-import com.bluegosling.possible.Fulfillable;
-import com.bluegosling.util.Throwables;
 import com.bluegosling.vars.Variable;
 
-import java.util.Collections;
-import java.util.NoSuchElementException;
-import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
@@ -19,8 +11,7 @@ import java.util.concurrent.TimeoutException;
 
 /**
  * A future whose result is set programmatically. This exposes protected API in
- * {@link AbstractFluentFuture} as public API. It also provides a view of the future as an
- * instance of {@link Fulfillable}.
+ * {@link AbstractFluentFuture} as public API.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
@@ -90,57 +81,6 @@ public class SettableFluentFuture<T> extends AbstractFluentFuture<T> {
     * @see SettableRunnableFluentFuture
     */   public RunnableFluentFuture<T> asRunnableFuture(Callable<T> callable) {
       return new RunnableView(callable);
-   }
-
-   /**
-    * Returns a view of this future as a {@link Fulfillable}. Fulfilling the returned object will
-    * successfully complete the future.
-    * 
-    * @return a view of this future as a {@link Fulfillable}
-    */
-   public Fulfillable<T> asFulfillable() {
-      return new FutureFulfillable();
-   }
-   
-   /**
-    * A view of the future as a {@link Fulfillable}.
-    *
-    * @author Joshua Humphries (jhumphries131@gmail.com)
-    */
-   private class FutureFulfillable extends AbstractDynamicPossible<T> implements Fulfillable<T> {
-      
-      FutureFulfillable() {
-      }
-      
-      @Override
-      public boolean isPresent() {
-         return isSuccessful();
-      }
-      
-      @Override
-      public boolean fulfill(T value) {
-         return setValue(value);
-      }
-
-      @Override
-      public T get() {
-         if (!isDone() || isCancelled()) {
-            throw new NoSuchElementException("not yet fulfilled");
-         } else if (isFailed()) {
-            throw Throwables.withCause(new NoSuchElementException("failed to fulfill"),
-                  getFailure());
-         }
-         return getResult();
-      }
-         
-      @Override
-      public Set<T> asSet() {
-         // once completed, the future is immutable
-         if (isDone()) {
-            return isSuccessful() ? Collections.singleton(getResult()) : Collections.emptySet();
-         }
-         return super.asSet();
-      }
    }
 
    /**

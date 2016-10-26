@@ -2,8 +2,6 @@ package com.bluegosling.collections.immutable;
 
 import static java.util.Objects.requireNonNull;
 
-import com.bluegosling.collections.HamtMap;
-
 import java.util.ArrayDeque;
 import java.util.Iterator;
 import java.util.Map;
@@ -14,6 +12,8 @@ import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+
+import com.bluegosling.collections.maps.HamtMap;
 
 /**
  * An implementation of {@link PersistentMap} that uses an immutable hash array-mapped trie (HAMT)

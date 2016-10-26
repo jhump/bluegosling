@@ -3,8 +3,6 @@ package com.bluegosling.apt.testing;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
-import com.bluegosling.collections.views.TransformingList;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.Result;
@@ -12,6 +10,8 @@ import org.junit.runner.RunWith;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.model.InitializationError;
+
+import com.bluegosling.collections.TransformingList;
 
 import java.io.OutputStreamWriter;
 import java.util.Collection;

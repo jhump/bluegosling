@@ -1,6 +1,5 @@
 package com.bluegosling.collections;
 
-import com.bluegosling.collections.views.TransformingIterator;
 import com.bluegosling.function.TriFunction;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;

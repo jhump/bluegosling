@@ -2,9 +2,9 @@ package com.bluegosling.concurrent.atoms;
 
 import static org.junit.Assert.assertEquals;
 
-import com.bluegosling.collections.MapBuilder;
-
 import org.junit.Test;
+
+import com.bluegosling.collections.maps.MapBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;

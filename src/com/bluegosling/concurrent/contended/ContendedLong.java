@@ -1,11 +1,11 @@
 package com.bluegosling.concurrent.contended;
 
-import com.bluegosling.util.IsDerivedFrom;
-
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicLongFieldUpdater;
 import java.util.function.LongBinaryOperator;
 import java.util.function.LongUnaryOperator;
+
+import com.bluegosling.util.IsDerivedFrom;
 
 /**
  * Like an {@link AtomicLong}, except uses padding to reduce cache contention (aka false-sharing)

@@ -1,8 +1,8 @@
 package com.bluegosling.collections.concurrent;
 
+import com.bluegosling.collections.DescendingMap;
+import com.bluegosling.collections.DescendingSet;
 import com.bluegosling.collections.MapUtils;
-import com.bluegosling.collections.views.DescendingMap;
-import com.bluegosling.collections.views.DescendingSet;
 import com.bluegosling.concurrent.locks.DoubleInstanceLock;
 
 import java.util.AbstractCollection;

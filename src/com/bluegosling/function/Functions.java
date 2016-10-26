@@ -1,7 +1,5 @@
 package com.bluegosling.function;
 
-import com.bluegosling.tuples.Pair;
-
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -240,9 +238,14 @@ public final class Functions {
       return values.hasNext() ? foldLeft(values, function, function.apply(seed, values.next()))
             : seed;
    }
+
+   public static <T> Iterable<T> unfold(T seed, Function<? super T, ? extends T> unspoolResult,
+         BiFunction<? super T, ? super T, ? extends T> unspoolNext) {
+      return unfold(seed, unspoolResult, unspoolNext, Predicates.isNull());
+   }
    
-   public static <T> Iterable<T> unfold(final Function<? super T, Pair<T, T>> unspool,
-         final Predicate<? super T> finished, final T seed) {
+   public static <T> Iterable<T> unfold(T seed, Function<? super T, ? extends T> unspoolResult,
+         BiFunction<? super T, ? super T, ? extends T> unspoolNext, Predicate<? super T> finished) {
       return () -> new Iterator<T>() {
          private T val = seed;
          private Boolean hasNext;
@@ -260,9 +263,8 @@ public final class Functions {
             if (!hasNext()) {
                throw new NoSuchElementException();
             }
-            Pair<T, T> unspooled = unspool.apply(val);
-            T result = unspooled.getFirst();
-            val = unspooled.getSecond();
+            T result = unspoolResult.apply(val);
+            val = unspoolNext.apply(val, result);
             hasNext = null;
             return result;
          }

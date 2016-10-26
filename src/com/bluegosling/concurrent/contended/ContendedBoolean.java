@@ -1,9 +1,9 @@
 package com.bluegosling.concurrent.contended;
 
-import com.bluegosling.util.IsDerivedFrom;
-
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
+
+import com.bluegosling.util.IsDerivedFrom;
 
 /**
  * Like an {@link AtomicBoolean}, except uses padding to reduce cache contention (aka false-sharing)
