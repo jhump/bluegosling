@@ -981,7 +981,14 @@ public class SourceDependencyAnalysis {
          @Override
          public void visit(ImportDeclaration n, Void arg) {
             if (n.isStatic() || !n.isAsterisk()) {
-               importsByCompilationUnit.put(file, nameToString(n.getName()));
+               String importedName = nameToString(n.getName());
+               if (n.isStatic() && !n.isAsterisk()) {
+                  // last component is the static element, which we don't care about
+                  int pos = importedName.lastIndexOf('.');
+                  assert pos > 0;
+                  importedName = importedName.substring(0, pos);
+               }
+               importsByCompilationUnit.put(file, importedName);
             } else {
                importWildcardsByCompilationUnit.put(file, nameToString(n.getName()));
             }

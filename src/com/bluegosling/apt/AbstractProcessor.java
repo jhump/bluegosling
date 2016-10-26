@@ -3,14 +3,13 @@ package com.bluegosling.apt;
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic;
-
-import com.google.common.collect.Sets;
 
 /**
  * An abstract annotation processor that makes for a better base class than the standard. This
@@ -77,7 +76,7 @@ public abstract class AbstractProcessor extends javax.annotation.processing.Abst
       if (sz == 0) {
          return Collections.emptySet();
       }
-      Set<String> ret = Sets.newLinkedHashSetWithExpectedSize(sz);
+      Set<String> ret = new LinkedHashSet<>(sz * 4 / 3);
       if (ann1 != null) {
          ret.addAll(Arrays.asList(ann1.value()));
       }

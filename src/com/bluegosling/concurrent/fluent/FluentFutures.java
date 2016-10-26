@@ -1,8 +1,8 @@
 package com.bluegosling.concurrent.fluent;
 
-import static com.bluegosling.concurrent.extras.FutureTuples.asPair;
-import static com.bluegosling.concurrent.fluent.FluentFuture.cast;
-import static com.bluegosling.concurrent.fluent.FluentFuture.makeFluent;
+import static com.bluegosling.concurrent.fluent.FluentFuture.*;
+//import static com.bluegosling.concurrent.fluent.FluentFuture.cast;
+//import static com.bluegosling.concurrent.fluent.FluentFuture.makeFluent;
 
 import com.bluegosling.collections.MoreIterables;
 import com.bluegosling.concurrent.SameThreadExecutor;
@@ -16,20 +16,21 @@ import com.google.common.util.concurrent.Uninterruptibles;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.CancellationException;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CompletionException;
-import java.util.concurrent.CompletionStage;
-import java.util.concurrent.Delayed;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ForkJoinPool;
-import java.util.concurrent.Future;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
+import java.util.concurrent.*;
+//import java.util.concurrent.CancellationException;
+//import java.util.concurrent.CompletableFuture;
+//import java.util.concurrent.CompletionException;
+//import java.util.concurrent.CompletionStage;
+//import java.util.concurrent.Delayed;
+//import java.util.concurrent.ExecutionException;
+//import java.util.concurrent.Executor;
+//import java.util.concurrent.Executors;
+//import java.util.concurrent.ForkJoinPool;
+//import java.util.concurrent.Future;
+//import java.util.concurrent.ScheduledExecutorService;
+//import java.util.concurrent.ScheduledFuture;
+//import java.util.concurrent.TimeUnit;
+//import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
@@ -1260,7 +1261,7 @@ final class FluentFutures {
       public <U, V> CompletionStage<V> thenCombineAsync(CompletionStage<? extends U> other,
             BiFunction<? super T, ? super U, ? extends V> fn, Executor executor) {
          FluentFuture<U> otherFuture = cast(makeFluent(other.toCompletableFuture()));
-         return proceed(asPair(future, otherFuture), executor,
+         return proceed(combine(future, otherFuture), executor,
                FluentCompletionStage.<Pair<T, U>, V>apply((pair) -> {
                   return fn.apply(pair.getFirst(), pair.getSecond());
                })).asCompletionStage();
@@ -1282,7 +1283,7 @@ final class FluentFutures {
       public <U> CompletionStage<Void> thenAcceptBothAsync(CompletionStage<? extends U> other,
             BiConsumer<? super T, ? super U> action, Executor executor) {
          FluentFuture<U> otherFuture = cast(makeFluent(other.toCompletableFuture()));
-         return proceed(asPair(future, otherFuture), executor, accept((pair) -> {
+         return proceed(combine(future, otherFuture), executor, accept((pair) -> {
             action.accept(pair.getFirst(), pair.getSecond());
          })).asCompletionStage();
       }
@@ -1301,7 +1302,7 @@ final class FluentFutures {
       public CompletionStage<Void> runAfterBothAsync(CompletionStage<?> other, Runnable action,
             Executor executor) {
          FluentFuture<?> otherFuture = makeFluent(other.toCompletableFuture());
-         return proceed(asPair(future, otherFuture), executor, run(action)).asCompletionStage();
+         return proceed(combine(future, otherFuture), executor, run(action)).asCompletionStage();
       }
 
       @Override
@@ -1532,6 +1533,11 @@ final class FluentFutures {
             }
          });
          return ret;
+      }
+      
+      private static <T, U> FluentFuture<Pair<T, U>> combine(FluentFuture<? extends T> futureT,
+            FluentFuture<? extends U> futureU) {
+         return futureT.combineWith(futureU, (t, u) -> Pair.<T, U>create(t, u));
       }
       
       /**
