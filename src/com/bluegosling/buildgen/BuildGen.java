@@ -19,9 +19,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-import com.bluegosling.buildgen.SourceDependencyAnalysis.Analyzer;
-import com.bluegosling.buildgen.SourceDependencyAnalysis.JavaPackage;
-import com.bluegosling.buildgen.SourceDependencyAnalysis.PackageDirectory;
+import com.bluegosling.buildgen.SourceDependencyAnalyzer.Results;
 import com.google.common.base.Predicate;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableSet;
@@ -66,7 +64,7 @@ public class BuildGen {
    }
 
    public Model generateModel() {
-      SourceDependencyAnalysis analysis = new Analyzer(searchPaths).analyze();
+      Results analysis = new SourceDependencyAnalyzer(searchPaths).analyze();
       Set<List<PackageDirectory>> cycles = analysis.getPackageCycles();
       if (!cycles.isEmpty()) {
          throw new BuildGenException(
@@ -208,7 +206,7 @@ public class BuildGen {
             + "files. If any dependencies cannot be resolved or if any package dependency\n"
             + "cycles are found, the process fails. When the process fails, existing BUILD\n"
             + "files will be left in tact.\n",
-            SourceDependencyAnalysis.class.getName());
+            SourceDependencyAnalyzer.class.getName());
       System.exit(1);
    }
    
