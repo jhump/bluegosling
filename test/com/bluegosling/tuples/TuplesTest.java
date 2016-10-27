@@ -22,19 +22,19 @@ public class TuplesTest {
    }
 
    @Test public void unit() {
-      Unit<String> u = Unit.create("a");
+      Single<String> u = Single.of("a");
       
       Tuple t = Tuples.fromArray("a");
-      assertSame(Unit.class, t.getClass());
+      assertSame(Single.class, t.getClass());
       assertEquals(u, t);
       
       t = Tuples.fromCollection(Collections.singleton("a"));
-      assertSame(Unit.class, t.getClass());
+      assertSame(Single.class, t.getClass());
       assertEquals(u, t);
    }
 
    @Test public void pair() {
-      Pair<String, Integer> p = Pair.create("a", 1);
+      Pair<String, Integer> p = Pair.of("a", 1);
 
       Tuple t = Tuples.fromArray("a", 1);
       assertSame(Pair.class, t.getClass());
@@ -46,39 +46,39 @@ public class TuplesTest {
    }
 
    @Test public void trio() {
-      Trio<String, Integer, Double> trio = Trio.create("a", 1, 42.0);
+      Triple<String, Integer, Double> trio = Triple.of("a", 1, 42.0);
       
       Tuple t = Tuples.fromArray("a", 1, 42.0);
-      assertSame(Trio.class, t.getClass());
+      assertSame(Triple.class, t.getClass());
       assertEquals(trio, t);
       
       t = Tuples.fromCollection(Arrays.<Object>asList("a", 1, 42.0));
-      assertSame(Trio.class, t.getClass());
+      assertSame(Triple.class, t.getClass());
       assertEquals(trio, t);
    }
 
    @Test public void quartet() {
-      Quartet<String, Integer, Double, String> q = Quartet.create("a", 1, 42.0, "foobar");
+      Quadruple<String, Integer, Double, String> q = Quadruple.of("a", 1, 42.0, "foobar");
       
       Tuple t = Tuples.fromArray("a", 1, 42.0, "foobar");
-      assertSame(Quartet.class, t.getClass());
+      assertSame(Quadruple.class, t.getClass());
       assertEquals(q, t);
       
       t = Tuples.fromCollection(Arrays.<Object>asList("a", 1, 42.0, "foobar"));
-      assertSame(Quartet.class, t.getClass());
+      assertSame(Quadruple.class, t.getClass());
       assertEquals(q, t);
    }
 
    @Test public void quintet() {
-      Quintet<String, Integer, Double, String, Long> q =
-            Quintet.create("a", 1, 42.0, "foobar", 0x1234L);
+      Quintuple<String, Integer, Double, String, Long> q =
+            Quintuple.of("a", 1, 42.0, "foobar", 0x1234L);
       
       Tuple t = Tuples.fromArray("a", 1, 42.0, "foobar", 0x1234L);
-      assertSame(Quintet.class, t.getClass());
+      assertSame(Quintuple.class, t.getClass());
       assertEquals(q, t);
       
       t = Tuples.fromCollection(Arrays.<Object>asList("a", 1, 42.0, "foobar", 0x1234L));
-      assertSame(Quintet.class, t.getClass());
+      assertSame(Quintuple.class, t.getClass());
       assertEquals(q, t);
    }
 

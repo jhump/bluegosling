@@ -7,7 +7,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import com.bluegosling.tuples.Trio;
+import com.bluegosling.tuples.Triple;
 
 import org.junit.Test;
 
@@ -84,14 +84,14 @@ public abstract class AbstractSynchronousAtomTest {
    }
    
    @Test public void watchers() {
-      List<Trio<Atom<? extends String>, String, String>> notices1 =
-            new ArrayList<Trio<Atom<? extends String>, String, String>>();
-      List<Trio<Atom<? extends String>, String, String>> notices2 =
-            new ArrayList<Trio<Atom<? extends String>, String, String>>();
+      List<Triple<Atom<? extends String>, String, String>> notices1 =
+            new ArrayList<Triple<Atom<? extends String>, String, String>>();
+      List<Triple<Atom<? extends String>, String, String>> notices2 =
+            new ArrayList<Triple<Atom<? extends String>, String, String>>();
       Atom.Watcher<String> watcher1 = (atom, oldValue, newValue) ->
-            notices1.add(Trio.create(atom, oldValue, newValue));
+            notices1.add(Triple.of(atom, oldValue, newValue));
       Atom.Watcher<String> watcher2 = (atom, oldValue, newValue) ->
-            notices2.add(Trio.create(atom, oldValue, newValue));
+            notices2.add(Triple.of(atom, oldValue, newValue));
 
       SynchronousAtom<String> atom = create();
       atom.addWatcher(watcher1);
@@ -111,20 +111,20 @@ public abstract class AbstractSynchronousAtomTest {
    protected void checkWatchers(SynchronousAtom<String> atom, List<?>... noticesArray) {
       atom.set("abc");
       for (List<?> notices : noticesArray) {
-         assertEquals(Arrays.asList(Trio.create(atom, null, "abc")), notices);
+         assertEquals(Arrays.asList(Triple.of(atom, null, "abc")), notices);
          notices.clear();
       }
       
       Function<String,String> twice = i -> i + i;
       atom.updateAndGet(twice);
       for (List<?> notices : noticesArray) {
-         assertEquals(Arrays.asList(Trio.create(atom, "abc", "abcabc")), notices);
+         assertEquals(Arrays.asList(Triple.of(atom, "abc", "abcabc")), notices);
          notices.clear();
       }
       
       atom.set(null); // reset
       for (List<?> notices : noticesArray) {
-         assertEquals(Arrays.asList(Trio.create(atom, "abcabc", null)), notices);
+         assertEquals(Arrays.asList(Triple.of(atom, "abcabc", null)), notices);
          notices.clear();
       }
    }

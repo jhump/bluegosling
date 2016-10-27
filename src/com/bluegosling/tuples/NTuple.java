@@ -72,7 +72,7 @@ public final class NTuple<A, B, C, D, E> implements Tuple.Ops5<A, B, C, D, E>, S
    
    /**
     * Creates a new tuple. The tuple must have at least 6 items (otherwise, it would be a
-    * {@link Quintet}).
+    * {@link Quintuple}).
     * 
     * @param a the first item
     * @param b the second item
@@ -185,13 +185,13 @@ public final class NTuple<A, B, C, D, E> implements Tuple.Ops5<A, B, C, D, E>, S
     * {@inheritDoc}
     * 
     * <p>If this tuple has exactly six elements, then the returned tuple will have five elements and
-    * thus be an instance of {@link Quintet}. If this tuple has more than six elements, then the
+    * thus be an instance of {@link Quintuple}. If this tuple has more than six elements, then the
     * returned tuple will also be an {@link NTuple}.
     */
    @Override
    public Ops5<B, C, D, E, ?> removeFirst() {
       if (array.length == 6) {
-         return Quintet.create(b, c, d, e, array[5]);
+         return Quintuple.of(b, c, d, e, array[5]);
       } else {
          return new NTuple<B, C, D, E, Object>(removeItem(array, 0));
       }
@@ -201,13 +201,13 @@ public final class NTuple<A, B, C, D, E> implements Tuple.Ops5<A, B, C, D, E>, S
     * {@inheritDoc}
     * 
     * <p>If this tuple has exactly six elements, then the returned tuple will have five elements and
-    * thus be an instance of {@link Quintet}. If this tuple has more than six elements, then the
+    * thus be an instance of {@link Quintuple}. If this tuple has more than six elements, then the
     * returned tuple will also be an {@link NTuple}.
     */
    @Override
    public Ops5<A, C, D, E, ?> removeSecond() {
       if (array.length == 6) {
-         return Quintet.create(a, c, d, e, array[5]);
+         return Quintuple.of(a, c, d, e, array[5]);
       } else {
          return new NTuple<A, C, D, E, Object>(removeItem(array, 1));
       }
@@ -217,13 +217,13 @@ public final class NTuple<A, B, C, D, E> implements Tuple.Ops5<A, B, C, D, E>, S
     * {@inheritDoc}
     * 
     * <p>If this tuple has exactly six elements, then the returned tuple will have five elements and
-    * thus be an instance of {@link Quintet}. If this tuple has more than six elements, then the
+    * thus be an instance of {@link Quintuple}. If this tuple has more than six elements, then the
     * returned tuple will also be an {@link NTuple}.
     */
    @Override
    public Ops5<A, B, D, E, ?> removeThird() {
       if (array.length == 6) {
-         return Quintet.create(a, b, d, e, array[5]);
+         return Quintuple.of(a, b, d, e, array[5]);
       } else {
          return new NTuple<A, B, D, E, Object>(removeItem(array, 2));
       }
@@ -233,13 +233,13 @@ public final class NTuple<A, B, C, D, E> implements Tuple.Ops5<A, B, C, D, E>, S
     * {@inheritDoc}
     * 
     * <p>If this tuple has exactly six elements, then the returned tuple will have five elements and
-    * thus be an instance of {@link Quintet}. If this tuple has more than six elements, then the
+    * thus be an instance of {@link Quintuple}. If this tuple has more than six elements, then the
     * returned tuple will also be an {@link NTuple}.
     */
    @Override
    public Ops5<A, B, C, E, ?> removeFourth() {
       if (array.length == 6) {
-         return Quintet.create(a, b, c, e, array[5]);
+         return Quintuple.of(a, b, c, e, array[5]);
       } else {
          return new NTuple<A, B, C, E, Object>(removeItem(array, 3));
       }
@@ -249,13 +249,13 @@ public final class NTuple<A, B, C, D, E> implements Tuple.Ops5<A, B, C, D, E>, S
     * {@inheritDoc}
     * 
     * <p>If this tuple has exactly six elements, then the returned tuple will have five elements and
-    * thus be an instance of {@link Quintet}. If this tuple has more than six elements, then the
+    * thus be an instance of {@link Quintuple}. If this tuple has more than six elements, then the
     * returned tuple will also be an {@link NTuple}.
     */
    @Override
    public Ops5<A, B, C, D, ?> removeFifth() {
       if (array.length == 6) {
-         return Quintet.create(a, b, c, d, array[5]);
+         return Quintuple.of(a, b, c, d, array[5]);
       } else {
          return new NTuple<A, B, C, D, Object>(removeItem(array, 4));
       }
@@ -410,7 +410,7 @@ public final class NTuple<A, B, C, D, E> implements Tuple.Ops5<A, B, C, D, E>, S
     * calling {@link #removeFirst()}.
     * 
     * <p>If this tuple has exactly six elements, then the returned tuple will have five elements and
-    * thus be an instance of {@link Quintet}. If this tuple has more than six elements, then the
+    * thus be an instance of {@link Quintuple}. If this tuple has more than six elements, then the
     * returned tuple will also be an {@link NTuple}.
     *
     * @param index the zero-based index of the item to remove
@@ -424,7 +424,7 @@ public final class NTuple<A, B, C, D, E> implements Tuple.Ops5<A, B, C, D, E>, S
       Object newArray[] = removeItem(array, index);
       if (array.length == 6) {
          assert newArray.length == 5;
-         return Quintet.create(newArray[0], newArray[1], newArray[2], newArray[3], newArray[4]);
+         return Quintuple.of(newArray[0], newArray[1], newArray[2], newArray[3], newArray[4]);
       } else {
          return new NTuple<B, C, D, E, Object>(newArray);
       }

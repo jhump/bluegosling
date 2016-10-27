@@ -19,7 +19,7 @@ import com.bluegosling.util.ValueType;
  * @param <A> the element type
  */
 @ValueType
-public final class Unit<A> implements Tuple.Ops1<A>, Serializable {
+public final class Single<A> implements Tuple.Ops1<A>, Serializable {
 
    private static final long serialVersionUID = -9201943154135089064L;
    
@@ -32,9 +32,9 @@ public final class Unit<A> implements Tuple.Ops1<A>, Serializable {
     * @param units a collection of units
     * @return the list of values, extracted from the units
     */
-   public static <T> List<T> extract(Collection<Unit<T>> units) {
+   public static <T> List<T> extract(Collection<Single<T>> units) {
       List<T> extracted = new ArrayList<T>(units.size());
-      for (Unit<T> unit : units) {
+      for (Single<T> unit : units) {
          extracted.add(unit.getFirst());
       }
       return Collections.unmodifiableList(extracted);
@@ -49,17 +49,17 @@ public final class Unit<A> implements Tuple.Ops1<A>, Serializable {
     * @param coll a collection of values
     * @return a list of units, each one representing a corresponding value in the collection
     */
-   public static <T> List<Unit<T>> enclose(Collection<? extends T> coll) {
-      List<Unit<T>> enclosed = new ArrayList<Unit<T>>(coll.size());
+   public static <T> List<Single<T>> enclose(Collection<? extends T> coll) {
+      List<Single<T>> enclosed = new ArrayList<Single<T>>(coll.size());
       for (T t : coll) {
-         enclosed.add(create(t));
+         enclosed.add(of(t));
       }
       return Collections.unmodifiableList(enclosed);
    }
 
    private final A a;
    
-   private Unit(A a) {
+   private Single(A a) {
       this.a = a;
    }
    
@@ -69,8 +69,8 @@ public final class Unit<A> implements Tuple.Ops1<A>, Serializable {
     * @param t the sole element
     * @return a new tuple with the one specified item
     */
-   public static <T> Unit<T> create(T t) {
-      return new Unit<T>(t);
+   public static <T> Single<T> of(T t) {
+      return new Single<T>(t);
    }
    
    /**
@@ -111,8 +111,8 @@ public final class Unit<A> implements Tuple.Ops1<A>, Serializable {
    }
 
    @Override
-   public <T> Unit<T> setFirst(T t) {
-      return new Unit<T>(t);
+   public <T> Single<T> setFirst(T t) {
+      return new Single<T>(t);
    }
 
    @Override
@@ -122,12 +122,12 @@ public final class Unit<A> implements Tuple.Ops1<A>, Serializable {
 
    @Override
    public <T> Pair<A, T> add(T t) {
-      return Pair.create(a, t);
+      return Pair.of(a, t);
    }
 
    @Override
    public <T> Pair<T, A> insertFirst(T t) {
-      return Pair.create(t, a);
+      return Pair.of(t, a);
    }
 
    @Override
@@ -136,13 +136,13 @@ public final class Unit<A> implements Tuple.Ops1<A>, Serializable {
    }
 
    @Override
-   public <T> Unit<T> transformAll(Function<Object, ? extends T> function) {
+   public <T> Single<T> transformAll(Function<Object, ? extends T> function) {
       return transformFirst(function);
    }
 
    @Override
-   public <T> Unit<T> transformFirst(Function<? super A, ? extends T> function) {
-      return Unit.<T>create(function.apply(a));
+   public <T> Single<T> transformFirst(Function<? super A, ? extends T> function) {
+      return Single.<T>of(function.apply(a));
       
    }
    

@@ -142,7 +142,7 @@ public class UnrolledLinkedList<E> extends AbstractSequentialList<E> implements 
             node = node.next;
          }
       }
-      return Pair.create(node, offset);
+      return Pair.of(node, offset);
    }
    
    E remove(Node<E> node, int offset) {

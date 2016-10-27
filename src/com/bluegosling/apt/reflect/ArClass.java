@@ -264,7 +264,7 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
       // different Elements means different compile context, so we should re-query
       try {
          ArClass javaLangObject = forName(Object.class.getCanonicalName());
-         memoizedJavaLangObject = Pair.create(javaLangObject, elements());
+         memoizedJavaLangObject = Pair.of(javaLangObject, elements());
          return javaLangObject;
       } catch (ClassNotFoundException e) {
          // really should never happen
@@ -1377,7 +1377,7 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
          typeMirrorMap.put(int.class, types().getPrimitiveType(TypeKind.INT));
          typeMirrorMap.put(long.class, types().getPrimitiveType(TypeKind.LONG));
          typeMirrorMap.put(short.class, types().getPrimitiveType(TypeKind.SHORT));
-         memoizedTypeMirrorMap = Pair.create(typeMirrorMap, types());
+         memoizedTypeMirrorMap = Pair.of(typeMirrorMap, types());
          return typeMirrorMap;
       }
       

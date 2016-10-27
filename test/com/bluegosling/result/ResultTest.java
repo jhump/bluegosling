@@ -24,7 +24,7 @@ import com.bluegosling.possible.Possible;
 import com.bluegosling.result.FailedResultException;
 import com.bluegosling.result.Result;
 import com.bluegosling.tuples.Pair;
-import com.bluegosling.tuples.Trio;
+import com.bluegosling.tuples.Triple;
 import com.google.common.collect.ImmutableList;
 import com.google.common.util.concurrent.Futures;
 
@@ -327,15 +327,15 @@ public class ResultTest {
       Result<String, String> r1 = Result.ok("ok");
       Result<String, String> r2 = Result.ok("ko");
       
-      Pair<String, String> expected = Pair.create("ok", "ko");
-      Pair<String, String> other = Pair.create("foo", "bar");
+      Pair<String, String> expected = Pair.of("ok", "ko");
+      Pair<String, String> other = Pair.of("foo", "bar");
     
-      checkSuccess(r1.combineWith(r2, Pair::create), expected, other);
+      checkSuccess(r1.combineWith(r2, Pair::of), expected, other);
       
       Result<String, String> failed = Result.error("kaboom!");
       
-      checkError(failed.combineWith(r1, Pair::create), "kaboom!", "pow!", other);
-      checkError(r2.combineWith(failed, Pair::create), "kaboom!", "pow!", other);
+      checkError(failed.combineWith(r1, Pair::of), "kaboom!", "pow!", other);
+      checkError(r2.combineWith(failed, Pair::of), "kaboom!", "pow!", other);
    }
    
    @Test public void combineWith_3() {
@@ -343,15 +343,15 @@ public class ResultTest {
       Result<String, String> r2 = Result.ok("ko");
       Result<String, String> r3 = Result.ok("OK");
       
-      Trio<String, String, String> expected = Trio.create("ok", "ko", "OK");
-      Trio<String, String, String> other = Trio.create("foo", "bar", "baz");
+      Triple<String, String, String> expected = Triple.of("ok", "ko", "OK");
+      Triple<String, String, String> other = Triple.of("foo", "bar", "baz");
     
-      checkSuccess(r1.combineWith(r2, r3, Trio::create), expected, other);
+      checkSuccess(r1.combineWith(r2, r3, Triple::of), expected, other);
       
       Result<String, String> failed = Result.error("kaboom!");
       
-      checkError(failed.combineWith(r1, r2, Trio::create), "kaboom!", "pow!", other);
-      checkError(r2.combineWith(r3, failed, Trio::create), "kaboom!", "pow!", other);
+      checkError(failed.combineWith(r1, r2, Triple::of), "kaboom!", "pow!", other);
+      checkError(r2.combineWith(r3, failed, Triple::of), "kaboom!", "pow!", other);
    }
    
    @Test public void successfulOnly() {

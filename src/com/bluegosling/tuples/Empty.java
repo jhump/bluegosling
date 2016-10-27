@@ -49,12 +49,12 @@ public final class Empty implements Tuple, Serializable {
    }
 
    @Override
-   public <T> Unit<T> add(T t) {
-      return Unit.create(t);
+   public <T> Single<T> add(T t) {
+      return Single.of(t);
    }
 
    @Override
-   public <T> Unit<T> insertFirst(T t) {
+   public <T> Single<T> insertFirst(T t) {
       return add(t);
    }
 

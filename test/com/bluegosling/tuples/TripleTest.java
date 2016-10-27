@@ -20,13 +20,13 @@ import java.util.List;
 import java.util.function.Function;
 
 /**
- * Test cases for {@link Trio}.
+ * Test cases for {@link Triple}.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public class TrioTest {
+public class TripleTest {
 
-   private final Trio<String, Integer, Double> t = Trio.create("a", 1, 42.0);
+   private final Triple<String, Integer, Double> t = Triple.of("a", 1, 42.0);
 
    // Collection-like operations
    
@@ -37,9 +37,9 @@ public class TrioTest {
       assertTrue(t.contains("a"));
       assertTrue(t.contains(1));
       assertTrue(t.contains(42.0));
-      assertTrue(Trio.create("a", 1, null).contains(null));
-      assertTrue(Trio.create("a", null, 1).contains(null));
-      assertTrue(Trio.create(null, "a", 1).contains(null));
+      assertTrue(Triple.of("a", 1, null).contains(null));
+      assertTrue(Triple.of("a", null, 1).contains(null));
+      assertTrue(Triple.of(null, "a", 1).contains(null));
    }
    
    @Test public void isEmpty() {
@@ -78,13 +78,13 @@ public class TrioTest {
    
    @Test public void equals() {
       assertTrue(t.equals(t));
-      assertTrue(t.equals(Trio.create("a", 1, 42.0)));
-      assertTrue(t.equals(Quartet.create("XYZ", "a", 1, 42.0).removeFirst()));
-      assertTrue(t.equals(Pair.create(1, 42.0).insertFirst("a")));
+      assertTrue(t.equals(Triple.of("a", 1, 42.0)));
+      assertTrue(t.equals(Quadruple.of("XYZ", "a", 1, 42.0).removeFirst()));
+      assertTrue(t.equals(Pair.of(1, 42.0).insertFirst("a")));
       assertFalse(t.equals(Empty.INSTANCE));
-      assertFalse(t.equals(Unit.create("a")));
-      assertFalse(t.equals(Pair.create("a", 1)));
-      assertFalse(t.equals(Trio.create("a", 1, 43.43)));
+      assertFalse(t.equals(Single.of("a")));
+      assertFalse(t.equals(Pair.of("a", 1)));
+      assertFalse(t.equals(Triple.of("a", 1, 43.43)));
       assertFalse(t.equals(Arrays.<Object>asList("a", 1, 42.0)));
    }
    
@@ -101,18 +101,18 @@ public class TrioTest {
    }
    
    @Test public void addAndInsert() {
-      Quartet<String, Integer, Double, String> q = t.add("foobar");
-      assertEquals(Quartet.create("a", 1, 42.0, "foobar"), q);
+      Quadruple<String, Integer, Double, String> q = t.add("foobar");
+      assertEquals(Quadruple.of("a", 1, 42.0, "foobar"), q);
       assertEquals(q, t.insertFourth("foobar"));
-      assertEquals(Quartet.create("foobar", "a", 1, 42.0), t.insertFirst("foobar"));
-      assertEquals(Quartet.create("a", "foobar", 1, 42.0), t.insertSecond("foobar"));
-      assertEquals(Quartet.create("a", 1, "foobar", 42.0), t.insertThird("foobar"));
+      assertEquals(Quadruple.of("foobar", "a", 1, 42.0), t.insertFirst("foobar"));
+      assertEquals(Quadruple.of("a", "foobar", 1, 42.0), t.insertSecond("foobar"));
+      assertEquals(Quadruple.of("a", 1, "foobar", 42.0), t.insertThird("foobar"));
    }
    
    @Test public void remove() {
-      assertEquals(Pair.create(1, 42.0), t.removeFirst());
-      assertEquals(Pair.create("a", 42.0), t.removeSecond());
-      assertEquals(Pair.create("a", 1), t.removeThird());
+      assertEquals(Pair.of(1, 42.0), t.removeFirst());
+      assertEquals(Pair.of("a", 42.0), t.removeSecond());
+      assertEquals(Pair.of("a", 1), t.removeThird());
    }
    
    @Test public void transform() {
@@ -122,10 +122,10 @@ public class TrioTest {
          }
       };
       
-      assertEquals(Trio.create("abcdefg", "abcdefg", "abcdefg"), t.transformAll(f));
-      assertEquals(Trio.create("abcdefg", 1, 42.0), t.transformFirst(f));
-      assertEquals(Trio.create("a", "abcdefg", 42.0), t.transformSecond(f));
-      assertEquals(Trio.create("a", 1, "abcdefg"), t.transformThird(f));
+      assertEquals(Triple.of("abcdefg", "abcdefg", "abcdefg"), t.transformAll(f));
+      assertEquals(Triple.of("abcdefg", 1, 42.0), t.transformFirst(f));
+      assertEquals(Triple.of("a", "abcdefg", 42.0), t.transformSecond(f));
+      assertEquals(Triple.of("a", 1, "abcdefg"), t.transformThird(f));
    }
    
    // serialization
@@ -134,7 +134,7 @@ public class TrioTest {
       ByteArrayOutputStream bos = new ByteArrayOutputStream();
       new ObjectOutputStream(bos).writeObject(t);
       ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
-      Trio<?, ?, ?> deserialized = (Trio<?, ?, ?>) new ObjectInputStream(bis).readObject();
+      Triple<?, ?, ?> deserialized = (Triple<?, ?, ?>) new ObjectInputStream(bis).readObject();
       
       assertEquals(t, deserialized);
    }
@@ -143,44 +143,44 @@ public class TrioTest {
    
    @Test public void separate() {
       assertEquals(
-            Trio.create(Collections.emptyList(), Collections.emptyList(), Collections.emptyList()),
-            Trio.separate(Collections.<Trio<Integer, String, Double>>emptyList()));
+            Triple.of(Collections.emptyList(), Collections.emptyList(), Collections.emptyList()),
+            Triple.separate(Collections.<Triple<Integer, String, Double>>emptyList()));
 
-      List<Trio<Integer, String, Double>> trios = Arrays.asList(Trio.create(1, "a", 101.0),
-            Trio.create(2, "b", 222.0), Trio.create(3, "c", 330.3));
+      List<Triple<Integer, String, Double>> trios = Arrays.asList(Triple.of(1, "a", 101.0),
+            Triple.of(2, "b", 222.0), Triple.of(3, "c", 330.3));
       assertEquals(
-            Trio.create(Arrays.asList(1, 2, 3), Arrays.asList("a", "b", "c"),
+            Triple.of(Arrays.asList(1, 2, 3), Arrays.asList("a", "b", "c"),
                   Arrays.asList(101.0, 222.0, 330.3)),
-            Trio.separate(trios));
+            Triple.separate(trios));
    }
 
-   private <A, B, C> void assertCombinedEquals(List<Trio<A, B, C>> expectedTrios,
+   private <A, B, C> void assertCombinedEquals(List<Triple<A, B, C>> expectedTrios,
          Collection<? extends A> a, Collection<? extends B> b, Collection<? extends C> c) {
-      assertEquals(expectedTrios, Trio.combine(a, b, c));
-      assertEquals(expectedTrios, Trio.combine(Trio.create(a, b, c)));
+      assertEquals(expectedTrios, Triple.combine(a, b, c));
+      assertEquals(expectedTrios, Triple.combine(Triple.of(a, b, c)));
    }
    
    @Test public void combine() {
-      assertCombinedEquals(Collections.<Trio<Integer, String, Double>>emptyList(),
+      assertCombinedEquals(Collections.<Triple<Integer, String, Double>>emptyList(),
             Collections.<Integer>emptyList(), Collections.<String>emptyList(),
             Collections.<Double>emptyList());
 
       assertCombinedEquals(
-            Arrays.asList(Trio.create(1, "a", 101.0), Trio.create(2, "b", 222.0),
-                  Trio.create(3, "c", 330.3)),
+            Arrays.asList(Triple.of(1, "a", 101.0), Triple.of(2, "b", 222.0),
+                  Triple.of(3, "c", 330.3)),
             Arrays.asList(1, 2, 3), Arrays.asList("a", "b", "c"),
             Arrays.asList(101.0, 222.0, 330.3));
    }
 
    private void assertCombineFails(Collection<?> a, Collection<?> b, Collection<?> c) {
       try {
-         Trio.combine(a, b, c);
+         Triple.combine(a, b, c);
          fail("expecting IllegalArgumentException but never thrown");
       } catch (IllegalArgumentException expected) {
       }
 
       try {
-         Trio.combine(Trio.create(a, b, c));
+         Triple.combine(Triple.of(a, b, c));
          fail("expecting IllegalArgumentException but never thrown");
       } catch (IllegalArgumentException expected) {
       }

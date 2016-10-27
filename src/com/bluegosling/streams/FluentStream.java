@@ -17,7 +17,7 @@ import com.bluegosling.collections.MoreSpliterators;
 import com.bluegosling.collections.MoreStreams;
 import com.bluegosling.function.TriFunction;
 import com.bluegosling.tuples.Pair;
-import com.bluegosling.tuples.Trio;
+import com.bluegosling.tuples.Triple;
 
 /**
  * A fluent stream is a {@link Stream} that provides extra operations, including extensibility in
@@ -240,7 +240,7 @@ public interface FluentStream<T> extends Stream<T> {
     */
    default Pair<FluentStream<T>, FluentStream<T>> fork() {
       Supplier<FluentStream<T>> forks = fork(2);
-      return Pair.create(forks.get(), forks.get());
+      return Pair.of(forks.get(), forks.get());
    }
 
    /**
@@ -252,7 +252,7 @@ public interface FluentStream<T> extends Stream<T> {
     */
    default Pair<FluentStream<T>, FluentStream<T>> partition(Predicate<? super T> criteria) {
       Pair<FluentStream<T>, FluentStream<T>> forked = fork();
-      return Pair.create(forked.getFirst().filter(criteria),
+      return Pair.of(forked.getFirst().filter(criteria),
             forked.getSecond().filter(criteria.negate()));
    }
 
@@ -308,7 +308,7 @@ public interface FluentStream<T> extends Stream<T> {
     * stream.join(other,
     *     keyExtractor1, valueExtractor1,
     *     keyExtractor2, valueExtractor2,
-    *     Trio::create);
+    *     Triple::of);
     * </pre>
     * 
     * @param other a stream
@@ -320,15 +320,15 @@ public interface FluentStream<T> extends Stream<T> {
     *       stream
     * @return a stream that is the joined result of this stream and the given stream
     */
-   default <K, U, V, W> FluentStream<Trio<K, Collection<V>, Collection<W>>> join(
+   default <K, U, V, W> FluentStream<Triple<K, Collection<V>, Collection<W>>> join(
          Stream<? extends U> other,
          Function<? super T, ? extends K> keyExtractor1,
          Function<? super T, ? extends V> valueExtractor1,
          Function<? super U, ? extends K> keyExtractor2,
          Function<? super U, ? extends W> valueExtractor2) {
-      return this.<K, U, V, W, Trio<K, Collection<V>, Collection<W>>>
+      return this.<K, U, V, W, Triple<K, Collection<V>, Collection<W>>>
             join(other, keyExtractor1, valueExtractor1, keyExtractor2, valueExtractor2,
-                  Trio::create);
+                  Triple::of);
    }
 
    /**
@@ -337,7 +337,7 @@ public interface FluentStream<T> extends Stream<T> {
     * stream.join(other,
     *     keyExtractor1, Function.identity(),
     *     keyExtractor2, Function.identity(),
-    *     Trio::create);
+    *     Triple::of);
     * </pre>
     * 
     * @param other a stream
@@ -346,7 +346,7 @@ public interface FluentStream<T> extends Stream<T> {
     *       stream
     * @return a stream that is the joined result of this stream and the given stream
     */
-   default <K, U> FluentStream<Trio<K, Collection<T>, Collection<U>>> join(
+   default <K, U> FluentStream<Triple<K, Collection<T>, Collection<U>>> join(
          Stream<? extends U> other, Function<? super T, ? extends K> keyExtractor1,
          Function<? super U, ? extends K> keyExtractor2) {
       return join(other, keyExtractor1, Function.identity(), keyExtractor2, Function.identity());

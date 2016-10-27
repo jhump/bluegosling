@@ -57,8 +57,8 @@ public class EmptyTest {
    
    @Test public void equals() {
       assertTrue(e.equals(e));
-      assertTrue(e.equals(Unit.create("a").removeFirst()));
-      assertFalse(e.equals(Unit.create("a")));
+      assertTrue(e.equals(Single.of("a").removeFirst()));
+      assertFalse(e.equals(Single.of("a")));
       assertFalse(e.equals(Collections.emptyList()));
    }
    
@@ -69,8 +69,8 @@ public class EmptyTest {
    // accessors / mutators
    
    @Test public void addAndInsert() {
-      Unit<String> u = e.add("a");
-      assertEquals(Unit.create("a"), u);
+      Single<String> u = e.add("a");
+      assertEquals(Single.of("a"), u);
       assertEquals(u, e.insertFirst("a"));
    }
    

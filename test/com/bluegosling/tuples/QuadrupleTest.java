@@ -20,13 +20,13 @@ import java.util.List;
 import java.util.function.Function;
 
 /**
- * Test cases for {@link Quartet}.
+ * Test cases for {@link Quadruple}.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public class QuartetTest {
+public class QuadrupleTest {
 
-   private final Quartet<String, Integer, Double, String> q = Quartet.create("a", 1, 42.0, "foobar");
+   private final Quadruple<String, Integer, Double, String> q = Quadruple.of("a", 1, 42.0, "foobar");
 
    // Collection-like operations
    
@@ -38,10 +38,10 @@ public class QuartetTest {
       assertTrue(q.contains(1));
       assertTrue(q.contains(42.0));
       assertTrue(q.contains("foobar"));
-      assertTrue(Quartet.create("a", 1, 42.0, null).contains(null));
-      assertTrue(Quartet.create("a", 1, null, 42.0).contains(null));
-      assertTrue(Quartet.create("a", null, 1, 42.0).contains(null));
-      assertTrue(Quartet.create(null, "a", 1, 42.0).contains(null));
+      assertTrue(Quadruple.of("a", 1, 42.0, null).contains(null));
+      assertTrue(Quadruple.of("a", 1, null, 42.0).contains(null));
+      assertTrue(Quadruple.of("a", null, 1, 42.0).contains(null));
+      assertTrue(Quadruple.of(null, "a", 1, 42.0).contains(null));
    }
    
    @Test public void isEmpty() {
@@ -83,14 +83,14 @@ public class QuartetTest {
    
    @Test public void equals() {
       assertTrue(q.equals(q));
-      assertTrue(q.equals(Quartet.create("a", 1, 42.0, "foobar")));
-      assertTrue(q.equals(Quintet.create("XYZ", "a", 1, 42.0, "foobar").removeFirst()));
-      assertTrue(q.equals(Trio.create(1, 42.0, "foobar").insertFirst("a")));
+      assertTrue(q.equals(Quadruple.of("a", 1, 42.0, "foobar")));
+      assertTrue(q.equals(Quintuple.of("XYZ", "a", 1, 42.0, "foobar").removeFirst()));
+      assertTrue(q.equals(Triple.of(1, 42.0, "foobar").insertFirst("a")));
       assertFalse(q.equals(Empty.INSTANCE));
-      assertFalse(q.equals(Unit.create("a")));
-      assertFalse(q.equals(Pair.create("a", 1)));
-      assertFalse(q.equals(Trio.create("a", 1, 42.0)));
-      assertFalse(q.equals(Quartet.create("a", 1, 42.0, "baz")));
+      assertFalse(q.equals(Single.of("a")));
+      assertFalse(q.equals(Pair.of("a", 1)));
+      assertFalse(q.equals(Triple.of("a", 1, 42.0)));
+      assertFalse(q.equals(Quadruple.of("a", 1, 42.0, "baz")));
       assertFalse(q.equals(Arrays.<Object>asList("a", 1, 42.0, "foobar")));
    }
    
@@ -108,20 +108,20 @@ public class QuartetTest {
    }
    
    @Test public void addAndInsert() {
-      Quintet<String, Integer, Double, String, Long> q5 = q.add(0x1234L);
-      assertEquals(Quintet.create("a", 1, 42.0, "foobar", 0x1234L), q5);
+      Quintuple<String, Integer, Double, String, Long> q5 = q.add(0x1234L);
+      assertEquals(Quintuple.of("a", 1, 42.0, "foobar", 0x1234L), q5);
       assertEquals(q5, q.insertFifth(0x1234L));
-      assertEquals(Quintet.create(0x1234L, "a", 1, 42.0, "foobar"), q.insertFirst(0x1234L));
-      assertEquals(Quintet.create("a", 0x1234L, 1, 42.0, "foobar"), q.insertSecond(0x1234L));
-      assertEquals(Quintet.create("a", 1, 0x1234L, 42.0, "foobar"), q.insertThird(0x1234L));
-      assertEquals(Quintet.create("a", 1, 42.0, 0x1234L, "foobar"), q.insertFourth(0x1234L));
+      assertEquals(Quintuple.of(0x1234L, "a", 1, 42.0, "foobar"), q.insertFirst(0x1234L));
+      assertEquals(Quintuple.of("a", 0x1234L, 1, 42.0, "foobar"), q.insertSecond(0x1234L));
+      assertEquals(Quintuple.of("a", 1, 0x1234L, 42.0, "foobar"), q.insertThird(0x1234L));
+      assertEquals(Quintuple.of("a", 1, 42.0, 0x1234L, "foobar"), q.insertFourth(0x1234L));
    }
    
    @Test public void remove() {
-      assertEquals(Trio.create(1, 42.0, "foobar"), q.removeFirst());
-      assertEquals(Trio.create("a", 42.0, "foobar"), q.removeSecond());
-      assertEquals(Trio.create("a", 1, "foobar"), q.removeThird());
-      assertEquals(Trio.create("a", 1, 42.0), q.removeFourth());
+      assertEquals(Triple.of(1, 42.0, "foobar"), q.removeFirst());
+      assertEquals(Triple.of("a", 42.0, "foobar"), q.removeSecond());
+      assertEquals(Triple.of("a", 1, "foobar"), q.removeThird());
+      assertEquals(Triple.of("a", 1, 42.0), q.removeFourth());
    }
    
    @Test public void transform() {
@@ -131,11 +131,11 @@ public class QuartetTest {
          }
       };
       
-      assertEquals(Quartet.create("abcdefg", "abcdefg", "abcdefg", "abcdefg"), q.transformAll(f));
-      assertEquals(Quartet.create("abcdefg", 1, 42.0, "foobar"), q.transformFirst(f));
-      assertEquals(Quartet.create("a", "abcdefg", 42.0, "foobar"), q.transformSecond(f));
-      assertEquals(Quartet.create("a", 1, "abcdefg", "foobar"), q.transformThird(f));
-      assertEquals(Quartet.create("a", 1, 42.0, "abcdefg"), q.transformFourth(f));
+      assertEquals(Quadruple.of("abcdefg", "abcdefg", "abcdefg", "abcdefg"), q.transformAll(f));
+      assertEquals(Quadruple.of("abcdefg", 1, 42.0, "foobar"), q.transformFirst(f));
+      assertEquals(Quadruple.of("a", "abcdefg", 42.0, "foobar"), q.transformSecond(f));
+      assertEquals(Quadruple.of("a", 1, "abcdefg", "foobar"), q.transformThird(f));
+      assertEquals(Quadruple.of("a", 1, 42.0, "abcdefg"), q.transformFourth(f));
    }
    
    // serialization
@@ -144,8 +144,8 @@ public class QuartetTest {
       ByteArrayOutputStream bos = new ByteArrayOutputStream();
       new ObjectOutputStream(bos).writeObject(q);
       ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
-      Quartet<?, ?, ?, ?> deserialized =
-            (Quartet<?, ?, ?, ?>) new ObjectInputStream(bis).readObject();
+      Quadruple<?, ?, ?, ?> deserialized =
+            (Quadruple<?, ?, ?, ?>) new ObjectInputStream(bis).readObject();
       
       assertEquals(q, deserialized);
    }
@@ -154,34 +154,34 @@ public class QuartetTest {
    
    @Test public void separate() {
       assertEquals(
-            Quartet.create(Collections.emptyList(), Collections.emptyList(),
+            Quadruple.of(Collections.emptyList(), Collections.emptyList(),
                   Collections.emptyList(), Collections.emptyList()),
-            Quartet.separate(Collections.<Quartet<Integer, String, Double, Boolean>>emptyList()));
+            Quadruple.separate(Collections.<Quadruple<Integer, String, Double, Boolean>>emptyList()));
 
-      List<Quartet<Integer, String, Double, Boolean>> quartets =
-            Arrays.asList(Quartet.create(1, "a", 101.0, true), Quartet.create(2, "b", 222.0, false),
-                  Quartet.create(3, "c", 330.3, true));
+      List<Quadruple<Integer, String, Double, Boolean>> quartets =
+            Arrays.asList(Quadruple.of(1, "a", 101.0, true), Quadruple.of(2, "b", 222.0, false),
+                  Quadruple.of(3, "c", 330.3, true));
       assertEquals(
-            Quartet.create(Arrays.asList(1, 2, 3), Arrays.asList("a", "b", "c"),
+            Quadruple.of(Arrays.asList(1, 2, 3), Arrays.asList("a", "b", "c"),
                   Arrays.asList(101.0, 222.0, 330.3), Arrays.asList(true, false, true)),
-            Quartet.separate(quartets));
+            Quadruple.separate(quartets));
    }
 
-   private <A, B, C, D> void assertCombinedEquals(List<Quartet<A, B, C, D>> expectedQuartets,
+   private <A, B, C, D> void assertCombinedEquals(List<Quadruple<A, B, C, D>> expectedQuartets,
          Collection<? extends A> a, Collection<? extends B> b, Collection<? extends C> c,
          Collection<? extends D> d) {
-      assertEquals(expectedQuartets, Quartet.combine(a, b, c, d));
-      assertEquals(expectedQuartets, Quartet.combine(Quartet.create(a, b, c, d)));
+      assertEquals(expectedQuartets, Quadruple.combine(a, b, c, d));
+      assertEquals(expectedQuartets, Quadruple.combine(Quadruple.of(a, b, c, d)));
    }
    
    @Test public void combine() {
-      assertCombinedEquals(Collections.<Quartet<Integer, String, Double, Boolean>>emptyList(),
+      assertCombinedEquals(Collections.<Quadruple<Integer, String, Double, Boolean>>emptyList(),
             Collections.<Integer>emptyList(), Collections.<String>emptySet(),
             Collections.<Double>emptyList(), Collections.<Boolean>emptySet());
 
       assertCombinedEquals(
-            Arrays.asList(Quartet.create(1, "a", 101.0, true), Quartet.create(2, "b", 222.0, false),
-                  Quartet.create(3, "c", 330.3, true)),
+            Arrays.asList(Quadruple.of(1, "a", 101.0, true), Quadruple.of(2, "b", 222.0, false),
+                  Quadruple.of(3, "c", 330.3, true)),
             Arrays.asList(1, 2, 3), Arrays.asList("a", "b", "c"),
             Arrays.asList(101.0, 222.0, 330.3), Arrays.asList(true, false, true));
    }
@@ -189,13 +189,13 @@ public class QuartetTest {
    private void assertCombineFails(Collection<?> a, Collection<?> b, Collection<?> c,
          Collection<?> d) {
       try {
-         Quartet.combine(a, b, c, d);
+         Quadruple.combine(a, b, c, d);
          fail("expecting IllegalArgumentException but never thrown");
       } catch (IllegalArgumentException expected) {
       }
 
       try {
-         Quartet.combine(Quartet.create(a, b, c, d));
+         Quadruple.combine(Quadruple.of(a, b, c, d));
          fail("expecting IllegalArgumentException but never thrown");
       } catch (IllegalArgumentException expected) {
       }

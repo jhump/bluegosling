@@ -26,7 +26,7 @@ import java.util.function.Function;
  */
 public class PairTest {
    
-   private final Pair<String, Integer> p = Pair.create("a", 1);
+   private final Pair<String, Integer> p = Pair.of("a", 1);
    
    // Collection-like operations
    
@@ -36,8 +36,8 @@ public class PairTest {
       assertFalse(p.contains(new Object()));
       assertTrue(p.contains("a"));
       assertTrue(p.contains(1));
-      assertTrue(Pair.create("a", null).contains(null));
-      assertTrue(Pair.create(null, "a").contains(null));
+      assertTrue(Pair.of("a", null).contains(null));
+      assertTrue(Pair.of(null, "a").contains(null));
    }
    
    @Test public void isEmpty() {
@@ -73,12 +73,12 @@ public class PairTest {
    
    @Test public void equals() {
       assertTrue(p.equals(p));
-      assertTrue(p.equals(Pair.create("a", 1)));
-      assertTrue(p.equals(Trio.create("a", "b", 1).removeSecond()));
-      assertTrue(p.equals(Unit.create(1).insertFirst("a")));
+      assertTrue(p.equals(Pair.of("a", 1)));
+      assertTrue(p.equals(Triple.of("a", "b", 1).removeSecond()));
+      assertTrue(p.equals(Single.of(1).insertFirst("a")));
       assertFalse(p.equals(Empty.INSTANCE));
-      assertFalse(p.equals(Unit.create("a")));
-      assertFalse(p.equals(Pair.create("a", "b")));
+      assertFalse(p.equals(Single.of("a")));
+      assertFalse(p.equals(Pair.of("a", "b")));
       assertFalse(p.equals(Arrays.<Object>asList("a", 1)));
    }
    
@@ -94,16 +94,16 @@ public class PairTest {
    }
    
    @Test public void addAndInsert() {
-      Trio<String, Integer, Double> t = p.add(42.0);
-      assertEquals(Trio.create("a", 1, 42.0), t);
+      Triple<String, Integer, Double> t = p.add(42.0);
+      assertEquals(Triple.of("a", 1, 42.0), t);
       assertEquals(t, p.insertThird(42.0));
-      assertEquals(Trio.create(42.0, "a", 1), p.insertFirst(42.0));
-      assertEquals(Trio.create("a", 42.0, 1), p.insertSecond(42.0));
+      assertEquals(Triple.of(42.0, "a", 1), p.insertFirst(42.0));
+      assertEquals(Triple.of("a", 42.0, 1), p.insertSecond(42.0));
    }
    
    @Test public void remove() {
-      assertEquals(Unit.create(1), p.removeFirst());
-      assertEquals(Unit.create("a"), p.removeSecond());
+      assertEquals(Single.of(1), p.removeFirst());
+      assertEquals(Single.of("a"), p.removeSecond());
    }
    
    @Test public void transform() {
@@ -113,9 +113,9 @@ public class PairTest {
          }
       };
       
-      assertEquals(Pair.create("abcdefg", "abcdefg"), p.transformAll(f));
-      assertEquals(Pair.create("abcdefg", 1), p.transformFirst(f));
-      assertEquals(Pair.create("a", "abcdefg"), p.transformSecond(f));
+      assertEquals(Pair.of("abcdefg", "abcdefg"), p.transformAll(f));
+      assertEquals(Pair.of("abcdefg", 1), p.transformFirst(f));
+      assertEquals(Pair.of("a", "abcdefg"), p.transformSecond(f));
    }
    
    // serialization
@@ -132,19 +132,19 @@ public class PairTest {
    // separate, combine
    
    @Test public void separate() {
-      assertEquals(Pair.create(Collections.emptyList(), Collections.emptyList()),
+      assertEquals(Pair.of(Collections.emptyList(), Collections.emptyList()),
             Pair.separate(Collections.<Pair<Integer, String>>emptyList()));
 
       List<Pair<Integer, String>> pairs =
-            Arrays.asList(Pair.create(1, "a"), Pair.create(2, "b"), Pair.create(3, "c"));
-      assertEquals(Pair.create(Arrays.asList(1, 2, 3), Arrays.asList("a", "b", "c")),
+            Arrays.asList(Pair.of(1, "a"), Pair.of(2, "b"), Pair.of(3, "c"));
+      assertEquals(Pair.of(Arrays.asList(1, 2, 3), Arrays.asList("a", "b", "c")),
             Pair.separate(pairs));
    }
 
    private <A, B> void assertCombinedEquals(List<Pair<A, B>> expectedPairs,
          Collection<? extends A> a, Collection<? extends B> b) {
       assertEquals(expectedPairs, Pair.combine(a, b));
-      assertEquals(expectedPairs, Pair.combine(Pair.create(a, b)));
+      assertEquals(expectedPairs, Pair.combine(Pair.of(a, b)));
    }
    
    @Test public void combine() {
@@ -152,7 +152,7 @@ public class PairTest {
             Collections.<Integer>emptyList(), Collections.<String>emptyList());
 
       assertCombinedEquals(
-            Arrays.asList(Pair.create(1, "a"), Pair.create(2, "b"), Pair.create(3, "c")),
+            Arrays.asList(Pair.of(1, "a"), Pair.of(2, "b"), Pair.of(3, "c")),
             Arrays.asList(1, 2, 3), Arrays.asList("a", "b", "c"));
    }
 
@@ -164,7 +164,7 @@ public class PairTest {
       }
 
       try {
-         Pair.combine(Pair.create(a, b));
+         Pair.combine(Pair.of(a, b));
          fail("expecting IllegalArgumentException but never thrown");
       } catch (IllegalArgumentException expected) {
       }

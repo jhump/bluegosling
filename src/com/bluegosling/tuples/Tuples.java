@@ -31,8 +31,8 @@ public final class Tuples {
     * will be the first item in the array, and so on.
     * 
     * If the specified array is empty, {@link Empty#INSTANCE} will be returned. If the array has
-    * exactly one, two, three, four, or five elements then a {@link Unit}, {@link Pair},
-    * {@link Trio}, {@link Quartet}, or {@link Quintet} will be returned, respectively. If the
+    * exactly one, two, three, four, or five elements then a {@link Single}, {@link Pair},
+    * {@link Triple}, {@link Quadruple}, or {@link Quintuple} will be returned, respectively. If the
     * array has more than five elements than an {@link NTuple} is returned.
     * 
     * @param array the array
@@ -43,15 +43,15 @@ public final class Tuples {
          case 0:
             return Empty.INSTANCE;
          case 1:
-            return Unit.create(array[0]);
+            return Single.of(array[0]);
          case 2:
-            return Pair.create(array[0], array[1]);
+            return Pair.of(array[0], array[1]);
          case 3:
-            return Trio.create(array[0], array[1], array[2]);
+            return Triple.of(array[0], array[1], array[2]);
          case 4:
-            return Quartet.create(array[0], array[1], array[2], array[3]);
+            return Quadruple.of(array[0], array[1], array[2], array[3]);
          case 5:
-            return Quintet.create(array[0], array[1], array[2], array[3], array[4]);
+            return Quintuple.of(array[0], array[1], array[2], array[3], array[4]);
          default:
             return NTuple.create(array[0], array[1], array[2], array[3], array[4], array[5],
                   getRemaining(array, 6));
@@ -101,9 +101,9 @@ public final class Tuples {
    }
 
    public <A extends Comparable<A>, B extends Comparable<B>, C extends Comparable<C>>
-   Comparator<Trio<A, B, C>> trioNaturalOrdering() {
-      return new Comparator<Trio<A, B, C>>() {
-         @Override public int compare(Trio<A, B, C> o1, Trio<A, B, C> o2) {
+   Comparator<Triple<A, B, C>> trioNaturalOrdering() {
+      return new Comparator<Triple<A, B, C>>() {
+         @Override public int compare(Triple<A, B, C> o1, Triple<A, B, C> o2) {
             int c = o1.getFirst().compareTo(o2.getFirst());
             if (c == 0) {
                c = o1.getSecond().compareTo(o2.getSecond());
@@ -115,9 +115,9 @@ public final class Tuples {
 
    public <A extends Comparable<A>, B extends Comparable<B>, C extends Comparable<C>,
             D extends Comparable<D>>
-   Comparator<Quartet<A, B, C, D>> quartetNaturalOrdering() {
-      return new Comparator<Quartet<A, B, C, D>>() {
-         @Override public int compare(Quartet<A, B, C, D> o1, Quartet<A, B, C, D> o2) {
+   Comparator<Quadruple<A, B, C, D>> quartetNaturalOrdering() {
+      return new Comparator<Quadruple<A, B, C, D>>() {
+         @Override public int compare(Quadruple<A, B, C, D> o1, Quadruple<A, B, C, D> o2) {
             int c = o1.getFirst().compareTo(o2.getFirst());
             if (c == 0) {
                c = o1.getSecond().compareTo(o2.getSecond());
@@ -132,9 +132,9 @@ public final class Tuples {
    
    public <A extends Comparable<A>, B extends Comparable<B>, C extends Comparable<C>,
             D extends Comparable<D>, E extends Comparable<E>>
-   Comparator<Quintet<A, B, C, D, E>> quintetNaturalOrdering() {
-      return new Comparator<Quintet<A, B, C, D, E>>() {
-         @Override public int compare(Quintet<A, B, C, D, E> o1, Quintet<A, B, C, D, E> o2) {
+   Comparator<Quintuple<A, B, C, D, E>> quintetNaturalOrdering() {
+      return new Comparator<Quintuple<A, B, C, D, E>>() {
+         @Override public int compare(Quintuple<A, B, C, D, E> o1, Quintuple<A, B, C, D, E> o2) {
             int c = o1.getFirst().compareTo(o2.getFirst());
             if (c == 0) {
                c = o1.getSecond().compareTo(o2.getSecond());
