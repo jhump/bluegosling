@@ -8,7 +8,7 @@ import com.bluegosling.concurrent.locks.HierarchicalLock.AcquiredLock;
 import com.bluegosling.concurrent.locks.HierarchicalLock.ExclusiveLock;
 import com.bluegosling.concurrent.locks.HierarchicalLock.SharedLock;
 import com.bluegosling.tuples.Pair;
-import com.bluegosling.tuples.Trio;
+import com.bluegosling.tuples.Triple;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -1002,7 +1002,7 @@ public class Transaction {
             atom.validate(value);
          }
          value = commute.getFirst().apply(value);
-         pendingFutures.add(Pair.create(commute.getSecond(), value));
+         pendingFutures.add(Pair.of(commute.getSecond(), value));
       }
       setAtom(atom, value, true);
    }
@@ -1079,7 +1079,7 @@ public class Transaction {
             }
          }
          
-         List<Trio<TransactionalAtom<Object>, Object, Object>> notifications = new ArrayList<>();
+         List<Triple<TransactionalAtom<Object>, Object, Object>> notifications = new ArrayList<>();
          
          long newVersion = pinNewVersion();
          try {
@@ -1094,7 +1094,7 @@ public class Transaction {
                   if (info.isDirty() && markedAtoms.remove(atom)) {
                      Object newValue = info.getValue();
                      Object oldValue = atom.addValue(info.getValue(), newVersion, oldestVersion);
-                     notifications.add(Trio.create(atom, oldValue, newValue));
+                     notifications.add(Triple.of(atom, oldValue, newValue));
                      atom.unmark(); // "release" the atom eagerly
                   }
                }
@@ -1119,7 +1119,7 @@ public class Transaction {
          processAsyncActions(savepoint);
          
          // send notifications
-         for (Trio<TransactionalAtom<Object>, Object, Object> notification : notifications) {
+         for (Triple<TransactionalAtom<Object>, Object, Object> notification : notifications) {
             notification.getFirst().notify(notification.getSecond(), notification.getThird());
          }
          
@@ -1428,7 +1428,7 @@ public class Transaction {
          acquireLock(atom, info, LockState.LOCKED_EXCLUSIVE, false);
       }
       info.commutes.add(Pair.<Function<? super T, ? extends T>, SettableFluentFuture<T>>
-            create(function, future));
+            of(function, future));
       return future;
    }
    
@@ -1442,7 +1442,7 @@ public class Transaction {
    <T> void enqueueAsynchronousAction(AsynchronousAtom<T> atom,
          RunnableFluentFuture<T> runnable) {
       Pair<AsynchronousAtom<?>, RunnableFluentFuture<?>> pair =
-            Pair.<AsynchronousAtom<?>, RunnableFluentFuture<?>>create(atom, runnable); 
+            Pair.<AsynchronousAtom<?>, RunnableFluentFuture<?>>of(atom, runnable); 
       savepoint.asyncActions.add(pair);
    }
    

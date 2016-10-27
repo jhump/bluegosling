@@ -8,7 +8,7 @@ import static org.junit.Assert.assertTrue;
 
 import com.bluegosling.concurrent.fluent.FluentFuture;
 import com.bluegosling.possible.Holder;
-import com.bluegosling.tuples.Trio;
+import com.bluegosling.tuples.Triple;
 
 import org.junit.Test;
 
@@ -54,14 +54,14 @@ public class TransactionalAtomTest extends AbstractSynchronousAtomTest {
       assertEquals("ABC", atom.get());
       
       // w/ watcher
-      List<Trio<Atom<? extends String>, String, String>> notices =
-            new ArrayList<Trio<Atom<? extends String>, String, String>>();
+      List<Triple<Atom<? extends String>, String, String>> notices =
+            new ArrayList<Triple<Atom<? extends String>, String, String>>();
       Atom.Watcher<String> watcher = (a, oldValue, newValue) ->
-            notices.add(Trio.create(a, oldValue, newValue));
+            notices.add(Triple.of(a, oldValue, newValue));
       atom.addWatcher(watcher);
       Function<String, String> twice = (s) -> s + s;
       result = atom.commute(twice);
-      assertEquals(Arrays.asList(Trio.create(atom, "ABC", "ABCABC")), notices);
+      assertEquals(Arrays.asList(Triple.of(atom, "ABC", "ABCABC")), notices);
       notices.clear();
       assertTrue(result.isDone());
       assertEquals("ABCABC", result.get());
@@ -139,10 +139,10 @@ public class TransactionalAtomTest extends AbstractSynchronousAtomTest {
 
    @Test public void watchers_inTransaction() {
       TransactionalAtom<String> atom = create("");
-      List<Trio<Atom<?>, String, String>> notices =
-            new ArrayList<Trio<Atom<?>, String, String>>();
+      List<Triple<Atom<?>, String, String>> notices =
+            new ArrayList<Triple<Atom<?>, String, String>>();
       atom.addWatcher((a, oldValue, newValue) ->
-            notices.add(Trio.create(a, oldValue, newValue)));
+            notices.add(Triple.of(a, oldValue, newValue)));
       Function<String, String> twice = i -> i + i;
       
       Transaction.execute(t -> {
@@ -154,14 +154,14 @@ public class TransactionalAtomTest extends AbstractSynchronousAtomTest {
       assertEquals("ABCABC", atom.get());
       // watchers only get the total delta from before-transaction to committed-value
       assertEquals(1, notices.size());
-      assertEquals(Trio.create(atom,  "", "ABCABC"), notices.get(0));
+      assertEquals(Triple.of(atom,  "", "ABCABC"), notices.get(0));
    }
    
    @Test public void commute_inTransaction() {
       TransactionalAtom<Integer> atom = create(100);
-      List<Trio<Atom<?>, Integer, Integer>> notices =
-            new ArrayList<Trio<Atom<?>, Integer, Integer>>();
-      atom.addWatcher((a, oldValue, newValue) -> notices.add(Trio.create(a, oldValue, newValue)));
+      List<Triple<Atom<?>, Integer, Integer>> notices =
+            new ArrayList<Triple<Atom<?>, Integer, Integer>>();
+      atom.addWatcher((a, oldValue, newValue) -> notices.add(Triple.of(a, oldValue, newValue)));
       Function<Integer, Integer> twice = i -> i << 1;
       
       // explicit rollback cancels the future
@@ -198,7 +198,7 @@ public class TransactionalAtomTest extends AbstractSynchronousAtomTest {
       assertEquals(Integer.valueOf(400), atom.get());
       // got a notice this time
       assertEquals(1, notices.size());
-      assertEquals(Trio.create(atom, 100, 400), notices.get(0));
+      assertEquals(Triple.of(atom, 100, 400), notices.get(0));
    }
 
    @Test public void pin_inTransaction() throws Exception {

@@ -122,14 +122,14 @@ public class NTupleTest {
             NTuple.create(1, 42.0, "foobar", 0x1234L, "baz", 2, 4, 8, 16, "ABC", "XYZ")
                   .insertFirst("a")));
       assertTrue(n.equals(
-            Quintet.create(1, 42.0, "foobar", 0x1234L, "baz").insertFirst("a")
+            Quintuple.of(1, 42.0, "foobar", 0x1234L, "baz").insertFirst("a")
                   .add(2).add(4).add(8).add(16).add("ABC").add("XYZ")));
       assertFalse(n.equals(Empty.INSTANCE));
-      assertFalse(n.equals(Unit.create("a")));
-      assertFalse(n.equals(Pair.create("a", 1)));
-      assertFalse(n.equals(Trio.create("a", 1, 42.0)));
-      assertFalse(n.equals(Quartet.create("a", 1, 42.0, "baz")));
-      assertFalse(n.equals(Quintet.create("a", 1, 42.0, "foobar", 0x1234L)));
+      assertFalse(n.equals(Single.of("a")));
+      assertFalse(n.equals(Pair.of("a", 1)));
+      assertFalse(n.equals(Triple.of("a", 1, 42.0)));
+      assertFalse(n.equals(Quadruple.of("a", 1, 42.0, "baz")));
+      assertFalse(n.equals(Quintuple.of("a", 1, 42.0, "foobar", 0x1234L)));
       assertFalse(n.equals(NTuple.create("a", 1, 42.0, "foobar", 0x1234L, "baz")));
       assertFalse(n.equals(
             NTuple.create("a", 1, 42.0, "foobar", 0x1234L, "baz", 2, 4, 8, 16, "ABC", "DEF")));
@@ -193,24 +193,24 @@ public class NTupleTest {
    @Test public void remove_sixItems() {
       NTuple<String, Integer, Double, String, Long> n6 =
             NTuple.create("a", 1, 42.0, "foobar", 0x1234L, "baz");
-      assertEquals(Quintet.create(1, 42.0, "foobar", 0x1234L, "baz"), n6.removeFirst());
-      assertEquals(Quintet.create("a", 42.0, "foobar", 0x1234L, "baz"), n6.removeSecond());
-      assertEquals(Quintet.create("a", 1, "foobar", 0x1234L, "baz"), n6.removeThird());
-      assertEquals(Quintet.create("a", 1, 42.0, 0x1234L, "baz"), n6.removeFourth());
-      assertEquals(Quintet.create("a", 1, 42.0, "foobar", "baz"), n6.removeFifth());
-      // result has 5 items so should be instance of Quintet
-      assertSame(Quintet.class, n6.removeFirst().getClass());
-      assertSame(Quintet.class, n6.removeSecond().getClass());
-      assertSame(Quintet.class, n6.removeThird().getClass());
-      assertSame(Quintet.class, n6.removeFourth().getClass());
-      assertSame(Quintet.class, n6.removeFifth().getClass());
+      assertEquals(Quintuple.of(1, 42.0, "foobar", 0x1234L, "baz"), n6.removeFirst());
+      assertEquals(Quintuple.of("a", 42.0, "foobar", 0x1234L, "baz"), n6.removeSecond());
+      assertEquals(Quintuple.of("a", 1, "foobar", 0x1234L, "baz"), n6.removeThird());
+      assertEquals(Quintuple.of("a", 1, 42.0, 0x1234L, "baz"), n6.removeFourth());
+      assertEquals(Quintuple.of("a", 1, 42.0, "foobar", "baz"), n6.removeFifth());
+      // result has 5 items so should be instance of Quintuple
+      assertSame(Quintuple.class, n6.removeFirst().getClass());
+      assertSame(Quintuple.class, n6.removeSecond().getClass());
+      assertSame(Quintuple.class, n6.removeThird().getClass());
+      assertSame(Quintuple.class, n6.removeFourth().getClass());
+      assertSame(Quintuple.class, n6.removeFifth().getClass());
       //random access
-      assertEquals(Quintet.create(1, 42.0, "foobar", 0x1234L, "baz"), n6.remove(0));
-      assertEquals(Quintet.create("a", 1, "foobar", 0x1234L, "baz"), n6.remove(2));
-      assertEquals(Quintet.create("a", 1, 42.0, "foobar", 0x1234L), n6.remove(5));
-      assertSame(Quintet.class, n6.remove(0).getClass());
-      assertSame(Quintet.class, n6.remove(2).getClass());
-      assertSame(Quintet.class, n6.remove(5).getClass());
+      assertEquals(Quintuple.of(1, 42.0, "foobar", 0x1234L, "baz"), n6.remove(0));
+      assertEquals(Quintuple.of("a", 1, "foobar", 0x1234L, "baz"), n6.remove(2));
+      assertEquals(Quintuple.of("a", 1, 42.0, "foobar", 0x1234L), n6.remove(5));
+      assertSame(Quintuple.class, n6.remove(0).getClass());
+      assertSame(Quintuple.class, n6.remove(2).getClass());
+      assertSame(Quintuple.class, n6.remove(5).getClass());
    }
    
    @Test public void remove_moreThanSixItems() {

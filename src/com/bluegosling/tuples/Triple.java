@@ -22,7 +22,7 @@ import java.util.function.Function;
  * @param <C> the type of the third item
  */
 @ValueType
-public final class Trio<A, B, C> implements Tuple.Ops3<A, B, C>, Serializable {
+public final class Triple<A, B, C> implements Tuple.Ops3<A, B, C>, Serializable {
 
    private static final long serialVersionUID = -2245545958928314038L;
 
@@ -36,7 +36,7 @@ public final class Trio<A, B, C> implements Tuple.Ops3<A, B, C>, Serializable {
     * @return a list view of the specified trio
     */
    @SuppressWarnings("unchecked") // thanks to type bounds, we know the cast is safe
-   public static <T> List<T> asTypedList(Trio<? extends T, ? extends T, ? extends T> trio) {
+   public static <T> List<T> asTypedList(Triple<? extends T, ? extends T, ? extends T> trio) {
       return (List<T>) trio.asList();
    }
    
@@ -49,17 +49,17 @@ public final class Trio<A, B, C> implements Tuple.Ops3<A, B, C>, Serializable {
     * @param trios a collection of trios
     * @return a trio of lists whose values were extracted from the collection of trios
     */
-   public static <T, U, V> Trio<List<T>, List<U>, List<V>> separate(
-         Collection<Trio<T, U, V>> trios) {
+   public static <T, U, V> Triple<List<T>, List<U>, List<V>> separate(
+         Collection<Triple<T, U, V>> trios) {
       List<T> t = new ArrayList<T>(trios.size());
       List<U> u = new ArrayList<U>(trios.size());
       List<V> v = new ArrayList<V>(trios.size());
-      for (Trio<T, U, V> trio : trios) {
+      for (Triple<T, U, V> trio : trios) {
          t.add(trio.getFirst());
          u.add(trio.getSecond());
          v.add(trio.getThird());
       }
-      return create(Collections.unmodifiableList(t), Collections.unmodifiableList(u),
+      return of(Collections.unmodifiableList(t), Collections.unmodifiableList(u),
             Collections.unmodifiableList(v));
    }
 
@@ -73,8 +73,8 @@ public final class Trio<A, B, C> implements Tuple.Ops3<A, B, C>, Serializable {
     * @return a list of trios, each one representing corresponding values from the collection
     * @throws IllegalArgumentException if any collection has a different size than the others
     */   
-   public static <T, U, V> List<Trio<T, U, V>> combine(
-         Trio<? extends Collection<T>, ? extends Collection<U>, ? extends Collection<V>> trio) {
+   public static <T, U, V> List<Triple<T, U, V>> combine(
+         Triple<? extends Collection<T>, ? extends Collection<U>, ? extends Collection<V>> trio) {
       return combine(trio.getFirst(), trio.getSecond(), trio.getThird());
    }
    
@@ -90,17 +90,17 @@ public final class Trio<A, B, C> implements Tuple.Ops3<A, B, C>, Serializable {
     * @return a list of trios, each one representing corresponding values from the collections
     * @throws IllegalArgumentException if any collection has a different size than the others
     */
-   public static <T, U, V> List<Trio<T, U, V>> combine(Collection<T> t, Collection<U> u,
+   public static <T, U, V> List<Triple<T, U, V>> combine(Collection<T> t, Collection<U> u,
          Collection<V> v) {
       if (t.size() != u.size() || t.size() != v.size()) {
          throw new IllegalArgumentException();
       }
-      List<Trio<T, U, V>> list = new ArrayList<Trio<T, U, V>>(t.size());
+      List<Triple<T, U, V>> list = new ArrayList<Triple<T, U, V>>(t.size());
       Iterator<T> tIter = t.iterator();
       Iterator<U> uIter = u.iterator();
       Iterator<V> vIter = v.iterator();
       while (tIter.hasNext() && uIter.hasNext() && vIter.hasNext()) {
-         list.add(create(tIter.next(), uIter.next(), vIter.next()));
+         list.add(of(tIter.next(), uIter.next(), vIter.next()));
       }
       if (tIter.hasNext() || uIter.hasNext() || vIter.hasNext()) {
          // size changed since check above such that collections differ
@@ -113,7 +113,7 @@ public final class Trio<A, B, C> implements Tuple.Ops3<A, B, C>, Serializable {
    private final B b;
    private final C c;
    
-   private Trio(A a, B b, C c) {
+   private Triple(A a, B b, C c) {
       this.a = a;
       this.b = b;
       this.c = c;
@@ -127,8 +127,8 @@ public final class Trio<A, B, C> implements Tuple.Ops3<A, B, C>, Serializable {
     * @param c the third item in the trio
     * @return a new trio
     */
-   public static <A, B, C> Trio<A, B, C> create(A a, B b, C c) {
-      return new Trio<A, B, C>(a, b, c);
+   public static <A, B, C> Triple<A, B, C> of(A a, B b, C c) {
+      return new Triple<A, B, C>(a, b, c);
    }
 
    @Override
@@ -169,78 +169,78 @@ public final class Trio<A, B, C> implements Tuple.Ops3<A, B, C>, Serializable {
    }
 
    @Override
-   public <T> Trio<T, B, C> setFirst(T t) {
-      return Trio.create(t, b, c);
+   public <T> Triple<T, B, C> setFirst(T t) {
+      return Triple.of(t, b, c);
    }
 
    @Override
-   public <T> Trio<A, T, C> setSecond(T t) {
-      return Trio.create(a, t, c);
+   public <T> Triple<A, T, C> setSecond(T t) {
+      return Triple.of(a, t, c);
    }
 
    @Override
-   public <T> Trio<A, B, T> setThird(T t) {
-      return Trio.create(a, b, t);
+   public <T> Triple<A, B, T> setThird(T t) {
+      return Triple.of(a, b, t);
    }
 
    @Override
    public Pair<B, C> removeFirst() {
-      return Pair.create(b, c);
+      return Pair.of(b, c);
    }
 
    @Override
    public Pair<A, C> removeSecond() {
-      return Pair.create(a, c);
+      return Pair.of(a, c);
    }
 
    @Override
    public Pair<A, B> removeThird() {
-      return Pair.create(a, b);
+      return Pair.of(a, b);
    }
 
    @Override
-   public <T> Quartet<A, B, C, T> add(T t) {
-      return Quartet.create(a, b, c, t);
+   public <T> Quadruple<A, B, C, T> add(T t) {
+      return Quadruple.of(a, b, c, t);
    }
 
    @Override
-   public <T> Quartet<T, A, B, C> insertFirst(T t) {
-      return Quartet.create(t, a, b, c);
+   public <T> Quadruple<T, A, B, C> insertFirst(T t) {
+      return Quadruple.of(t, a, b, c);
    }
 
    @Override
-   public <T> Quartet<A, T, B, C> insertSecond(T t) {
-      return Quartet.create(a, t, b, c);
+   public <T> Quadruple<A, T, B, C> insertSecond(T t) {
+      return Quadruple.of(a, t, b, c);
    }
 
    @Override
-   public <T> Quartet<A, B, T, C> insertThird(T t) {
-      return Quartet.create(a, b, t, c);
+   public <T> Quadruple<A, B, T, C> insertThird(T t) {
+      return Quadruple.of(a, b, t, c);
    }
 
    @Override
-   public <T> Quartet<A, B, C, T> insertFourth(T t) {
+   public <T> Quadruple<A, B, C, T> insertFourth(T t) {
       return add(t);
    }
 
    @Override
-   public <T> Trio<T, T, T> transformAll(Function<Object, ? extends T> function) {
-      return Trio.<T, T, T>create(function.apply(a), function.apply(b), function.apply(c));
+   public <T> Triple<T, T, T> transformAll(Function<Object, ? extends T> function) {
+      return Triple.<T, T, T>of(function.apply(a), function.apply(b), function.apply(c));
    }
 
    @Override
-   public <T> Trio<T, B, C> transformFirst(Function<? super A, ? extends T> function) {
-      return Trio.<T, B, C>create(function.apply(a), b, c);
+   public <T> Triple<T, B, C> transformFirst(Function<? super A, ? extends T> function) {
+      return Triple.<T, B, C>of(function.apply(a), b, c);
    }
 
    @Override
-   public <T> Trio<A, T, C> transformSecond(Function<? super B, ? extends T> function) {
-      return Trio.<A, T, C>create(a, function.apply(b), c);
+   public <T> Triple<A, T, C> transformSecond(Function<? super B, ? extends T> function) {
+      return Triple.<A, T, C>of(a, function.apply(b), c);
    }
 
    @Override
-   public <T> Trio<A, B, T> transformThird(Function<? super C, ? extends T> function) {
-      return Trio.<A, B, T>create(a, b, function.apply(c));
+   public <T> Triple<A, B, T> transformThird(Function<? super C, ? extends T> function) {
+      return Triple.<A, B, T>of(a, b, function.apply(c));
    }
    
    /**

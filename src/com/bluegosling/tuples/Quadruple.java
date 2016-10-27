@@ -21,7 +21,7 @@ import com.bluegosling.util.ValueType;
  * @param <D> the type of the fourth item
  */
 @ValueType
-public final class Quartet<A, B, C, D> implements Tuple.Ops4<A, B, C, D>, Serializable {
+public final class Quadruple<A, B, C, D> implements Tuple.Ops4<A, B, C, D>, Serializable {
 
    private static final long serialVersionUID = -4005223210115823097L;
 
@@ -35,7 +35,7 @@ public final class Quartet<A, B, C, D> implements Tuple.Ops4<A, B, C, D>, Serial
     * @return a list view of the specified quartet
     */
    @SuppressWarnings("unchecked") // thanks to type bounds, we know the cast is safe
-   public static <T> List<T> asTypedList(Quartet<? extends T, ? extends T, ? extends T, ? extends T> quartet) {
+   public static <T> List<T> asTypedList(Quadruple<? extends T, ? extends T, ? extends T, ? extends T> quartet) {
       return (List<T>) quartet.asList();
    }
 
@@ -48,19 +48,19 @@ public final class Quartet<A, B, C, D> implements Tuple.Ops4<A, B, C, D>, Serial
     * @param quartets a collection of quartet
     * @return a quartet of lists whose values were extracted from the collection of quartets
     */
-   public static <T, U, V, W> Quartet<List<T>, List<U>, List<V>, List<W>> separate(
-         Collection<Quartet<T, U, V, W>> quartets) {
+   public static <T, U, V, W> Quadruple<List<T>, List<U>, List<V>, List<W>> separate(
+         Collection<Quadruple<T, U, V, W>> quartets) {
       List<T> t = new ArrayList<T>(quartets.size());
       List<U> u = new ArrayList<U>(quartets.size());
       List<V> v = new ArrayList<V>(quartets.size());
       List<W> w = new ArrayList<W>(quartets.size());
-      for (Quartet<T, U, V, W> quartet : quartets) {
+      for (Quadruple<T, U, V, W> quartet : quartets) {
          t.add(quartet.getFirst());
          u.add(quartet.getSecond());
          v.add(quartet.getThird());
          w.add(quartet.getFourth());
       }
-      return create(Collections.unmodifiableList(t), Collections.unmodifiableList(u),
+      return of(Collections.unmodifiableList(t), Collections.unmodifiableList(u),
             Collections.unmodifiableList(v), Collections.unmodifiableList(w));
    }
 
@@ -74,8 +74,8 @@ public final class Quartet<A, B, C, D> implements Tuple.Ops4<A, B, C, D>, Serial
     * @return a list of quartets, each one representing corresponding values from the collections
     * @throws IllegalArgumentException if any collection has a different size than the others
     */   
-   public static <T, U, V, W> List<Quartet<T, U, V, W>> combine(
-         Quartet<? extends Collection<T>, ? extends Collection<U>, ? extends Collection<V>,
+   public static <T, U, V, W> List<Quadruple<T, U, V, W>> combine(
+         Quadruple<? extends Collection<T>, ? extends Collection<U>, ? extends Collection<V>,
                ? extends Collection<W>> quartet) {
       return combine(quartet.getFirst(), quartet.getSecond(), quartet.getThird(),
             quartet.getFourth());
@@ -94,18 +94,18 @@ public final class Quartet<A, B, C, D> implements Tuple.Ops4<A, B, C, D>, Serial
     * @return a list of quartets, each one representing corresponding values from the collections
     * @throws IllegalArgumentException if any collection has a different size than the others
     */
-   public static <T, U, V, W> List<Quartet<T, U, V, W>> combine(Collection<T> t, Collection<U> u,
+   public static <T, U, V, W> List<Quadruple<T, U, V, W>> combine(Collection<T> t, Collection<U> u,
          Collection<V> v, Collection<W> w) {
       if (t.size() != u.size() || t.size() != v.size() || t.size() != w.size()) {
          throw new IllegalArgumentException();
       }
-      List<Quartet<T, U, V, W>> list = new ArrayList<Quartet<T, U, V, W>>(t.size());
+      List<Quadruple<T, U, V, W>> list = new ArrayList<Quadruple<T, U, V, W>>(t.size());
       Iterator<T> tIter = t.iterator();
       Iterator<U> uIter = u.iterator();
       Iterator<V> vIter = v.iterator();
       Iterator<W> wIter = w.iterator();
       while (tIter.hasNext() && uIter.hasNext() && vIter.hasNext() && wIter.hasNext()) {
-         list.add(create(tIter.next(), uIter.next(), vIter.next(), wIter.next()));
+         list.add(of(tIter.next(), uIter.next(), vIter.next(), wIter.next()));
       }
       if (tIter.hasNext() || uIter.hasNext() || vIter.hasNext() || wIter.hasNext()) {
          // size changed since check above such that collections differ
@@ -119,7 +119,7 @@ public final class Quartet<A, B, C, D> implements Tuple.Ops4<A, B, C, D>, Serial
    private final C c;
    private final D d;
    
-   private Quartet(A a, B b, C c, D d) {
+   private Quadruple(A a, B b, C c, D d) {
       this.a = a;
       this.b = b;
       this.c = c;
@@ -135,8 +135,8 @@ public final class Quartet<A, B, C, D> implements Tuple.Ops4<A, B, C, D>, Serial
     * @param d the fourth item in the quartet
     * @return a new quartet
     */
-   public static <A, B, C, D> Quartet<A, B, C, D> create(A a, B b, C c, D d) {
-      return new Quartet<A, B, C, D>(a, b, c, d);
+   public static <A, B, C, D> Quadruple<A, B, C, D> of(A a, B b, C c, D d) {
+      return new Quadruple<A, B, C, D>(a, b, c, d);
    }
 
    @Override
@@ -183,99 +183,99 @@ public final class Quartet<A, B, C, D> implements Tuple.Ops4<A, B, C, D>, Serial
    }
 
    @Override
-   public <T> Quartet<T, B, C, D> setFirst(T t) {
-      return Quartet.create(t, b, c, d);
+   public <T> Quadruple<T, B, C, D> setFirst(T t) {
+      return Quadruple.of(t, b, c, d);
    }
 
    @Override
-   public <T> Quartet<A, T, C, D> setSecond(T t) {
-      return Quartet.create(a, t, c, d);
+   public <T> Quadruple<A, T, C, D> setSecond(T t) {
+      return Quadruple.of(a, t, c, d);
    }
 
    @Override
-   public <T> Quartet<A, B, T, D> setThird(T t) {
-      return Quartet.create(a, b, t, d);
+   public <T> Quadruple<A, B, T, D> setThird(T t) {
+      return Quadruple.of(a, b, t, d);
    }
 
    @Override
-   public <T> Quartet<A, B, C, T> setFourth(T t) {
-      return Quartet.create(a, b, c, t);
+   public <T> Quadruple<A, B, C, T> setFourth(T t) {
+      return Quadruple.of(a, b, c, t);
    }
 
    @Override
-   public Trio<B, C, D> removeFirst() {
-      return Trio.create(b, c, d);
+   public Triple<B, C, D> removeFirst() {
+      return Triple.of(b, c, d);
    }
 
    @Override
-   public Trio<A, C, D> removeSecond() {
-      return Trio.create(a, c, d);
+   public Triple<A, C, D> removeSecond() {
+      return Triple.of(a, c, d);
    }
 
    @Override
-   public Trio<A, B, D> removeThird() {
-      return Trio.create(a, b, d);
+   public Triple<A, B, D> removeThird() {
+      return Triple.of(a, b, d);
    }
 
    @Override
-   public Trio<A, B, C> removeFourth() {
-      return Trio.create(a, b, c);
+   public Triple<A, B, C> removeFourth() {
+      return Triple.of(a, b, c);
    }
 
    @Override
-   public <T> Quintet<A, B, C, D, T> add(T t) {
-      return Quintet.create(a, b, c, d, t);
+   public <T> Quintuple<A, B, C, D, T> add(T t) {
+      return Quintuple.of(a, b, c, d, t);
    }
 
    @Override
-   public <T> Quintet<T, A, B, C, D> insertFirst(T t) {
-      return Quintet.create(t, a, b, c, d);
+   public <T> Quintuple<T, A, B, C, D> insertFirst(T t) {
+      return Quintuple.of(t, a, b, c, d);
    }
 
    @Override
-   public <T> Quintet<A, T, B, C, D> insertSecond(T t) {
-      return Quintet.create(a, t, b, c, d);
+   public <T> Quintuple<A, T, B, C, D> insertSecond(T t) {
+      return Quintuple.of(a, t, b, c, d);
    }
 
    @Override
-   public <T> Quintet<A, B, T, C, D> insertThird(T t) {
-      return Quintet.create(a, b, t, c, d);
+   public <T> Quintuple<A, B, T, C, D> insertThird(T t) {
+      return Quintuple.of(a, b, t, c, d);
    }
 
    @Override
-   public <T> Quintet<A, B, C, T, D> insertFourth(T t) {
-      return Quintet.create(a, b, c, t, d);
+   public <T> Quintuple<A, B, C, T, D> insertFourth(T t) {
+      return Quintuple.of(a, b, c, t, d);
    }
 
    @Override
-   public <T> Quintet<A, B, C, D, T> insertFifth(T t) {
+   public <T> Quintuple<A, B, C, D, T> insertFifth(T t) {
       return add(t);
    }
 
    @Override
-   public <T> Quartet<T, T, T, T> transformAll(Function<Object, ? extends T> function) {
-      return Quartet.<T, T, T, T>create(function.apply(a), function.apply(b), function.apply(c),
+   public <T> Quadruple<T, T, T, T> transformAll(Function<Object, ? extends T> function) {
+      return Quadruple.<T, T, T, T>of(function.apply(a), function.apply(b), function.apply(c),
             function.apply(d));
    }
 
    @Override
-   public <T> Quartet<T, B, C, D> transformFirst(Function<? super A, ? extends T> function) {
-      return Quartet.<T, B, C, D>create(function.apply(a), b, c, d);
+   public <T> Quadruple<T, B, C, D> transformFirst(Function<? super A, ? extends T> function) {
+      return Quadruple.<T, B, C, D>of(function.apply(a), b, c, d);
    }
 
    @Override
-   public <T> Quartet<A, T, C, D> transformSecond(Function<? super B, ? extends T> function) {
-      return Quartet.<A, T, C, D>create(a, function.apply(b), c, d);
+   public <T> Quadruple<A, T, C, D> transformSecond(Function<? super B, ? extends T> function) {
+      return Quadruple.<A, T, C, D>of(a, function.apply(b), c, d);
    }
 
    @Override
-   public <T> Quartet<A, B, T, D> transformThird(Function<? super C, ? extends T> function) {
-      return Quartet.<A, B, T, D>create(a, b, function.apply(c), d);
+   public <T> Quadruple<A, B, T, D> transformThird(Function<? super C, ? extends T> function) {
+      return Quadruple.<A, B, T, D>of(a, b, function.apply(c), d);
    }
 
    @Override
-   public <T> Quartet<A, B, C, T> transformFourth(Function<? super D, ? extends T> function) {
-      return Quartet.<A, B, C, T>create(a, b, c, function.apply(d));
+   public <T> Quadruple<A, B, C, T> transformFourth(Function<? super D, ? extends T> function) {
+      return Quadruple.<A, B, C, T>of(a, b, c, function.apply(d));
    }
    
    @Override

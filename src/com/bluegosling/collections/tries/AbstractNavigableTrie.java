@@ -262,7 +262,7 @@ abstract class AbstractNavigableTrie<K, X, V, N extends AbstractNavigableTrie.Na
                // need it...
                path = new ArrayDeque<>();
             }
-            path.push(Pair.create(node, k));
+            path.push(Pair.of(node, k));
          }
          node = entry.getValue();
          assert node != null;
@@ -367,7 +367,7 @@ abstract class AbstractNavigableTrie<K, X, V, N extends AbstractNavigableTrie.Na
                // need it...
                path = new ArrayDeque<>();
             }
-            path.push(Pair.create(node, k));
+            path.push(Pair.of(node, k));
          }
          node = entry.getValue();
       }

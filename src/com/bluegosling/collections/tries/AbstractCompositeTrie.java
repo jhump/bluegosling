@@ -4,7 +4,7 @@ import com.bluegosling.collections.CollectionUtils;
 import com.bluegosling.collections.MapUtils;
 import com.bluegosling.collections.MoreIterables;
 import com.bluegosling.possible.Reference;
-import com.bluegosling.tuples.Trio;
+import com.bluegosling.tuples.Triple;
 import com.google.common.collect.Iterables;
 
 import java.util.AbstractCollection;
@@ -306,7 +306,7 @@ abstract class AbstractCompositeTrie<K, C, V, N extends AbstractTrie.Node<C, K, 
       
       @Override
       public void putAll(Map<? extends K, ? extends V> m) {
-         List<Trio<Iterable<C>, K, V>> entries = new ArrayList<>(m.size());
+         List<Triple<Iterable<C>, K, V>> entries = new ArrayList<>(m.size());
          // first pass, check all prefixes and create list of new entries w/ suffixes
          for (Entry<? extends K, ? extends V> entry : m.entrySet()) {
             K key = entry.getKey();
@@ -315,10 +315,10 @@ abstract class AbstractCompositeTrie<K, C, V, N extends AbstractTrie.Node<C, K, 
                throw new IllegalArgumentException(
                      "Key, " + key + ", does not have prefix " + CollectionUtils.toString(prefix));
             }
-            entries.add(Trio.create(k, key, entry.getValue()));
+            entries.add(Triple.of(k, key, entry.getValue()));
          }
          // they've all been checked for correct prefix; add 'em
-         for (Trio<Iterable<C>, K, V> entry : entries) {
+         for (Triple<Iterable<C>, K, V> entry : entries) {
             put(entry.getFirst(), entry.getSecond(), entry.getThird());
          }
       }

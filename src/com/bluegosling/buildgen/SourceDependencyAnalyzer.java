@@ -1189,7 +1189,7 @@ public class SourceDependencyAnalyzer {
       for (List<PackageDirectory> cycle : results.getPackageCycles()) {
          System.out.println("Found cycle: " + cycle);
          for (int i = 1; i < cycle.size(); i++) {
-            relationships.add(Pair.create(cycle.get(i - 1), cycle.get(i)));
+            relationships.add(Pair.of(cycle.get(i - 1), cycle.get(i)));
          }
       }
       // and show the dependencies that caused the cycles

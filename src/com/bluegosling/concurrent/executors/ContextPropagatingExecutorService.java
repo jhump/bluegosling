@@ -40,7 +40,7 @@ public class ContextPropagatingExecutorService extends WrappingExecutorService {
       for (ContextPropagator<?> p : propagators) {
          @SuppressWarnings("unchecked")
          ContextPropagator<Object> pObj = (ContextPropagator<Object>) p;
-         captured.add(Pair.create(pObj, pObj.capture()));
+         captured.add(Pair.of(pObj, pObj.capture()));
       }
       
       return () -> {
@@ -48,7 +48,7 @@ public class ContextPropagatingExecutorService extends WrappingExecutorService {
          List<Pair<ContextPropagator<Object>, Object>> installed = new ArrayList<>(captured.size());
          try {
             for (Pair<ContextPropagator<Object>, Object> p : captured) {
-               installed.add(Pair.create(p.getFirst(), p.getFirst().install(p.getSecond())));
+               installed.add(Pair.of(p.getFirst(), p.getFirst().install(p.getSecond())));
             }
             // run the task
             return c.call();

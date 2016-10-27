@@ -18,13 +18,13 @@ import java.util.List;
 import java.util.function.Function;
 
 /**
- * Test cases from {@link Unit}.
+ * Test cases from {@link Single}.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public class UnitTest {
+public class SingleTest {
 
-   private final Unit<String> u = Unit.create("a");
+   private final Single<String> u = Single.of("a");
 
    // Collection-like operations
    
@@ -33,7 +33,7 @@ public class UnitTest {
       assertFalse(u.contains("b"));
       assertFalse(u.contains(new Object()));
       assertTrue(u.contains("a"));
-      assertTrue(Unit.create(null).contains(null));
+      assertTrue(Single.of(null).contains(null));
    }
    
    @Test public void isEmpty() {
@@ -66,12 +66,12 @@ public class UnitTest {
    
    @Test public void equals() {
       assertTrue(u.equals(u));
-      assertTrue(u.equals(Unit.create("a")));
-      assertTrue(u.equals(Pair.create("a", "b").removeSecond()));
+      assertTrue(u.equals(Single.of("a")));
+      assertTrue(u.equals(Pair.of("a", "b").removeSecond()));
       assertTrue(u.equals(Empty.INSTANCE.add("a")));
       assertFalse(u.equals(Empty.INSTANCE));
-      assertFalse(u.equals(Unit.create("b")));
-      assertFalse(u.equals(Pair.create("a", "b")));
+      assertFalse(u.equals(Single.of("b")));
+      assertFalse(u.equals(Pair.of("a", "b")));
       assertFalse(u.equals(Collections.singletonList("a")));
    }
    
@@ -87,9 +87,9 @@ public class UnitTest {
    
    @Test public void addAndInsert() {
       Pair<String, Integer> p = u.add(1);
-      assertEquals(Pair.create("a", 1), p);
+      assertEquals(Pair.of("a", 1), p);
       assertEquals(p, u.insertSecond(1));
-      assertEquals(Pair.create(42.0, "a"), u.insertFirst(42.0));
+      assertEquals(Pair.of(42.0, "a"), u.insertFirst(42.0));
    }
    
    @Test public void remove() {
@@ -103,8 +103,8 @@ public class UnitTest {
          }
       };
       
-      assertEquals(Unit.create("abcdefg"), u.transformAll(f));
-      assertEquals(Unit.create("abcdefg"), u.transformFirst(f));
+      assertEquals(Single.of("abcdefg"), u.transformAll(f));
+      assertEquals(Single.of("abcdefg"), u.transformFirst(f));
    }
    
    // serialization
@@ -113,7 +113,7 @@ public class UnitTest {
       ByteArrayOutputStream bos = new ByteArrayOutputStream();
       new ObjectOutputStream(bos).writeObject(u);
       ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
-      Unit<?> deserialized = (Unit<?>) new ObjectInputStream(bis).readObject();
+      Single<?> deserialized = (Single<?>) new ObjectInputStream(bis).readObject();
       
       assertEquals(u, deserialized);
    }
@@ -121,16 +121,16 @@ public class UnitTest {
    // extract, enclose
    
    @Test public void extract() {
-      assertEquals(Collections.emptyList(), Unit.extract(Collections.<Unit<String>>emptyList()));
+      assertEquals(Collections.emptyList(), Single.extract(Collections.<Single<String>>emptyList()));
 
-      List<Unit<Integer>> units = Arrays.asList(Unit.create(1), Unit.create(2), Unit.create(3));
-      assertEquals(Arrays.asList(1, 2, 3), Unit.extract(units));
+      List<Single<Integer>> units = Arrays.asList(Single.of(1), Single.of(2), Single.of(3));
+      assertEquals(Arrays.asList(1, 2, 3), Single.extract(units));
    }
 
    @Test public void enclose() {
-      assertEquals(Collections.emptyList(), Unit.enclose(Collections.<String>emptyList()));
+      assertEquals(Collections.emptyList(), Single.enclose(Collections.<String>emptyList()));
 
-      List<Unit<Integer>> units = Arrays.asList(Unit.create(1), Unit.create(2), Unit.create(3));
-      assertEquals(units, Unit.enclose(Arrays.asList(1, 2, 3)));
+      List<Single<Integer>> units = Arrays.asList(Single.of(1), Single.of(2), Single.of(3));
+      assertEquals(units, Single.enclose(Arrays.asList(1, 2, 3)));
    }
 }

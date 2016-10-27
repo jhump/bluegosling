@@ -3,7 +3,7 @@ package com.bluegosling.concurrent.atoms;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import com.bluegosling.tuples.Trio;
+import com.bluegosling.tuples.Triple;
 
 import org.junit.Test;
 
@@ -52,12 +52,12 @@ public class ThreadLocalAtomTest extends AbstractSynchronousAtomTest {
       ThreadLocalAtom<String> tla = (ThreadLocalAtom<String>) atom;
       tla.setRootValue("abc");
       for (List<?> notices : noticesArray) {
-         assertEquals(Arrays.asList(Trio.create(tla, null, "abc")), notices);
+         assertEquals(Arrays.asList(Triple.of(tla, null, "abc")), notices);
          notices.clear();
       }
       tla.setRootValue(null);
       for (List<?> notices : noticesArray) {
-         assertEquals(Arrays.asList(Trio.create(tla, "abc", null)), notices);
+         assertEquals(Arrays.asList(Triple.of(tla, "abc", null)), notices);
          notices.clear();
       }
    }

@@ -607,7 +607,7 @@ public abstract class PersistentListBackedConcurrentList<E> implements Concurren
             int start = from > l.size() ? l.size() : from;
             int end = to > l.size() ? l.size() : to;
             List<E> subList = l.subList(start, end);
-            memoized = Pair.create(l, subList);
+            memoized = Pair.of(l, subList);
             return subList;
          }
          

@@ -55,7 +55,7 @@ public final class Pair<A, B> implements Tuple.Ops2<A, B>, Serializable {
          t.add(pair.getFirst());
          u.add(pair.getSecond());
       }
-      return create(Collections.unmodifiableList(t), Collections.unmodifiableList(u));
+      return of(Collections.unmodifiableList(t), Collections.unmodifiableList(u));
    }
 
    /**
@@ -92,7 +92,7 @@ public final class Pair<A, B> implements Tuple.Ops2<A, B>, Serializable {
       Iterator<T> tIter = t.iterator();
       Iterator<U> uIter = u.iterator();
       while (tIter.hasNext() && uIter.hasNext()) {
-         list.add(create(tIter.next(), uIter.next()));
+         list.add(of(tIter.next(), uIter.next()));
       }
       if (tIter.hasNext() || uIter.hasNext()) {
          // size changed since check above such that two collections differ
@@ -116,7 +116,7 @@ public final class Pair<A, B> implements Tuple.Ops2<A, B>, Serializable {
     * @param b the second item in the pair
     * @return a new pair
     */
-   public static <A, B> Pair<A, B> create(A a, B b) {
+   public static <A, B> Pair<A, B> of(A a, B b) {
       return new Pair<A, B>(a, b);
    }
 
@@ -153,57 +153,57 @@ public final class Pair<A, B> implements Tuple.Ops2<A, B>, Serializable {
 
    @Override
    public <T> Pair<T, B> setFirst(T t) {
-      return Pair.create(t, b);
+      return Pair.of(t, b);
    }
 
    @Override
    public <T> Pair<A, T> setSecond(T t) {
-      return Pair.create(a, t);
+      return Pair.of(a, t);
    }
 
    @Override
-   public Unit<B> removeFirst() {
-      return Unit.create(b);
+   public Single<B> removeFirst() {
+      return Single.of(b);
    }
 
    @Override
-   public Unit<A> removeSecond() {
-      return Unit.create(a);
+   public Single<A> removeSecond() {
+      return Single.of(a);
    }
 
    @Override
-   public <T> Trio<A, B, T> add(T t) {
-      return Trio.create(a, b, t);
+   public <T> Triple<A, B, T> add(T t) {
+      return Triple.of(a, b, t);
    }
 
    @Override
-   public <T> Trio<T, A, B> insertFirst(T t) {
-      return Trio.create(t, a, b);
+   public <T> Triple<T, A, B> insertFirst(T t) {
+      return Triple.of(t, a, b);
    }
 
    @Override
-   public <T> Trio<A, T, B> insertSecond(T t) {
-      return Trio.create(a, t, b);
+   public <T> Triple<A, T, B> insertSecond(T t) {
+      return Triple.of(a, t, b);
    }
 
    @Override
-   public <T> Trio<A, B, T> insertThird(T t) {
+   public <T> Triple<A, B, T> insertThird(T t) {
       return add(t);
    }
 
    @Override
    public <T> Pair<T, T> transformAll(Function<Object, ? extends T> function) {
-      return Pair.<T, T>create(function.apply(a), function.apply(b));
+      return Pair.<T, T>of(function.apply(a), function.apply(b));
    }
 
    @Override
    public <T> Pair<T, B> transformFirst(Function<? super A, ? extends T> function) {
-      return Pair.<T, B>create(function.apply(a), b);
+      return Pair.<T, B>of(function.apply(a), b);
    }
 
    @Override
    public <T> Pair<A, T> transformSecond(Function<? super B, ? extends T> function) {
-      return Pair.<A, T>create(a, function.apply(b));
+      return Pair.<A, T>of(a, function.apply(b));
    }
    
    /**
@@ -228,7 +228,7 @@ public final class Pair<A, B> implements Tuple.Ops2<A, B>, Serializable {
    
    // TODO: doc, test
    public Pair<B, A> swap() {
-      return Pair.create(b, a);
+      return Pair.of(b, a);
    }
    
    @Override

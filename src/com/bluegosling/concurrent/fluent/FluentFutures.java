@@ -1537,7 +1537,7 @@ final class FluentFutures {
       
       private static <T, U> FluentFuture<Pair<T, U>> combine(FluentFuture<? extends T> futureT,
             FluentFuture<? extends U> futureU) {
-         return futureT.combineWith(futureU, (t, u) -> Pair.<T, U>create(t, u));
+         return futureT.combineWith(futureU, (t, u) -> Pair.<T, U>of(t, u));
       }
       
       /**

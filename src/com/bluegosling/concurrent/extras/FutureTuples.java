@@ -4,53 +4,53 @@ import com.bluegosling.concurrent.fluent.CombiningFluentFuture;
 import com.bluegosling.concurrent.fluent.FluentFuture;
 import com.bluegosling.tuples.NTuple;
 import com.bluegosling.tuples.Pair;
-import com.bluegosling.tuples.Quartet;
-import com.bluegosling.tuples.Quintet;
-import com.bluegosling.tuples.Trio;
+import com.bluegosling.tuples.Quadruple;
+import com.bluegosling.tuples.Quintuple;
+import com.bluegosling.tuples.Triple;
 import com.bluegosling.tuples.Tuple;
 import com.bluegosling.tuples.Tuples;
-import com.bluegosling.tuples.Unit;
+import com.bluegosling.tuples.Single;
 
 import java.util.Arrays;
 
 //TODO: javadoc
 //TODO: tests
 public class FutureTuples {
-   public static <T> FluentFuture<Unit<T>> asUnit(FluentFuture<? extends T> future) {
-      return future.map((o) -> Unit.create(o));
+   public static <T> FluentFuture<Single<T>> asSingle(FluentFuture<? extends T> future) {
+      return future.map((o) -> Single.of(o));
    }
    
    public static <T, U> FluentFuture<Pair<T, U>> asPair(FluentFuture<? extends T> futureT,
          FluentFuture<? extends U> futureU) {
-      return futureT.combineWith(futureU, (t, u) -> Pair.<T, U>create(t, u));
+      return futureT.combineWith(futureU, (t, u) -> Pair.<T, U>of(t, u));
    }
 
-   public static <T, U, V> FluentFuture<Trio<T, U, V>> asTrio(
+   public static <T, U, V> FluentFuture<Triple<T, U, V>> asTriple(
          FluentFuture<? extends T> futureT, FluentFuture<? extends U> futureU,
          FluentFuture<? extends V> futureV) {
-      return futureT.combineWith(futureU, futureV, (t, u, v) -> Trio.<T, U, V>create(t, u, v));
+      return futureT.combineWith(futureU, futureV, (t, u, v) -> Triple.<T, U, V>of(t, u, v));
    }
 
-   public static <T, U, V, W> FluentFuture<Quartet<T, U, V, W>> asQuartet(
+   public static <T, U, V, W> FluentFuture<Quadruple<T, U, V, W>> asQuadruple(
          FluentFuture<? extends T> futureT, FluentFuture<? extends U> futureU,
          FluentFuture<? extends V> futureV, FluentFuture<? extends W> futureW) {
-      return new CombiningFluentFuture<Quartet<T,U, V, W>>(
+      return new CombiningFluentFuture<Quadruple<T,U, V, W>>(
             Arrays.asList(futureT, futureU, futureV, futureW)) {
-         @Override protected Quartet<T, U, V, W> computeValue() {
-            return Quartet.create(futureT.getResult(), futureU.getResult(),
+         @Override protected Quadruple<T, U, V, W> computeValue() {
+            return Quadruple.of(futureT.getResult(), futureU.getResult(),
                   futureV.getResult(), futureW.getResult());
          }
       };
    }
 
-   public static <T, U, V, W, X> FluentFuture<Quintet<T, U, V, W, X>> asQuintet(
+   public static <T, U, V, W, X> FluentFuture<Quintuple<T, U, V, W, X>> asQuintuple(
          FluentFuture<? extends T> futureT, FluentFuture<? extends U> futureU,
          FluentFuture<? extends V> futureV, FluentFuture<? extends W> futureW,
          FluentFuture<? extends X> futureX) {
-      return new CombiningFluentFuture<Quintet<T,U, V, W, X>>(
+      return new CombiningFluentFuture<Quintuple<T,U, V, W, X>>(
             Arrays.asList(futureT, futureU, futureV, futureW, futureX)) {
-         @Override protected Quintet<T, U, V, W, X> computeValue() {
-            return Quintet.create(futureT.getResult(), futureU.getResult(), futureV.getResult(),
+         @Override protected Quintuple<T, U, V, W, X> computeValue() {
+            return Quintuple.of(futureT.getResult(), futureU.getResult(), futureV.getResult(),
                   futureW.getResult(), futureX.getResult());
          }
       };

@@ -22,7 +22,7 @@ import com.bluegosling.util.ValueType;
  * @param <E> the type of the fifth item
  */
 @ValueType
-public final class Quintet<A, B, C, D, E> implements Tuple.Ops5<A, B, C, D, E>, Serializable {
+public final class Quintuple<A, B, C, D, E> implements Tuple.Ops5<A, B, C, D, E>, Serializable {
 
    private static final long serialVersionUID = -6961697944717178646L;
 
@@ -36,7 +36,7 @@ public final class Quintet<A, B, C, D, E> implements Tuple.Ops5<A, B, C, D, E>, 
     * @return a list view of the specified quintet
     */
    @SuppressWarnings("unchecked") // thanks to type bounds, we know the cast is safe
-   public static <T> List<T> asTypedList(Quintet<? extends T, ? extends T, ? extends T, ? extends T, ? extends T> quintet) {
+   public static <T> List<T> asTypedList(Quintuple<? extends T, ? extends T, ? extends T, ? extends T, ? extends T> quintet) {
       return (List<T>) quintet.asList();
    }
    
@@ -49,21 +49,21 @@ public final class Quintet<A, B, C, D, E> implements Tuple.Ops5<A, B, C, D, E>, 
     * @param quintets a collection of quintet
     * @return a quintet of lists whose values were extracted from the collection of quintets
     */
-   public static <T, U, V, W, X> Quintet<List<T>, List<U>, List<V>, List<W>, List<X>> separate(
-         Collection<Quintet<T, U, V, W, X>> quintets) {
+   public static <T, U, V, W, X> Quintuple<List<T>, List<U>, List<V>, List<W>, List<X>> separate(
+         Collection<Quintuple<T, U, V, W, X>> quintets) {
       List<T> t = new ArrayList<T>(quintets.size());
       List<U> u = new ArrayList<U>(quintets.size());
       List<V> v = new ArrayList<V>(quintets.size());
       List<W> w = new ArrayList<W>(quintets.size());
       List<X> x = new ArrayList<X>(quintets.size());
-      for (Quintet<T, U, V, W, X> quintet : quintets) {
+      for (Quintuple<T, U, V, W, X> quintet : quintets) {
          t.add(quintet.getFirst());
          u.add(quintet.getSecond());
          v.add(quintet.getThird());
          w.add(quintet.getFourth());
          x.add(quintet.getFifth());
       }
-      return create(Collections.unmodifiableList(t), Collections.unmodifiableList(u),
+      return of(Collections.unmodifiableList(t), Collections.unmodifiableList(u),
             Collections.unmodifiableList(v), Collections.unmodifiableList(w),
             Collections.unmodifiableList(x));
    }
@@ -78,8 +78,8 @@ public final class Quintet<A, B, C, D, E> implements Tuple.Ops5<A, B, C, D, E>, 
     * @return a list of quintets, each one representing corresponding values from the collections
     * @throws IllegalArgumentException if any collection has a different size than the others
     */   
-   public static <T, U, V, W, X> List<Quintet<T, U, V, W, X>> combine(
-         Quintet<? extends Collection<T>, ? extends Collection<U>, ? extends Collection<V>,
+   public static <T, U, V, W, X> List<Quintuple<T, U, V, W, X>> combine(
+         Quintuple<? extends Collection<T>, ? extends Collection<U>, ? extends Collection<V>,
                ? extends Collection<W>, ? extends Collection<X>> quintet) {
       return combine(quintet.getFirst(), quintet.getSecond(), quintet.getThird(),
             quintet.getFourth(), quintet.getFifth());
@@ -99,13 +99,13 @@ public final class Quintet<A, B, C, D, E> implements Tuple.Ops5<A, B, C, D, E>, 
     * @return a list of quintets, each one representing corresponding values from the collections
     * @throws IllegalArgumentException if any collection has a different size than the others
     */
-   public static <T, U, V, W, X> List<Quintet<T, U, V, W, X>> combine(Collection<T> t,
+   public static <T, U, V, W, X> List<Quintuple<T, U, V, W, X>> combine(Collection<T> t,
          Collection<U> u, Collection<V> v, Collection<W> w, Collection<X> x) {
       if (t.size() != u.size() || t.size() != v.size() || t.size() != w.size()
             || t.size() != x.size()) {
          throw new IllegalArgumentException();
       }
-      List<Quintet<T, U, V, W, X>> list = new ArrayList<Quintet<T, U, V, W, X>>(t.size());
+      List<Quintuple<T, U, V, W, X>> list = new ArrayList<Quintuple<T, U, V, W, X>>(t.size());
       Iterator<T> tIter = t.iterator();
       Iterator<U> uIter = u.iterator();
       Iterator<V> vIter = v.iterator();
@@ -113,7 +113,7 @@ public final class Quintet<A, B, C, D, E> implements Tuple.Ops5<A, B, C, D, E>, 
       Iterator<X> xIter = x.iterator();
       while (tIter.hasNext() && uIter.hasNext() && vIter.hasNext() && wIter.hasNext()
             && xIter.hasNext()) {
-         list.add(create(tIter.next(), uIter.next(), vIter.next(), wIter.next(), xIter.next()));
+         list.add(of(tIter.next(), uIter.next(), vIter.next(), wIter.next(), xIter.next()));
       }
       if (tIter.hasNext() || uIter.hasNext() || vIter.hasNext() || wIter.hasNext()
             || xIter.hasNext()) {
@@ -129,7 +129,7 @@ public final class Quintet<A, B, C, D, E> implements Tuple.Ops5<A, B, C, D, E>, 
    private final D d;
    private final E e;
    
-   private Quintet(A a, B b, C c, D d, E e) {
+   private Quintuple(A a, B b, C c, D d, E e) {
       this.a = a;
       this.b = b;
       this.c = c;
@@ -147,8 +147,8 @@ public final class Quintet<A, B, C, D, E> implements Tuple.Ops5<A, B, C, D, E>, 
     * @param e the fifth item in the quintet
     * @return a new quintet
     */
-   public static <A, B, C, D, E> Quintet<A, B, C, D, E> create(A a, B b, C c, D d, E e) {
-      return new Quintet<A, B, C, D, E>(a, b, c, d, e);
+   public static <A, B, C, D, E> Quintuple<A, B, C, D, E> of(A a, B b, C c, D d, E e) {
+      return new Quintuple<A, B, C, D, E>(a, b, c, d, e);
    }
 
    @Override
@@ -201,53 +201,53 @@ public final class Quintet<A, B, C, D, E> implements Tuple.Ops5<A, B, C, D, E>, 
    }
 
    @Override
-   public <T> Quintet<T, B, C, D, E> setFirst(T t) {
-      return Quintet.create(t, b, c, d, e);
+   public <T> Quintuple<T, B, C, D, E> setFirst(T t) {
+      return Quintuple.of(t, b, c, d, e);
    }
 
    @Override
-   public <T> Quintet<A, T, C, D, E> setSecond(T t) {
-      return Quintet.create(a, t, c, d, e);
+   public <T> Quintuple<A, T, C, D, E> setSecond(T t) {
+      return Quintuple.of(a, t, c, d, e);
    }
 
    @Override
-   public <T> Quintet<A, B, T, D, E> setThird(T t) {
-      return Quintet.create(a, b, t, d, e);
+   public <T> Quintuple<A, B, T, D, E> setThird(T t) {
+      return Quintuple.of(a, b, t, d, e);
    }
 
    @Override
-   public <T> Quintet<A, B, C, T, E> setFourth(T t) {
-      return Quintet.create(a, b, c, t, e);
+   public <T> Quintuple<A, B, C, T, E> setFourth(T t) {
+      return Quintuple.of(a, b, c, t, e);
    }
 
    @Override
-   public <T> Quintet<A, B, C, D, T> setFifth(T t) {
-      return Quintet.create(a, b, c, d, t);
+   public <T> Quintuple<A, B, C, D, T> setFifth(T t) {
+      return Quintuple.of(a, b, c, d, t);
    }
 
    @Override
-   public Quartet<B, C, D, E> removeFirst() {
-      return Quartet.create(b, c, d, e);
+   public Quadruple<B, C, D, E> removeFirst() {
+      return Quadruple.of(b, c, d, e);
    }
 
    @Override
-   public Quartet<A, C, D, E> removeSecond() {
-      return Quartet.create(a, c, d, e);
+   public Quadruple<A, C, D, E> removeSecond() {
+      return Quadruple.of(a, c, d, e);
    }
 
    @Override
-   public Quartet<A, B, D, E> removeThird() {
-      return Quartet.create(a, b, d, e);
+   public Quadruple<A, B, D, E> removeThird() {
+      return Quadruple.of(a, b, d, e);
    }
 
    @Override
-   public Quartet<A, B, C, E> removeFourth() {
-      return Quartet.create(a, b, c, e);
+   public Quadruple<A, B, C, E> removeFourth() {
+      return Quadruple.of(a, b, c, e);
    }
 
    @Override
-   public Quartet<A, B, C, D> removeFifth() {
-      return Quartet.create(a, b, c, d);
+   public Quadruple<A, B, C, D> removeFifth() {
+      return Quadruple.of(a, b, c, d);
    }
 
    @Override
@@ -281,34 +281,34 @@ public final class Quintet<A, B, C, D, E> implements Tuple.Ops5<A, B, C, D, E>, 
    }
 
    @Override
-   public <T> Quintet<T, T, T, T, T> transformAll(Function<Object, ? extends T> function) {
-      return Quintet.<T, T, T, T, T>create(function.apply(a), function.apply(b), function.apply(c),
+   public <T> Quintuple<T, T, T, T, T> transformAll(Function<Object, ? extends T> function) {
+      return Quintuple.<T, T, T, T, T>of(function.apply(a), function.apply(b), function.apply(c),
             function.apply(d), function.apply(e));
    }
 
    @Override
-   public <T> Quintet<T, B, C, D, E> transformFirst(Function<? super A, ? extends T> function) {
-      return Quintet.<T, B, C, D, E>create(function.apply(a), b, c, d, e);
+   public <T> Quintuple<T, B, C, D, E> transformFirst(Function<? super A, ? extends T> function) {
+      return Quintuple.<T, B, C, D, E>of(function.apply(a), b, c, d, e);
    }
 
    @Override
-   public <T> Quintet<A, T, C, D, E> transformSecond(Function<? super B, ? extends T> function) {
-      return Quintet.<A, T, C, D, E>create(a, function.apply(b), c, d, e);
+   public <T> Quintuple<A, T, C, D, E> transformSecond(Function<? super B, ? extends T> function) {
+      return Quintuple.<A, T, C, D, E>of(a, function.apply(b), c, d, e);
    }
 
    @Override
-   public <T> Quintet<A, B, T, D, E> transformThird(Function<? super C, ? extends T> function) {
-      return Quintet.<A, B, T, D, E>create(a, b, function.apply(c), d, e);
+   public <T> Quintuple<A, B, T, D, E> transformThird(Function<? super C, ? extends T> function) {
+      return Quintuple.<A, B, T, D, E>of(a, b, function.apply(c), d, e);
    }
 
    @Override
-   public <T> Quintet<A, B, C, T, E> transformFourth(Function<? super D, ? extends T> function) {
-      return Quintet.<A, B, C, T, E>create(a, b, c, function.apply(d), e);
+   public <T> Quintuple<A, B, C, T, E> transformFourth(Function<? super D, ? extends T> function) {
+      return Quintuple.<A, B, C, T, E>of(a, b, c, function.apply(d), e);
    }
 
    @Override
-   public <T> Quintet<A, B, C, D, T> transformFifth(Function<? super E, ? extends T> function) {
-      return Quintet.<A, B, C, D, T>create(a, b, c, d, function.apply(e));
+   public <T> Quintuple<A, B, C, D, T> transformFifth(Function<? super E, ? extends T> function) {
+      return Quintuple.<A, B, C, D, T>of(a, b, c, d, function.apply(e));
    }
    
    @Override
