@@ -248,10 +248,13 @@ public class SourceDependencyAnalyzer {
       Map<CompilationUnit, Set<JavaClass>> resolved = new LinkedHashMap<>();
       for (Entry<CompilationUnit, String> entry : importsByCompilationUnit.entries()) {
          JavaClass resolvedClass = resolveClass(entry.getValue());
-         if (resolvedClass != null) {
-            resolved.computeIfAbsent(entry.getKey(), k -> new LinkedHashSet<>())
-                  .add(resolvedClass);
+         if (resolvedClass == null) {
+            // it's an import, so we know it's a reference to a class (and not, for example,
+            // a reference to some other non-type identifier). so synthesize a value
+            resolvedClass = new JavaClass(entry.getValue(), null);
          }
+         resolved.computeIfAbsent(entry.getKey(), k -> new LinkedHashSet<>())
+               .add(resolvedClass);
       }
       for (Entry<String, String> entry : depsByElement.entries()) {
          CompilationUnit source = findCompilationUnit(entry.getKey());
