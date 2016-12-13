@@ -12,8 +12,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
-import com.bluegosling.time.Clock;
-import com.bluegosling.time.SystemClock;
+import com.bluegosling.util.Clock;
+import com.bluegosling.util.SystemClock;
 import com.google.common.util.concurrent.ForwardingFuture;
 import com.google.common.util.concurrent.ForwardingListenableFuture;
 import com.google.common.util.concurrent.ListenableScheduledFuture;

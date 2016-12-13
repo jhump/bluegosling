@@ -1,38 +1,37 @@
 package com.bluegosling.buildgen;
 
-import static java.util.Objects.requireNonNull;
-
-import java.io.File;
 import java.util.Objects;
+import java.util.Set;
+
+import com.google.common.collect.ImmutableSet;
 
 public class JavaPackage implements Comparable<JavaPackage> {
    private final String packageName;
-   private final PackageDirectory directory;
-   private final File sourceRoot;
+   private final Set<PackageDirectory> directories;
    
    JavaPackage(String packageName) {
-      this(packageName, null, null);
-   }
-
-   JavaPackage(String packageName, PackageDirectory directory, File sourceRoot) {
       this.packageName = packageName;
-      this.directory = directory == null ? null : new PackageDirectory(directory, this);
-      if (directory != null) {
-         requireNonNull(sourceRoot);
-      }
-      this.sourceRoot = sourceRoot;
+      this.directories = null;
    }
 
+   JavaPackage(String packageName, Iterable<PackageDirectory> directories) {
+      this.packageName = packageName;
+      this.directories = ImmutableSet.copyOf(directories);
+   }
+   
    public String getPackageName() {
       return packageName;
    }
    
-   public PackageDirectory getPackageDirectory() {
-      return directory;
+   public Set<PackageDirectory> getPackageDirectories() {
+      if (directories == null) {
+         throw new IllegalStateException("External packages have no associated directories");
+      }
+      return directories;
    }
    
-   public File getSourceRoot() {
-      return sourceRoot;
+   public boolean hasDirectories() {
+      return directories != null;
    }
    
    @Override
@@ -40,15 +39,14 @@ public class JavaPackage implements Comparable<JavaPackage> {
       if (o instanceof JavaPackage) {
          JavaPackage other = (JavaPackage) o;
          return packageName.equals(other.packageName)
-               && Objects.equals(directory, other.directory)
-               && Objects.equals(sourceRoot, other.sourceRoot);
+               && Objects.equals(directories, other.directories);
       }
       return false;
    }
    
    @Override
    public int hashCode() {
-      return Objects.hash(packageName, directory, sourceRoot);
+      return Objects.hash(packageName, directories);
    }
 
    @Override

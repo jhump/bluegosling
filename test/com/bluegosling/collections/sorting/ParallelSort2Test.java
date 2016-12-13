@@ -2,20 +2,21 @@ package com.bluegosling.collections.sorting;
 
 import static org.junit.Assert.assertEquals;
 
-import com.bluegosling.collections.sorting.ParallelSort2;
-import com.bluegosling.time.Stopwatch;
-
-import org.junit.Ignore;
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.LongSummaryStatistics;
 import java.util.concurrent.TimeUnit;
+
+import org.junit.Ignore;
+import org.junit.Test;
+
+import com.google.common.base.Stopwatch;
 
 // TODO: javadoc
 public class ParallelSort2Test {
+   private static final long NANOS_PER_MILLI = TimeUnit.MILLISECONDS.toNanos(1);
 
    private List<Integer> getDescendingList(int numItems) {
       ArrayList<Integer> list = new ArrayList<Integer>(numItems);
@@ -86,28 +87,29 @@ public class ParallelSort2Test {
 
       int numItems = 1000*1000;
       
-      Stopwatch stopwatch = new Stopwatch();
+      LongSummaryStatistics stats = new LongSummaryStatistics();
+      Stopwatch stopwatch = Stopwatch.createUnstarted();
       for (int i = 0; i < 5; i++) {
          List<Integer> list = getDescendingList(numItems);
-         stopwatch.start();
+         stopwatch.reset().start();
          Collections.sort(list);
          stopwatch.stop();
-         stopwatch.lap();
+         stats.accept(stopwatch.elapsed(TimeUnit.NANOSECONDS));
       }
       
       System.out.println("Total time with one thread (avg of 5 runs, in millis): "
-            + stopwatch.lapAverage(TimeUnit.MILLISECONDS));
+               + stats.getAverage() / NANOS_PER_MILLI);
 
-      stopwatch.reset();
+      stats = new LongSummaryStatistics();
       for (int i = 0; i < 5; i++) {
          List<Integer> list = getDescendingList(numItems);
-         stopwatch.start();
+         stopwatch.reset().start();
          ParallelSort2.sort(list, 4);
          stopwatch.stop();
-         stopwatch.lap();
+         stats.accept(stopwatch.elapsed(TimeUnit.NANOSECONDS));
       }
       
       System.out.println("Total time with four threads (avg of 5 runs, in millis): "
-            + stopwatch.lapAverage(TimeUnit.MILLISECONDS));
+            + stats.getAverage() / NANOS_PER_MILLI);
    }
 }

@@ -2,20 +2,22 @@ package com.bluegosling.collections.sorting;
 
 import static org.junit.Assert.assertEquals;
 
-import com.bluegosling.collections.sorting.SmoothSort;
-import com.bluegosling.time.Stopwatch;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LongSummaryStatistics;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Ignore;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
+import com.google.common.base.Stopwatch;
 
 
 public class SmoothSortTest {
+   private static final long NANOS_PER_MILLI = TimeUnit.MILLISECONDS.toNanos(1);
+   private static final long NANOS_PER_MICRO = TimeUnit.MICROSECONDS.toNanos(1);
    
    private static final Random RANDOM = new Random(1);
    
@@ -88,8 +90,9 @@ public class SmoothSortTest {
          maxLen *= 10;
       }
       // now measure
-      Stopwatch sw1 = new Stopwatch();
-      Stopwatch sw2 = new Stopwatch();
+      Stopwatch sw = Stopwatch.createUnstarted();
+      LongSummaryStatistics stats1 = new LongSummaryStatistics();
+      LongSummaryStatistics stats2 = new LongSummaryStatistics();
       maxLen = 100;
       count = 10000;
       while (count > 0) {
@@ -103,42 +106,37 @@ public class SmoothSortTest {
                list2.add(v);
             }
             // benchmark
-            sw1.start();
+            sw.reset().start();
             Collections.sort(list1, Comparator.naturalOrder());
-            sw1.stop();
-            sw1.lap();
+            sw.stop();
+            stats1.accept(sw.elapsed(TimeUnit.NANOSECONDS));
             // ours
-            sw2.start();
+            sw.reset().start();
             SmoothSort.sort(list2);
-            sw2.stop();
-            sw2.lap();
+            sw.stop();
+            stats2.accept(sw.elapsed(TimeUnit.NANOSECONDS));
             
             assertEquals(list1, list2);
          }
          
          System.out.println("Benchmark:");
-         printResults(sw1);
+         printResults(stats1);
          System.out.println("Smoothsort:");
-         printResults(sw2);
+         printResults(stats2);
 
-         sw1.reset();
-         sw2.reset();
+         stats1 = new LongSummaryStatistics();
+         stats2 = new LongSummaryStatistics();
          
          count /= 10;
          maxLen *= 10;
       }
    }
    
-   private void printResults(Stopwatch sw) {
-      long laps[] = sw.lapResults(TimeUnit.MICROSECONDS);
-      long sum = 0, max = Long.MIN_VALUE;
-      for (long lap : laps) {
-         sum += lap;
-         if (lap > max) {
-            max = lap;
-         }
-      }
+   private void printResults(LongSummaryStatistics stats) {
       System.out.println(String.format(" Total: %dms (%d laps), Avg: %dus, Max: %dus",
-            TimeUnit.MICROSECONDS.toMillis(sum), laps.length, Math.round(1.0*sum / laps.length), max));
+            stats.getSum() / NANOS_PER_MILLI,
+            stats.getCount(),
+            Math.round(stats.getAverage() / NANOS_PER_MICRO),
+            stats.getMax() / NANOS_PER_MICRO));
    }
 }

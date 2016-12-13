@@ -9,7 +9,7 @@ import static org.junit.Assert.fail;
 
 import com.bluegosling.concurrent.SameThreadExecutor;
 import com.bluegosling.concurrent.fluent.FluentRepeatingFutureTask;
-import com.bluegosling.time.Clock;
+import com.bluegosling.util.Clock;
 
 import org.junit.Test;
 
