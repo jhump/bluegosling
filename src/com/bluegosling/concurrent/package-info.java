@@ -5,7 +5,4 @@
  *  
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-// TODO: add references to other key APIs? Duration, NonReentrantLock, DoubleInstanceLock,
-// ManagedBlockers, CompletableExecutorService, RateLimiter, ThreadLimitingExecutorService,
-// AbstractQueuedReferenceSynchronizer?
 package com.bluegosling.concurrent;

@@ -19,6 +19,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import com.bluegosling.concurrent.SameThreadExecutor;
@@ -34,12 +35,12 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.EnumDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.expr.NameExpr;
 import com.github.javaparser.ast.expr.QualifiedNameExpr;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import com.google.common.base.Preconditions;
-import com.google.common.base.Predicate;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
@@ -68,9 +69,6 @@ import com.google.common.util.concurrent.Uninterruptibles;
  * @see #analyze()
  */
 public class SourceDependencyAnalyzer {
-   private static final Predicate<File> JAVA_SOURCE_FILE_FILTER =
-         f -> f.isFile() && f.getName().toLowerCase().endsWith(".java");
-         
    private static final NoResolveClassLoader LOADER = new NoResolveClassLoader();
    
    /**
@@ -92,6 +90,7 @@ public class SourceDependencyAnalyzer {
    final Consumer<File> progressCallback;
    final Map<CompilationUnit, File> rootByCompilationUnit = new LinkedHashMap<>();
    final Map<CompilationUnit, String> packageByCompilationUnit = new LinkedHashMap<>();
+   final SetMultimap<String, PackageDirectory> directoriesByPackage = LinkedHashMultimap.create();
    final PackageTrieSet packageIndex = new PackageTrieSet();
    final Map<String, CompilationUnit> compilationUnitByClass = new LinkedHashMap<>();
    final SetMultimap<CompilationUnit, String> classesByCompilationUnit =
@@ -103,6 +102,7 @@ public class SourceDependencyAnalyzer {
          LinkedHashMultimap.create();
    final SetMultimap<String, String> depsByElement = LinkedHashMultimap.create();
    final Map<String, String> packageByElement = new LinkedHashMap<>();
+   final Map<String, JavaPackage> resolvedPackages = new LinkedHashMap<>();
    final FluentFutureTask<Results> result;
    
    /**
@@ -171,30 +171,43 @@ public class SourceDependencyAnalyzer {
    }
 
    private Results doAnalysis() throws Exception {
+      // parse each source file to extract dependencies
       for (File path : paths) {
          for (File file : Files.fileTreeTraverser().preOrderTraversal(path)
-               .filter(JAVA_SOURCE_FILE_FILTER)) {
+               .filter(CompilationUnit.JAVA_SOURCE_FILE_FILTER)) {
             progressCallback.accept(file);
-            CompilationUnit cu = asCompilationUnit(file);
+            CompilationUnit cu = CompilationUnit.asCompilationUnit(file);
             rootByCompilationUnit.put(cu, path);
             new AstVisitor(cu).visit();
          }
       }
+      // Index all of the observed packages
       for (String packageName : packageByCompilationUnit.values()) {
          packageIndex.add(packageName);
       }
+      // Create resolved package objects for each observed package
+      for (Entry<String, Collection<PackageDirectory>> entry
+            : directoriesByPackage.asMap().entrySet()) {
+         resolvedPackages.put(entry.getKey(), new JavaPackage(entry.getKey(), entry.getValue()));
+      }
+      // Try to resolve all observed dependencies
       Map<CompilationUnit, Set<JavaClass>> classDeps = resolveDependencies();
+      // Finally, update each CompilationUnit so it has proper refs to constituent java classes
+      // and to the resolved package objects computed above.
       for (CompilationUnit f : classDeps.keySet()) {
          Set<String> containedClassNames = classesByCompilationUnit.get(f);
          assert containedClassNames != null && !containedClassNames.isEmpty();
          String packageName = packageByCompilationUnit.get(f);
          assert packageName != null;
+         JavaPackage pkg = resolvedPackages.get(packageName);
+         assert pkg != null;
          File root = rootByCompilationUnit.get(f);
          assert root != null;
          for (String className : containedClassNames) {
-            f.addClass(new JavaClass(className, packageName, f, root));
+            f.addClass(new JavaClass(className, pkg, f, root));
          }
       }
+      
       return new Results(classDeps);
    }
 
@@ -271,16 +284,18 @@ public class SourceDependencyAnalyzer {
             packageName = ""; // unnamed package
          }
          assert packageName.startsWith(knownPackagePrefix);
-         return new JavaClass(className, packageName, target, rootByCompilationUnit.get(target));
+         JavaPackage pkg = resolvedPackages.get(packageName);
+         assert pkg != null;
+         return new JavaClass(className, pkg, target, rootByCompilationUnit.get(target));
       }
       // Not in a compilation unit? Try resolving from class path. At this point, we have a
       // canonical name. But if the class in question is a nested class, its binary name may be
       // different. So we have to try replacing dots with dollar signs until we've either found
       // the class or have exhausted all possible binary names.
-      return findClass(className, knownPackagePrefix);
+      return findExternalClass(className, knownPackagePrefix);
    }
    
-   private JavaClass findClass(String className, String knownPackagePrefix) {
+   private JavaClass findExternalClass(String className, String knownPackagePrefix) {
       StringBuilder sb = new StringBuilder(className);
       int pos = className.length();
       while (pos > knownPackagePrefix.length()) {
@@ -463,9 +478,65 @@ public class SourceDependencyAnalyzer {
          currentScope.push(n.getPackageName());
          packageName = n.getPackageName();
          packageByCompilationUnit.put(file, packageName);
+         directoriesByPackage.put(packageName, file.getParentFile());
          super.visit(n, arg);
       }
-      
+
+      @Override
+      public void visit(ConstructorDeclaration n, Void arg) {
+         // MethodDeclaration defines "throws" as TypeExpr, but unfortunately
+         // ConstructorDeclaration does not...
+         for (NameExpr expr : n.getThrows()) {
+            depsByElement.put(currentScope.peek(), nameToString(expr));
+         }
+         pushElement(makeMethodName("<init>"));
+         try {
+            super.visit(n, arg);
+         } finally {
+            popElement();
+         }
+      }
+
+      @Override
+      public void visit(MethodDeclaration n, Void arg) {
+         pushElement(makeMethodName(n.getName()));
+         try {
+            super.visit(n, arg);
+         } finally {
+            popElement();
+         }
+      }
+
+      @Override
+      public void visit(ClassOrInterfaceType n, Void arg) {
+         depsByElement.put(currentScope.peek(), typeToString(n));
+      }
+
+          @Override
+      public void visit(ClassOrInterfaceDeclaration n, Void arg) {
+         visitType(n, super::visit);
+      }
+
+      @Override
+      public void visit(EnumDeclaration n, Void arg) {
+         visitType(n, super::visit);
+      }
+
+      @Override
+      public void visit(AnnotationDeclaration n, Void arg) {
+         visitType(n, super::visit);
+      }
+
+      private <T extends TypeDeclaration> void visitType(T type,
+            BiConsumer<T, Void> delegate) {
+         pushElement(makeTypeName(type.getName()));
+         try {
+            delegate.accept(type, null);
+         } finally {
+            popElement();
+         }
+      }
+
       private String nameToString(NameExpr name) {
          if (!(name instanceof QualifiedNameExpr)) {
             return name.getName();
@@ -524,66 +595,6 @@ public class SourceDependencyAnalyzer {
       
       private void popElement() {
          currentScope.pop();
-      }
-
-      @Override
-      public void visit(ClassOrInterfaceDeclaration n, Void arg) {
-         pushElement(makeTypeName(n.getName()));
-         try {
-            super.visit(n, arg);
-         } finally {
-            popElement();
-         }
-      }
-
-      @Override
-      public void visit(EnumDeclaration n, Void arg) {
-         pushElement(makeTypeName(n.getName()));
-         try {
-            super.visit(n, arg);
-         } finally {
-            popElement();
-         }
-      }
-
-      @Override
-      public void visit(AnnotationDeclaration n, Void arg) {
-         pushElement(makeTypeName(n.getName()));
-         try {
-            super.visit(n, arg);
-         } finally {
-            popElement();
-         }
-      }
-
-      @Override
-      public void visit(ConstructorDeclaration n, Void arg) {
-         // MethodDeclaration defines "throws" as TypeExpr, but unfortunately
-         // ConstructorDeclaration does not...
-         for (NameExpr expr : n.getThrows()) {
-            depsByElement.put(currentScope.peek(), nameToString(expr));
-         }
-         pushElement(makeMethodName("<init>"));
-         try {
-            super.visit(n, arg);
-         } finally {
-            popElement();
-         }
-      }
-
-      @Override
-      public void visit(MethodDeclaration n, Void arg) {
-         pushElement(makeMethodName(n.getName()));
-         try {
-            super.visit(n, arg);
-         } finally {
-            popElement();
-         }
-      }
-
-      @Override
-      public void visit(ClassOrInterfaceType n, Void arg) {
-         depsByElement.put(currentScope.peek(), typeToString(n));
       }
    }
 
@@ -854,8 +865,7 @@ public class SourceDependencyAnalyzer {
             assert source.getContainedClasses().stream().allMatch(c -> c.getSourceFile() != null);
             assert source.getContainedClasses().stream().allMatch(c -> c.getSourceRoot() != null);
             assert source.getParentFile().asJavaPackage() != null;
-            assert source.getParentFile().asJavaPackage().getPackageDirectory() != null;
-            assert source.getParentFile().asJavaPackage().getSourceRoot() != null;
+            assert !source.getParentFile().asJavaPackage().getPackageDirectories().isEmpty();
             
             for (JavaClass dep : entry.getValue()) {
                CompilationUnit target = dep.getSourceFile();
@@ -1010,7 +1020,9 @@ public class SourceDependencyAnalyzer {
        * @return all compilation units in the given directory
        */
       public Set<CompilationUnit> getCompilationUnitsForPackage(File pkg) {
-         return pkg.isDirectory() ? filesByPackage.get(asPackage(pkg)) : ImmutableSet.of();
+         return pkg.isDirectory()
+               ? filesByPackage.get(PackageDirectory.asPackage(pkg)) 
+               : ImmutableSet.of();
       }
       
       public Set<JavaClass> getExternalPackageContents(JavaPackage pkg) {
@@ -1025,14 +1037,14 @@ public class SourceDependencyAnalyzer {
        */
       public Set<CompilationUnit> getDependencies(File file) {
          return file.isDirectory()
-               ? fileDependenciesByPackage.get(asPackage(file))
-               : fileDependencies.get(asCompilationUnitUnknown(file));
+               ? fileDependenciesByPackage.get(PackageDirectory.asPackage(file))
+               : fileDependencies.get(CompilationUnit.asCompilationUnitUnknown(file));
       }
       
       public Set<JavaClass> getExternalDependencies(File file) {
          return file.isDirectory()
-               ? externalDependenciesByPackage.get(asPackage(file))
-               : externalClassDependencies.get(asCompilationUnitUnknown(file));
+               ? externalDependenciesByPackage.get(PackageDirectory.asPackage(file))
+               : externalClassDependencies.get(CompilationUnit.asCompilationUnitUnknown(file));
       }
 
       /**
@@ -1043,8 +1055,8 @@ public class SourceDependencyAnalyzer {
        */
       public Set<CompilationUnit> getDependents(File file) {
          return file.isDirectory()
-               ? fileDependentsByPackage.get(asPackage(file))
-               : fileDependents.get(asCompilationUnitUnknown(file));
+               ? fileDependentsByPackage.get(PackageDirectory.asPackage(file))
+               : fileDependents.get(CompilationUnit.asCompilationUnitUnknown(file));
       }
 
       /**
@@ -1055,14 +1067,14 @@ public class SourceDependencyAnalyzer {
        */
       public Set<PackageDirectory> getPackageDependencies(File file) {
          return file.isDirectory()
-               ? packageDependencies.get(asPackage(file))
-               : packageDependenciesByFile.get(asCompilationUnitUnknown(file));
+               ? packageDependencies.get(PackageDirectory.asPackage(file))
+               : packageDependenciesByFile.get(CompilationUnit.asCompilationUnitUnknown(file));
       }
 
       public Set<JavaPackage> getExternalPackageDependencies(File file) {
          return file.isDirectory()
-               ? externalPackageDependencies.get(asPackage(file))
-               : externalPackageDependenciesByFile.get(asCompilationUnitUnknown(file));
+               ? externalPackageDependencies.get(PackageDirectory.asPackage(file))
+               : externalPackageDependenciesByFile.get(CompilationUnit.asCompilationUnitUnknown(file));
       }
 
       /**
@@ -1073,8 +1085,8 @@ public class SourceDependencyAnalyzer {
        */
       public Set<PackageDirectory> getPackageDependents(File file) {
          return file.isDirectory()
-               ? packageDependents.get(asPackage(file))
-               : packageDependentsByFile.get(asCompilationUnitUnknown(file));
+               ? packageDependents.get(PackageDirectory.asPackage(file))
+               : packageDependentsByFile.get(CompilationUnit.asCompilationUnitUnknown(file));
       }
       
       /**
@@ -1093,7 +1105,8 @@ public class SourceDependencyAnalyzer {
             return ImmutableSetMultimap.of();
          }
          SetMultimap<CompilationUnit, CompilationUnit> ret =
-               fileDependencyDetails.get(asPackage(package1), asPackage(package2));
+               fileDependencyDetails.get(PackageDirectory.asPackage(package1),
+                     PackageDirectory.asPackage(package2));
          return ret == null ? ImmutableSetMultimap.of() : ret;
       }
 
@@ -1128,26 +1141,10 @@ public class SourceDependencyAnalyzer {
        *       dependency of its preceding element
        */
       public List<PackageDirectory> getDependencyPath(File a, File b) {
-         List<PackageDirectory> path = shortestPaths.get(packageOf(a), packageOf(b));
+         List<PackageDirectory> path =
+               shortestPaths.get(PackageDirectory.of(a), PackageDirectory.of(b));
          return path == null ? ImmutableList.of() : path;
       }
-   }
-   
-   private static CompilationUnit asCompilationUnit(File f) {
-      assert JAVA_SOURCE_FILE_FILTER.apply(f);
-      return new CompilationUnit(f);
-   }
-   
-   private static CompilationUnit asCompilationUnitUnknown(File f) {
-      return new CompilationUnit(f);
-   }
-   
-   static PackageDirectory asPackage(File f) {
-      return new PackageDirectory(f);
-   }
-   
-   private static PackageDirectory packageOf(File f) {
-      return f.isDirectory() ? asPackage(f) : asPackage(f.getParentFile());
    }
    
    /**
@@ -1173,7 +1170,7 @@ public class SourceDependencyAnalyzer {
                   "The given path, %s, does not exist so could not be analyzed.\n", path);
             System.exit(1);
          }
-         if (!path.isDirectory() && !JAVA_SOURCE_FILE_FILTER.apply(path)) {
+         if (!path.isDirectory() && !CompilationUnit.JAVA_SOURCE_FILE_FILTER.apply(path)) {
             System.err.printf(
                   "The given path, %s, is neither a directory nor a Java source file.\n", path);
             System.exit(1);

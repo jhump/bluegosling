@@ -2,14 +2,6 @@ package com.bluegosling.reflect.scanner;
 
 import static java.util.Objects.requireNonNull;
 
-import com.bluegosling.concurrent.Awaitable;
-import com.bluegosling.concurrent.SameThreadExecutor;
-import com.bluegosling.concurrent.ThreadFactories;
-import com.bluegosling.concurrent.fluent.FluentExecutorService;
-import com.bluegosling.concurrent.fluent.FluentFuture;
-import com.bluegosling.concurrent.fluent.SettableFluentFuture;
-import com.bluegosling.time.Stopwatch;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -38,6 +30,14 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+
+import com.bluegosling.concurrent.Awaitable;
+import com.bluegosling.concurrent.SameThreadExecutor;
+import com.bluegosling.concurrent.ThreadFactories;
+import com.bluegosling.concurrent.fluent.FluentExecutorService;
+import com.bluegosling.concurrent.fluent.FluentFuture;
+import com.bluegosling.concurrent.fluent.SettableFluentFuture;
+import com.google.common.base.Stopwatch;
 
 /**
  * Scans directories and JARs for classes, indexing them by package. This can be used to get
@@ -579,7 +579,7 @@ public class PackageScanner {
        * @return the amount of time elapsed during the scan of this path
        */
       public long getScanDuration(TimeUnit unit) {
-         return elapsed.read(unit);
+         return elapsed.elapsed(unit);
       }
 
       /**
@@ -640,7 +640,7 @@ public class PackageScanner {
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    public static class ScanResult implements Awaitable {
-      private final Stopwatch elapsed = new Stopwatch();
+      private final Stopwatch elapsed = Stopwatch.createUnstarted();
       private final Map<String, FluentFuture<PathResult>> results = new HashMap<>();
       private final FluentFuture<Map<String, Set<ClassInfo>>> operation;
       
@@ -666,7 +666,7 @@ public class PackageScanner {
                continue;
             }
             FluentFuture<PathResult> future;
-            Stopwatch fileElapsed = new Stopwatch();
+            Stopwatch fileElapsed = Stopwatch.createUnstarted();
             if (file.isDirectory()) {
                future = ex.submit(() -> scanDirectory(file, cl, fileElapsed));
             } else {
@@ -711,7 +711,7 @@ public class PackageScanner {
        * @return the amount of time elapsed during the scan of this path
        */
       public long getScanDuration(TimeUnit unit) {
-         return elapsed.read(unit);
+         return elapsed.elapsed(unit);
       }
 
       /**

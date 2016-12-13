@@ -1,8 +1,9 @@
 package com.bluegosling.concurrent;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
-import com.bluegosling.time.Stopwatch;
+import com.google.common.base.Stopwatch;
 
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
@@ -11,6 +12,7 @@ import java.util.concurrent.atomic.AtomicReference;
 // TODO: real tests!
 public class RateLimiterTest {
 
+   @Ignore
    @Test public void test() throws Exception {
       for (int i = 0; i < 20; i++) {
          test1();
@@ -20,7 +22,7 @@ public class RateLimiterTest {
    @Test public void test1() throws Exception {
       int numThreads = 1;
       int qps = 9_900_000;
-      Stopwatch sw = new Stopwatch();
+      Stopwatch sw = Stopwatch.createUnstarted();
       AtomicReference<RateLimiter> rl = new AtomicReference<>();
       CountDownLatch ready = new CountDownLatch(numThreads);
       CountDownLatch go = new CountDownLatch(1);
@@ -50,9 +52,9 @@ public class RateLimiterTest {
    }
 
    @Test public void test2() throws Exception {
-      Stopwatch sw = new Stopwatch();
-      AtomicReference<RateLimiter> rl = new AtomicReference<>();
+      Stopwatch sw = Stopwatch.createUnstarted();
       Random r = new Random();
+      AtomicReference<RateLimiter> rl = new AtomicReference<>();
       CountDownLatch ready = new CountDownLatch(3);
       CountDownLatch go = new CountDownLatch(1);
       CountDownLatch done = new CountDownLatch(3);
@@ -67,7 +69,7 @@ public class RateLimiterTest {
             RateLimiter l = rl.get();
             Thread th = Thread.currentThread();
             for (int j = 0; j < 100; j++) {
-               int p = 1; //r.nextInt(10) + 1;
+               int p = r.nextInt(3) + 1;
                l.acquire(p);
                System.out.println("" + th + " got " + p + " permits @ " + sw);
             }
@@ -75,12 +77,12 @@ public class RateLimiterTest {
          }).start();
       }
       ready.await();
-      RateLimiter l = new RateLimiter(100, 1, 0); 
+      RateLimiter l = new RateLimiter(200, 1, 0); 
       rl.set(l);
       sw.start();
       go.countDown();
       Thread.sleep(1500);
-      l.setRate(20);
+      l.setRate(50);
       done.await();
    }
 }

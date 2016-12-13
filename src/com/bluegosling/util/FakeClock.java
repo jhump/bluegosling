@@ -1,4 +1,4 @@
-package com.bluegosling.time;
+package com.bluegosling.util;
 
 import java.util.concurrent.TimeUnit;
 

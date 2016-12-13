@@ -5,4 +5,4 @@ java_tests(name='fluent',
       'src/com/bluegosling/concurrent',
       'src/com/bluegosling/concurrent/fluent',
       'src/com/bluegosling/testing',
-      'src/com/bluegosling/time'])
+      'src/com/bluegosling/util'])

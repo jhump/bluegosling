@@ -5,8 +5,8 @@ import static org.junit.Assert.fail;
 
 import com.bluegosling.concurrent.fluent.FluentFuture;
 import com.bluegosling.concurrent.fluent.FluentScheduledFutureTask;
-import com.bluegosling.time.Clock;
-import com.bluegosling.time.FakeClock;
+import com.bluegosling.util.Clock;
+import com.bluegosling.util.FakeClock;
 
 import org.junit.Test;
 

@@ -7,26 +7,24 @@ import java.util.Objects;
 
 public class JavaClass implements Comparable<JavaClass> {
    private final String className;
+   private final JavaPackage pkg;
    private final String packageName;
    private final CompilationUnit sourceFile;
    private final File sourceRoot;
-   private final JavaPackage pkg;
    
    JavaClass(String className, String packageName) {
-      this(className, packageName, null, null);
+      this(className, new JavaPackage(packageName), null, null);
    }
 
-   JavaClass(String className, String packageName, CompilationUnit sourceFile, File sourceRoot) {
+   JavaClass(String className, JavaPackage pkg, CompilationUnit sourceFile, File sourceRoot) {
       this.className = className;
-      this.packageName = packageName;
+      this.pkg = pkg;
+      this.packageName = pkg.getPackageName();
       this.sourceFile = sourceFile;
       if (sourceFile != null) {
          requireNonNull(sourceRoot);
       }
       this.sourceRoot = sourceRoot;
-      this.pkg = new JavaPackage(packageName,
-            sourceFile == null ? null : sourceFile.getParentFile(),
-            sourceRoot);
    }
 
    public String getClassName() {

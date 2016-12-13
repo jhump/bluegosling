@@ -1,12 +1,12 @@
 /**
  * New implementations of concurrent data structures.
  * 
- * This package contains several blocking queue and deque implementations that are lock-free. Under
- * certain workloads, particularly where contention might arise (many consumers and/or many
+ * <p>This package contains several blocking queue and deque implementations that are lock-free.
+ * Under certain workloads, particularly where contention might arise (many consumers and/or many
  * producers), these implementations may provide superior performance to the standard
  * implementations included in the {@code java.util.concurrent} package (JSR 166).
  * 
- * There is also a factory class for instantiating
+ * <p>There is also a factory class for instantiating
  * {@linkplain com.bluegosling.collections.concurrent.ShardedConcurrentSets concurrent sets}. It
  * operates using normal not-thread-safe set implementations and makes them
  * thread-safe using sharding, for parallelism, and read-write locks, for thread-safety.

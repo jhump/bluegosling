@@ -1,5 +1,7 @@
 package com.bluegosling.buildgen;
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.File;
 
 public class PackageDirectory extends File {
@@ -18,7 +20,14 @@ public class PackageDirectory extends File {
    }
    
    public JavaPackage asJavaPackage() {
-      assert pkg != null;
-      return pkg;
+      return requireNonNull(pkg);
+   }
+   
+   static PackageDirectory asPackage(File f) {
+      return new PackageDirectory(f);
+   }
+   
+   static PackageDirectory of(File f) {
+      return f.isDirectory() ? asPackage(f) : asPackage(f.getParentFile());
    }
 }

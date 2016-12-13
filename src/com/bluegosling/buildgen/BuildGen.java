@@ -74,6 +74,7 @@ public class BuildGen {
       Model model = new Model(searchPaths);
       for (PackageDirectory dir : analysis.getPackages()) {
          Set<String> deps = new TreeSet<>();
+         // add in-repo deps
          for (PackageDirectory dep : analysis.getPackageDependencies(dir)) {
             if (dep.equals(dir)) {
                continue;
@@ -82,6 +83,18 @@ public class BuildGen {
             deps.add(depTarget);
             deps.addAll(settings.getImpliedExtraDepsFor(depTarget));
          }
+         // test directories also implicitly depend on non-test directories for same package
+         if (settings.isInTestPath(dir)) {
+            for (PackageDirectory dep : dir.asJavaPackage().getPackageDirectories()) {
+               if (settings.isInTestPath(dep)) {
+                  continue; // no cycles!
+               }
+               String depTarget = asTarget(dep);
+               deps.add(depTarget);
+               deps.addAll(settings.getImpliedExtraDepsFor(depTarget));
+            }
+         }
+         // add external deps
          for (JavaPackage dep : analysis.getExternalPackageDependencies(dir)) {
             String target = settings.get3rdPartyTargetForPackage(dep.getPackageName());
             if (target == null) {
