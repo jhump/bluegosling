@@ -1,6 +1,3 @@
----
-layout: index
----
 # bluegosling
 
 [![Build Status](https://travis-ci.org/jhump/bluegosling.svg?branch=master)](https://travis-ci.org/jhump/bluegosling/branches)

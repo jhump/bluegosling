@@ -8,3 +8,10 @@ elif [[ "$#" -ne 0 ]]; then
   exit 1
 fi
 
+if git diff --name-only --diff-filter=ACM HEAD HEAD~1 \
+    | grep '^README.md$'; then
+  echo -e '---\nlayout: index\n---\n\n' > docs/index.md
+  cat README.md >> docs/index.md
+  git add docs/index.md
+  git commit -am "sync README.md to docs/index.md"
+fi
