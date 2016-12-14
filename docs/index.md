@@ -17,7 +17,7 @@ While going through the motions of implementing numerous [collections](https://d
 
 ## What's the status?
 
-This has been a random dumping ground for lots of ideas, many half-baked (or less). I created the project when I was working at Google, so felt that [Google Code](https://code.google.com) was the place to do it. On 3/21/2015, I moved it to [Github](https://github.com/jhump/bluegosling) (from [http://code.google.com/p/bluegosling]).
+This has been a random dumping ground for lots of ideas, many half-baked (or less). I created the project when I was working at Google, so felt that [Google Code](https://code.google.com) was the place to do it. On 3/21/2015, I moved it to [Github](https://github.com/jhump/bluegosling) (from [http://code.google.com/p/bluegosling](http://code.google.com/p/bluegosling)).
 
 The project has now been broken up into numerous modules, each of which could be used in other Java projects. I spent several months, sometimes just a few hours a week, cleaning up cross-package dependencies, refactoring into packages and modules that made sense, and documenting things. There are still numerous rough edges and cruft -- classes/APIs/data structures that I never finished implementing. Some of them are very close to done and just need tests (and thus fixes). Some are mere skeletons, serving only as placeholders for what they might eventually become. But the amount of cruft is shrinking and the cruft that is there is slowly getting better documented so its status is obvious to any would-be users.
 
@@ -42,7 +42,7 @@ interfaces).
 
 ## How can I learn more?
 
-You can peruse the complete java doc here: [http://jhump.github.io/bluegosling/javadoc/index.html]
+You can peruse the complete java doc here: [https://jhump.github.io/bluegosling/javadoc/index.html](https://jhump.github.io/bluegosling/javadoc/index.html)
 
 ## Who are you?
 
