@@ -1,0 +1,10 @@
+#!/bin/bash
+if [[ "$#" -eq 1 && "$1" == "--setup" ]]; then
+  cd $(dirname $0)/.git/hooks
+  ln -sfn ../../post-commit
+  echo "post-commit hook configured"
+elif [[ "$#" -ne 0 ]]; then
+  echo "Expected no arguments"
+  exit 1
+fi
+
