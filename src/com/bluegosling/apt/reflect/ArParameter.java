@@ -28,6 +28,15 @@ public class ArParameter<M extends ArExecutableMember> extends ArAbstractAnnotat
       super(element);
    }
    
+   /**
+    * Returns a parameter based on the specified element.
+    * 
+    * @param element the element
+    * @return a parameter
+    * @throws NullPointerException if the specified element is null
+    * @throws IllegalArgumentException if the specified element does not represent a
+    *       parameter
+    */
    public static ArParameter<?> forElement(VariableElement element) {
       if (element == null) {
          throw new NullPointerException();
@@ -38,6 +47,16 @@ public class ArParameter<M extends ArExecutableMember> extends ArAbstractAnnotat
       return new ArParameter<ArExecutableMember>(element);
    }
    
+
+   /**
+    * Returns a method parameter based on the specified element.
+    * 
+    * @param element the element
+    * @return a method parameter
+    * @throws NullPointerException if the specified element is null
+    * @throws IllegalArgumentException if the specified element does not represent a
+    *       parameter of a method
+    */
    public static ArParameter<ArMethod> forMethodParameterElement(VariableElement element) {
       @SuppressWarnings("unchecked") // we check the type before letting this ref escape
       ArParameter<ArMethod> param = (ArParameter<ArMethod>) forElement(element);
@@ -49,6 +68,15 @@ public class ArParameter<M extends ArExecutableMember> extends ArAbstractAnnotat
       return param;
    }
 
+   /**
+    * Returns a constructor parameter based on the specified element.
+    * 
+    * @param element the element
+    * @return a constructor parameter
+    * @throws NullPointerException if the specified element is null
+    * @throws IllegalArgumentException if the specified element does not represent a
+    *       parameter of a constructor
+    */
    public static ArParameter<ArConstructor> forConstructorParameterElement(
          VariableElement element) {
       @SuppressWarnings("unchecked") // we'll check the type before letting this ref escape

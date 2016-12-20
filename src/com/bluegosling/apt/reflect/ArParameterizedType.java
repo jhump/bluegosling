@@ -32,7 +32,6 @@ public class ArParameterizedType implements ArType {
     * Creates a parameterized type from the specified type mirror.
     * 
     * @param arrayType the type mirror
-    * @return a parameterized type
     * @throws NullPointerException if the specified type mirror is null
     */
    private ArParameterizedType(DeclaredType declaredType) {

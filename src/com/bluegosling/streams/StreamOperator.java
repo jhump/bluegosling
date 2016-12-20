@@ -1,7 +1,7 @@
 package com.bluegosling.streams;
 
 /**
- * A stream operator provides a simople intermediate operation, or stage, in a stream. These are
+ * A stream operator provides a simple intermediate operation, or stage, in a stream. These are
  * non-terminal operations that accept data produced by the upstream operation, perform some sort
  * of transformation on the data, and then send the results to downstream operations.
  * 

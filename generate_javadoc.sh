@@ -1,19 +1,6 @@
 #!/bin/bash
 set -e
 
-if [[ -n $(git status -s -uno) ]]; then
-	echo "You working tree is dirty. Commit your changes before generating javadoc." >&2
-	exit 1
-fi
-
-original_branch="$(git branch | grep '^\* ' | awk '{ print $2 }')"
-if [[ -z $original_branch ]]; then
-	# must have a detached head checked out
-	original_branch="$(git rev-parse HEAD)"
-fi
-
-git checkout -b regen-javadocs
-
 # Finds all com.bluegosling.* packages (and sub-packages thereof) and generates javadoc for them.
 rm -rf javadoc/ 2> /dev/null
 mkdir javadoc/
@@ -26,12 +13,3 @@ find src -type d \
 	-link https://docs.oracle.com/javase/8/docs/api/ \
 	-link http://docs.guava-libraries.googlecode.com/git/javadoc \
 	-overview src/com/bluegosling/overview.html
-
-git reset gh-pages
-git add javadoc
-git commit -m "re-generated javadocs: $(date)"
-git checkout gh-pages
-git merge --ff-only regen-javadocs
-git branch -D regen-javadocs
-
-git checkout -f $original_branch

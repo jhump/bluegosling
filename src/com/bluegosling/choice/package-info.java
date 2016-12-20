@@ -8,7 +8,7 @@
  * <li><strong>Either / Any</strong>: These types require that exactly one component be present and
  *    non-null. These are most similar to union types found often in functional languages, like
  *    Scala.</li>
- * <li><strong>Variant</strong>: These types require that exactly one component be present, but
+ * <li><strong>Union</strong>: These types require that exactly one component be present, but
  *    null components are allowed. They are more like traditional union or variant types in that
  *    they do not place constraints on the values that may be present.</li>
  * </ol>

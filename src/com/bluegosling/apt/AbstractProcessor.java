@@ -12,7 +12,7 @@ import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic;
 
 /**
- * An abstract annotation processor that makes for a better base class than the standard. This
+ * An abstract annotation processor that may make for a better base class than the standard. This
  * class provides the following two new features:
  * <ul>
  * <li>This processor sets up thread-local state about the current processing environment. This
