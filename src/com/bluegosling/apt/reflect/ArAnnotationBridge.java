@@ -66,7 +66,7 @@ public final class ArAnnotationBridge {
    
    private static final ThreadLocal<Object> lastValue = new ThreadLocal<Object>(); 
    
-   private static <T> T getLastValue(java.lang.Class<T> clazz) {
+   private static <T> T getLastValue(Class<T> clazz) {
       @SuppressWarnings("unchecked") // we'll check it before we try to return it
       T val = (T) lastValue.get();
       lastValue.set(null);
@@ -83,15 +83,14 @@ public final class ArAnnotationBridge {
     * that had the same values as the specified {@link ArAnnotation} (which itself comes from an
     * annotation mirror).
     * 
-    * <p>They key differences between an actual {@link java.lang.annotation.Annotation
-    * java.lang.annotation.Annotation} and the value returned follow:
+    * <p>They key differences between an actual {@link Annotation} and the value returned follow:
     * <ul>
     * <li>The returned value does not implement {@code equals(Object)} or {@code hashCode()} per
-    * the contract specified by {@link java.lang.annotation.Annotation}. Bridged annotations can
-    * safely be compared to one another but not to actual (non-bridge) annotation objects.</li>
-    * <li>Methods that return {@code java.lang.Class} or {@code java.lang.Class[]} values will
-    * always return {@code null}. Callers must use {@link #bridge(Class)} or {@link #bridge(Class[])}
-    * to get to these values, but as {@link ArClass} objects instead of as {@link Class} tokens.</li>
+    * the contract specified by {@link Annotation}. Bridged annotations can safely be compared to
+    * one another but not to actual (non-bridge) annotation objects.</li>
+    * <li>Methods that return {@code Class} or {@code Class[]} values will always return
+    * {@code null}. Callers must use {@link #bridge(Class)} or {@link #bridge(Class[])} to get to
+    * these values, but as {@link ArClass} objects instead of as {@link Class} tokens.</li>
     * </ul>
     * 
     * @param annotation the annotation to be bridged
@@ -102,8 +101,7 @@ public final class ArAnnotationBridge {
     *       if the specified annotation is not of the specified type
     * @throws NullPointerException if either argument is {@code null}
     */
-   public static <T extends java.lang.annotation.Annotation> T createBridge(ArAnnotation annotation,
-         java.lang.Class<T> clazz) {
+   public static <T extends Annotation> T createBridge(ArAnnotation annotation, Class<T> clazz) {
       if (annotation == null || clazz == null) {
          throw new NullPointerException();
       }
@@ -115,7 +113,7 @@ public final class ArAnnotationBridge {
             throw new IllegalArgumentException("specified annotation is not of specified type");
          }
       } catch (ClassNotFoundException e) {
-         // if we couldn't find a java.lang.Class for this annotation, then it obviously wasn't
+         // if we couldn't find a class token for this annotation, then it obviously wasn't
          // an instance of the clazz
          throw new IllegalArgumentException("specified annotation is not of specified type");
       }
@@ -136,8 +134,8 @@ public final class ArAnnotationBridge {
     * 
     * @see #createBridge(ArAnnotation, Class)
     */
-   public static <T extends java.lang.annotation.Annotation> T createBridge(ArClass annotatedClass,
-         java.lang.Class<T> annotationType) {
+   public static <T extends Annotation> T createBridge(ArClass annotatedClass,
+         Class<T> annotationType) {
       if (annotatedClass == null || annotationType == null) {
          throw new NullPointerException();
       }
@@ -153,14 +151,13 @@ public final class ArAnnotationBridge {
     * 
     * @param annotation the annotation to be bridged
     * @return an annotation bridge
-    * @throws ClassNotFoundException if no runtime {@code java.lang.Class} could be loaded for
-    *       the type of the specified annotation
+    * @throws ClassNotFoundException if no runtime {@code Class} could be loaded for the type of
+    *           the specified annotation
     * @throws NullPointerException if the argument is {@code null}
     *       
     * @see #createBridge(ArAnnotation, Class)
     */
-   public static java.lang.annotation.Annotation createBridge(ArAnnotation annotation)
-         throws ClassNotFoundException {
+   public static Annotation createBridge(ArAnnotation annotation) throws ClassNotFoundException {
       if (annotation == null) {
          throw new NullPointerException();
       }
@@ -177,13 +174,13 @@ public final class ArAnnotationBridge {
     * @param annotation the annotation to be bridged
     * @param classLoader a class loader
     * @return an annotation bridge
-    * @throws ClassNotFoundException if no runtime {@code java.lang.Class} could be loaded for
-    *       the type of the specified annotation
+    * @throws ClassNotFoundException if no runtime {@code Class} could be loaded for the type of
+    *           the specified annotation
     * @throws NullPointerException if either argument is {@code null}
     *       
     * @see #createBridge(ArAnnotation, Class)
     */
-   public static java.lang.annotation.Annotation createBridge(ArAnnotation annotation,
+   public static Annotation createBridge(ArAnnotation annotation,
          ClassLoader classLoader) throws ClassNotFoundException {
       if (annotation == null || classLoader == null) {
          throw new NullPointerException();
@@ -203,9 +200,9 @@ public final class ArAnnotationBridge {
    }
    
    /**
-    * Bridges an annotation value from {@code java.lang.Class} to {@link ArClass}. The value
-    * returned from invoking a method on the bridge instance is what should be supplied as the
-    * argument to this method.
+    * Bridges an annotation value from {@code Class} to {@link ArClass}. The value returned from
+    * invoking a method on the bridge instance is what should be supplied as the argument to this
+    * method.
     * 
     * @param val the value returned from an annotation bridge (which will actually always be
     *       {@code null} and should be supplied as an argument to make the syntax more readable)
@@ -220,8 +217,8 @@ public final class ArAnnotationBridge {
    }
    
    /**
-    * Bridges an annotation value from {@code java.lang.Class[]} to {@link ArClass Class[]}. The
-    * value returned from invoking a method on the bridge instance is what should be supplied as the
+    * Bridges an annotation value from {@code Class[]} to {@link ArClass Class[]}. The value
+    * returned from invoking a method on the bridge instance is what should be supplied as the
     * argument to this method.
     * 
     * @param val the value returned from an annotation bridge (which will actually always be
@@ -346,7 +343,7 @@ public final class ArAnnotationBridge {
             @SuppressWarnings("unchecked")
             List<?> vals = new TransformingList<Object, Object>((List<Object>) val,
                   (o) -> convertAnnotationValue(o, componentType, methodName));
-            // java.lang.Class is special since we actually return array of our Class instead
+            // Class is special since we actually return array of ArClass instead
             Class<?> arrayElementType;
             if (Class.class.isAssignableFrom(componentType)) {
                arrayElementType = ArClass.class;
