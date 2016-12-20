@@ -174,15 +174,21 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>static <a href="../../../../com/bluegosling/apt/reflect/ArParameter.html" title="class in com.bluegosling.apt.reflect">ArParameter</a>&lt;<a href="../../../../com/bluegosling/apt/reflect/ArConstructor.html" title="class in com.bluegosling.apt.reflect">ArConstructor</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/bluegosling/apt/reflect/ArParameter.html#forConstructorParameterElement-javax.lang.model.element.VariableElement-">forConstructorParameterElement</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/VariableElement.html?is-external=true" title="class or interface in javax.lang.model.element">VariableElement</a>&nbsp;element)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/bluegosling/apt/reflect/ArParameter.html#forConstructorParameterElement-javax.lang.model.element.VariableElement-">forConstructorParameterElement</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/VariableElement.html?is-external=true" title="class or interface in javax.lang.model.element">VariableElement</a>&nbsp;element)</code>
+<div class="block">Returns a constructor parameter based on the specified element.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>static <a href="../../../../com/bluegosling/apt/reflect/ArParameter.html" title="class in com.bluegosling.apt.reflect">ArParameter</a>&lt;?&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/bluegosling/apt/reflect/ArParameter.html#forElement-javax.lang.model.element.VariableElement-">forElement</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/VariableElement.html?is-external=true" title="class or interface in javax.lang.model.element">VariableElement</a>&nbsp;element)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/bluegosling/apt/reflect/ArParameter.html#forElement-javax.lang.model.element.VariableElement-">forElement</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/VariableElement.html?is-external=true" title="class or interface in javax.lang.model.element">VariableElement</a>&nbsp;element)</code>
+<div class="block">Returns a parameter based on the specified element.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>static <a href="../../../../com/bluegosling/apt/reflect/ArParameter.html" title="class in com.bluegosling.apt.reflect">ArParameter</a>&lt;<a href="../../../../com/bluegosling/apt/reflect/ArMethod.html" title="class in com.bluegosling.apt.reflect">ArMethod</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/bluegosling/apt/reflect/ArParameter.html#forMethodParameterElement-javax.lang.model.element.VariableElement-">forMethodParameterElement</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/VariableElement.html?is-external=true" title="class or interface in javax.lang.model.element">VariableElement</a>&nbsp;element)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/bluegosling/apt/reflect/ArParameter.html#forMethodParameterElement-javax.lang.model.element.VariableElement-">forMethodParameterElement</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/VariableElement.html?is-external=true" title="class or interface in javax.lang.model.element">VariableElement</a>&nbsp;element)</code>
+<div class="block">Returns a method parameter based on the specified element.</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotation.html" title="class in com.bluegosling.apt.reflect">ArAnnotation</a></code></td>
@@ -293,6 +299,17 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <li class="blockList">
 <h4>forElement</h4>
 <pre>public static&nbsp;<a href="../../../../com/bluegosling/apt/reflect/ArParameter.html" title="class in com.bluegosling.apt.reflect">ArParameter</a>&lt;?&gt;&nbsp;forElement(<a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/VariableElement.html?is-external=true" title="class or interface in javax.lang.model.element">VariableElement</a>&nbsp;element)</pre>
+<div class="block">Returns a parameter based on the specified element.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>element</code> - the element</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a parameter</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if the specified element is null</dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the specified element does not represent a
+       parameter</dd>
+</dl>
 </li>
 </ul>
 <a name="forMethodParameterElement-javax.lang.model.element.VariableElement-">
@@ -302,6 +319,17 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <li class="blockList">
 <h4>forMethodParameterElement</h4>
 <pre>public static&nbsp;<a href="../../../../com/bluegosling/apt/reflect/ArParameter.html" title="class in com.bluegosling.apt.reflect">ArParameter</a>&lt;<a href="../../../../com/bluegosling/apt/reflect/ArMethod.html" title="class in com.bluegosling.apt.reflect">ArMethod</a>&gt;&nbsp;forMethodParameterElement(<a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/VariableElement.html?is-external=true" title="class or interface in javax.lang.model.element">VariableElement</a>&nbsp;element)</pre>
+<div class="block">Returns a method parameter based on the specified element.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>element</code> - the element</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a method parameter</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if the specified element is null</dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the specified element does not represent a
+       parameter of a method</dd>
+</dl>
 </li>
 </ul>
 <a name="forConstructorParameterElement-javax.lang.model.element.VariableElement-">
@@ -311,6 +339,17 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <li class="blockList">
 <h4>forConstructorParameterElement</h4>
 <pre>public static&nbsp;<a href="../../../../com/bluegosling/apt/reflect/ArParameter.html" title="class in com.bluegosling.apt.reflect">ArParameter</a>&lt;<a href="../../../../com/bluegosling/apt/reflect/ArConstructor.html" title="class in com.bluegosling.apt.reflect">ArConstructor</a>&gt;&nbsp;forConstructorParameterElement(<a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/VariableElement.html?is-external=true" title="class or interface in javax.lang.model.element">VariableElement</a>&nbsp;element)</pre>
+<div class="block">Returns a constructor parameter based on the specified element.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>element</code> - the element</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a constructor parameter</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if the specified element is null</dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the specified element does not represent a
+       parameter of a constructor</dd>
+</dl>
 </li>
 </ul>
 <a name="asElement--">

@@ -123,6 +123,8 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre>public abstract class <span class="typeNameLabel">ArProcessor</span>
 extends <a href="../../../../com/bluegosling/apt/AbstractProcessor.html" title="class in com.bluegosling.apt">AbstractProcessor</a></pre>
+<div class="block">An abstract annotation processor whose methods is defined in terms of the reflection-like API in
+ this package instead of the standard element and type mirror APIs.</div>
 </li>
 </ul>
 </div>
@@ -143,7 +145,9 @@ extends <a href="../../../../com/bluegosling/apt/AbstractProcessor.html" title="
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected <a href="../../../../com/bluegosling/apt/reflect/ArRoundEnvironment.html" title="class in com.bluegosling.apt.reflect">ArRoundEnvironment</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/bluegosling/apt/reflect/ArProcessor.html#roundEnv">roundEnv</a></span></code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/bluegosling/apt/reflect/ArProcessor.html#roundEnv">roundEnv</a></span></code>
+<div class="block">The environment of the current processing round.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -188,12 +192,15 @@ extends <a href="../../../../com/bluegosling/apt/AbstractProcessor.html" title="
 <td class="colFirst"><code>protected boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/bluegosling/apt/reflect/ArProcessor.html#doProcess-java.util.Set-javax.annotation.processing.RoundEnvironment-">doProcess</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/TypeElement.html?is-external=true" title="class or interface in javax.lang.model.element">TypeElement</a>&gt;&nbsp;annotations,
          <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/RoundEnvironment.html?is-external=true" title="class or interface in javax.annotation.processing">RoundEnvironment</a>&nbsp;env)</code>
-<div class="block">Processes the given annotations for the given round.</div>
+<div class="block">Translates the given element and round environment into reflection-like types and then
+ delegates to <a href="../../../../com/bluegosling/apt/reflect/ArProcessor.html#process-java.util.Set-"><code>process(Set)</code></a>.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected abstract boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/bluegosling/apt/reflect/ArProcessor.html#process-java.util.Set-">process</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect">ArClass</a>&gt;&nbsp;annotationTypes)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/bluegosling/apt/reflect/ArProcessor.html#process-java.util.Set-">process</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect">ArClass</a>&gt;&nbsp;annotationTypes)</code>
+<div class="block">Processes annotations.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -238,6 +245,8 @@ extends <a href="../../../../com/bluegosling/apt/AbstractProcessor.html" title="
 <li class="blockList">
 <h4>roundEnv</h4>
 <pre>protected&nbsp;<a href="../../../../com/bluegosling/apt/reflect/ArRoundEnvironment.html" title="class in com.bluegosling.apt.reflect">ArRoundEnvironment</a> roundEnv</pre>
+<div class="block">The environment of the current processing round. This provides a facility for querying for
+ annotated elements that are currently being processed.</div>
 </li>
 </ul>
 </li>
@@ -273,8 +282,8 @@ extends <a href="../../../../com/bluegosling/apt/AbstractProcessor.html" title="
 <h4>doProcess</h4>
 <pre>protected final&nbsp;boolean&nbsp;doProcess(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/TypeElement.html?is-external=true" title="class or interface in javax.lang.model.element">TypeElement</a>&gt;&nbsp;annotations,
                                   <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/RoundEnvironment.html?is-external=true" title="class or interface in javax.annotation.processing">RoundEnvironment</a>&nbsp;env)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../../com/bluegosling/apt/AbstractProcessor.html#doProcess-java.util.Set-javax.annotation.processing.RoundEnvironment-">AbstractProcessor</a></code></span></div>
-<div class="block">Processes the given annotations for the given round. This perform the work of the processor.</div>
+<div class="block">Translates the given element and round environment into reflection-like types and then
+ delegates to <a href="../../../../com/bluegosling/apt/reflect/ArProcessor.html#process-java.util.Set-"><code>process(Set)</code></a>.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../com/bluegosling/apt/AbstractProcessor.html#doProcess-java.util.Set-javax.annotation.processing.RoundEnvironment-">doProcess</a></code>&nbsp;in class&nbsp;<code><a href="../../../../com/bluegosling/apt/AbstractProcessor.html" title="class in com.bluegosling.apt">AbstractProcessor</a></code></dd>
@@ -295,6 +304,16 @@ extends <a href="../../../../com/bluegosling/apt/AbstractProcessor.html" title="
 <li class="blockList">
 <h4>process</h4>
 <pre>protected abstract&nbsp;boolean&nbsp;process(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect">ArClass</a>&gt;&nbsp;annotationTypes)</pre>
+<div class="block">Processes annotations. This does the work of the processor. The supplied types are the
+ annotation types that this processor <a href="../../../../com/bluegosling/apt/AbstractProcessor.html#getSupportedAnnotationTypes--">supports</a>
+ and that were encountered during the round of compilation/processing. Implementations can use
+ the <a href="../../../../com/bluegosling/apt/reflect/ArProcessor.html#roundEnv"><code>round environment</code></a> to query for annotated elements.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>annotationTypes</code> - the annotation types to process</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if the processor claims the annotations, false otherwise</dd>
+</dl>
 </li>
 </ul>
 </li>

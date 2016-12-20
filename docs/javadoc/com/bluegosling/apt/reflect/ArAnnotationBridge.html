@@ -175,13 +175,13 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>static <a href="../../../../com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect">ArClass</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/bluegosling/apt/reflect/ArAnnotationBridge.html#bridge-java.lang.Class-">bridge</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;val)</code>
-<div class="block">Bridges an annotation value from <code>java.lang.Class</code> to <a href="../../../../com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect"><code>ArClass</code></a>.</div>
+<div class="block">Bridges an annotation value from <code>Class</code> to <a href="../../../../com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect"><code>ArClass</code></a>.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>static <a href="../../../../com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect">ArClass</a>[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/bluegosling/apt/reflect/ArAnnotationBridge.html#bridge-java.lang.Class:A-">bridge</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;[]&nbsp;val)</code>
-<div class="block">Bridges an annotation value from <code>java.lang.Class[]</code> to <a href="../../../../com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect"><code>Class[]</code></a>.</div>
+<div class="block">Bridges an annotation value from <code>Class[]</code> to <a href="../../../../com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect"><code>Class[]</code></a>.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
@@ -251,14 +251,14 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
  that had the same values as the specified <a href="../../../../com/bluegosling/apt/reflect/ArAnnotation.html" title="class in com.bluegosling.apt.reflect"><code>ArAnnotation</code></a> (which itself comes from an
  annotation mirror).
  
- <p>They key differences between an actual <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation"><code>java.lang.annotation.Annotation</code></a> and the value returned follow:
+ <p>They key differences between an actual <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation"><code>Annotation</code></a> and the value returned follow:
  <ul>
  <li>The returned value does not implement <code>equals(Object)</code> or <code>hashCode()</code> per
- the contract specified by <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation"><code>Annotation</code></a>. Bridged annotations can
- safely be compared to one another but not to actual (non-bridge) annotation objects.</li>
- <li>Methods that return <code>java.lang.Class</code> or <code>java.lang.Class[]</code> values will
- always return <code>null</code>. Callers must use <a href="../../../../com/bluegosling/apt/reflect/ArAnnotationBridge.html#bridge-java.lang.Class-"><code>bridge(Class)</code></a> or <a href="../../../../com/bluegosling/apt/reflect/ArAnnotationBridge.html#bridge-java.lang.Class:A-"><code>bridge(Class[])</code></a>
- to get to these values, but as <a href="../../../../com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect"><code>ArClass</code></a> objects instead of as <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang"><code>Class</code></a> tokens.</li>
+ the contract specified by <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation"><code>Annotation</code></a>. Bridged annotations can safely be compared to
+ one another but not to actual (non-bridge) annotation objects.</li>
+ <li>Methods that return <code>Class</code> or <code>Class[]</code> values will always return
+ <code>null</code>. Callers must use <a href="../../../../com/bluegosling/apt/reflect/ArAnnotationBridge.html#bridge-java.lang.Class-"><code>bridge(Class)</code></a> or <a href="../../../../com/bluegosling/apt/reflect/ArAnnotationBridge.html#bridge-java.lang.Class:A-"><code>bridge(Class[])</code></a> to get to
+ these values, but as <a href="../../../../com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect"><code>ArClass</code></a> objects instead of as <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang"><code>Class</code></a> tokens.</li>
  </ul></div>
 <dl>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
@@ -317,8 +317,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>an annotation bridge</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/ClassNotFoundException.html?is-external=true" title="class or interface in java.lang">ClassNotFoundException</a></code> - if no runtime <code>java.lang.Class</code> could be loaded for
-       the type of the specified annotation</dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/ClassNotFoundException.html?is-external=true" title="class or interface in java.lang">ClassNotFoundException</a></code> - if no runtime <code>Class</code> could be loaded for the type of
+           the specified annotation</dd>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if the argument is <code>null</code></dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../com/bluegosling/apt/reflect/ArAnnotationBridge.html#createBridge-com.bluegosling.apt.reflect.ArAnnotation-java.lang.Class-"><code>createBridge(ArAnnotation, Class)</code></a></dd>
@@ -343,8 +343,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>an annotation bridge</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/ClassNotFoundException.html?is-external=true" title="class or interface in java.lang">ClassNotFoundException</a></code> - if no runtime <code>java.lang.Class</code> could be loaded for
-       the type of the specified annotation</dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/ClassNotFoundException.html?is-external=true" title="class or interface in java.lang">ClassNotFoundException</a></code> - if no runtime <code>Class</code> could be loaded for the type of
+           the specified annotation</dd>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if either argument is <code>null</code></dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../com/bluegosling/apt/reflect/ArAnnotationBridge.html#createBridge-com.bluegosling.apt.reflect.ArAnnotation-java.lang.Class-"><code>createBridge(ArAnnotation, Class)</code></a></dd>
@@ -358,9 +358,9 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <li class="blockList">
 <h4>bridge</h4>
 <pre>public static&nbsp;<a href="../../../../com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect">ArClass</a>&nbsp;bridge(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;val)</pre>
-<div class="block">Bridges an annotation value from <code>java.lang.Class</code> to <a href="../../../../com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect"><code>ArClass</code></a>. The value
- returned from invoking a method on the bridge instance is what should be supplied as the
- argument to this method.</div>
+<div class="block">Bridges an annotation value from <code>Class</code> to <a href="../../../../com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect"><code>ArClass</code></a>. The value returned from
+ invoking a method on the bridge instance is what should be supplied as the argument to this
+ method.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>val</code> - the value returned from an annotation bridge (which will actually always be
@@ -379,8 +379,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <li class="blockList">
 <h4>bridge</h4>
 <pre>public static&nbsp;<a href="../../../../com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect">ArClass</a>[]&nbsp;bridge(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;[]&nbsp;val)</pre>
-<div class="block">Bridges an annotation value from <code>java.lang.Class[]</code> to <a href="../../../../com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect"><code>Class[]</code></a>. The
- value returned from invoking a method on the bridge instance is what should be supplied as the
+<div class="block">Bridges an annotation value from <code>Class[]</code> to <a href="../../../../com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect"><code>Class[]</code></a>. The value
+ returned from invoking a method on the bridge instance is what should be supplied as the
  argument to this method.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>

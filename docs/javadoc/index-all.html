@@ -249,7 +249,7 @@
 </dd>
 <dt><a href="com/bluegosling/apt/AbstractProcessor.html" title="class in com.bluegosling.apt"><span class="typeNameLink">AbstractProcessor</span></a> - Class in <a href="com/bluegosling/apt/package-summary.html">com.bluegosling.apt</a></dt>
 <dd>
-<div class="block">An abstract annotation processor that makes for a better base class than the standard.</div>
+<div class="block">An abstract annotation processor that may make for a better base class than the standard.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/AbstractProcessor.html#AbstractProcessor--">AbstractProcessor()</a></span> - Constructor for class com.bluegosling.apt.<a href="com/bluegosling/apt/AbstractProcessor.html" title="class in com.bluegosling.apt">AbstractProcessor</a></dt>
 <dd>&nbsp;</dd>
@@ -1455,7 +1455,10 @@
 <div class="block">An instance of type with information about actual type parameters.</div>
 </dd>
 <dt><a href="com/bluegosling/apt/reflect/ArProcessor.html" title="class in com.bluegosling.apt.reflect"><span class="typeNameLink">ArProcessor</span></a> - Class in <a href="com/bluegosling/apt/reflect/package-summary.html">com.bluegosling.apt.reflect</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">An abstract annotation processor whose methods is defined in terms of the reflection-like API in
+ this package instead of the standard element and type mirror APIs.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArProcessor.html#ArProcessor--">ArProcessor()</a></span> - Constructor for class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArProcessor.html" title="class in com.bluegosling.apt.reflect">ArProcessor</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/bluegosling/collections/lists/ArrayBackedLinkedList.html" title="class in com.bluegosling.collections.lists"><span class="typeNameLink">ArrayBackedLinkedList</span></a>&lt;<a href="com/bluegosling/collections/lists/ArrayBackedLinkedList.html" title="type parameter in ArrayBackedLinkedList">E</a>&gt; - Class in <a href="com/bluegosling/collections/lists/package-summary.html">com.bluegosling.collections.lists</a></dt>
@@ -2281,11 +2284,11 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArAnnotationBridge.html#bridge-java.lang.Class-">bridge(Class&lt;?&gt;)</a></span> - Static method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArAnnotationBridge.html" title="class in com.bluegosling.apt.reflect">ArAnnotationBridge</a></dt>
 <dd>
-<div class="block">Bridges an annotation value from <code>java.lang.Class</code> to <a href="com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect"><code>ArClass</code></a>.</div>
+<div class="block">Bridges an annotation value from <code>Class</code> to <a href="com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect"><code>ArClass</code></a>.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArAnnotationBridge.html#bridge-java.lang.Class:A-">bridge(Class&lt;?&gt;[])</a></span> - Static method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArAnnotationBridge.html" title="class in com.bluegosling.apt.reflect">ArAnnotationBridge</a></dt>
 <dd>
-<div class="block">Bridges an annotation value from <code>java.lang.Class[]</code> to <a href="com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect"><code>Class[]</code></a>.</div>
+<div class="block">Bridges an annotation value from <code>Class[]</code> to <a href="com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect"><code>Class[]</code></a>.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArAnnotationBridge.html#bridge-T-">bridge(T)</a></span> - Static method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArAnnotationBridge.html" title="class in com.bluegosling.apt.reflect">ArAnnotationBridge</a></dt>
 <dd>
@@ -3283,7 +3286,9 @@
 <div class="block">Implementations and variations of <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent"><code>Executor</code></a>s.</div>
 </dd>
 <dt><a href="com/bluegosling/concurrent/extras/package-summary.html">com.bluegosling.concurrent.extras</a> - package com.bluegosling.concurrent.extras</dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Additional concurrency-related APIs.</div>
+</dd>
 <dt><a href="com/bluegosling/concurrent/fluent/package-summary.html">com.bluegosling.concurrent.fluent</a> - package com.bluegosling.concurrent.fluent</dt>
 <dd>
 <div class="block">This package contains the über-Future.</div>
@@ -3303,7 +3308,10 @@
  provides lots of scheduled task and job management functionality.</div>
 </dd>
 <dt><a href="com/bluegosling/derivations/package-summary.html">com.bluegosling.derivations</a> - package com.bluegosling.derivations</dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">A simple tool for analyzing derivations and computing indirect/transitive derivation
+ relationships.</div>
+</dd>
 <dt><a href="com/bluegosling/function/package-summary.html">com.bluegosling.function</a> - package com.bluegosling.function</dt>
 <dd>
 <div class="block">Interfaces and classes that complement the standard <code>java.util.function</code> package.</div>
@@ -3321,23 +3329,35 @@
 <div class="block">Objects that may or may not have a value.</div>
 </dd>
 <dt><a href="com/bluegosling/processors/package-summary.html">com.bluegosling.processors</a> - package com.bluegosling.processors</dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Annotation processors.</div>
+</dd>
 <dt><a href="com/bluegosling/reflect/package-summary.html">com.bluegosling.reflect</a> - package com.bluegosling.reflect</dt>
 <dd>
 <div class="block">Utilities to aid in runtime type reflection code, including the use of proxies.</div>
 </dd>
 <dt><a href="com/bluegosling/reflect/blaster/package-summary.html">com.bluegosling.reflect.blaster</a> - package com.bluegosling.reflect.blaster</dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">An API that allows a single proxy to be used as a broadcasting proxy -- to "blast" method
+ invocations out to multiple delegates.</div>
+</dd>
 <dt><a href="com/bluegosling/reflect/caster/package-summary.html">com.bluegosling.reflect.caster</a> - package com.bluegosling.reflect.caster</dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">An API that leverages reflection to dynamically cast an object to an arbitrary interface.</div>
+</dd>
 <dt><a href="com/bluegosling/reflect/model/package-summary.html">com.bluegosling.reflect.model</a> - package com.bluegosling.reflect.model</dt>
 <dd>
 <div class="block">Extensions of elements and type mirrors for use with core reflection.</div>
 </dd>
 <dt><a href="com/bluegosling/reflect/scanner/package-summary.html">com.bluegosling.reflect.scanner</a> - package com.bluegosling.reflect.scanner</dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">A package scanner that uses reflection to enumerate the contents of a package.</div>
+</dd>
 <dt><a href="com/bluegosling/result/package-summary.html">com.bluegosling.result</a> - package com.bluegosling.result</dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">A simple value type that can represent either the value of a successful operation or the cause of
+ failure for an unsuccessful one.</div>
+</dd>
 <dt><a href="com/bluegosling/streams/package-summary.html">com.bluegosling.streams</a> - package com.bluegosling.streams</dt>
 <dd>
 <div class="block">An alternate <a href="https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html?is-external=true" title="class or interface in java.util.stream">stream</a> implementation that includes additional
@@ -4991,7 +5011,10 @@
 <div class="block">Processes the given annotations for the given round.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArProcessor.html#doProcess-java.util.Set-javax.annotation.processing.RoundEnvironment-">doProcess(Set&lt;? extends TypeElement&gt;, RoundEnvironment)</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArProcessor.html" title="class in com.bluegosling.apt.reflect">ArProcessor</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Translates the given element and round environment into reflection-like types and then
+ delegates to <a href="com/bluegosling/apt/reflect/ArProcessor.html#process-java.util.Set-"><code>ArProcessor.process(Set)</code></a>.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/processors/ValueTypeProcessor.html#doProcess-java.util.Set-javax.annotation.processing.RoundEnvironment-">doProcess(Set&lt;? extends TypeElement&gt;, RoundEnvironment)</a></span> - Method in class com.bluegosling.processors.<a href="com/bluegosling/processors/ValueTypeProcessor.html" title="class in com.bluegosling.processors">ValueTypeProcessor</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/bluegosling/concurrent/locks/DoubleInstanceLock.html" title="class in com.bluegosling.concurrent.locks"><span class="typeNameLink">DoubleInstanceLock</span></a>&lt;<a href="com/bluegosling/concurrent/locks/DoubleInstanceLock.html" title="type parameter in DoubleInstanceLock">T</a>&gt; - Class in <a href="com/bluegosling/concurrent/locks/package-summary.html">com.bluegosling.concurrent.locks</a></dt>
@@ -6361,7 +6384,9 @@
  elements per the given comparator.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArParameter.html#forConstructorParameterElement-javax.lang.model.element.VariableElement-">forConstructorParameterElement(VariableElement)</a></span> - Static method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArParameter.html" title="class in com.bluegosling.apt.reflect">ArParameter</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns a constructor parameter based on the specified element.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/concurrent/fluent/FutureListener.html#forConsumer-java.util.function.Consumer-">forConsumer(Consumer&lt;? super FluentFuture&lt;T&gt;&gt;)</a></span> - Static method in interface com.bluegosling.concurrent.fluent.<a href="com/bluegosling/concurrent/fluent/FutureListener.html" title="interface in com.bluegosling.concurrent.fluent">FutureListener</a></dt>
 <dd>
 <div class="block">Adapts a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function"><code>Consumer</code></a> to the <a href="com/bluegosling/concurrent/fluent/FutureListener.html" title="interface in com.bluegosling.concurrent.fluent"><code>FutureListener</code></a> interface.</div>
@@ -6415,7 +6440,9 @@
 <div class="block">Returns a package based on the specified element.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArParameter.html#forElement-javax.lang.model.element.VariableElement-">forElement(VariableElement)</a></span> - Static method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArParameter.html" title="class in com.bluegosling.apt.reflect">ArParameter</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns a parameter based on the specified element.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArTypeVariable.html#forElement-javax.lang.model.element.TypeParameterElement-">forElement(TypeParameterElement)</a></span> - Static method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArTypeVariable.html" title="class in com.bluegosling.apt.reflect">ArTypeVariable</a></dt>
 <dd>
 <div class="block">Creates a type variable from the specified element.</div>
@@ -6488,7 +6515,9 @@
 <div class="block">Returns a converter that converts longs into streams of 64 bits.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArParameter.html#forMethodParameterElement-javax.lang.model.element.VariableElement-">forMethodParameterElement(VariableElement)</a></span> - Static method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArParameter.html" title="class in com.bluegosling.apt.reflect">ArParameter</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns a method parameter based on the specified element.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArClass.html#forName-java.lang.String-">forName(String)</a></span> - Static method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect">ArClass</a></dt>
 <dd>
 <div class="block">Returns the <a href="com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect"><code>ArClass</code></a> for the given fully-qualified class name.</div>
@@ -13916,7 +13945,9 @@
  <a href="com/bluegosling/apt/AbstractProcessor.html#doProcess-java.util.Set-javax.annotation.processing.RoundEnvironment-"><code>AbstractProcessor.doProcess(Set, RoundEnvironment)</code></a>.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArProcessor.html#process-java.util.Set-">process(Set&lt;ArClass&gt;)</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArProcessor.html" title="class in com.bluegosling.apt.reflect">ArProcessor</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Processes annotations.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/testing/CompilationContext.TaskBuilder.html#processingClasses-java.lang.Iterable-">processingClasses(Iterable&lt;Class&lt;?&gt;&gt;)</a></span> - Method in interface com.bluegosling.apt.testing.<a href="com/bluegosling/apt/testing/CompilationContext.TaskBuilder.html" title="interface in com.bluegosling.apt.testing">CompilationContext.TaskBuilder</a></dt>
 <dd>
 <div class="block">Adds classes to be processed by the annotation processing round of compilation.</div>
@@ -15472,7 +15503,9 @@
 <dt><span class="memberNameLink"><a href="com/bluegosling/collections/tables/Table5D.html#rotate--">rotate()</a></span> - Method in interface com.bluegosling.collections.tables.<a href="com/bluegosling/collections/tables/Table5D.html" title="interface in com.bluegosling.collections.tables">Table5D</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArProcessor.html#roundEnv">roundEnv</a></span> - Variable in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArProcessor.html" title="class in com.bluegosling.apt.reflect">ArProcessor</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">The environment of the current processing round.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/testing/TestEnvironment.html#roundEnvironment--">roundEnvironment()</a></span> - Method in class com.bluegosling.apt.testing.<a href="com/bluegosling/apt/testing/TestEnvironment.html" title="class in com.bluegosling.apt.testing">TestEnvironment</a></dt>
 <dd>
 <div class="block">Gets the round environment for the current round of processing.</div>
@@ -16865,7 +16898,7 @@
 <dd>&nbsp;</dd>
 <dt><a href="com/bluegosling/streams/StreamOperator.html" title="interface in com.bluegosling.streams"><span class="typeNameLink">StreamOperator</span></a>&lt;<a href="com/bluegosling/streams/StreamOperator.html" title="type parameter in StreamOperator">T</a>,<a href="com/bluegosling/streams/StreamOperator.html" title="type parameter in StreamOperator">U</a>&gt; - Interface in <a href="com/bluegosling/streams/package-summary.html">com.bluegosling.streams</a></dt>
 <dd>
-<div class="block">A stream operator provides a simople intermediate operation, or stage, in a stream.</div>
+<div class="block">A stream operator provides a simple intermediate operation, or stage, in a stream.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/testing/ObjectVerifiers.html#STRICT_EXCEPTIONS">STRICT_EXCEPTIONS</a></span> - Static variable in class com.bluegosling.testing.<a href="com/bluegosling/testing/ObjectVerifiers.html" title="class in com.bluegosling.testing">ObjectVerifiers</a></dt>
 <dd>
