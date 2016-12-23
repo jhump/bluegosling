@@ -314,13 +314,13 @@
 <dd>
 <div class="block">Constructs a new node.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArClass.html#accept-com.bluegosling.apt.reflect.ArType.Visitor-P-">accept(ArType.Visitor&lt;R, P&gt;, P)</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect">ArClass</a></dt>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArArrayType.html#accept-com.bluegosling.apt.reflect.ArType.Visitor-P-">accept(ArType.Visitor&lt;R, P&gt;, P)</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArArrayType.html" title="class in com.bluegosling.apt.reflect">ArArrayType</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArGenericArrayType.html#accept-com.bluegosling.apt.reflect.ArType.Visitor-P-">accept(ArType.Visitor&lt;R, P&gt;, P)</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArGenericArrayType.html" title="class in com.bluegosling.apt.reflect">ArGenericArrayType</a></dt>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArDeclaredType.html#accept-com.bluegosling.apt.reflect.ArType.Visitor-P-">accept(ArType.Visitor&lt;R, P&gt;, P)</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArDeclaredType.html" title="class in com.bluegosling.apt.reflect">ArDeclaredType</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArParameterizedType.html#accept-com.bluegosling.apt.reflect.ArType.Visitor-P-">accept(ArType.Visitor&lt;R, P&gt;, P)</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArParameterizedType.html" title="class in com.bluegosling.apt.reflect">ArParameterizedType</a></dt>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArPrimitiveType.html#accept-com.bluegosling.apt.reflect.ArType.Visitor-P-">accept(ArType.Visitor&lt;R, P&gt;, P)</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArPrimitiveType.html" title="class in com.bluegosling.apt.reflect">ArPrimitiveType</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArType.html#accept-com.bluegosling.apt.reflect.ArType.Visitor-P-">accept(ArType.Visitor&lt;R, P&gt;, P)</a></span> - Method in interface com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArType.html" title="interface in com.bluegosling.apt.reflect">ArType</a></dt>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArType.html#accept-com.bluegosling.apt.reflect.ArType.Visitor-P-">accept(ArType.Visitor&lt;R, P&gt;, P)</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArType.html" title="class in com.bluegosling.apt.reflect">ArType</a></dt>
 <dd>
 <div class="block">Uses the specified visitor to visit this type.</div>
 </dd>
@@ -1372,6 +1372,10 @@
 <dd>
 <div class="block">Applies the specified predicate to the held value, if present.</div>
 </dd>
+<dt><a href="com/bluegosling/apt/reflect/ArAnnotatedConstruct.html" title="interface in com.bluegosling.apt.reflect"><span class="typeNameLink">ArAnnotatedConstruct</span></a> - Interface in <a href="com/bluegosling/apt/reflect/package-summary.html">com.bluegosling.apt.reflect</a></dt>
+<dd>
+<div class="block">Anything that can have annotations.</div>
+</dd>
 <dt><a href="com/bluegosling/apt/reflect/ArAnnotatedElement.html" title="interface in com.bluegosling.apt.reflect"><span class="typeNameLink">ArAnnotatedElement</span></a> - Interface in <a href="com/bluegosling/apt/reflect/package-summary.html">com.bluegosling.apt.reflect</a></dt>
 <dd>
 <div class="block">An element that can have annotations.</div>
@@ -1383,6 +1387,10 @@
 <dt><a href="com/bluegosling/apt/reflect/ArAnnotationBridge.html" title="class in com.bluegosling.apt.reflect"><span class="typeNameLink">ArAnnotationBridge</span></a> - Class in <a href="com/bluegosling/apt/reflect/package-summary.html">com.bluegosling.apt.reflect</a></dt>
 <dd>
 <div class="block">Bridges an annotation mirror into an actual annotation interface.</div>
+</dd>
+<dt><a href="com/bluegosling/apt/reflect/ArArrayType.html" title="class in com.bluegosling.apt.reflect"><span class="typeNameLink">ArArrayType</span></a> - Class in <a href="com/bluegosling/apt/reflect/package-summary.html">com.bluegosling.apt.reflect</a></dt>
+<dd>
+<div class="block">An array type.</div>
 </dd>
 <dt><a href="com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect"><span class="typeNameLink">ArClass</span></a> - Class in <a href="com/bluegosling/apt/reflect/package-summary.html">com.bluegosling.apt.reflect</a></dt>
 <dd>
@@ -1396,6 +1404,10 @@
 <dd>
 <div class="block">A constructor.</div>
 </dd>
+<dt><a href="com/bluegosling/apt/reflect/ArDeclaredType.html" title="class in com.bluegosling.apt.reflect"><span class="typeNameLink">ArDeclaredType</span></a> - Class in <a href="com/bluegosling/apt/reflect/package-summary.html">com.bluegosling.apt.reflect</a></dt>
+<dd>
+<div class="block">A declared type.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/function/Predicates.html#areSameObject--">areSameObject()</a></span> - Static method in class com.bluegosling.function.<a href="com/bluegosling/function/Predicates.html" title="class in com.bluegosling.function">Predicates</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/bluegosling/apt/reflect/ArExecutableMember.html" title="interface in com.bluegosling.apt.reflect"><span class="typeNameLink">ArExecutableMember</span></a> - Interface in <a href="com/bluegosling/apt/reflect/package-summary.html">com.bluegosling.apt.reflect</a></dt>
@@ -1406,13 +1418,26 @@
 <dd>
 <div class="block">A field.</div>
 </dd>
-<dt><a href="com/bluegosling/apt/reflect/ArGenericArrayType.html" title="class in com.bluegosling.apt.reflect"><span class="typeNameLink">ArGenericArrayType</span></a> - Class in <a href="com/bluegosling/apt/reflect/package-summary.html">com.bluegosling.apt.reflect</a></dt>
-<dd>
-<div class="block">An array type with generic type information.</div>
-</dd>
 <dt><a href="com/bluegosling/apt/reflect/ArGenericDeclaration.html" title="interface in com.bluegosling.apt.reflect"><span class="typeNameLink">ArGenericDeclaration</span></a> - Interface in <a href="com/bluegosling/apt/reflect/package-summary.html">com.bluegosling.apt.reflect</a></dt>
 <dd>
 <div class="block">An element that may include the declaration of generic type variables.</div>
+</dd>
+<dt><a href="com/bluegosling/apt/reflect/ArGenericMethodSignature.html" title="class in com.bluegosling.apt.reflect"><span class="typeNameLink">ArGenericMethodSignature</span></a> - Class in <a href="com/bluegosling/apt/reflect/package-summary.html">com.bluegosling.apt.reflect</a></dt>
+<dd>
+<div class="block">Represents a generic method signature, composed of a method name and sequence of generic
+ parameter types.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArGenericMethodSignature.html#ArGenericMethodSignature-com.bluegosling.apt.reflect.ArMethod-">ArGenericMethodSignature(ArMethod)</a></span> - Constructor for class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArGenericMethodSignature.html" title="class in com.bluegosling.apt.reflect">ArGenericMethodSignature</a></dt>
+<dd>
+<div class="block">Constructs a new signature for the specified method.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArGenericMethodSignature.html#ArGenericMethodSignature-java.lang.String-com.bluegosling.apt.reflect.ArType...-">ArGenericMethodSignature(String, ArType...)</a></span> - Constructor for class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArGenericMethodSignature.html" title="class in com.bluegosling.apt.reflect">ArGenericMethodSignature</a></dt>
+<dd>
+<div class="block">Constructs a new signature based on the given name and list of arguments.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArGenericMethodSignature.html#ArGenericMethodSignature-java.lang.String-java.util.List-">ArGenericMethodSignature(String, List&lt;ArType&gt;)</a></span> - Constructor for class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArGenericMethodSignature.html" title="class in com.bluegosling.apt.reflect">ArGenericMethodSignature</a></dt>
+<dd>
+<div class="block">Constructs a new signature based on the given name and list of arguments.</div>
 </dd>
 <dt><a href="com/bluegosling/apt/reflect/ArMember.html" title="interface in com.bluegosling.apt.reflect"><span class="typeNameLink">ArMember</span></a> - Interface in <a href="com/bluegosling/apt/reflect/package-summary.html">com.bluegosling.apt.reflect</a></dt>
 <dd>
@@ -1450,9 +1475,9 @@
 <dd>
 <div class="block">A representation of a parameter to an executable member, like a constructor or method.</div>
 </dd>
-<dt><a href="com/bluegosling/apt/reflect/ArParameterizedType.html" title="class in com.bluegosling.apt.reflect"><span class="typeNameLink">ArParameterizedType</span></a> - Class in <a href="com/bluegosling/apt/reflect/package-summary.html">com.bluegosling.apt.reflect</a></dt>
+<dt><a href="com/bluegosling/apt/reflect/ArPrimitiveType.html" title="class in com.bluegosling.apt.reflect"><span class="typeNameLink">ArPrimitiveType</span></a> - Class in <a href="com/bluegosling/apt/reflect/package-summary.html">com.bluegosling.apt.reflect</a></dt>
 <dd>
-<div class="block">An instance of type with information about actual type parameters.</div>
+<div class="block">A primitive type.</div>
 </dd>
 <dt><a href="com/bluegosling/apt/reflect/ArProcessor.html" title="class in com.bluegosling.apt.reflect"><span class="typeNameLink">ArProcessor</span></a> - Class in <a href="com/bluegosling/apt/reflect/package-summary.html">com.bluegosling.apt.reflect</a></dt>
 <dd>
@@ -1528,26 +1553,21 @@
 <dd>
 <div class="block">Wraps a standard round environment.</div>
 </dd>
-<dt><a href="com/bluegosling/apt/reflect/ArType.html" title="interface in com.bluegosling.apt.reflect"><span class="typeNameLink">ArType</span></a> - Interface in <a href="com/bluegosling/apt/reflect/package-summary.html">com.bluegosling.apt.reflect</a></dt>
+<dt><a href="com/bluegosling/apt/reflect/ArType.html" title="class in com.bluegosling.apt.reflect"><span class="typeNameLink">ArType</span></a> - Class in <a href="com/bluegosling/apt/reflect/package-summary.html">com.bluegosling.apt.reflect</a></dt>
 <dd>
 <div class="block">A interface that represents a generic type.</div>
 </dd>
-<dt><a href="com/bluegosling/apt/reflect/ArType.Kind.html" title="enum in com.bluegosling.apt.reflect"><span class="typeNameLink">ArType.Kind</span></a> - Enum in <a href="com/bluegosling/apt/reflect/package-summary.html">com.bluegosling.apt.reflect</a></dt>
+<dt><a href="com/bluegosling/apt/reflect/ArTypeParameter.html" title="class in com.bluegosling.apt.reflect"><span class="typeNameLink">ArTypeParameter</span></a>&lt;<a href="com/bluegosling/apt/reflect/ArTypeParameter.html" title="type parameter in ArTypeParameter">D</a> extends <a href="com/bluegosling/apt/reflect/ArGenericDeclaration.html" title="interface in com.bluegosling.apt.reflect">ArGenericDeclaration</a>&gt; - Class in <a href="com/bluegosling/apt/reflect/package-summary.html">com.bluegosling.apt.reflect</a></dt>
 <dd>
-<div class="block">An enumeration of the valid concrete kinds of <a href="com/bluegosling/apt/reflect/ArType.html" title="interface in com.bluegosling.apt.reflect"><code>ArType</code></a>s.</div>
-</dd>
-<dt><a href="com/bluegosling/apt/reflect/ArType.Visitor.html" title="interface in com.bluegosling.apt.reflect"><span class="typeNameLink">ArType.Visitor</span></a>&lt;<a href="com/bluegosling/apt/reflect/ArType.Visitor.html" title="type parameter in ArType.Visitor">R</a>,<a href="com/bluegosling/apt/reflect/ArType.Visitor.html" title="type parameter in ArType.Visitor">P</a>&gt; - Interface in <a href="com/bluegosling/apt/reflect/package-summary.html">com.bluegosling.apt.reflect</a></dt>
-<dd>
-<div class="block">A visitor for simulating multiple dispatch over the concrete implementations of
- <a href="com/bluegosling/apt/reflect/ArType.html" title="interface in com.bluegosling.apt.reflect"><code>ArType</code></a>.</div>
+<div class="block">A type parameter declaration.</div>
 </dd>
 <dt><a href="com/bluegosling/apt/reflect/ArTypes.html" title="class in com.bluegosling.apt.reflect"><span class="typeNameLink">ArTypes</span></a> - Class in <a href="com/bluegosling/apt/reflect/package-summary.html">com.bluegosling.apt.reflect</a></dt>
 <dd>
-<div class="block">Container of helper methods for working with <a href="com/bluegosling/apt/reflect/ArType.html" title="interface in com.bluegosling.apt.reflect"><code>ArType</code></a>s.</div>
+<div class="block">Container of helper methods for working with <a href="com/bluegosling/apt/reflect/ArType.html" title="class in com.bluegosling.apt.reflect"><code>ArType</code></a>s.</div>
 </dd>
-<dt><a href="com/bluegosling/apt/reflect/ArTypeVariable.html" title="class in com.bluegosling.apt.reflect"><span class="typeNameLink">ArTypeVariable</span></a>&lt;<a href="com/bluegosling/apt/reflect/ArTypeVariable.html" title="type parameter in ArTypeVariable">D</a> extends <a href="com/bluegosling/apt/reflect/ArGenericDeclaration.html" title="interface in com.bluegosling.apt.reflect">ArGenericDeclaration</a>&gt; - Class in <a href="com/bluegosling/apt/reflect/package-summary.html">com.bluegosling.apt.reflect</a></dt>
+<dt><a href="com/bluegosling/apt/reflect/ArTypeVariable.html" title="class in com.bluegosling.apt.reflect"><span class="typeNameLink">ArTypeVariable</span></a> - Class in <a href="com/bluegosling/apt/reflect/package-summary.html">com.bluegosling.apt.reflect</a></dt>
 <dd>
-<div class="block">A type variable.</div>
+<div class="block">A type variable, or a use of a type parameter.</div>
 </dd>
 <dt><a href="com/bluegosling/apt/reflect/ArWildcardType.html" title="class in com.bluegosling.apt.reflect"><span class="typeNameLink">ArWildcardType</span></a> - Class in <a href="com/bluegosling/apt/reflect/package-summary.html">com.bluegosling.apt.reflect</a></dt>
 <dd>
@@ -1563,7 +1583,7 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArTypes.html#asClass-com.bluegosling.apt.reflect.ArType-">asClass(ArType)</a></span> - Static method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArTypes.html" title="class in com.bluegosling.apt.reflect">ArTypes</a></dt>
 <dd>
-<div class="block">Downcasts the specified type as a <a href="com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect"><code>ArClass</code></a>.</div>
+<div class="block">Downcasts the specified type as an <a href="com/bluegosling/apt/reflect/ArDeclaredType.html" title="class in com.bluegosling.apt.reflect"><code>ArDeclaredType</code></a>.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/reflect/scanner/PackageScanner.ClassInfo.html#asClass--">asClass()</a></span> - Method in class com.bluegosling.reflect.scanner.<a href="com/bluegosling/reflect/scanner/PackageScanner.ClassInfo.html" title="class in com.bluegosling.reflect.scanner">PackageScanner.ClassInfo</a></dt>
 <dd>
@@ -1581,22 +1601,18 @@
 <dd>
 <div class="block">Returns a view of this future as a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletionStage.html?is-external=true" title="class or interface in java.util.concurrent"><code>CompletionStage</code></a>.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArTypes.html#asDeclaredType-com.bluegosling.apt.reflect.ArType-">asDeclaredType(ArType)</a></span> - Static method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArTypes.html" title="class in com.bluegosling.apt.reflect">ArTypes</a></dt>
+<dd>
+<div class="block">Downcasts the specified type as an <a href="com/bluegosling/apt/reflect/ArDeclaredType.html" title="class in com.bluegosling.apt.reflect"><code>ArDeclaredType</code></a>.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArAnnotatedElement.html#asElement--">asElement()</a></span> - Method in interface com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArAnnotatedElement.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedElement</a></dt>
 <dd>
 <div class="block">Returns the underlying <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/Element.html?is-external=true" title="class or interface in javax.lang.model.element"><code>Element</code></a> for this object.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArClass.html#asElement--">asElement()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect">ArClass</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArField.html#asElement--">asElement()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArField.html" title="class in com.bluegosling.apt.reflect">ArField</a></dt>
-<dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArPackage.html#asElement--">asElement()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArPackage.html" title="class in com.bluegosling.apt.reflect">ArPackage</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArParameter.html#asElement--">asElement()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArParameter.html" title="class in com.bluegosling.apt.reflect">ArParameter</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArTypeVariable.html#asElement--">asElement()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArTypeVariable.html" title="class in com.bluegosling.apt.reflect">ArTypeVariable</a></dt>
-<dd>
-<div class="block">Returns the underlying <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/Element.html?is-external=true" title="class or interface in javax.lang.model.element"><code>Element</code></a> represented by this type.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArModifier.html#asElementModifier--">asElementModifier()</a></span> - Method in enum com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArModifier.html" title="enum in com.bluegosling.apt.reflect">ArModifier</a></dt>
 <dd>
 <div class="block">Returns the corresponding <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/Modifier.html?is-external=true" title="class or interface in javax.lang.model.element"><code>javax.lang.model.element.Modifier</code></a>.</div>
@@ -1615,7 +1631,7 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArTypes.html#asGenericArrayType-com.bluegosling.apt.reflect.ArType-">asGenericArrayType(ArType)</a></span> - Static method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArTypes.html" title="class in com.bluegosling.apt.reflect">ArTypes</a></dt>
 <dd>
-<div class="block">Downcasts the specified type as a <a href="com/bluegosling/apt/reflect/ArGenericArrayType.html" title="class in com.bluegosling.apt.reflect"><code>ArGenericArrayType</code></a>.</div>
+<div class="block">Downcasts the specified type as a <a href="com/bluegosling/apt/reflect/ArArrayType.html" title="class in com.bluegosling.apt.reflect"><code>ArArrayType</code></a>.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArModifier.html#asInt--">asInt()</a></span> - Method in enum com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArModifier.html" title="enum in com.bluegosling.apt.reflect">ArModifier</a></dt>
 <dd>
@@ -1769,13 +1785,13 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/concurrent/extras/FutureTuples.html#asPair-com.bluegosling.concurrent.fluent.FluentFuture-com.bluegosling.concurrent.fluent.FluentFuture-">asPair(FluentFuture&lt;? extends T&gt;, FluentFuture&lt;? extends U&gt;)</a></span> - Static method in class com.bluegosling.concurrent.extras.<a href="com/bluegosling/concurrent/extras/FutureTuples.html" title="class in com.bluegosling.concurrent.extras">FutureTuples</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArTypes.html#asParameterizedType-com.bluegosling.apt.reflect.ArType-">asParameterizedType(ArType)</a></span> - Static method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArTypes.html" title="class in com.bluegosling.apt.reflect">ArTypes</a></dt>
-<dd>
-<div class="block">Downcasts the specified type as a <a href="com/bluegosling/apt/reflect/ArParameterizedType.html" title="class in com.bluegosling.apt.reflect"><code>ArParameterizedType</code></a>.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/result/Result.html#asPossible--">asPossible()</a></span> - Method in class com.bluegosling.result.<a href="com/bluegosling/result/Result.html" title="class in com.bluegosling.result">Result</a></dt>
 <dd>
 <div class="block">Returns the result's value, as a possible.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArTypes.html#asPrimitiveType-com.bluegosling.apt.reflect.ArType-">asPrimitiveType(ArType)</a></span> - Static method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArTypes.html" title="class in com.bluegosling.apt.reflect">ArTypes</a></dt>
+<dd>
+<div class="block">Downcasts the specified type as an <a href="com/bluegosling/apt/reflect/ArPrimitiveType.html" title="class in com.bluegosling.apt.reflect"><code>ArPrimitiveType</code></a>.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/concurrent/extras/FutureTuples.html#asQuadruple-com.bluegosling.concurrent.fluent.FluentFuture-com.bluegosling.concurrent.fluent.FluentFuture-com.bluegosling.concurrent.fluent.FluentFuture-com.bluegosling.concurrent.fluent.FluentFuture-">asQuadruple(FluentFuture&lt;? extends T&gt;, FluentFuture&lt;? extends U&gt;, FluentFuture&lt;? extends V&gt;, FluentFuture&lt;? extends W&gt;)</a></span> - Static method in class com.bluegosling.concurrent.extras.<a href="com/bluegosling/concurrent/extras/FutureTuples.html" title="class in com.bluegosling.concurrent.extras">FutureTuples</a></dt>
 <dd>&nbsp;</dd>
@@ -1874,6 +1890,10 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/concurrent/extras/FutureTuples.html#asTriple-com.bluegosling.concurrent.fluent.FluentFuture-com.bluegosling.concurrent.fluent.FluentFuture-com.bluegosling.concurrent.fluent.FluentFuture-">asTriple(FluentFuture&lt;? extends T&gt;, FluentFuture&lt;? extends U&gt;, FluentFuture&lt;? extends V&gt;)</a></span> - Static method in class com.bluegosling.concurrent.extras.<a href="com/bluegosling/concurrent/extras/FutureTuples.html" title="class in com.bluegosling.concurrent.extras">FutureTuples</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArClass.html#asType--">asType()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect">ArClass</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArTypeParameter.html#asType--">asType()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArTypeParameter.html" title="class in com.bluegosling.apt.reflect">ArTypeParameter</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/reflect/AnnotatedTypeRef.html#asType--">asType()</a></span> - Method in class com.bluegosling.reflect.<a href="com/bluegosling/reflect/AnnotatedTypeRef.html" title="class in com.bluegosling.reflect">AnnotatedTypeRef</a></dt>
 <dd>
 <div class="block">Returns the <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect"><code>AnnotatedType</code></a> representation of this type token.</div>
@@ -1898,17 +1918,23 @@
 <dd>
 <div class="block">Returns a list with a tighter upper bound than <a href="com/bluegosling/tuples/Tuple.html#asList--"><code>Tuple.asList()</code></a>.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArGenericArrayType.html#asTypeMirror--">asTypeMirror()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArGenericArrayType.html" title="class in com.bluegosling.apt.reflect">ArGenericArrayType</a></dt>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArArrayType.html#asTypeMirror--">asTypeMirror()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArArrayType.html" title="class in com.bluegosling.apt.reflect">ArArrayType</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArParameterizedType.html#asTypeMirror--">asTypeMirror()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArParameterizedType.html" title="class in com.bluegosling.apt.reflect">ArParameterizedType</a></dt>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArClass.html#asTypeMirror--">asTypeMirror()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect">ArClass</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArType.html#asTypeMirror--">asTypeMirror()</a></span> - Method in interface com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArType.html" title="interface in com.bluegosling.apt.reflect">ArType</a></dt>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArDeclaredType.html#asTypeMirror--">asTypeMirror()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArDeclaredType.html" title="class in com.bluegosling.apt.reflect">ArDeclaredType</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArType.html#asTypeMirror--">asTypeMirror()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArType.html" title="class in com.bluegosling.apt.reflect">ArType</a></dt>
 <dd>
 <div class="block">Returns the underlying <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/TypeMirror.html?is-external=true" title="class or interface in javax.lang.model.type"><code>TypeMirror</code></a> represented by this type.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArTypeParameter.html#asTypeMirror--">asTypeMirror()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArTypeParameter.html" title="class in com.bluegosling.apt.reflect">ArTypeParameter</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArTypeVariable.html#asTypeMirror--">asTypeMirror()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArTypeVariable.html" title="class in com.bluegosling.apt.reflect">ArTypeVariable</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArWildcardType.html#asTypeMirror--">asTypeMirror()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArWildcardType.html" title="class in com.bluegosling.apt.reflect">ArWildcardType</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArTypeVariable.html#asTypeParameter--">asTypeParameter()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArTypeVariable.html" title="class in com.bluegosling.apt.reflect">ArTypeVariable</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/reflect/AnnotatedTypeRef.html#asTypeRef--">asTypeRef()</a></span> - Method in class com.bluegosling.reflect.<a href="com/bluegosling/reflect/AnnotatedTypeRef.html" title="class in com.bluegosling.reflect">AnnotatedTypeRef</a></dt>
 <dd>&nbsp;</dd>
@@ -4414,7 +4440,7 @@
 <dd>
 <div class="block">Creates an annotation bridge.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArAnnotationBridge.html#createBridge-com.bluegosling.apt.reflect.ArClass-java.lang.Class-">createBridge(ArClass, Class&lt;T&gt;)</a></span> - Static method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArAnnotationBridge.html" title="class in com.bluegosling.apt.reflect">ArAnnotationBridge</a></dt>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArAnnotationBridge.html#createBridge-com.bluegosling.apt.reflect.ArAnnotatedElement-java.lang.Class-">createBridge(ArAnnotatedElement, Class&lt;T&gt;)</a></span> - Static method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArAnnotationBridge.html" title="class in com.bluegosling.apt.reflect">ArAnnotationBridge</a></dt>
 <dd>
 <div class="block">Queries for an annotation and creates a bridge for it.</div>
 </dd>
@@ -5220,11 +5246,15 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArAnnotation.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArAnnotation.html" title="class in com.bluegosling.apt.reflect">ArAnnotation</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArArrayType.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArArrayType.html" title="class in com.bluegosling.apt.reflect">ArArrayType</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArClass.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect">ArClass</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArDeclaredType.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArDeclaredType.html" title="class in com.bluegosling.apt.reflect">ArDeclaredType</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArField.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArField.html" title="class in com.bluegosling.apt.reflect">ArField</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArGenericArrayType.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArGenericArrayType.html" title="class in com.bluegosling.apt.reflect">ArGenericArrayType</a></dt>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArGenericMethodSignature.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArGenericMethodSignature.html" title="class in com.bluegosling.apt.reflect">ArGenericMethodSignature</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArMethodSignature.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArMethodSignature.html" title="class in com.bluegosling.apt.reflect">ArMethodSignature</a></dt>
 <dd>&nbsp;</dd>
@@ -5232,7 +5262,9 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArParameter.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArParameter.html" title="class in com.bluegosling.apt.reflect">ArParameter</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArParameterizedType.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArParameterizedType.html" title="class in com.bluegosling.apt.reflect">ArParameterizedType</a></dt>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArPrimitiveType.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArPrimitiveType.html" title="class in com.bluegosling.apt.reflect">ArPrimitiveType</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArTypeParameter.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArTypeParameter.html" title="class in com.bluegosling.apt.reflect">ArTypeParameter</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArTypeVariable.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArTypeVariable.html" title="class in com.bluegosling.apt.reflect">ArTypeVariable</a></dt>
 <dd>&nbsp;</dd>
@@ -5349,6 +5381,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/reflect/EnumType.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in class com.bluegosling.reflect.<a href="com/bluegosling/reflect/EnumType.html" title="class in com.bluegosling.reflect">EnumType</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/reflect/GenericMethodSignature.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in class com.bluegosling.reflect.<a href="com/bluegosling/reflect/GenericMethodSignature.html" title="class in com.bluegosling.reflect">GenericMethodSignature</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/reflect/MethodSignature.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in class com.bluegosling.reflect.<a href="com/bluegosling/reflect/MethodSignature.html" title="class in com.bluegosling.reflect">MethodSignature</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/reflect/scanner/PackageScanner.ClassInfo.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in class com.bluegosling.reflect.scanner.<a href="com/bluegosling/reflect/scanner/PackageScanner.ClassInfo.html" title="class in com.bluegosling.reflect.scanner">PackageScanner.ClassInfo</a></dt>
@@ -5420,6 +5454,10 @@
 <dt><span class="memberNameLink"><a href="com/bluegosling/reflect/TypeAnnotationHierarchy.Builder.html#equivalent-java.lang.Class-java.lang.Class-java.util.Map-">equivalent(Class&lt;? extends Annotation&gt;, Class&lt;? extends Annotation&gt;, Map&lt;String, String&gt;)</a></span> - Method in class com.bluegosling.reflect.<a href="com/bluegosling/reflect/TypeAnnotationHierarchy.Builder.html" title="class in com.bluegosling.reflect">TypeAnnotationHierarchy.Builder</a></dt>
 <dd>
 <div class="block">Defines an equivalence relationship between the given two type annotations.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/reflect/GenericMethodSignature.html#erasure--">erasure()</a></span> - Method in class com.bluegosling.reflect.<a href="com/bluegosling/reflect/GenericMethodSignature.html" title="class in com.bluegosling.reflect">GenericMethodSignature</a></dt>
+<dd>
+<div class="block">Returns the erased method signature.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/result/Result.html#error-E-">error(E)</a></span> - Static method in class com.bluegosling.result.<a href="com/bluegosling/result/Result.html" title="class in com.bluegosling.result">Result</a></dt>
 <dd>
@@ -6443,7 +6481,7 @@
 <dd>
 <div class="block">Returns a parameter based on the specified element.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArTypeVariable.html#forElement-javax.lang.model.element.TypeParameterElement-">forElement(TypeParameterElement)</a></span> - Static method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArTypeVariable.html" title="class in com.bluegosling.apt.reflect">ArTypeVariable</a></dt>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArTypeParameter.html#forElement-javax.lang.model.element.TypeParameterElement-">forElement(TypeParameterElement)</a></span> - Static method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArTypeParameter.html" title="class in com.bluegosling.apt.reflect">ArTypeParameter</a></dt>
 <dd>
 <div class="block">Creates a type variable from the specified element.</div>
 </dd>
@@ -6534,10 +6572,8 @@
 <dd>
 <div class="block">Returns the class for <code>Object</code>.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArClass.html#forPrimitive-java.lang.Class-">forPrimitive(Class&lt;?&gt;)</a></span> - Static method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect">ArClass</a></dt>
-<dd>
-<div class="block">Returns a class that represents the specified primitive type.</div>
-</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArDeclaredType.html#forObject--">forObject()</a></span> - Static method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArDeclaredType.html" title="class in com.bluegosling.apt.reflect">ArDeclaredType</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/concurrent/locks/Locking.ReadWriteLocking.html#forReadLock--">forReadLock()</a></span> - Method in interface com.bluegosling.concurrent.locks.<a href="com/bluegosling/concurrent/locks/Locking.ReadWriteLocking.html" title="interface in com.bluegosling.concurrent.locks">Locking.ReadWriteLocking</a></dt>
 <dd>
 <div class="block">Returns a locking interface that corresponds to the read (e.g.</div>
@@ -6631,7 +6667,7 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArClass.html#forType-com.bluegosling.apt.reflect.ArType-">forType(ArType)</a></span> - Static method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect">ArClass</a></dt>
 <dd>
-<div class="block">Returns a <a href="com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect"><code>ArClass</code></a> that corresponds to the specified <a href="com/bluegosling/apt/reflect/ArType.html" title="interface in com.bluegosling.apt.reflect"><code>ArType</code></a>.</div>
+<div class="block">Returns a <a href="com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect"><code>ArClass</code></a> that corresponds to the specified <a href="com/bluegosling/apt/reflect/ArType.html" title="class in com.bluegosling.apt.reflect"><code>ArType</code></a>.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArTypes.html#forType-java.lang.reflect.Type-">forType(Type)</a></span> - Static method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArTypes.html" title="class in com.bluegosling.apt.reflect">ArTypes</a></dt>
 <dd>&nbsp;</dd>
@@ -6645,18 +6681,18 @@
 <dd>
 <div class="block">Constructs a type token that represents a specified <code>java.lang.reflect.Type</code>.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArArrayType.html#forTypeMirror-javax.lang.model.type.ArrayType-">forTypeMirror(ArrayType)</a></span> - Static method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArArrayType.html" title="class in com.bluegosling.apt.reflect">ArArrayType</a></dt>
+<dd>
+<div class="block">Creates a generic array type from the specified type mirror.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArClass.html#forTypeMirror-javax.lang.model.type.TypeMirror-">forTypeMirror(TypeMirror)</a></span> - Static method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect">ArClass</a></dt>
 <dd>
 <div class="block">Creates a class corresponding to the specified type mirror.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArGenericArrayType.html#forTypeMirror-javax.lang.model.type.ArrayType-">forTypeMirror(ArrayType)</a></span> - Static method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArGenericArrayType.html" title="class in com.bluegosling.apt.reflect">ArGenericArrayType</a></dt>
-<dd>
-<div class="block">Creates a generic array type from the specified type mirror.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArParameterizedType.html#forTypeMirror-javax.lang.model.type.DeclaredType-">forTypeMirror(DeclaredType)</a></span> - Static method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArParameterizedType.html" title="class in com.bluegosling.apt.reflect">ArParameterizedType</a></dt>
-<dd>
-<div class="block">Creates a parameterized type from the specified type mirror.</div>
-</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArDeclaredType.html#forTypeMirror-javax.lang.model.type.DeclaredType-">forTypeMirror(DeclaredType)</a></span> - Static method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArDeclaredType.html" title="class in com.bluegosling.apt.reflect">ArDeclaredType</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArPrimitiveType.html#forTypeMirror-javax.lang.model.type.TypeMirror-">forTypeMirror(TypeMirror)</a></span> - Static method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArPrimitiveType.html" title="class in com.bluegosling.apt.reflect">ArPrimitiveType</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArTypes.html#forTypeMirror-javax.lang.model.type.TypeMirror-">forTypeMirror(TypeMirror)</a></span> - Static method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArTypes.html" title="class in com.bluegosling.apt.reflect">ArTypes</a></dt>
 <dd>
 <div class="block">Returns a type that corresponds to the specified type mirror.</div>
@@ -6687,10 +6723,6 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/collections/primitive/CharIterator.html#from-java.lang.CharSequence-">from(CharSequence)</a></span> - Static method in interface com.bluegosling.collections.primitive.<a href="com/bluegosling/collections/primitive/CharIterator.html" title="interface in com.bluegosling.collections.primitive">CharIterator</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArAnnotatedElement.html#FROM_ELEMENT">FROM_ELEMENT</a></span> - Static variable in interface com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArAnnotatedElement.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedElement</a></dt>
-<dd>
-<div class="block">A function that transforms a <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/Element.html?is-external=true" title="class or interface in javax.lang.model.element"><code>Element</code></a> to an <a href="com/bluegosling/apt/reflect/ArAnnotatedElement.html" title="interface in com.bluegosling.apt.reflect"><code>ArAnnotatedElement</code></a>.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/tuples/Tuples.html#fromArray-java.lang.Object...-">fromArray(Object...)</a></span> - Static method in class com.bluegosling.tuples.<a href="com/bluegosling/tuples/Tuples.html" title="class in com.bluegosling.tuples">Tuples</a></dt>
 <dd>
 <div class="block">Creates a new tuple with the same items as the specified array.</div>
@@ -6699,6 +6731,8 @@
 <dd>
 <div class="block">Returns a set of modifiers represented by the specified bitfield.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArModifier.html#fromBitFieldWithVisibility-int-">fromBitFieldWithVisibility(int)</a></span> - Static method in enum com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArModifier.html" title="enum in com.bluegosling.apt.reflect">ArModifier</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/collections/bits/BitSequences.html#fromBits-java.lang.Boolean:A-">fromBits(Boolean[])</a></span> - Static method in class com.bluegosling.collections.bits.<a href="com/bluegosling/collections/bits/BitSequences.html" title="class in com.bluegosling.collections.bits">BitSequences</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/collections/bits/BitSequences.html#fromBits-java.lang.Iterable-">fromBits(Iterable&lt;Boolean&gt;)</a></span> - Static method in class com.bluegosling.collections.bits.<a href="com/bluegosling/collections/bits/BitSequences.html" title="class in com.bluegosling.collections.bits">BitSequences</a></dt>
@@ -6802,6 +6836,8 @@
 <dd>
 <div class="block">Converts a set of <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/Modifier.html?is-external=true" title="class or interface in javax.lang.model.element"><code>Modifier</code></a>s to a set of modifiers.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArModifier.html#fromElementModifiersWithVisibility-java.util.Set-">fromElementModifiersWithVisibility(Set&lt;Modifier&gt;)</a></span> - Static method in enum com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArModifier.html" title="enum in com.bluegosling.apt.reflect">ArModifier</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/function/PartialFunctions.html#fromFunction-java.util.function.Function-">fromFunction(Function&lt;? super I, Optional&lt;? extends O&gt;&gt;)</a></span> - Static method in class com.bluegosling.function.<a href="com/bluegosling/function/PartialFunctions.html" title="class in com.bluegosling.function">PartialFunctions</a></dt>
 <dd>
 <div class="block">Adapts a compatible function to the <a href="com/bluegosling/function/PartialFunction.html" title="interface in com.bluegosling.function"><code>PartialFunction</code></a> interface.</div>
@@ -7013,6 +7049,22 @@
 <dt><span class="memberNameLink"><a href="com/bluegosling/util/Cloners.html#GENERIC_CLONER">GENERIC_CLONER</a></span> - Static variable in class com.bluegosling.util.<a href="com/bluegosling/util/Cloners.html" title="class in com.bluegosling.util">Cloners</a></dt>
 <dd>
 <div class="block">A generic cloner that will try to clone any type of object.</div>
+</dd>
+<dt><a href="com/bluegosling/reflect/GenericMethodSignature.html" title="class in com.bluegosling.reflect"><span class="typeNameLink">GenericMethodSignature</span></a> - Class in <a href="com/bluegosling/reflect/package-summary.html">com.bluegosling.reflect</a></dt>
+<dd>
+<div class="block">Represents a generic method signature, composed of a method name and sequence of parameter types.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/reflect/GenericMethodSignature.html#GenericMethodSignature-java.lang.reflect.Method-">GenericMethodSignature(Method)</a></span> - Constructor for class com.bluegosling.reflect.<a href="com/bluegosling/reflect/GenericMethodSignature.html" title="class in com.bluegosling.reflect">GenericMethodSignature</a></dt>
+<dd>
+<div class="block">Constructs a new signature for the specified method.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/reflect/GenericMethodSignature.html#GenericMethodSignature-java.lang.String-java.lang.reflect.Type...-">GenericMethodSignature(String, Type...)</a></span> - Constructor for class com.bluegosling.reflect.<a href="com/bluegosling/reflect/GenericMethodSignature.html" title="class in com.bluegosling.reflect">GenericMethodSignature</a></dt>
+<dd>
+<div class="block">Constructs a new signature based on the given name and list of arguments.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/reflect/GenericMethodSignature.html#GenericMethodSignature-java.lang.String-java.util.List-">GenericMethodSignature(String, List&lt;Type&gt;)</a></span> - Constructor for class com.bluegosling.reflect.<a href="com/bluegosling/reflect/GenericMethodSignature.html" title="class in com.bluegosling.reflect">GenericMethodSignature</a></dt>
+<dd>
+<div class="block">Constructs a new signature based on the given name and list of arguments.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/ProcessingEnvironments.html#get--">get()</a></span> - Static method in class com.bluegosling.apt.<a href="com/bluegosling/apt/ProcessingEnvironments.html" title="class in com.bluegosling.apt">ProcessingEnvironments</a></dt>
 <dd>
@@ -7260,7 +7312,7 @@
 <dd>
 <div class="block">Returns the count of active worker threads.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArParameterizedType.html#getActualTypeArguments--">getActualTypeArguments()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArParameterizedType.html" title="class in com.bluegosling.apt.reflect">ArParameterizedType</a></dt>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArDeclaredType.html#getActualTypeArguments--">getActualTypeArguments()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArDeclaredType.html" title="class in com.bluegosling.apt.reflect">ArDeclaredType</a></dt>
 <dd>
 <div class="block">Returns a list of the actual values supplied for the type variables.</div>
 </dd>
@@ -7564,11 +7616,11 @@
 <dd>
 <div class="block">Returns the generic superclass of the given type.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArAnnotatedElement.html#getAnnotation-com.bluegosling.apt.reflect.ArClass-">getAnnotation(ArClass)</a></span> - Method in interface com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArAnnotatedElement.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedElement</a></dt>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArAnnotatedConstruct.html#getAnnotation-com.bluegosling.apt.reflect.ArClass-">getAnnotation(ArClass)</a></span> - Method in interface com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArAnnotatedConstruct.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedConstruct</a></dt>
 <dd>
 <div class="block">Gets the annotation from the object that corresponds to the specified annotation type.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArAnnotatedElement.html#getAnnotation-java.lang.Class-">getAnnotation(Class&lt;? extends Annotation&gt;)</a></span> - Method in interface com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArAnnotatedElement.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedElement</a></dt>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArAnnotatedConstruct.html#getAnnotation-java.lang.Class-">getAnnotation(Class&lt;? extends Annotation&gt;)</a></span> - Method in interface com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArAnnotatedConstruct.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedConstruct</a></dt>
 <dd>
 <div class="block">Gets the annotation from the object that corresponds to the specified annotation type.</div>
 </dd>
@@ -7597,13 +7649,13 @@
 <div class="block">Returns the annotation's attributes and values, including undeclared
  attributes with their corresponding default value.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArAnnotatedElement.html#getAnnotationBridge-java.lang.Class-">getAnnotationBridge(Class&lt;T&gt;)</a></span> - Method in interface com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArAnnotatedElement.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedElement</a></dt>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArAnnotatedConstruct.html#getAnnotationBridge-java.lang.Class-">getAnnotationBridge(Class&lt;T&gt;)</a></span> - Method in interface com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArAnnotatedConstruct.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedConstruct</a></dt>
 <dd>
 <div class="block">Gets an annotation bridge for the specified annotation type.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArClass.html#getAnnotationBridge-java.lang.Class-">getAnnotationBridge(Class&lt;T&gt;)</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect">ArClass</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArAnnotatedElement.html#getAnnotations--">getAnnotations()</a></span> - Method in interface com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArAnnotatedElement.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedElement</a></dt>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArAnnotatedConstruct.html#getAnnotations--">getAnnotations()</a></span> - Method in interface com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArAnnotatedConstruct.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedConstruct</a></dt>
 <dd>
 <div class="block">Gets all annotations for this object.</div>
 </dd>
@@ -7672,7 +7724,7 @@
 <dd>
 <div class="block">Returns an annotation value for the given boolean.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArTypeVariable.html#getBounds--">getBounds()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArTypeVariable.html" title="class in com.bluegosling.apt.reflect">ArTypeVariable</a></dt>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArTypeParameter.html#getBounds--">getBounds()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArTypeParameter.html" title="class in com.bluegosling.apt.reflect">ArTypeParameter</a></dt>
 <dd>
 <div class="block">Returns the upper bounds (aka "extends" bounds) for this type variable.</div>
 </dd>
@@ -7748,10 +7800,6 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/buildgen/JavaClass.html#getClassName--">getClassName()</a></span> - Method in class com.bluegosling.buildgen.<a href="com/bluegosling/buildgen/JavaClass.html" title="class in com.bluegosling.buildgen">JavaClass</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArClass.html#getClassTypeVariables--">getClassTypeVariables()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect">ArClass</a></dt>
-<dd>
-<div class="block">Returns the class's list of type variables.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/collections/tables/Table2D.html#getColumn-C-">getColumn(C)</a></span> - Method in interface com.bluegosling.collections.tables.<a href="com/bluegosling/collections/tables/Table2D.html" title="interface in com.bluegosling.collections.tables">Table2D</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/collections/tables/Table3D.html#getColumn-P-C-">getColumn(P, C)</a></span> - Method in interface com.bluegosling.collections.tables.<a href="com/bluegosling/collections/tables/Table3D.html" title="interface in com.bluegosling.collections.tables">Table3D</a></dt>
@@ -7798,6 +7846,10 @@
 <dd>
 <div class="block">Breaks the specified object into a sequence of components.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArArrayType.html#getComponentType--">getComponentType()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArArrayType.html" title="class in com.bluegosling.apt.reflect">ArArrayType</a></dt>
+<dd>
+<div class="block">Gets the component type of the array.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArClass.html#getComponentType--">getComponentType()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect">ArClass</a></dt>
 <dd>
 <div class="block">Returns an array class's component type.</div>
@@ -7826,17 +7878,9 @@
 <dd>
 <div class="block">Returns the public constructor with the specified argument types.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArConstructor.html#getConstructorParameters--">getConstructorParameters()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArConstructor.html" title="class in com.bluegosling.apt.reflect">ArConstructor</a></dt>
-<dd>
-<div class="block">Returns the constructor's list of parameters.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArClass.html#getConstructors--">getConstructors()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect">ArClass</a></dt>
 <dd>
 <div class="block">Returns the list of public constructors for this class.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArConstructor.html#getConstructorTypeVariables--">getConstructorTypeVariables()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArConstructor.html" title="class in com.bluegosling.apt.reflect">ArConstructor</a></dt>
-<dd>
-<div class="block">Returns the constructor's list of type variables.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/buildgen/CompilationUnit.html#getContainedClasses--">getContainedClasses()</a></span> - Method in class com.bluegosling.buildgen.<a href="com/bluegosling/buildgen/CompilationUnit.html" title="class in com.bluegosling.buildgen">CompilationUnit</a></dt>
 <dd>&nbsp;</dd>
@@ -7852,7 +7896,7 @@
 <dd>
 <div class="block">Returns the annotation's attributes and values.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArAnnotatedElement.html#getDeclaredAnnotations--">getDeclaredAnnotations()</a></span> - Method in interface com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArAnnotatedElement.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedElement</a></dt>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArAnnotatedConstruct.html#getDeclaredAnnotations--">getDeclaredAnnotations()</a></span> - Method in interface com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArAnnotatedConstruct.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedConstruct</a></dt>
 <dd>
 <div class="block">Gets the annotations declared on this object.</div>
 </dd>
@@ -8241,11 +8285,7 @@
 <dd>
 <div class="block">Retrieves the fourth item in the tuple.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArGenericArrayType.html#getGenericComponentType--">getGenericComponentType()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArGenericArrayType.html" title="class in com.bluegosling.apt.reflect">ArGenericArrayType</a></dt>
-<dd>
-<div class="block">Gets the component type of the array.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArTypeVariable.html#getGenericDeclaration--">getGenericDeclaration()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArTypeVariable.html" title="class in com.bluegosling.apt.reflect">ArTypeVariable</a></dt>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArTypeParameter.html#getGenericDeclaration--">getGenericDeclaration()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArTypeParameter.html" title="class in com.bluegosling.apt.reflect">ArTypeParameter</a></dt>
 <dd>
 <div class="block">Returns the declaration for this type variable.</div>
 </dd>
@@ -8419,10 +8459,6 @@
 <dd>
 <div class="block">Gets the method with the specified name that is supported by this interface verifier.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArMethod.html#getMethodParameters--">getMethodParameters()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArMethod.html" title="class in com.bluegosling.apt.reflect">ArMethod</a></dt>
-<dd>
-<div class="block">Returns the method's list of parameters.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArClass.html#getMethods--">getMethods()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect">ArClass</a></dt>
 <dd>
 <div class="block">Returns the list of all public methods for this class, including those inherited from ancestor
@@ -8435,10 +8471,6 @@
 <dt><span class="memberNameLink"><a href="com/bluegosling/testing/InterfaceVerifier.html#getMethodsNamed-java.lang.String-">getMethodsNamed(String)</a></span> - Method in class com.bluegosling.testing.<a href="com/bluegosling/testing/InterfaceVerifier.html" title="class in com.bluegosling.testing">InterfaceVerifier</a></dt>
 <dd>
 <div class="block">Gets all methods with the specified name that are supported by this interface verifier.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArMethod.html#getMethodTypeVariables--">getMethodTypeVariables()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArMethod.html" title="class in com.bluegosling.apt.reflect">ArMethod</a></dt>
-<dd>
-<div class="block">Returns the method's list of type variables.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/collections/AbstractNavigableMap.html#getModCount--">getModCount()</a></span> - Method in class com.bluegosling.collections.<a href="com/bluegosling/collections/AbstractNavigableMap.html" title="class in com.bluegosling.collections">AbstractNavigableMap</a></dt>
 <dd>
@@ -8483,6 +8515,10 @@
 <div class="block">Returns the simple name of the declaring class, since that is how
  constructors are "named" in Java source code.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArGenericMethodSignature.html#getName--">getName()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArGenericMethodSignature.html" title="class in com.bluegosling.apt.reflect">ArGenericMethodSignature</a></dt>
+<dd>
+<div class="block">Returns the name of the method that this signature represents.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArMember.html#getName--">getName()</a></span> - Method in interface com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArMember.html" title="interface in com.bluegosling.apt.reflect">ArMember</a></dt>
 <dd>
 <div class="block">Returns the member's name.</div>
@@ -8499,12 +8535,16 @@
 <dd>
 <div class="block">Returns the parameter name.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArTypeVariable.html#getName--">getName()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArTypeVariable.html" title="class in com.bluegosling.apt.reflect">ArTypeVariable</a></dt>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArTypeParameter.html#getName--">getName()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArTypeParameter.html" title="class in com.bluegosling.apt.reflect">ArTypeParameter</a></dt>
 <dd>
 <div class="block">Returns the name of the type variable.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/testing/TestJavaFileObject.html#getName--">getName()</a></span> - Method in class com.bluegosling.apt.testing.<a href="com/bluegosling/apt/testing/TestJavaFileObject.html" title="class in com.bluegosling.apt.testing">TestJavaFileObject</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/reflect/GenericMethodSignature.html#getName--">getName()</a></span> - Method in class com.bluegosling.reflect.<a href="com/bluegosling/reflect/GenericMethodSignature.html" title="class in com.bluegosling.reflect">GenericMethodSignature</a></dt>
+<dd>
+<div class="block">Returns the name of the method that this signature represents.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/reflect/MethodSignature.html#getName--">getName()</a></span> - Method in class com.bluegosling.reflect.<a href="com/bluegosling/reflect/MethodSignature.html" title="class in com.bluegosling.reflect">MethodSignature</a></dt>
 <dd>
 <div class="block">Returns the name of the method that this signature represents.</div>
@@ -8525,7 +8565,7 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/collections/maps/LinearHashingMap.html#getOrDefault-java.lang.Object-V-">getOrDefault(Object, V)</a></span> - Method in class com.bluegosling.collections.maps.<a href="com/bluegosling/collections/maps/LinearHashingMap.html" title="class in com.bluegosling.collections.maps">LinearHashingMap</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArParameterizedType.html#getOwnerType--">getOwnerType()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArParameterizedType.html" title="class in com.bluegosling.apt.reflect">ArParameterizedType</a></dt>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArDeclaredType.html#getOwnerType--">getOwnerType()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArDeclaredType.html" title="class in com.bluegosling.apt.reflect">ArDeclaredType</a></dt>
 <dd>
 <div class="block">Returns the enclosing type.</div>
 </dd>
@@ -8620,15 +8660,31 @@
 <dd>
 <div class="block">Returns a declared type mirror that represents the same type as given.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArConstructor.html#getParameters--">getParameters()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArConstructor.html" title="class in com.bluegosling.apt.reflect">ArConstructor</a></dt>
+<dd>
+<div class="block">Returns the constructor's list of parameters.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArExecutableMember.html#getParameters--">getParameters()</a></span> - Method in interface com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArExecutableMember.html" title="interface in com.bluegosling.apt.reflect">ArExecutableMember</a></dt>
 <dd>
 <div class="block">Returns the list of parameters declared for the method or constructor.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArMethod.html#getParameters--">getParameters()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArMethod.html" title="class in com.bluegosling.apt.reflect">ArMethod</a></dt>
+<dd>
+<div class="block">Returns the method's list of parameters.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArExecutableMember.html#getParameterTypes--">getParameterTypes()</a></span> - Method in interface com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArExecutableMember.html" title="interface in com.bluegosling.apt.reflect">ArExecutableMember</a></dt>
 <dd>
 <div class="block">Returns the list of parameter types.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArGenericMethodSignature.html#getParameterTypes--">getParameterTypes()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArGenericMethodSignature.html" title="class in com.bluegosling.apt.reflect">ArGenericMethodSignature</a></dt>
+<dd>
+<div class="block">Returns the parameter types for the method that this signature represents.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArMethodSignature.html#getParameterTypes--">getParameterTypes()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArMethodSignature.html" title="class in com.bluegosling.apt.reflect">ArMethodSignature</a></dt>
+<dd>
+<div class="block">Returns the parameter types for the method that this signature represents.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/reflect/GenericMethodSignature.html#getParameterTypes--">getParameterTypes()</a></span> - Method in class com.bluegosling.reflect.<a href="com/bluegosling/reflect/GenericMethodSignature.html" title="class in com.bluegosling.reflect">GenericMethodSignature</a></dt>
 <dd>
 <div class="block">Returns the parameter types for the method that this signature represents.</div>
 </dd>
@@ -8691,13 +8747,18 @@
 <dd>
 <div class="block">Gets the current allowed rate of permit acquisition, in permits per second.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArParameterizedType.html#getRawType--">getRawType()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArParameterizedType.html" title="class in com.bluegosling.apt.reflect">ArParameterizedType</a></dt>
-<dd>
-<div class="block">Returns the raw, or erased, type.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/reflect/TypeRef.html#getRawType--">getRawType()</a></span> - Method in class com.bluegosling.reflect.<a href="com/bluegosling/reflect/TypeRef.html" title="class in com.bluegosling.reflect">TypeRef</a></dt>
 <dd>
 <div class="block">Returns the raw type that corresponds to this generic type.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArConstructor.html#getReceiverType--">getReceiverType()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArConstructor.html" title="class in com.bluegosling.apt.reflect">ArConstructor</a></dt>
+<dd>
+<div class="block">Returns the constructor's implicit receiver type or <code>null</code> if the constructor is for a
+ static or top-level type.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArMethod.html#getReceiverType--">getReceiverType()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArMethod.html" title="class in com.bluegosling.apt.reflect">ArMethod</a></dt>
+<dd>
+<div class="block">Returns the method's receiver type or <code>null</code> if the method is static.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/reflect/model/Types.html#getReferenceTypeMirror-java.lang.Class-">getReferenceTypeMirror(Class&lt;?&gt;)</a></span> - Method in interface com.bluegosling.reflect.model.<a href="com/bluegosling/reflect/model/Types.html" title="interface in com.bluegosling.reflect.model">Types</a></dt>
 <dd>
@@ -8949,13 +9010,13 @@
 <dd>
 <div class="block">Returns a type element for the given class token.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArClass.html#getTypeKind--">getTypeKind()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect">ArClass</a></dt>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArArrayType.html#getTypeKind--">getTypeKind()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArArrayType.html" title="class in com.bluegosling.apt.reflect">ArArrayType</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArGenericArrayType.html#getTypeKind--">getTypeKind()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArGenericArrayType.html" title="class in com.bluegosling.apt.reflect">ArGenericArrayType</a></dt>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArDeclaredType.html#getTypeKind--">getTypeKind()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArDeclaredType.html" title="class in com.bluegosling.apt.reflect">ArDeclaredType</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArParameterizedType.html#getTypeKind--">getTypeKind()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArParameterizedType.html" title="class in com.bluegosling.apt.reflect">ArParameterizedType</a></dt>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArPrimitiveType.html#getTypeKind--">getTypeKind()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArPrimitiveType.html" title="class in com.bluegosling.apt.reflect">ArPrimitiveType</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArType.html#getTypeKind--">getTypeKind()</a></span> - Method in interface com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArType.html" title="interface in com.bluegosling.apt.reflect">ArType</a></dt>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArType.html#getTypeKind--">getTypeKind()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArType.html" title="class in com.bluegosling.apt.reflect">ArType</a></dt>
 <dd>
 <div class="block">Gets the kind of this type.</div>
 </dd>
@@ -8991,6 +9052,20 @@
 <dd>
 <div class="block">Returns the names of this type's generic type variables (as declared in code).</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArClass.html#getTypeParameters--">getTypeParameters()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect">ArClass</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArConstructor.html#getTypeParameters--">getTypeParameters()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArConstructor.html" title="class in com.bluegosling.apt.reflect">ArConstructor</a></dt>
+<dd>
+<div class="block">Returns the constructor's list of type variables.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArGenericDeclaration.html#getTypeParameters--">getTypeParameters()</a></span> - Method in interface com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArGenericDeclaration.html" title="interface in com.bluegosling.apt.reflect">ArGenericDeclaration</a></dt>
+<dd>
+<div class="block">Returns the list of type parameters for the declaring method, constructor, or class.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArMethod.html#getTypeParameters--">getTypeParameters()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArMethod.html" title="class in com.bluegosling.apt.reflect">ArMethod</a></dt>
+<dd>
+<div class="block">Returns the method's list of type variables.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/reflect/AnnotatedTypeRef.html#getTypeParameters--">getTypeParameters()</a></span> - Method in class com.bluegosling.reflect.<a href="com/bluegosling/reflect/AnnotatedTypeRef.html" title="class in com.bluegosling.reflect">AnnotatedTypeRef</a></dt>
 <dd>
 <div class="block">Returns this type's type variables if it has any.</div>
@@ -9016,13 +9091,6 @@
 <dt><span class="memberNameLink"><a href="com/bluegosling/reflect/model/Types.html#getTypeVariableMirror-java.lang.reflect.TypeVariable-">getTypeVariableMirror(TypeVariable&lt;?&gt;)</a></span> - Method in interface com.bluegosling.reflect.model.<a href="com/bluegosling/reflect/model/Types.html" title="interface in com.bluegosling.reflect.model">Types</a></dt>
 <dd>
 <div class="block">Returns a type variable mirror that represents the same type as given.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArClass.html#getTypeVariables--">getTypeVariables()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect">ArClass</a></dt>
-<dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArGenericDeclaration.html#getTypeVariables--">getTypeVariables()</a></span> - Method in interface com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArGenericDeclaration.html" title="interface in com.bluegosling.apt.reflect">ArGenericDeclaration</a></dt>
-<dd>
-<div class="block">Returns the list of type variables for the declaring method,
- constructor, or class.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/reflect/Types.html#getTypeVariablesAsMap-D-">getTypeVariablesAsMap(D)</a></span> - Static method in class com.bluegosling.reflect.<a href="com/bluegosling/reflect/Types.html" title="class in com.bluegosling.reflect">Types</a></dt>
 <dd>
@@ -9188,11 +9256,15 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArAnnotation.html#hashCode--">hashCode()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArAnnotation.html" title="class in com.bluegosling.apt.reflect">ArAnnotation</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArArrayType.html#hashCode--">hashCode()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArArrayType.html" title="class in com.bluegosling.apt.reflect">ArArrayType</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArClass.html#hashCode--">hashCode()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect">ArClass</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArDeclaredType.html#hashCode--">hashCode()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArDeclaredType.html" title="class in com.bluegosling.apt.reflect">ArDeclaredType</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArField.html#hashCode--">hashCode()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArField.html" title="class in com.bluegosling.apt.reflect">ArField</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArGenericArrayType.html#hashCode--">hashCode()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArGenericArrayType.html" title="class in com.bluegosling.apt.reflect">ArGenericArrayType</a></dt>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArGenericMethodSignature.html#hashCode--">hashCode()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArGenericMethodSignature.html" title="class in com.bluegosling.apt.reflect">ArGenericMethodSignature</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArMethodSignature.html#hashCode--">hashCode()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArMethodSignature.html" title="class in com.bluegosling.apt.reflect">ArMethodSignature</a></dt>
 <dd>&nbsp;</dd>
@@ -9200,7 +9272,9 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArParameter.html#hashCode--">hashCode()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArParameter.html" title="class in com.bluegosling.apt.reflect">ArParameter</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArParameterizedType.html#hashCode--">hashCode()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArParameterizedType.html" title="class in com.bluegosling.apt.reflect">ArParameterizedType</a></dt>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArPrimitiveType.html#hashCode--">hashCode()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArPrimitiveType.html" title="class in com.bluegosling.apt.reflect">ArPrimitiveType</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArTypeParameter.html#hashCode--">hashCode()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArTypeParameter.html" title="class in com.bluegosling.apt.reflect">ArTypeParameter</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArTypeVariable.html#hashCode--">hashCode()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArTypeVariable.html" title="class in com.bluegosling.apt.reflect">ArTypeVariable</a></dt>
 <dd>&nbsp;</dd>
@@ -9319,6 +9393,8 @@
 <dt><span class="memberNameLink"><a href="com/bluegosling/reflect/EnumType.EnumElement.html#hashCode--">hashCode()</a></span> - Method in interface com.bluegosling.reflect.<a href="com/bluegosling/reflect/EnumType.EnumElement.html" title="interface in com.bluegosling.reflect">EnumType.EnumElement</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/reflect/EnumType.html#hashCode--">hashCode()</a></span> - Method in class com.bluegosling.reflect.<a href="com/bluegosling/reflect/EnumType.html" title="class in com.bluegosling.reflect">EnumType</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/reflect/GenericMethodSignature.html#hashCode--">hashCode()</a></span> - Method in class com.bluegosling.reflect.<a href="com/bluegosling/reflect/GenericMethodSignature.html" title="class in com.bluegosling.reflect">GenericMethodSignature</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/reflect/MethodSignature.html#hashCode--">hashCode()</a></span> - Method in class com.bluegosling.reflect.<a href="com/bluegosling/reflect/MethodSignature.html" title="class in com.bluegosling.reflect">MethodSignature</a></dt>
 <dd>&nbsp;</dd>
@@ -10300,11 +10376,11 @@
 <dd>
 <div class="block">Determines if the given type is an annotation type.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArAnnotatedElement.html#isAnnotationPresent-com.bluegosling.apt.reflect.ArClass-">isAnnotationPresent(ArClass)</a></span> - Method in interface com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArAnnotatedElement.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedElement</a></dt>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArAnnotatedConstruct.html#isAnnotationPresent-com.bluegosling.apt.reflect.ArClass-">isAnnotationPresent(ArClass)</a></span> - Method in interface com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArAnnotatedConstruct.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedConstruct</a></dt>
 <dd>
 <div class="block">Determines whether an annotation of the specified type exists on the object.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArAnnotatedElement.html#isAnnotationPresent-java.lang.Class-">isAnnotationPresent(Class&lt;? extends Annotation&gt;)</a></span> - Method in interface com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArAnnotatedElement.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedElement</a></dt>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArAnnotatedConstruct.html#isAnnotationPresent-java.lang.Class-">isAnnotationPresent(Class&lt;? extends Annotation&gt;)</a></span> - Method in interface com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArAnnotatedConstruct.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedConstruct</a></dt>
 <dd>
 <div class="block">Determines whether an annotation of the specified type exists on the object.</div>
 </dd>
@@ -17692,26 +17768,6 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/collections/primitive/PrimitiveList.OfFloat.html#toFloatArray--">toFloatArray()</a></span> - Method in interface com.bluegosling.collections.primitive.<a href="com/bluegosling/collections/primitive/PrimitiveList.OfFloat.html" title="interface in com.bluegosling.collections.primitive">PrimitiveList.OfFloat</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArClass.html#toGenericString--">toGenericString()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect">ArClass</a></dt>
-<dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArField.html#toGenericString--">toGenericString()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArField.html" title="class in com.bluegosling.apt.reflect">ArField</a></dt>
-<dd>
-<div class="block">Returns a string representation of this field that includes generic type information and
- possible references to the enclosing class's type parameters.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArGenericDeclaration.html#toGenericString--">toGenericString()</a></span> - Method in interface com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArGenericDeclaration.html" title="interface in com.bluegosling.apt.reflect">ArGenericDeclaration</a></dt>
-<dd>
-<div class="block">Returns a string representation of the generic declaration that
- includes references to type parameters.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArMember.html#toGenericString--">toGenericString()</a></span> - Method in interface com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArMember.html" title="interface in com.bluegosling.apt.reflect">ArMember</a></dt>
-<dd>
-<div class="block">Returns a string representation of the member that includes generic type information.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArParameter.html#toGenericString--">toGenericString()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArParameter.html" title="class in com.bluegosling.apt.reflect">ArParameter</a></dt>
-<dd>
-<div class="block">Returns a string representation of this parameter that includes generic type information.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/graph/Node.html#toGraph--">toGraph()</a></span> - Method in class com.bluegosling.graph.<a href="com/bluegosling/graph/Node.html" title="class in com.bluegosling.graph">Node</a></dt>
 <dd>
 <div class="block">Returns a graph consisting of this node and its transitive dependencies.</div>
@@ -17815,11 +17871,15 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArAnnotation.html#toString--">toString()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArAnnotation.html" title="class in com.bluegosling.apt.reflect">ArAnnotation</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArArrayType.html#toString--">toString()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArArrayType.html" title="class in com.bluegosling.apt.reflect">ArArrayType</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArClass.html#toString--">toString()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect">ArClass</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArDeclaredType.html#toString--">toString()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArDeclaredType.html" title="class in com.bluegosling.apt.reflect">ArDeclaredType</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArField.html#toString--">toString()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArField.html" title="class in com.bluegosling.apt.reflect">ArField</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArGenericArrayType.html#toString--">toString()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArGenericArrayType.html" title="class in com.bluegosling.apt.reflect">ArGenericArrayType</a></dt>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArGenericMethodSignature.html#toString--">toString()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArGenericMethodSignature.html" title="class in com.bluegosling.apt.reflect">ArGenericMethodSignature</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArMethodSignature.html#toString--">toString()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArMethodSignature.html" title="class in com.bluegosling.apt.reflect">ArMethodSignature</a></dt>
 <dd>&nbsp;</dd>
@@ -17827,7 +17887,14 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArParameter.html#toString--">toString()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArParameter.html" title="class in com.bluegosling.apt.reflect">ArParameter</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArParameterizedType.html#toString--">toString()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArParameterizedType.html" title="class in com.bluegosling.apt.reflect">ArParameterizedType</a></dt>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArPrimitiveType.html#toString--">toString()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArPrimitiveType.html" title="class in com.bluegosling.apt.reflect">ArPrimitiveType</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArType.html#toString--">toString()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArType.html" title="class in com.bluegosling.apt.reflect">ArType</a></dt>
+<dd>
+<div class="block">Returns a string representation of this type, suitable for constructing a representation of
+ this type that could be used in Java source code.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArTypeParameter.html#toString--">toString()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArTypeParameter.html" title="class in com.bluegosling.apt.reflect">ArTypeParameter</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArTypeVariable.html#toString--">toString()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArTypeVariable.html" title="class in com.bluegosling.apt.reflect">ArTypeVariable</a></dt>
 <dd>&nbsp;</dd>
@@ -17944,6 +18011,8 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/reflect/EnumType.html#toString--">toString()</a></span> - Method in class com.bluegosling.reflect.<a href="com/bluegosling/reflect/EnumType.html" title="class in com.bluegosling.reflect">EnumType</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/reflect/GenericMethodSignature.html#toString--">toString()</a></span> - Method in class com.bluegosling.reflect.<a href="com/bluegosling/reflect/GenericMethodSignature.html" title="class in com.bluegosling.reflect">GenericMethodSignature</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/reflect/MethodSignature.html#toString--">toString()</a></span> - Method in class com.bluegosling.reflect.<a href="com/bluegosling/reflect/MethodSignature.html" title="class in com.bluegosling.reflect">MethodSignature</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/reflect/scanner/PackageScanner.ClassInfo.html#toString--">toString()</a></span> - Method in class com.bluegosling.reflect.scanner.<a href="com/bluegosling/reflect/scanner/PackageScanner.ClassInfo.html" title="class in com.bluegosling.reflect.scanner">PackageScanner.ClassInfo</a></dt>
@@ -17992,21 +18061,6 @@
 <dd>
 <div class="block">Returns the total capacity for this factory.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArClass.html#toTypeString--">toTypeString()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect">ArClass</a></dt>
-<dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArGenericArrayType.html#toTypeString--">toTypeString()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArGenericArrayType.html" title="class in com.bluegosling.apt.reflect">ArGenericArrayType</a></dt>
-<dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArParameterizedType.html#toTypeString--">toTypeString()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArParameterizedType.html" title="class in com.bluegosling.apt.reflect">ArParameterizedType</a></dt>
-<dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArType.html#toTypeString--">toTypeString()</a></span> - Method in interface com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArType.html" title="interface in com.bluegosling.apt.reflect">ArType</a></dt>
-<dd>
-<div class="block">Returns a string representation of this type, suitable for constructing a representation of
- this type that could be used in Java source code.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArTypeVariable.html#toTypeString--">toTypeString()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArTypeVariable.html" title="class in com.bluegosling.apt.reflect">ArTypeVariable</a></dt>
-<dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArWildcardType.html#toTypeString--">toTypeString()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArWildcardType.html" title="class in com.bluegosling.apt.reflect">ArWildcardType</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/bluegosling/concurrent/atoms/Transaction.html" title="class in com.bluegosling.concurrent.atoms"><span class="typeNameLink">Transaction</span></a> - Class in <a href="com/bluegosling/concurrent/atoms/package-summary.html">com.bluegosling.concurrent.atoms</a></dt>
 <dd>
 <div class="block">A transaction in which changes to <a href="com/bluegosling/concurrent/atoms/TransactionalAtom.html" title="class in com.bluegosling.concurrent.atoms"><code>TransactionalAtom</code></a>s can be made.</div>
@@ -19027,10 +19081,6 @@
 <dd>
 <div class="block">Returns the enum constant of this type with the specified name.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArType.Kind.html#valueOf-java.lang.String-">valueOf(String)</a></span> - Static method in enum com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArType.Kind.html" title="enum in com.bluegosling.apt.reflect">ArType.Kind</a></dt>
-<dd>
-<div class="block">Returns the enum constant of this type with the specified name.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/buildgen/BuildGen.TargetType.html#valueOf-java.lang.String-">valueOf(String)</a></span> - Static method in enum com.bluegosling.buildgen.<a href="com/bluegosling/buildgen/BuildGen.TargetType.html" title="enum in com.bluegosling.buildgen">BuildGen.TargetType</a></dt>
 <dd>
 <div class="block">Returns the enum constant of this type with the specified name.</div>
@@ -19081,11 +19131,6 @@
 the order they are declared.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArModifier.html#values--">values()</a></span> - Static method in enum com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArModifier.html" title="enum in com.bluegosling.apt.reflect">ArModifier</a></dt>
-<dd>
-<div class="block">Returns an array containing the constants of this enum type, in
-the order they are declared.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArType.Kind.html#values--">values()</a></span> - Static method in enum com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArType.Kind.html" title="enum in com.bluegosling.apt.reflect">ArType.Kind</a></dt>
 <dd>
 <div class="block">Returns an array containing the constants of this enum type, in
 the order they are declared.</div>
@@ -19422,10 +19467,6 @@ the order they are declared.</div>
 <dd>
 <div class="block">Visits the underlying callable, for tasks implemented by a callable.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArType.Visitor.html#visitClass-com.bluegosling.apt.reflect.ArClass-P-">visitClass(ArClass, P)</a></span> - Method in interface com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArType.Visitor.html" title="interface in com.bluegosling.apt.reflect">ArType.Visitor</a></dt>
-<dd>
-<div class="block">Visits a class.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/reflect/TypeVisitor.html#visitClass-java.lang.Class-P-">visitClass(Class&lt;?&gt;, P)</a></span> - Method in interface com.bluegosling.reflect.<a href="com/bluegosling/reflect/TypeVisitor.html" title="interface in com.bluegosling.reflect">TypeVisitor</a></dt>
 <dd>
 <div class="block">Invoked when the visited type is a class token.</div>
@@ -19446,10 +19487,6 @@ the order they are declared.</div>
 <dd>
 <div class="block">Called when visiting a choice where the fourth option is present.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArType.Visitor.html#visitGenericArrayType-com.bluegosling.apt.reflect.ArGenericArrayType-P-">visitGenericArrayType(ArGenericArrayType, P)</a></span> - Method in interface com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArType.Visitor.html" title="interface in com.bluegosling.apt.reflect">ArType.Visitor</a></dt>
-<dd>
-<div class="block">Visits a generic array type.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/reflect/TypeVisitor.html#visitGenericArrayType-java.lang.reflect.GenericArrayType-P-">visitGenericArrayType(GenericArrayType, P)</a></span> - Method in interface com.bluegosling.reflect.<a href="com/bluegosling/reflect/TypeVisitor.html" title="interface in com.bluegosling.reflect">TypeVisitor</a></dt>
 <dd>
 <div class="block">Invoked when the visited type is a generic array type.</div>
@@ -19458,10 +19495,6 @@ the order they are declared.</div>
 <dd>
 <div class="block">Invoked when the visited type is not suitable for one of the more specific <code>visit*</code>
  methods.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArType.Visitor.html#visitParameterizedType-com.bluegosling.apt.reflect.ArParameterizedType-P-">visitParameterizedType(ArParameterizedType, P)</a></span> - Method in interface com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArType.Visitor.html" title="interface in com.bluegosling.apt.reflect">ArType.Visitor</a></dt>
-<dd>
-<div class="block">Visits a parameterized type.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/reflect/AnnotatedTypeVisitor.html#visitParameterizedType-java.lang.reflect.AnnotatedParameterizedType-P-">visitParameterizedType(AnnotatedParameterizedType, P)</a></span> - Method in interface com.bluegosling.reflect.<a href="com/bluegosling/reflect/AnnotatedTypeVisitor.html" title="interface in com.bluegosling.reflect">AnnotatedTypeVisitor</a></dt>
 <dd>
@@ -19487,11 +19520,6 @@ the order they are declared.</div>
 <dd>
 <div class="block">Called when visiting a choice where the third option is present.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArType.Visitor.html#visitTypeVariable-com.bluegosling.apt.reflect.ArTypeVariable-P-">visitTypeVariable(ArTypeVariable&lt;?&gt;, P)</a></span> - Method in interface com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArType.Visitor.html" title="interface in com.bluegosling.apt.reflect">ArType.Visitor</a></dt>
-<dd>
-<div class="block">Visits a type variable This is called from <a href="com/bluegosling/apt/reflect/ArType.html#accept-com.bluegosling.apt.reflect.ArType.Visitor-P-"><code>ArType.accept(Visitor, Object)</code></a> when the
- type being visited is an <a href="com/bluegosling/apt/reflect/ArTypeVariable.html" title="class in com.bluegosling.apt.reflect"><code>ArTypeVariable</code></a>.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/reflect/AnnotatedTypeVisitor.html#visitTypeVariable-java.lang.reflect.AnnotatedTypeVariable-P-">visitTypeVariable(AnnotatedTypeVariable, P)</a></span> - Method in interface com.bluegosling.reflect.<a href="com/bluegosling/reflect/AnnotatedTypeVisitor.html" title="interface in com.bluegosling.reflect">AnnotatedTypeVisitor</a></dt>
 <dd>
 <div class="block">Invoked when the visited type is a type variable.</div>
@@ -19511,10 +19539,6 @@ the order they are declared.</div>
 <dt><span class="memberNameLink"><a href="com/bluegosling/concurrent/fluent/FluentFuture.html#visitWhenDone-com.bluegosling.concurrent.fluent.FutureVisitor-">visitWhenDone(FutureVisitor&lt;? super T&gt;)</a></span> - Method in interface com.bluegosling.concurrent.fluent.<a href="com/bluegosling/concurrent/fluent/FluentFuture.html" title="interface in com.bluegosling.concurrent.fluent">FluentFuture</a></dt>
 <dd>
 <div class="block">Adds a listener that visits this future using a <a href="com/bluegosling/concurrent/SameThreadExecutor.html" title="class in com.bluegosling.concurrent"><code>SameThreadExecutor</code></a> when it completes.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArType.Visitor.html#visitWildcardType-com.bluegosling.apt.reflect.ArWildcardType-P-">visitWildcardType(ArWildcardType, P)</a></span> - Method in interface com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArType.Visitor.html" title="interface in com.bluegosling.apt.reflect">ArType.Visitor</a></dt>
-<dd>
-<div class="block">Visits a wildcard type.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/reflect/AnnotatedTypeVisitor.html#visitWildcardType-java.lang.reflect.AnnotatedWildcardType-P-">visitWildcardType(AnnotatedWildcardType, P)</a></span> - Method in interface com.bluegosling.reflect.<a href="com/bluegosling/reflect/AnnotatedTypeVisitor.html" title="interface in com.bluegosling.reflect">AnnotatedTypeVisitor</a></dt>
 <dd>

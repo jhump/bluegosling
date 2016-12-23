@@ -47,7 +47,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../com/bluegosling/apt/reflect/ArConstructor.html" title="class in com.bluegosling.apt.reflect"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../../com/bluegosling/apt/reflect/ArDeclaredType.html" title="class in com.bluegosling.apt.reflect"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../../com/bluegosling/apt/reflect/ArField.html" title="class in com.bluegosling.apt.reflect"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -114,7 +114,8 @@ extends <a href="../../../../com/bluegosling/apt/reflect/ArMember.html" title="i
  declarations.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Executable.html?is-external=true" title="class or interface in java.lang.reflect"><code>Executable</code></a></dd>
+<dd><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Executable.html?is-external=true" title="class or interface in java.lang.reflect"><code>Executable</code></a>, 
+<a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/ExecutableElement.html?is-external=true" title="class or interface in javax.lang.model.element"><code>ExecutableElement</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -141,13 +142,13 @@ extends <a href="../../../../com/bluegosling/apt/reflect/ArMember.html" title="i
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../com/bluegosling/apt/reflect/ArType.html" title="interface in com.bluegosling.apt.reflect">ArType</a>&gt;</code></td>
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../com/bluegosling/apt/reflect/ArType.html" title="class in com.bluegosling.apt.reflect">ArType</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/bluegosling/apt/reflect/ArExecutableMember.html#getGenericExceptionTypes--">getGenericExceptionTypes</a></span>()</code>
 <div class="block">Returns the list of declared exception types that can be thrown by this executable memebr.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../com/bluegosling/apt/reflect/ArType.html" title="interface in com.bluegosling.apt.reflect">ArType</a>&gt;</code></td>
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../com/bluegosling/apt/reflect/ArType.html" title="class in com.bluegosling.apt.reflect">ArType</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/bluegosling/apt/reflect/ArExecutableMember.html#getGenericParameterTypes--">getGenericParameterTypes</a></span>()</code>
 <div class="block">Returns the list of parameter types.</div>
 </td>
@@ -159,7 +160,7 @@ extends <a href="../../../../com/bluegosling/apt/reflect/ArMember.html" title="i
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../com/bluegosling/apt/reflect/ArParameter.html" title="class in com.bluegosling.apt.reflect">ArParameter</a>&lt;?&gt;&gt;</code></td>
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;? extends <a href="../../../../com/bluegosling/apt/reflect/ArParameter.html" title="class in com.bluegosling.apt.reflect">ArParameter</a>&lt;?&gt;&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/bluegosling/apt/reflect/ArExecutableMember.html#getParameters--">getParameters</a></span>()</code>
 <div class="block">Returns the list of parameters declared for the method or constructor.</div>
 </td>
@@ -182,7 +183,7 @@ extends <a href="../../../../com/bluegosling/apt/reflect/ArMember.html" title="i
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;com.bluegosling.apt.reflect.<a href="../../../../com/bluegosling/apt/reflect/ArMember.html" title="interface in com.bluegosling.apt.reflect">ArMember</a></h3>
-<code><a href="../../../../com/bluegosling/apt/reflect/ArMember.html#getDeclaringClass--">getDeclaringClass</a>, <a href="../../../../com/bluegosling/apt/reflect/ArMember.html#getModifiers--">getModifiers</a>, <a href="../../../../com/bluegosling/apt/reflect/ArMember.html#getName--">getName</a>, <a href="../../../../com/bluegosling/apt/reflect/ArMember.html#toGenericString--">toGenericString</a></code></li>
+<code><a href="../../../../com/bluegosling/apt/reflect/ArMember.html#getDeclaringClass--">getDeclaringClass</a>, <a href="../../../../com/bluegosling/apt/reflect/ArMember.html#getModifiers--">getModifiers</a>, <a href="../../../../com/bluegosling/apt/reflect/ArMember.html#getName--">getName</a></code></li>
 </ul>
 </li>
 </ul>
@@ -204,20 +205,14 @@ extends <a href="../../../../com/bluegosling/apt/reflect/ArMember.html" title="i
 <ul class="blockList">
 <li class="blockList">
 <h4>getParameters</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../com/bluegosling/apt/reflect/ArParameter.html" title="class in com.bluegosling.apt.reflect">ArParameter</a>&lt;?&gt;&gt;&nbsp;getParameters()</pre>
-<div class="block">Returns the list of parameters declared for the method or constructor.
- 
- <p>Sadly, though Java allows co-variant return types in overridden
- methods, it does not allow co-variance where the return types'
- erasures are the same and are co-variant only based on generic
- parameters. So methods with more specific return types (actual
- type parameters instead of wildcards) must have different names.</div>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;? extends <a href="../../../../com/bluegosling/apt/reflect/ArParameter.html" title="class in com.bluegosling.apt.reflect">ArParameter</a>&lt;?&gt;&gt;&nbsp;getParameters()</pre>
+<div class="block">Returns the list of parameters declared for the method or constructor.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the list of parameters</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../com/bluegosling/apt/reflect/ArMethod.html#getMethodParameters--"><code>ArMethod.getMethodParameters()</code></a>, 
-<a href="../../../../com/bluegosling/apt/reflect/ArConstructor.html#getConstructorParameters--"><code>ArConstructor.getConstructorParameters()</code></a></dd>
+<dd><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Executable.html?is-external=true#getParameters--" title="class or interface in java.lang.reflect"><code>Executable.getParameters()</code></a>, 
+<a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/ExecutableElement.html?is-external=true#getParameters--" title="class or interface in javax.lang.model.element"><code>ExecutableElement.getParameters()</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -234,8 +229,7 @@ extends <a href="../../../../com/bluegosling/apt/reflect/ArMember.html" title="i
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the list of parameter types</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Constructor.html?is-external=true#getParameterTypes--" title="class or interface in java.lang.reflect"><code>Constructor.getParameterTypes()</code></a>, 
-<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Method.html?is-external=true#getParameterTypes--" title="class or interface in java.lang.reflect"><code>Method.getParameterTypes()</code></a></dd>
+<dd><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Executable.html?is-external=true#getParameterTypes--" title="class or interface in java.lang.reflect"><code>Executable.getParameterTypes()</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -245,15 +239,14 @@ extends <a href="../../../../com/bluegosling/apt/reflect/ArMember.html" title="i
 <ul class="blockList">
 <li class="blockList">
 <h4>getGenericParameterTypes</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../com/bluegosling/apt/reflect/ArType.html" title="interface in com.bluegosling.apt.reflect">ArType</a>&gt;&nbsp;getGenericParameterTypes()</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../com/bluegosling/apt/reflect/ArType.html" title="class in com.bluegosling.apt.reflect">ArType</a>&gt;&nbsp;getGenericParameterTypes()</pre>
 <div class="block">Returns the list of parameter types. The returned types include all generic type information
  that was specified in the source declaration of the type.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the list of parameter types</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Constructor.html?is-external=true#getGenericParameterTypes--" title="class or interface in java.lang.reflect"><code>Constructor.getGenericParameterTypes()</code></a>, 
-<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Method.html?is-external=true#getGenericParameterTypes--" title="class or interface in java.lang.reflect"><code>Method.getGenericParameterTypes()</code></a></dd>
+<dd><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Executable.html?is-external=true#getGenericParameterTypes--" title="class or interface in java.lang.reflect"><code>Executable.getGenericParameterTypes()</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -271,8 +264,7 @@ extends <a href="../../../../com/bluegosling/apt/reflect/ArMember.html" title="i
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>true if this member has variable arity; false otherwise</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Constructor.html?is-external=true#isVarArgs--" title="class or interface in java.lang.reflect"><code>Constructor.isVarArgs()</code></a>, 
-<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Method.html?is-external=true#isVarArgs--" title="class or interface in java.lang.reflect"><code>Method.isVarArgs()</code></a></dd>
+<dd><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Executable.html?is-external=true#isVarArgs--" title="class or interface in java.lang.reflect"><code>Executable.isVarArgs()</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -291,8 +283,7 @@ extends <a href="../../../../com/bluegosling/apt/reflect/ArMember.html" title="i
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the list of lists of annotations</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Constructor.html?is-external=true#getParameterAnnotations--" title="class or interface in java.lang.reflect"><code>Constructor.getParameterAnnotations()</code></a>, 
-<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Method.html?is-external=true#getParameterAnnotations--" title="class or interface in java.lang.reflect"><code>Method.getParameterAnnotations()</code></a></dd>
+<dd><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Executable.html?is-external=true#getParameterAnnotations--" title="class or interface in java.lang.reflect"><code>Executable.getParameterAnnotations()</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -310,8 +301,7 @@ extends <a href="../../../../com/bluegosling/apt/reflect/ArMember.html" title="i
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the list of parameter types</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Constructor.html?is-external=true#getExceptionTypes--" title="class or interface in java.lang.reflect"><code>Constructor.getExceptionTypes()</code></a>, 
-<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Method.html?is-external=true#getExceptionTypes--" title="class or interface in java.lang.reflect"><code>Method.getExceptionTypes()</code></a></dd>
+<dd><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Executable.html?is-external=true#getExceptionTypes--" title="class or interface in java.lang.reflect"><code>Executable.getExceptionTypes()</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -321,7 +311,7 @@ extends <a href="../../../../com/bluegosling/apt/reflect/ArMember.html" title="i
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getGenericExceptionTypes</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../com/bluegosling/apt/reflect/ArType.html" title="interface in com.bluegosling.apt.reflect">ArType</a>&gt;&nbsp;getGenericExceptionTypes()</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../com/bluegosling/apt/reflect/ArType.html" title="class in com.bluegosling.apt.reflect">ArType</a>&gt;&nbsp;getGenericExceptionTypes()</pre>
 <div class="block">Returns the list of declared exception types that can be thrown by this executable memebr. The
  returned types include all generic type information that was specified in the source
  declaration of the type.</div>
@@ -329,8 +319,8 @@ extends <a href="../../../../com/bluegosling/apt/reflect/ArMember.html" title="i
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the list of exception types</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Constructor.html?is-external=true#getGenericExceptionTypes--" title="class or interface in java.lang.reflect"><code>Constructor.getGenericExceptionTypes()</code></a>, 
-<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Method.html?is-external=true#getGenericExceptionTypes--" title="class or interface in java.lang.reflect"><code>Method.getGenericExceptionTypes()</code></a></dd>
+<dd><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Executable.html?is-external=true#getGenericExceptionTypes--" title="class or interface in java.lang.reflect"><code>Executable.getGenericExceptionTypes()</code></a>, 
+<a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/ExecutableElement.html?is-external=true#getThrownTypes--" title="class or interface in javax.lang.model.element"><code>ExecutableElement.getThrownTypes()</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -361,7 +351,7 @@ extends <a href="../../../../com/bluegosling/apt/reflect/ArMember.html" title="i
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../com/bluegosling/apt/reflect/ArConstructor.html" title="class in com.bluegosling.apt.reflect"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../../com/bluegosling/apt/reflect/ArDeclaredType.html" title="class in com.bluegosling.apt.reflect"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../../com/bluegosling/apt/reflect/ArField.html" title="class in com.bluegosling.apt.reflect"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
