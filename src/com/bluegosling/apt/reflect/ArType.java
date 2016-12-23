@@ -1,5 +1,6 @@
 package com.bluegosling.apt.reflect;
 
+import java.lang.reflect.AnnotatedType;
 import java.lang.reflect.Type;
 
 import javax.lang.model.type.TypeMirror;
@@ -16,10 +17,16 @@ import javax.lang.model.type.TypeMirror;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  * 
  * @see Type
+ * @see AnnotatedType
+ * @see TypeMirror
  * @see ArTypes
  */
-public interface ArType {
+public abstract class ArType extends ArAbstractAnnotatedConstruct<TypeMirror> {
    
+   ArType(TypeMirror mirror) {
+      super(mirror);
+   }
+
    /**
     * A visitor for simulating multiple dispatch over the concrete implementations of
     * {@link ArType}. This can be used to more elegantly handle polymorphism of types than using
@@ -37,35 +44,35 @@ public interface ArType {
     */
    interface Visitor<R, P> {
       /**
-       * Visits a class. This is called from {@link ArType#accept(Visitor, Object)} when the type
-       * being visited is an {@link ArClass}.
+       * Visits a declared type. This is called from {@link ArType#accept(Visitor, Object)} when the
+       * type being visited is an {@link ArDeclaredType}.
        * 
-       * @param clazz the class being visited
+       * @param declaredType the declared type being visited
        * @param p extra parameter supplied to {@link ArType#accept(Visitor, Object)}
-       * @return the result of visiting this class
+       * @return the result of visiting this declared type
        */
-      R visitClass(ArClass clazz, P p);
+      R visitDeclaredType(ArDeclaredType declaredType, P p);
 
       /**
-       * Visits a generic array type. This is called from {@link ArType#accept(Visitor, Object)} 
-       * when the type being visited is an {@link ArGenericArrayType}.
+       * Visits a primitive type. This is called from {@link ArType#accept(Visitor, Object)} when
+       * the type being visited is an {@link ArAnnotatedPrimitiveType}.
        * 
-       * @param arrayType the generic array type being visited
+       * @param primitiveType the primitive type being visited
+       * @param p extra parameter supplied to {@link ArType#accept(Visitor, Object)}
+       * @return the result of visiting this declared type
+       */
+      R visitPrimitiveType(ArPrimitiveType primitiveType, P p);
+
+      /**
+       * Visits a array type. This is called from {@link ArType#accept(Visitor, Object)} when the
+       * type being visited is an {@link ArArrayType}.
+       * 
+       * @param arrayType the array type being visited
        * @param p extra parameter supplied to {@link ArType#accept(Visitor, Object)}
        * @return the result of visiting this array type
        */
-      R visitGenericArrayType(ArGenericArrayType arrayType, P p);
+      R visitArrayType(ArArrayType arrayType, P p);
       
-      /**
-       * Visits a parameterized type. This is called from {@link ArType#accept(Visitor, Object)}
-       * when the type being visited is an {@link ArParameterizedType}.
-       * 
-       * @param parameterizedType the parameterized type being visited
-       * @param p extra parameter supplied to {@link ArType#accept(Visitor, Object)}
-       * @return the result of visiting this parameterized type
-       */
-      R visitParameterizedType(ArParameterizedType parameterizedType, P p);
-
       /**
        * Visits a type variable This is called from {@link ArType#accept(Visitor, Object)} when the
        * type being visited is an {@link ArTypeVariable}.
@@ -74,7 +81,7 @@ public interface ArType {
        * @param p extra parameter supplied to {@link ArType#accept(Visitor, Object)}
        * @return the result of visiting this type variable
        */
-      R visitTypeVariable(ArTypeVariable<?> typeVariable, P p);
+      R visitTypeVariable(ArTypeVariable typeVariable, P p);
       
       /**
        * Visits a wildcard type. This is called from {@link ArType#accept(Visitor, Object)} when the
@@ -94,27 +101,26 @@ public interface ArType {
     */
    enum Kind {
       /**
-       * A class (or interface, enum, or annotation type) declaration or a raw/erased type. This
-       * kind is also used to represent primitive types and array types that do not refer to
-       * parameterized types or type variables.
+       * A declared type, which can be an interface, enum, or annotation type. It could be a
+       * parameterized type or it could be a raw/non-generic type.
        * 
-       * @see ArClass
+       * @see ArDeclaredType
        */
-      CLASS,
-
-      /**
-       * An array type whose component type refers to a parameterized type or type variable.
-       * 
-       * @see ArGenericArrayType
-       */
-      GENERIC_ARRAY_TYPE,
+      DECLARED_TYPE,
       
       /**
-       * A parameterized type.
+       * A primitive type or {@code void}.
        * 
-       * @see ArParameterizedType
+       * @see ArPrimitiveType
        */
-      PARAMETERIZED_TYPE,
+      PRIMITIVE_TYPE,
+
+      /**
+       * An array type.
+       * 
+       * @see ArArrayType
+       */
+      ARRAY_TYPE,
       
       /**
        * A type variable.
@@ -141,31 +147,30 @@ public interface ArType {
     * @param <P> the type of the optional parameter for the visitor
     * @return the value returned by the visitor
     */
-   <R, P> R accept(Visitor<R, P> visitor, P p);
+   public abstract <R, P> R accept(Visitor<R, P> visitor, P p);
 
    /**
     * Gets the kind of this type.
     * 
     * @return the kind of this type
     */
-   Kind getTypeKind();
+   public abstract Kind getTypeKind();
 
    /**
     * Returns the underlying {@link TypeMirror} represented by this type.
     * 
     * @return the underlying type mirror
     */
-   TypeMirror asTypeMirror();
+   public TypeMirror asTypeMirror() {
+      return delegate();
+   }
 
    /**
     * Returns a string representation of this type, suitable for constructing a representation of
-    * this type that could be used in Java source code. For most types, this is the same as
-    * {@code toString()}, but one glaring exception to that is in {@link ArClass} where
-    * {@link ArClass#toString() toString()} and {@link ArClass#toGenericString() toGenericString()}
-    * return representations that resemble type declarations but {@link ArClass#toTypeString()
-    * toTypeString()} returns a string that is a simple reference to the class's raw/erased type.
+    * this type that could be used in Java source code.
     * 
     * @return a string representation of this type
     */
-   String toTypeString();
+   @Override
+   public abstract String toString();
 }

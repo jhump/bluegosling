@@ -3,6 +3,8 @@ package com.bluegosling.apt.reflect;
 import java.lang.reflect.Executable;
 import java.util.List;
 
+import javax.lang.model.element.ExecutableElement;
+
 /**
  * An interface that represents a member that has executable code -- a constructor or a method. This
  * interface factors out many common methods between the two regarding parameters and exception
@@ -11,24 +13,19 @@ import java.util.List;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  * 
  * @see Executable
+ * @see ExecutableElement
  */
 public interface ArExecutableMember extends ArMember {
 
    /**
     * Returns the list of parameters declared for the method or constructor.
     * 
-    * <p>Sadly, though Java allows co-variant return types in overridden
-    * methods, it does not allow co-variance where the return types'
-    * erasures are the same and are co-variant only based on generic
-    * parameters. So methods with more specific return types (actual
-    * type parameters instead of wildcards) must have different names.
-    * 
     * @return the list of parameters
     * 
-    * @see ArMethod#getMethodParameters()
-    * @see ArConstructor#getConstructorParameters()
+    * @see Executable#getParameters()
+    * @see ExecutableElement#getParameters()
     */
-   List<ArParameter<?>> getParameters();
+   List<? extends ArParameter<?>> getParameters();
    
    /**
     * Returns the list of parameter types. The returned types are raw types with any generic
@@ -36,8 +33,7 @@ public interface ArExecutableMember extends ArMember {
     * 
     * @return the list of parameter types
     * 
-    * @see java.lang.reflect.Constructor#getParameterTypes()
-    * @see java.lang.reflect.Method#getParameterTypes()
+    * @see Executable#getParameterTypes()
     */
    List<ArClass> getParameterTypes();
 
@@ -47,8 +43,7 @@ public interface ArExecutableMember extends ArMember {
     * 
     * @return the list of parameter types
     * 
-    * @see java.lang.reflect.Constructor#getGenericParameterTypes()
-    * @see java.lang.reflect.Method#getGenericParameterTypes()
+    * @see Executable#getGenericParameterTypes()
     */
    List<ArType> getGenericParameterTypes();
    
@@ -59,8 +54,7 @@ public interface ArExecutableMember extends ArMember {
     * 
     * @return true if this member has variable arity; false otherwise
     * 
-    * @see java.lang.reflect.Constructor#isVarArgs()
-    * @see java.lang.reflect.Method#isVarArgs()
+    * @see Executable#isVarArgs()
     */
    boolean isVarArgs();
    
@@ -72,8 +66,7 @@ public interface ArExecutableMember extends ArMember {
     * 
     * @return the list of lists of annotations
     * 
-    * @see java.lang.reflect.Constructor#getParameterAnnotations()
-    * @see java.lang.reflect.Method#getParameterAnnotations()
+    * @see Executable#getParameterAnnotations()
     */
    List<List<ArAnnotation>> getParameterAnnotations();
    
@@ -84,8 +77,7 @@ public interface ArExecutableMember extends ArMember {
     * 
     * @return the list of parameter types
     * 
-    * @see java.lang.reflect.Constructor#getExceptionTypes()
-    * @see java.lang.reflect.Method#getExceptionTypes()
+    * @see Executable#getExceptionTypes()
     */
    List<ArClass> getExceptionTypes();
 
@@ -96,8 +88,8 @@ public interface ArExecutableMember extends ArMember {
     * 
     * @return the list of exception types
     * 
-    * @see java.lang.reflect.Constructor#getGenericExceptionTypes()
-    * @see java.lang.reflect.Method#getGenericExceptionTypes()
+    * @see Executable#getGenericExceptionTypes()
+    * @see ExecutableElement#getThrownTypes()
     */
    List<ArType> getGenericExceptionTypes();
 }

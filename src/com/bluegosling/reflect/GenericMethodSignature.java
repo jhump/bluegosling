@@ -3,14 +3,14 @@ package com.bluegosling.reflect;
 import static java.util.Objects.requireNonNull;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 /**
- * Represents a method signature, composed of a method name and sequence of parameter types.
+ * Represents a generic method signature, composed of a method name and sequence of parameter types.
  * 
  * <p>{@code MethodSignature} objects are used in place of {@code java.lang.reflect.Method} objects
  * when configuring an {@link com.bluegosling.testing.InterfaceVerifier InterfaceVerifier}. A proxy
@@ -19,9 +19,9 @@ import java.util.Objects;
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public class MethodSignature {
+public class GenericMethodSignature {
    private final String name;
-   private final List<Class<?>> argTypes;
+   private final List<Type> argTypes;
 
    /**
     * Constructs a new signature for the specified method.
@@ -29,9 +29,9 @@ public class MethodSignature {
     * @param m the method
     * @throws NullPointerException If the specified method is {@code null}
     */
-   public MethodSignature(Method m) {
+   public GenericMethodSignature(Method m) {
       this.name = m.getName();
-      this.argTypes = Arrays.asList(m.getParameterTypes());
+      this.argTypes = Arrays.asList(m.getGenericParameterTypes());
    }
 
    /**
@@ -42,7 +42,7 @@ public class MethodSignature {
     * @throws NullPointerException If the specified method name is {@code null} or any of the
     *            specified argument types is {@code null}
     */
-   public MethodSignature(String name, Class<?>... argTypes) {
+   public GenericMethodSignature(String name, Type... argTypes) {
       this(name, Arrays.asList(argTypes));
    }
 
@@ -54,10 +54,10 @@ public class MethodSignature {
     * @throws NullPointerException If the specified method name is {@code null} or any of the
     *            specified argument types is {@code null}
     */
-   public MethodSignature(String name, List<Class<?>> argTypes) {
+   public GenericMethodSignature(String name, List<Type> argTypes) {
       this.name = requireNonNull(name);
-      List<Class<?>> list = new ArrayList<>(argTypes);
-      for (Class<?> arg : list) {
+      List<Type> list = new ArrayList<>(argTypes);
+      for (Type arg : list) {
          requireNonNull(arg);
       }
       this.argTypes = list;
@@ -77,22 +77,52 @@ public class MethodSignature {
     * 
     * @return the list of parameter types
     */
-   public List<Class<?>> getParameterTypes() {
+   public List<Type> getParameterTypes() {
       return Collections.unmodifiableList(argTypes);
+   }
+   
+   /**
+    * Returns the erased method signature. The erased signature has the same name as this signature,
+    * but each parameter in the erased signature will be the {@linkplain Types#getErasure(Type)
+    * erasure} of the corresponding parameter in this signature.
+    * 
+    * @return the erased method signature
+    */
+   public MethodSignature erasure() {
+      List<Class<?>> erasedTypes = new ArrayList<>(argTypes.size());
+      for (Type t : argTypes) {
+         erasedTypes.add(Types.getErasure(t));
+      }
+      return new MethodSignature(name, erasedTypes);
    }
 
    @Override
    public boolean equals(Object o) {
-      if (o instanceof MethodSignature) {
-         MethodSignature ms = (MethodSignature) o;
-         return name.equals(ms.name) && argTypes.equals(ms.argTypes);
+      if (o instanceof GenericMethodSignature) {
+         GenericMethodSignature gms = (GenericMethodSignature) o;
+         if (!name.equals(gms.name)) {
+            return false;
+         }
+         if (argTypes.size() != gms.argTypes.size()) {
+            return false;
+         }
+         for (int i = 0; i < argTypes.size(); i++) {
+            if (!Types.equals(argTypes.get(i), gms.argTypes.get(i))) {
+               return false;
+            }
+         }
+         return true;
       }
       return false;
    }
 
    @Override
    public int hashCode() {
-      return Objects.hash(name, argTypes);
+      int hash = name.hashCode();
+      for (Type arg : argTypes) {
+         hash = Types.hashCode(arg) + 31 * hash;
+      }
+      return hash;
    }
 
    @Override
@@ -101,7 +131,7 @@ public class MethodSignature {
       sb.append(name);
       sb.append('(');
       boolean first = true;
-      for (Class<?> argType : argTypes) {
+      for (Type argType : argTypes) {
          if (first) {
             first = false;
          }

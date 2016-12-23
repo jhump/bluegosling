@@ -1,26 +1,25 @@
 package com.bluegosling.apt.reflect;
 
+import java.lang.reflect.AnnotatedWildcardType;
 import java.lang.reflect.WildcardType;
 
 import javax.lang.model.type.TypeMirror;
 
 /**
- * A wildcard type. Wildcards indicates unknown (but optionally bounded) values for type parameters.
- * This is analogous to {@link WildcardType}, except that it represents types in Java source (during
- * annotation processing) vs. representing runtime types.
+ * A wildcard type. Wildcards indicate unknown (but optionally bounded) values for type parameters.
+ * This is analogous to {@link WildcardType} or {@link AnnotatedWildcardType}, except that it
+ * represents types in Java source (during annotation processing) vs. representing runtime types.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
  * @see WildcardType
+ * @see AnnotatedWildcardType
+ * @see javax.lang.model.type.WildcardType
  */
-public class ArWildcardType implements ArType {
-   private final javax.lang.model.type.WildcardType modelType;
-   
+public class ArWildcardType extends ArType {
+
    private ArWildcardType(javax.lang.model.type.WildcardType modelType) {
-      if (modelType == null) {
-         throw new NullPointerException();
-      }
-      this.modelType = modelType;
+      super(modelType);
    }
    
    /**
@@ -45,8 +44,8 @@ public class ArWildcardType implements ArType {
    }
    
    @Override
-   public TypeMirror asTypeMirror() {
-      return modelType;
+   public javax.lang.model.type.WildcardType asTypeMirror() {
+      return (javax.lang.model.type.WildcardType) delegate();
    }
    
    /**
@@ -68,9 +67,9 @@ public class ArWildcardType implements ArType {
     * @see javax.lang.model.type.WildcardType#getExtendsBound()
     */
    public ArType getExtendsBound() {
-      TypeMirror bound = modelType.getExtendsBound();
+      TypeMirror bound = asTypeMirror().getExtendsBound();
       if (bound == null) {
-         return ArClass.forObject();
+         return ArDeclaredType.forObject();
       } else {
          return ArTypes.forTypeMirror(bound);
       }
@@ -94,7 +93,7 @@ public class ArWildcardType implements ArType {
     * @see javax.lang.model.type.WildcardType#getSuperBound()
     */
    public ArType getSuperBound() {
-      TypeMirror bound = modelType.getSuperBound();
+      TypeMirror bound = asTypeMirror().getSuperBound();
       if (bound == null) {
          return null;
       } else {
@@ -124,22 +123,17 @@ public class ArWildcardType implements ArType {
    
    @Override
    public String toString() {
-      return toTypeString();
-   }
-
-   @Override
-   public String toTypeString() {
       StringBuilder sb = new StringBuilder();
       sb.append("?");
       ArType superBound = getSuperBound();
       if (superBound != null) {
          sb.append(" super ");
-         sb.append(superBound.toTypeString());
+         sb.append(superBound.toString());
       } else {
-         TypeMirror bound = modelType.getExtendsBound();
+         TypeMirror bound = asTypeMirror().getExtendsBound();
          if (bound != null) {
             sb.append(" extends ");
-            sb.append(ArTypes.forTypeMirror(bound).toTypeString());
+            sb.append(ArTypes.forTypeMirror(bound).toString());
          }
       }
       return sb.toString();

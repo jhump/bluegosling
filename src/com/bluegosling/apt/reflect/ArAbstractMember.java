@@ -9,14 +9,15 @@ import javax.lang.model.element.Element;
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-abstract class ArAbstractMember extends ArAbstractAnnotatedElement implements ArMember {
+abstract class ArAbstractMember<E extends Element> extends ArAbstractAnnotatedElement<E>
+      implements ArMember {
 
    /**
     * Constructs a new object based on an {@link Element}.
     * 
     * @param element the element
     */
-   protected ArAbstractMember(Element element) {
+   protected ArAbstractMember(E element) {
       super(element);
    }
 

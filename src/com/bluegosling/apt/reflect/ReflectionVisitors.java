@@ -35,8 +35,8 @@ final class ReflectionVisitors {
    }
 
    /**
-    * A visitor that returns a {@link ArClass} or null if the visited element does not represent a
-    * class, interface, annotation type, or enum.
+    * A visitor that returns an {@link ArAnnotatedElement} or null if the visited element cannot
+    * be represented by element types in this package.
     */
    public static final ElementVisitor<ArAnnotatedElement, Void> ANNOTATED_ELEMENT_VISITOR =
          new ElementKindVisitor6<ArAnnotatedElement, Void>() {
@@ -168,10 +168,10 @@ final class ReflectionVisitors {
     * A visitor that returns a {@link ArTypeVariable} or null if the visited element does not
     * represent a type variable.
     */
-   public static final ElementVisitor<ArTypeVariable<?>, Void> TYPE_VARIABLE_VISITOR =
-         new SimpleElementVisitor6<ArTypeVariable<?>, Void>() {
-            @Override public ArTypeVariable<?> visitTypeParameter(TypeParameterElement element, Void d) {
-               return ArTypeVariable.forElement(element);
+   public static final ElementVisitor<ArTypeParameter<?>, Void> TYPE_VARIABLE_VISITOR =
+         new SimpleElementVisitor6<ArTypeParameter<?>, Void>() {
+            @Override public ArTypeParameter<?> visitTypeParameter(TypeParameterElement element, Void d) {
+               return ArTypeParameter.forElement(element);
             }
          };
 
@@ -227,22 +227,10 @@ final class ReflectionVisitors {
    public static final TypeVisitor<ArType, Void> TYPE_MIRROR_VISITOR =
          new TypeKindVisitor6<ArType, Void>() {
             @Override public ArType visitArray(ArrayType mirror, Void v) {
-               ArType componentType = this.visit(mirror.getComponentType(), v);
-               if (componentType.getTypeKind() == ArType.Kind.CLASS) {
-                  return ArClass.forArray(ArTypes.asClass(componentType));
-               }
-               return ArGenericArrayType.forTypeMirror(mirror);
+               return ArArrayType.forTypeMirror(mirror);
             }
             @Override public ArType visitDeclared(DeclaredType mirror, Void v) {
-               if (ArParameterizedType.isParameterized(mirror)) {
-                  return ArParameterizedType.forParameterizedTypeMirror(mirror);
-               } else {
-                  ArClass ret = ReflectionVisitors.CLASS_VISITOR.visit(mirror.asElement());
-                  if (ret == null) {
-                     throw new MirroredTypeException(mirror);
-                  }
-                  return ret;
-               }
+               return ArDeclaredType.forDeclaredTypeMirror(mirror);
             }
             @Override public ArType visitTypeVariable(javax.lang.model.type.TypeVariable mirror, Void v) {
                return ArTypeVariable.forTypeMirror(mirror);
@@ -254,31 +242,10 @@ final class ReflectionVisitors {
                return null;
             }
             @Override public ArType visitNoTypeAsVoid(NoType mirror, Void v) {
-               return ArClass.forPrimitive(void.class);
+               return ArPrimitiveType.forTypeMirror(mirror);
             }
-            @Override public ArType visitPrimitiveAsBoolean(PrimitiveType mirror, Void v) {
-               return ArClass.forPrimitive(boolean.class);
-            }
-            @Override public ArType visitPrimitiveAsByte(PrimitiveType mirror, Void v) {
-               return ArClass.forPrimitive(byte.class);
-            }
-            @Override public ArType visitPrimitiveAsChar(PrimitiveType mirror, Void v) {
-               return ArClass.forPrimitive(char.class);
-            }
-            @Override public ArType visitPrimitiveAsDouble(PrimitiveType mirror, Void v) {
-               return ArClass.forPrimitive(double.class);
-            }
-            @Override public ArType visitPrimitiveAsFloat(PrimitiveType mirror, Void v) {
-               return ArClass.forPrimitive(float.class);
-            }
-            @Override public ArType visitPrimitiveAsInt(PrimitiveType mirror, Void v) {
-               return ArClass.forPrimitive(int.class);
-            }
-            @Override public ArType visitPrimitiveAsLong(PrimitiveType mirror, Void v) {
-               return ArClass.forPrimitive(long.class);
-            }
-            @Override public ArType visitPrimitiveAsShort(PrimitiveType mirror, Void v) {
-               return ArClass.forPrimitive(short.class);
+            @Override public ArType visitPrimitive(PrimitiveType mirror, Void v) {
+               return ArPrimitiveType.forTypeMirror(mirror);
             }
             @Override public ArType defaultAction(TypeMirror mirror, Void v) {
                throw new MirroredTypeException(mirror);

@@ -11,8 +11,9 @@ import javax.lang.model.element.PackageElement;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
  * @see Package
+ * @see PackageElement
  */
-public class ArPackage extends ArAbstractAnnotatedElement {
+public class ArPackage extends ArAbstractAnnotatedElement<PackageElement> {
 
    private ArPackage(PackageElement element) {
       super(element);
@@ -41,11 +42,6 @@ public class ArPackage extends ArAbstractAnnotatedElement {
     */
    public static ArPackage forName(String packageName) {
       return forElement(elements().getPackageElement(packageName));
-   }
-   
-   @Override
-   public PackageElement asElement() {
-      return (PackageElement) super.asElement();
    }
    
    /**

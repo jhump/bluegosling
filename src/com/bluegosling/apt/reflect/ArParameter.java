@@ -21,8 +21,10 @@ import javax.lang.model.element.VariableElement;
  * @param <M> the type of executable member (constructor or method) to which the parameter belongs
  * 
  * @see Parameter
+ * @see VariableElement
  */
-public class ArParameter<M extends ArExecutableMember> extends ArAbstractAnnotatedElement {
+public class ArParameter<M extends ArExecutableMember>
+      extends ArAbstractAnnotatedElement<VariableElement> {
 
    private ArParameter(VariableElement element) {
       super(element);
@@ -157,22 +159,6 @@ public class ArParameter<M extends ArExecutableMember> extends ArAbstractAnnotat
 
    @Override
    public String toString() {
-      return toString(false);
-   }
-   
-   /**
-    * Returns a string representation of this parameter that includes generic type information. This
-    * is similar to {@link #toString()} except that it includes generic type information instead of
-    * just indicating erased types.
-    * 
-    * @return a string representation of the field that includes generic type information
-    */
-   public String toGenericString() {
-      return toString(true);
-   }
-   
-   private String toString(boolean includeGenerics) {
-      ArType type = includeGenerics ? getGenericType() : getType();
-      return type.toTypeString() + " " + getName();
+      return getGenericType().toString() + " " + getName();
    }
 }

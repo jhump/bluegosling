@@ -1,7 +1,5 @@
 package com.bluegosling.apt.reflect;
 
-import com.bluegosling.reflect.MethodSignature;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -10,13 +8,7 @@ import java.util.List;
 /**
  * Represents a method signature, composed of a method name and sequence of parameter types.
  * 
- * This class is identical to {@link MethodSignature} except that it uses {@link ArClass} instead
- * of {@link Class} to model parameter types, so it is suitable for use from an annotation
- * processor.
- * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
- * 
- * @see MethodSignature
  */
 public class ArMethodSignature {
 
@@ -63,7 +55,7 @@ public class ArMethodSignature {
          }
       }
       this.name = name;
-      this.argTypes = new ArrayList<ArClass>(argTypes);
+      this.argTypes = new ArrayList<>(argTypes);
    }
    
    /**
@@ -114,7 +106,7 @@ public class ArMethodSignature {
          else {
             sb.append(",");
          }
-         sb.append(argType.getName());
+         sb.append(argType.getCanonicalName());
       }
       sb.append(")");
       return sb.toString();

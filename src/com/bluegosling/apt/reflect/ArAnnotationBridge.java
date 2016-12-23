@@ -122,10 +122,10 @@ public final class ArAnnotationBridge {
    
    /**
     * Queries for an annotation and creates a bridge for it. This will query the given annotated
-    * class for an annotation of the specified type, and then construct a bridge for it. If the
-    * given class has no such annotation, {@code null} is returned.
+    * element for an annotation of the specified type, and then construct a bridge for it. If the
+    * given element has no such annotation, {@code null} is returned.
     *
-    * @param annotatedClass the class to which the annotation belongs
+    * @param annotatedElement the element to which the annotation belongs
     * @param annotationType the type of the annotation to query
     * @param <T> the annotation type
     * @return an bridge for the annotation of the given type on the given class or {@code null} if
@@ -134,12 +134,12 @@ public final class ArAnnotationBridge {
     * 
     * @see #createBridge(ArAnnotation, Class)
     */
-   public static <T extends Annotation> T createBridge(ArClass annotatedClass,
+   public static <T extends Annotation> T createBridge(ArAnnotatedElement annotatedElement,
          Class<T> annotationType) {
-      if (annotatedClass == null || annotationType == null) {
+      if (annotatedElement == null || annotationType == null) {
          throw new NullPointerException();
       }
-      ArAnnotation annotation = annotatedClass.getAnnotation(annotationType);
+      ArAnnotation annotation = annotatedElement.getAnnotation(annotationType);
       if (annotation == null) {
          return null;
       }

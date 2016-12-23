@@ -6,6 +6,8 @@ import java.util.List;
 import javax.lang.model.element.AnnotationValue;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
+import javax.lang.model.type.TypeKind;
+import javax.lang.model.type.TypeMirror;
 
 /**
  * A method. This is analogous to {@link Method}, except that it represents methods in Java source
@@ -14,6 +16,7 @@ import javax.lang.model.element.ExecutableElement;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
  * @see Method
+ * @see ExecutableElement
  */
 public class ArMethod extends ArAbstractExecutableMember {
 
@@ -42,18 +45,17 @@ public class ArMethod extends ArAbstractExecutableMember {
 
    /**
     * Returns the method's list of type variables. This is the same as
-    * {@link #getTypeVariables()}, except that the return value has more
+    * {@link #getTypeParameters()}, except that the return value has more
     * generic type information.
     * 
     * @return the list of type variables
-    * 
-    * @see #getTypeVariables()
     */
+   @Override
    @SuppressWarnings({ "rawtypes", "unchecked" })
-   public List<ArTypeVariable<ArMethod>> getMethodTypeVariables() {
+   public List<ArTypeParameter<ArMethod>> getTypeParameters() {
       // have to cast to raw type List first or else compiler will disallow the
       // subsequent cast to List<ArTypeVariable<ArMethod>>
-      return ((List) getTypeVariables());
+      return (List) super.getTypeParameters();
    }
    
    /**
@@ -62,14 +64,13 @@ public class ArMethod extends ArAbstractExecutableMember {
     * generic type information.
     * 
     * @return the list of parameters
-    * 
-    * @see #getParameters()
     */
+   @Override
    @SuppressWarnings({ "rawtypes", "unchecked" })
-   public List<ArParameter<ArMethod>> getMethodParameters() {
+   public List<ArParameter<ArMethod>> getParameters() {
       // have to cast to raw type List first or else compiler will disallow the
       // subsequent cast to List<ArParameter<ArMethod>>
-      return ((List) getParameters());
+      return ((List) super.getParameters());
    }
    
    /**
@@ -78,7 +79,7 @@ public class ArMethod extends ArAbstractExecutableMember {
     * 
     * @return the method's return type
     * 
-    * @see java.lang.reflect.Method#getReturnType()
+    * @see Method#getReturnType()
     */
    public ArClass getReturnType() {
       return ArClass.forTypeMirror(asElement().getReturnType());
@@ -90,12 +91,28 @@ public class ArMethod extends ArAbstractExecutableMember {
     * 
     * @return the method's return type
     * 
-    * @see java.lang.reflect.Method#getGenericReturnType()
+    * @see Method#getGenericReturnType()
+    * @see ExecutableElement#getReturnType()
     */
    public ArType getGenericReturnType() {
       return ArTypes.forTypeMirror(asElement().getReturnType());
    }
-   
+
+   /**
+    * Returns the method's receiver type or {@code null} if the method is static. The type of the
+    * receiver is always the type of declaring class. This method can be used to extract type
+    * annotations that are declared for the method receiver.
+    * 
+    * @return the method's receiver type
+    * 
+    * @see Method#getAnnotatedReceiverType()
+    * @see ExecutableElement#getReceiverType()
+    */
+   public ArType getReceiverType() {
+      TypeMirror receiver = asElement().getReceiverType();
+      return receiver.getKind() == TypeKind.NONE ? null : ArTypes.forTypeMirror(receiver);
+   }
+
    /**
     * Returns the default value for an annotation method. If this method is not an
     * annotation method then {@code null} is returned.
@@ -105,6 +122,9 @@ public class ArMethod extends ArAbstractExecutableMember {
     * 
     * @return the default value for this annotation method or {@code null} if this is
     *       not an annotation method
+    *       
+    * @see Method#getDefaultValue()
+    * @see ExecutableElement#getDefaultValue()
     */
    public Object getDefaultValue() {
       AnnotationValue val = asElement().getDefaultValue();
@@ -112,8 +132,7 @@ public class ArMethod extends ArAbstractExecutableMember {
    }
    
    @Override 
-   void appendReturnType(StringBuilder sb, boolean includeGenerics) {
-      ArType returnType = includeGenerics ? getGenericReturnType() : getReturnType();
-      sb.append(returnType.toTypeString());
+   void appendReturnType(StringBuilder sb) {
+      sb.append(getGenericReturnType().toString());
    }
 }

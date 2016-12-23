@@ -187,50 +187,67 @@ public final class ArTypes {
    }
    
    /**
-    * Downcasts the specified type as a {@link ArClass}.
+    * Downcasts the specified type as an {@link ArDeclaredType}.
     * 
     * @param type a type
     * @return a class
     * @throws NullPointerException if the specified type is null
-    * @throws IllegalArgumentException if the specified type's kind is not {@link ArType.Kind#CLASS}
+    * @throws IllegalArgumentException if the specified type's kind is not
+    *           {@link ArType.Kind#DECLARED_TYPE}
     */
-   public static ArClass asClass(ArType type) {
-      if (type.getTypeKind() != Kind.CLASS) {
-         throw new IllegalArgumentException("Specified type is not a Class");
+   public static ArDeclaredType asClass(ArType type) {
+      if (type.getTypeKind() != Kind.DECLARED_TYPE) {
+         throw new IllegalArgumentException("Specified type is not a declared type");
       }
-      return (ArClass) type;
+      return (ArDeclaredType) type;
    }
 
    /**
-    * Downcasts the specified type as a {@link ArGenericArrayType}.
+    * Downcasts the specified type as a {@link ArArrayType}.
     * 
     * @param type a type
     * @return a generic array type
     * @throws NullPointerException if the specified type is null
     * @throws IllegalArgumentException if the specified type's kind is not
-    *       {@link ArType.Kind#GENERIC_ARRAY_TYPE}
+    *       {@link ArType.Kind#ARRAY_TYPE}
     */
-   public static ArGenericArrayType asGenericArrayType(ArType type) {
-      if (type.getTypeKind() != Kind.GENERIC_ARRAY_TYPE) {
-         throw new IllegalArgumentException("Specified type is not a GenericArrayType");
+   public static ArArrayType asGenericArrayType(ArType type) {
+      if (type.getTypeKind() != Kind.ARRAY_TYPE) {
+         throw new IllegalArgumentException("Specified type is not an array type");
       }
-      return (ArGenericArrayType) type;
+      return (ArArrayType) type;
    }
 
    /**
-    * Downcasts the specified type as a {@link ArParameterizedType}.
+    * Downcasts the specified type as an {@link ArDeclaredType}.
     * 
     * @param type a type
-    * @return a parameterized type
+    * @return a declared type
     * @throws NullPointerException if the specified type is null
     * @throws IllegalArgumentException if the specified type's kind is not
-    *       {@link ArType.Kind#PARAMETERIZED_TYPE}
+    *           {@link ArType.Kind#DECLARED_TYPE}
     */
-   public static ArParameterizedType asParameterizedType(ArType type) {
-      if (type.getTypeKind() != Kind.PARAMETERIZED_TYPE) {
-         throw new IllegalArgumentException("Specified type is not a ParameterizedType");
+   public static ArDeclaredType asDeclaredType(ArType type) {
+      if (type.getTypeKind() != Kind.DECLARED_TYPE) {
+         throw new IllegalArgumentException("Specified type is not a declared type");
       }
-      return (ArParameterizedType) type;
+      return (ArDeclaredType) type;
+   }
+
+   /**
+    * Downcasts the specified type as an {@link ArPrimitiveType}.
+    * 
+    * @param type a type
+    * @return a primitive type
+    * @throws NullPointerException if the specified type is null
+    * @throws IllegalArgumentException if the specified type's kind is not
+    *           {@link ArType.Kind#PRIMITIVE_TYPE}
+    */
+   public static ArPrimitiveType asPrimitiveType(ArType type) {
+      if (type.getTypeKind() != Kind.PRIMITIVE_TYPE) {
+         throw new IllegalArgumentException("Specified type is not a primitive type");
+      }
+      return (ArPrimitiveType) type;
    }
 
    /**
@@ -242,11 +259,11 @@ public final class ArTypes {
     * @throws IllegalArgumentException if the specified type's kind is not
     *       {@link ArType.Kind#TYPE_VARIABLE}
     */
-   public static ArTypeVariable<?> asTypeVariable(ArType type) {
+   public static ArTypeVariable asTypeVariable(ArType type) {
       if (type.getTypeKind() != Kind.TYPE_VARIABLE) {
-         throw new IllegalArgumentException("Specified type is not a TypeVariable");
+         throw new IllegalArgumentException("Specified type is not a type variable");
       }
-      return (ArTypeVariable<?>) type;
+      return (ArTypeVariable) type;
    }
    
    /**
@@ -260,7 +277,7 @@ public final class ArTypes {
     */
    public static ArWildcardType asWildcardType(ArType type) {
       if (type.getTypeKind() != Kind.WILDCARD_TYPE) {
-         throw new IllegalArgumentException("Specified type is not a WildcardType");
+         throw new IllegalArgumentException("Specified type is not a wildcard type");
       }
       return (ArWildcardType) type;
    }

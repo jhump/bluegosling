@@ -3,6 +3,7 @@ package com.bluegosling.apt.reflect;
 import static com.bluegosling.apt.ProcessingEnvironments.elements;
 
 import java.lang.annotation.Annotation;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,7 @@ import javax.lang.model.element.ExecutableElement;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  * 
  * @see Annotation
+ * @see AnnotationMirror
  */
 public class ArAnnotation {
    private final AnnotationMirror mirror;
@@ -38,6 +40,20 @@ public class ArAnnotation {
     */
    public static ArAnnotation forAnnotationMirror(AnnotationMirror mirror) {
       return new ArAnnotation(mirror);
+   }
+   
+   /**
+    * Converts a list of {@link AnnotationMirror}s to a list of {@link ArAnnotation}s.
+    * 
+    * @param mirrors the annotation mirrors
+    * @return a list of annotations
+    */
+   static List<ArAnnotation> fromMirrors(List<? extends AnnotationMirror> mirrors) {
+      List<ArAnnotation> annotations = new ArrayList<ArAnnotation>(mirrors.size());
+      for (AnnotationMirror mirror : mirrors) {
+         annotations.add(ArAnnotation.forAnnotationMirror(mirror));
+      }
+      return annotations;
    }
 
    /**

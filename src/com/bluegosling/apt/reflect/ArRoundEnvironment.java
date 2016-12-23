@@ -4,6 +4,7 @@ import java.lang.annotation.Annotation;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Function;
 
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.Element;
@@ -101,11 +102,22 @@ public class ArRoundEnvironment {
       return classes;
    }
    
+   /**
+    * A function that transforms an {@link Element} to an {@link ArAnnotatedElement}.
+    * 
+    * <p>The function will return instances of {@link ArClass}, {@link ArField}, {@link ArMethod},
+    * {@link ArConstructor}, {@link ArParameter}, or {@link ArPackage}. If the specified input element
+    * does not represent one of these types of elements then {@code null} is returned.
+    */
+   private Function<Element, ArAnnotatedElement> FROM_ELEMENT =
+         (e) -> ReflectionVisitors.ANNOTATED_ELEMENT_VISITOR.visit(e);
+
+   
    private <T extends ArAnnotatedElement> Set<T> convertElements(Set<? extends Element> elements,
          Class<T> clazz) {
       Set<T> ret = new HashSet<T>();
       for (Element element : elements) {
-         ArAnnotatedElement a = ArAnnotatedElement.FROM_ELEMENT.apply(element);
+         ArAnnotatedElement a = FROM_ELEMENT.apply(element);
          if (a != null && clazz.isInstance(a)) {
             ret.add(clazz.cast(a));
          }
