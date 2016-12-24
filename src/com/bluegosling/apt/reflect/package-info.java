@@ -3,7 +3,7 @@
  * annotation processor. The layout of classes and interfaces here closely resembles those in
  * {@code java.lang.reflect}, which many programmers will feel are more natural and easier to use
  * than the APIs provided in the {@code javax.lang.model.element} and {@code java.lang.model.type}
- * packages.
+ * packages (aka language model APIs).
  * 
  * <p>All classes in this package have names that match similar classes in the standard reflection
  * APIs, but with an {@code Ar} prefix -- short for "<strong>A</strong>nnotation processing
@@ -48,19 +48,20 @@
  * 
  * <p>This package models types with the {@link com.bluegosling.apt.reflect.ArType} hierarchy. Each
  * type object wraps a {@link javax.lang.model.type.TypeMirror} object. The API resembles a mix of
- * {@link javax.lang.model.type.TypeMirror} and {@link java.lang.reflect.AnnotatedType}, attempting
- * to provide greater ease-of-use than type mirror while still maintaining the abstraction fidelity.
+ * {@link javax.lang.model.type.TypeMirror} (from language model APIs) and
+ * {@link java.lang.reflect.AnnotatedType} (from core reflection APIs), attempting to provide
+ * greater ease-of-use than type mirror while still maintaining the abstraction fidelity.
  * 
  * <h3>Annotations</h3>
- * In core reflection, annotations are instances of the annotation interface they represent. In
- * the language model APIs, there are mirrors. This package provides a blend. The
+ * In core reflection, annotations are instances of the annotation interface itself. In the
+ * language model APIs, there are mirrors. This package provides a blend. The
  * {@link com.bluegosling.apt.reflect.ArAnnotation} class is the analog of an
  * {@link javax.lang.model.element.AnnotationMirror}. But annotated constructs in this package
  * also provide the ability to create an {@link com.bluegosling.apt.reflect.ArAnnotationBridge},
  * which is an implementation of an actual annotation interface with some additional static API
  * for interacting with annotations that contains references to types that are not available during
- * annotation processing (e.g. classes that only available in source form, and not loadable at
- * runtime). 
+ * annotation processing (e.g. classes that only available in source form, and cannot be loaded as
+ * runtime types). 
  * 
  * <h3>Differences from Core Reflection</h3>
  * As alluded to above, this package models types more like type mirrors. Core reflection has
@@ -133,7 +134,7 @@
  * {@linkplain java.lang.Class#isPrimitive() core reflection} but unlike type mirrors. 
  * 
  * <p>The table below shows the type in this package that is used to model the same thing that a
- * given core reflection type models:
+ * given language model type models:
  * <table border=1 summary="javax.lang.model vs. com.bluegosling.apt.reflect">
  * <tr><th>Context</th><th>Language Models</th><th>This Package</th></tr>
  * <tr><td rowspan=7>Elements</td>
