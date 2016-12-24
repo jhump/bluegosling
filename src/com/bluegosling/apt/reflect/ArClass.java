@@ -29,10 +29,19 @@ import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.TypeParameterElement;
 import javax.lang.model.element.VariableElement;
+import javax.lang.model.type.ArrayType;
+import javax.lang.model.type.DeclaredType;
+import javax.lang.model.type.IntersectionType;
+import javax.lang.model.type.MirroredTypeException;
+import javax.lang.model.type.NoType;
+import javax.lang.model.type.PrimitiveType;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
+import javax.lang.model.type.TypeVariable;
+import javax.lang.model.type.WildcardType;
 import javax.lang.model.util.ElementFilter;
 import javax.lang.model.util.Elements;
+import javax.lang.model.util.TypeKindVisitor8;
 import javax.lang.model.util.Types;
 
 /**
@@ -41,12 +50,18 @@ import javax.lang.model.util.Types;
  *
  * <p>Sadly, since the types here may not be available as actual {@code Class} tokens,
  * this type cannot be parameterized the way that {@code Class} is.
+ * 
+ * <p>Unlike other {@link ArAnnotatedElement} implementations, it is possible for calls to
+ * {@link ArClass#asElement()} to throw {@link UnsupportedOperationException}. This happens for
+ * objects that represent primitive types and array types, which have no corresponding
+ * {@link TypeElement}.
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
  * @see Class
+ * @see TypeElement
  */
-public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaration, ArType {
+public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaration {
 
    /**
     * An enumeration of the various kinds of classes.
@@ -139,39 +154,7 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
     * @return the corresponding class
     */
    public static ArClass forType(ArType t) {
-      return t.accept(new Visitor<ArClass, Void>() {
-         @Override
-         public ArClass visitClass(ArClass clazz, Void v) {
-            return clazz;
-         }
-         @Override
-         public ArClass visitGenericArrayType(ArGenericArrayType arrayType, Void v) {
-            ArClass component = forType(arrayType.getGenericComponentType());
-            return new ArrayClass(component);
-         }
-         @Override
-         public ArClass visitParameterizedType(ArParameterizedType parameterizedType, Void v) {
-            return parameterizedType.getRawType();
-         }
-         @Override
-         public ArClass visitTypeVariable(ArTypeVariable<?> typeVariable, Void v) {
-            List<? extends ArType> bounds = typeVariable.getBounds();
-            if (bounds.isEmpty()) {
-               return forObject();
-            } else {
-               return forType(bounds.get(0));
-            }
-         }
-         @Override
-         public ArClass visitWildcardType(ArWildcardType wildcardType, Void v) {
-            ArType bound = wildcardType.getExtendsBound();
-            if (bound == null) {
-               return forObject();
-            } else {
-               return forType(bound);
-            }
-         }
-      }, null);
+      return forTypeMirror(t.asTypeMirror());
    }
    
    /**
@@ -211,7 +194,91 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
     * @throws NullPointerException if the specified type mirror is null
     */
    public static ArClass forTypeMirror(TypeMirror mirror) {
-      return forType(ArTypes.forTypeMirror(mirror));
+      return mirror.accept(new TypeKindVisitor8<ArClass, Void>() {
+         @Override
+         public ArClass visitPrimitiveAsBoolean(PrimitiveType t, Void p) {
+            return new PrimitiveClass(boolean.class);
+         }
+
+         @Override
+         public ArClass visitPrimitiveAsByte(PrimitiveType t, Void p) {
+            return new PrimitiveClass(byte.class);
+         }
+
+         @Override
+         public ArClass visitPrimitiveAsShort(PrimitiveType t, Void p) {
+            return new PrimitiveClass(short.class);
+         }
+
+         @Override
+         public ArClass visitPrimitiveAsInt(PrimitiveType t, Void p) {
+            return new PrimitiveClass(int.class);
+         }
+
+         @Override
+         public ArClass visitPrimitiveAsLong(PrimitiveType t, Void p) {
+            return new PrimitiveClass(long.class);
+         }
+
+         @Override
+         public ArClass visitPrimitiveAsChar(PrimitiveType t, Void p) {
+            return new PrimitiveClass(char.class);
+         }
+
+         @Override
+         public ArClass visitPrimitiveAsFloat(PrimitiveType t, Void p) {
+            return new PrimitiveClass(float.class);
+         }
+
+         @Override
+         public ArClass visitPrimitiveAsDouble(PrimitiveType t, Void p) {
+            return new PrimitiveClass(double.class);
+         }
+
+         @Override
+         public ArClass visitNoTypeAsVoid(NoType t, Void p) {
+            return new PrimitiveClass(void.class);
+         }
+
+         @Override
+         public ArClass visitArray(ArrayType t, Void p) {
+            ArClass component = forTypeMirror(t.getComponentType());
+            return new ArrayClass(component);
+         }
+
+         @Override
+         public ArClass visitDeclared(DeclaredType t, Void p) {
+            return new DeclaredClass((TypeElement) t.asElement());
+         }
+
+         @Override
+         public ArClass visitTypeVariable(TypeVariable t, Void p) {
+            TypeMirror bound = t.getUpperBound();
+            if (bound == null) {
+               return forObject();
+            } else if (bound.getKind() == TypeKind.INTERSECTION) {
+               IntersectionType i = (IntersectionType) bound;
+               return forTypeMirror(i.getBounds().get(0));
+            } else {
+               return forTypeMirror(bound);
+            }
+         }
+
+         @Override
+         public ArClass visitWildcard(WildcardType t, Void p) {
+            TypeMirror bound = t.getExtendsBound();
+            if (bound == null) {
+               return forObject();
+            } else {
+               return forTypeMirror(bound);
+            }
+         }
+
+         @Override
+         protected ArClass defaultAction(TypeMirror e, Void p) {
+            throw new MirroredTypeException(e);
+         }
+      }, null);
    }
    
    /**
@@ -223,22 +290,6 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
     */
    public static ArClass forArray(ArClass componentType) {
       return new ArrayClass(componentType);
-   }
-   
-   /**
-    * Returns a class that represents the specified primitive type.
-    * 
-    * @param primitiveClass the primitive type
-    * @return the corresponding class
-    * @throws NullPointerException if the specified type is null
-    * @throws IllegalArgumentException if the specified type is not a {@linkplain
-    *       Class#isPrimitive() primitive} type
-    */
-   public static ArClass forPrimitive(Class<?> primitiveClass) {
-      if (!primitiveClass.isPrimitive()) {
-         throw new IllegalArgumentException("Class " + primitiveClass + " is not a primitive");
-      }
-      return new PrimitiveClass(primitiveClass);
    }
    
    /**
@@ -494,16 +545,6 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
          initConstructors();
       }
       return publicConstructorsMap;
-   }
-   
-   @Override
-   public ArType.Kind getTypeKind() {
-      return ArType.Kind.CLASS;
-   }
-   
-   @Override
-   public <R, P> R accept(Visitor<R, P> visitor, P p) {
-      return visitor.visitClass(this,  p);
    }
    
    /**
@@ -1137,15 +1178,13 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
    /**
     * Returns this class's super-class with generic type information. If this class is an interface,
     * a primitive type, or {@code java.lang.Object} then {@code null} is returned. If this class is
-    * an array type then the class representing {@code java.lang.Object} is returned. If the
-    * super-class is a generic type then this method can return a {@link ArParameterizedType} instead
-    * of a {@link ArClass}.
+    * an array type then the class representing {@code java.lang.Object} is returned.
     * 
     * @return the super-class
     * 
     * @see Class#getGenericSuperclass()
     */
-   public abstract ArType getGenericSuperclass();
+   public abstract ArDeclaredType getGenericSuperclass();
    
    /**
     * Returns the list of interfaces directly implemented by this class. The list is returned in
@@ -1167,9 +1206,7 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
     * Returns the list of interfaces directly implemented by this class. The list is returned in
     * declaration order of the {@code implements} clause on the class. If this class object
     * represents an interface then this list contains any other interface types that are extended
-    * by this interface. If any of the implemented interfaces is a generic type then this method can
-    * return instances of {@link ArParameterizedType} in the list (instead of or in addition to
-    * instances of {@link ArClass}).
+    * by this interface.
     * 
     * <p>If this class does not implement any interfaces (or is a primitive type) then an empty list
     * is returned. If this class is an array type then a list is returned that contains two
@@ -1179,7 +1216,7 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
     * 
     * @see Class#getGenericInterfaces()
     */
-   public abstract List<? extends ArType> getGenericInterfaces();
+   public abstract List<ArDeclaredType> getGenericInterfaces();
    
    /**
     * Returns true if the specified type is assignable to this type. This will be true when this
@@ -1217,23 +1254,9 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
    }
 
    @Override
-   public List<ArTypeVariable<?>> getTypeVariables() {
+   public List<ArTypeParameter<ArClass>> getTypeParameters() {
       // default
       return Collections.emptyList();
-   }
-
-   /**
-    * Returns the class's list of type variables. This is the same as
-    * {@link #getTypeVariables()}, except that the return value has more
-    * generic type information.
-    * 
-    * @return the list of type variables
-    */
-   @SuppressWarnings({ "rawtypes", "unchecked" })
-   public List<ArTypeVariable<ArClass>> getClassTypeVariables() {
-      // have to cast to raw type List first or else compiler will disallow the
-      // subsequent cast to List<ArTypeVariable<ArClass>>
-      return ((List) getTypeVariables());
    }
 
    @Override
@@ -1305,8 +1328,12 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
    
    @Override
    public TypeElement asElement() {
-      return null;
+      throw new UnsupportedOperationException();
    }
+
+   public abstract ArType asType();
+
+   public abstract TypeMirror asTypeMirror();
 
    @Override
    public abstract boolean equals(Object o);
@@ -1315,30 +1342,14 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
    public abstract int hashCode();
    
    @Override
-   public String toTypeString() {
-      return getName();
-   }
-
-   @Override
    public String toString() {
-      return toString(false);
-   }
-   
-   @Override
-   public String toGenericString() {
-      return toString(true);
-   }
-
-   private String toString(boolean includeGenerics) {
       StringBuilder sb = new StringBuilder();
       sb.append(getClassKind().getClassStringPrefix());
       sb.append(getName());
-      if (includeGenerics) {
-         int l = sb.length();
-         ArTypeVariable.appendTypeParameters(sb, getTypeVariables());
-         if (sb.length() != l) {
-            sb.append(" ");
-         }
+      int l = sb.length();
+      ArTypeParameter.appendTypeParameters(sb, getTypeParameters());
+      if (sb.length() != l) {
+         sb.append(" ");
       }
       return sb.toString();
    }
@@ -1349,7 +1360,6 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
     * @author Joshua Humphries (jhumphries131@gmail.com)
     */
    private static class PrimitiveClass extends ArClass {
-      
       /**
        * Memoized reference to a map of primitive types to their corresponding type mirrors and the
        * {@link Types} used to query and create it. We only use the memoized value when the
@@ -1396,6 +1406,11 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
       public Kind getClassKind() {
          return Kind.PRIMITIVE;
       }
+
+      @Override
+      public ArType asType() {
+         return ArPrimitiveType.forTypeMirror(asTypeMirror());
+      }
       
       @Override
       public TypeMirror asTypeMirror() {
@@ -1433,7 +1448,7 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
       }
 
       @Override
-      public ArType getGenericSuperclass() {
+      public ArDeclaredType getGenericSuperclass() {
          return null;
       }
 
@@ -1443,7 +1458,7 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
       }
       
       @Override
-      public List<? extends ArType> getGenericInterfaces() {
+      public List<ArDeclaredType> getGenericInterfaces() {
          return Collections.emptyList();
       }
 
@@ -1539,6 +1554,11 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
       }
       
       @Override
+      public ArType asType() {
+         return ArArrayType.forTypeMirror((ArrayType) asTypeMirror());
+      }
+      
+      @Override
       public TypeMirror asTypeMirror() {
          TypeMirror ret = componentClass.asTypeMirror();
          for (int i = 0; i < dimensions; i++) {
@@ -1553,8 +1573,8 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
       }
 
       @Override
-      public ArType getGenericSuperclass() {
-         return forObject();
+      public ArDeclaredType getGenericSuperclass() {
+         return ArDeclaredType.forObject();
       }
 
       @Override
@@ -1578,8 +1598,10 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
       }
 
       @Override
-      public List<? extends ArType> getGenericInterfaces() {
-         return getInterfaces();
+      public List<ArDeclaredType> getGenericInterfaces() {
+         return Arrays.asList(getInterfaces().stream()
+               .map(ArClass::asType)
+               .toArray(ArDeclaredType[]::new));
       }
       
       @Override
@@ -1699,13 +1721,13 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
       
       // since we need to extend Class, we can't also extend AbstractAnnotatedElement, so we'll pick
       // up its implementations of AnnotatedElement methods by composition
-      private final ArAbstractAnnotatedElement annotatedElement;
+      private final ArAbstractAnnotatedElement<TypeElement> annotatedElement;
       
       DeclaredClass(TypeElement element) {
          if (element == null) {
             throw new NullPointerException();
          }
-         this.annotatedElement = new ArAbstractAnnotatedElement(element) {
+         this.annotatedElement = new ArAbstractAnnotatedElement<TypeElement>(element) {
             // Dummy implementations below -- we won't use them. We just want to use the
             // implementations of ArAnnotatedElement interface methods that this object provides.
             
@@ -1767,7 +1789,12 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
       public TypeElement asElement() {
          return (TypeElement) annotatedElement.asElement();
       }
-      
+
+      @Override
+      public ArType asType() {
+         return ArDeclaredType.forTypeMirror((DeclaredType) asTypeMirror());
+      }
+
       @Override
       public TypeMirror asTypeMirror() {
          return asElement().asType();
@@ -1917,11 +1944,14 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
       }
       
       @Override
-      public List<ArTypeVariable<?>> getTypeVariables() {
+      public List<ArTypeParameter<ArClass>> getTypeParameters() {
          List<? extends TypeParameterElement> parameters = asElement().getTypeParameters();
-         List<ArTypeVariable<?>> ret = new ArrayList<ArTypeVariable<?>>(parameters.size());
+         List<ArTypeParameter<ArClass>> ret = new ArrayList<>(parameters.size());
          for (TypeParameterElement parameter : parameters) {
-            ret.add(ArTypeVariable.forElement(parameter));
+            @SuppressWarnings("unchecked")
+            ArTypeParameter<ArClass> p =
+                  (ArTypeParameter<ArClass>) ArTypeParameter.forElement(parameter);
+            ret.add(p);
          }
          return Collections.unmodifiableList(ret);
       }
@@ -1932,14 +1962,14 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
       }
 
       @Override
-      public ArType getGenericSuperclass() {
-         return ArTypes.forTypeMirror(asElement().getSuperclass());
+      public ArDeclaredType getGenericSuperclass() {
+         return ArDeclaredType.forTypeMirror((DeclaredType) asElement().getSuperclass());
       }
       
       @Override
       public List<ArClass> getInterfaces() {
          List<? extends TypeMirror> interfaces = asElement().getInterfaces();
-         List<ArClass> ret = new ArrayList<ArClass>();
+         List<ArClass> ret = new ArrayList<>();
          for (TypeMirror iface : interfaces) {
             ret.add(forTypeMirror(iface));
          }
@@ -1947,11 +1977,11 @@ public abstract class ArClass implements ArAnnotatedElement, ArGenericDeclaratio
       }
 
       @Override
-      public List<? extends ArType> getGenericInterfaces() {
+      public List<ArDeclaredType> getGenericInterfaces() {
          List<? extends TypeMirror> interfaces = asElement().getInterfaces();
-         List<ArType> ret = new ArrayList<ArType>();
+         List<ArDeclaredType> ret = new ArrayList<>();
          for (TypeMirror iface : interfaces) {
-            ret.add(ArTypes.forTypeMirror(iface));
+            ret.add(ArDeclaredType.forTypeMirror((DeclaredType) iface));
          }
          return ret;
       }

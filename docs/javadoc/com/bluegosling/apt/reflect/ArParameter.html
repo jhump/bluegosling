@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":9,"i3":9,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10};
+var methods = {"i0":10,"i1":10,"i2":9,"i3":9,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -48,7 +48,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../com/bluegosling/apt/reflect/ArPackage.html" title="class in com.bluegosling.apt.reflect"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../com/bluegosling/apt/reflect/ArParameterizedType.html" title="class in com.bluegosling.apt.reflect"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../../com/bluegosling/apt/reflect/ArPrimitiveType.html" title="class in com.bluegosling.apt.reflect"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?com/bluegosling/apt/reflect/ArParameter.html" target="_top">Frames</a></li>
@@ -111,7 +111,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedElement.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedElement</a></dd>
+<dd><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedConstruct.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedConstruct</a>, <a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedElement.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedElement</a></dd>
 </dl>
 <hr>
 <br>
@@ -127,7 +127,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
  available and instead be synthesized.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Parameter.html?is-external=true" title="class or interface in java.lang.reflect"><code>Parameter</code></a></dd>
+<dd><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Parameter.html?is-external=true" title="class or interface in java.lang.reflect"><code>Parameter</code></a>, 
+<a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/VariableElement.html?is-external=true" title="class or interface in javax.lang.model.element"><code>VariableElement</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -135,21 +136,6 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
-<!-- =========== FIELD SUMMARY =========== -->
-<ul class="blockList">
-<li class="blockList"><a name="field.summary">
-<!--   -->
-</a>
-<h3>Field Summary</h3>
-<ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.com.bluegosling.apt.reflect.ArAnnotatedElement">
-<!--   -->
-</a>
-<h3>Fields inherited from interface&nbsp;com.bluegosling.apt.reflect.<a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedElement.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedElement</a></h3>
-<code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedElement.html#FROM_ELEMENT">FROM_ELEMENT</a></code></li>
-</ul>
-</li>
-</ul>
 <!-- ========== METHOD SUMMARY =========== -->
 <ul class="blockList">
 <li class="blockList"><a name="method.summary">
@@ -227,7 +213,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </td>
 </tr>
 <tr id="i11" class="rowColor">
-<td class="colFirst"><code><a href="../../../../com/bluegosling/apt/reflect/ArType.html" title="interface in com.bluegosling.apt.reflect">ArType</a></code></td>
+<td class="colFirst"><code><a href="../../../../com/bluegosling/apt/reflect/ArType.html" title="class in com.bluegosling.apt.reflect">ArType</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/bluegosling/apt/reflect/ArParameter.html#getGenericType--">getGenericType</a></span>()</code>
 <div class="block">Returns the type of this parameter.</div>
 </td>
@@ -262,12 +248,6 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </tr>
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/bluegosling/apt/reflect/ArParameter.html#toGenericString--">toGenericString</a></span>()</code>
-<div class="block">Returns a string representation of this parameter that includes generic type information.</div>
-</td>
-</tr>
-<tr id="i18" class="altColor">
-<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/bluegosling/apt/reflect/ArParameter.html#toString--">toString</a></span>()</code>&nbsp;</td>
 </tr>
 </table>
@@ -277,6 +257,13 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
 <code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.com.bluegosling.apt.reflect.ArAnnotatedConstruct">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;com.bluegosling.apt.reflect.<a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedConstruct.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedConstruct</a></h3>
+<code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedConstruct.html#getAnnotation-com.bluegosling.apt.reflect.ArClass-">getAnnotation</a>, <a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedConstruct.html#getAnnotation-java.lang.Class-">getAnnotation</a>, <a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedConstruct.html#getAnnotationBridge-java.lang.Class-">getAnnotationBridge</a>, <a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedConstruct.html#getDeclaredAnnotations--">getDeclaredAnnotations</a>, <a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedConstruct.html#isAnnotationPresent-com.bluegosling.apt.reflect.ArClass-">isAnnotationPresent</a>, <a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedConstruct.html#isAnnotationPresent-java.lang.Class-">isAnnotationPresent</a></code></li>
 </ul>
 </li>
 </ul>
@@ -404,7 +391,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockList">
 <li class="blockList">
 <h4>getGenericType</h4>
-<pre>public&nbsp;<a href="../../../../com/bluegosling/apt/reflect/ArType.html" title="interface in com.bluegosling.apt.reflect">ArType</a>&nbsp;getGenericType()</pre>
+<pre>public&nbsp;<a href="../../../../com/bluegosling/apt/reflect/ArType.html" title="class in com.bluegosling.apt.reflect">ArType</a>&nbsp;getGenericType()</pre>
 <div class="block">Returns the type of this parameter. This includes all generic type information
  that was specified in the source declaration of the type.</div>
 <dl>
@@ -454,19 +441,21 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;toString()</pre>
 </li>
 </ul>
-<a name="toGenericString--">
+<a name="getAnnotations--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>toGenericString</h4>
-<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;toGenericString()</pre>
-<div class="block">Returns a string representation of this parameter that includes generic type information. This
- is similar to <a href="../../../../com/bluegosling/apt/reflect/ArParameter.html#toString--"><code>toString()</code></a> except that it includes generic type information instead of
- just indicating erased types.</div>
+<h4>getAnnotations</h4>
+<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../com/bluegosling/apt/reflect/ArAnnotation.html" title="class in com.bluegosling.apt.reflect">ArAnnotation</a>&gt;&nbsp;getAnnotations()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedConstruct.html#getAnnotations--">ArAnnotatedConstruct</a></code></span></div>
+<div class="block">Gets all annotations for this object. This includes both annotations declared on the object
+ as well as any inherited annotations.</div>
 <dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedConstruct.html#getAnnotations--">getAnnotations</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedConstruct.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedConstruct</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a string representation of the field that includes generic type information</dd>
+<dd>the list of annotations</dd>
 </dl>
 </li>
 </ul>
@@ -477,12 +466,12 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <li class="blockList">
 <h4>getAnnotation</h4>
 <pre>public&nbsp;<a href="../../../../com/bluegosling/apt/reflect/ArAnnotation.html" title="class in com.bluegosling.apt.reflect">ArAnnotation</a>&nbsp;getAnnotation(<a href="../../../../com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect">ArClass</a>&nbsp;annotationClass)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedElement.html#getAnnotation-com.bluegosling.apt.reflect.ArClass-">ArAnnotatedElement</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedConstruct.html#getAnnotation-com.bluegosling.apt.reflect.ArClass-">ArAnnotatedConstruct</a></code></span></div>
 <div class="block">Gets the annotation from the object that corresponds to the specified annotation type.
  This will return an inherited annotation if one exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedElement.html#getAnnotation-com.bluegosling.apt.reflect.ArClass-">getAnnotation</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedElement.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedElement</a></code></dd>
+<dd><code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedConstruct.html#getAnnotation-com.bluegosling.apt.reflect.ArClass-">getAnnotation</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedConstruct.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedConstruct</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>annotationClass</code> - the annotation type</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -497,12 +486,12 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <li class="blockList">
 <h4>getAnnotation</h4>
 <pre>public&nbsp;<a href="../../../../com/bluegosling/apt/reflect/ArAnnotation.html" title="class in com.bluegosling.apt.reflect">ArAnnotation</a>&nbsp;getAnnotation(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;annotationClass)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedElement.html#getAnnotation-java.lang.Class-">ArAnnotatedElement</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedConstruct.html#getAnnotation-java.lang.Class-">ArAnnotatedConstruct</a></code></span></div>
 <div class="block">Gets the annotation from the object that corresponds to the specified annotation type.
  This will return an inherited annotation if one exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedElement.html#getAnnotation-java.lang.Class-">getAnnotation</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedElement.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedElement</a></code></dd>
+<dd><code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedConstruct.html#getAnnotation-java.lang.Class-">getAnnotation</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedConstruct.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedConstruct</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>annotationClass</code> - the annotation type</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -517,11 +506,11 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <li class="blockList">
 <h4>getAnnotationBridge</h4>
 <pre>public&nbsp;&lt;T extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;T&nbsp;getAnnotationBridge(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;annotationClass)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedElement.html#getAnnotationBridge-java.lang.Class-">ArAnnotatedElement</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedConstruct.html#getAnnotationBridge-java.lang.Class-">ArAnnotatedConstruct</a></code></span></div>
 <div class="block">Gets an annotation bridge for the specified annotation type.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedElement.html#getAnnotationBridge-java.lang.Class-">getAnnotationBridge</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedElement.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedElement</a></code></dd>
+<dd><code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedConstruct.html#getAnnotationBridge-java.lang.Class-">getAnnotationBridge</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedConstruct.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedConstruct</a></code></dd>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
 <dd><code>T</code> - the type of the annotation</dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -530,7 +519,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <dd>the corresponding <a href="../../../../com/bluegosling/apt/reflect/ArAnnotationBridge.html" title="class in com.bluegosling.apt.reflect">annotation bridge</a> or <code>null</code> if
        there is no such annotation</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedElement.html#getAnnotation-java.lang.Class-"><code>ArAnnotatedElement.getAnnotation(Class)</code></a>, 
+<dd><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedConstruct.html#getAnnotation-java.lang.Class-"><code>ArAnnotatedConstruct.getAnnotation(Class)</code></a>, 
 <a href="../../../../com/bluegosling/apt/reflect/ArAnnotationBridge.html#createBridge-com.bluegosling.apt.reflect.ArAnnotation-java.lang.Class-"><code>ArAnnotationBridge.createBridge(ArAnnotation, Class)</code></a></dd>
 </dl>
 </li>
@@ -542,12 +531,12 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <li class="blockList">
 <h4>isAnnotationPresent</h4>
 <pre>public&nbsp;boolean&nbsp;isAnnotationPresent(<a href="../../../../com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect">ArClass</a>&nbsp;annotationClass)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedElement.html#isAnnotationPresent-com.bluegosling.apt.reflect.ArClass-">ArAnnotatedElement</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedConstruct.html#isAnnotationPresent-com.bluegosling.apt.reflect.ArClass-">ArAnnotatedConstruct</a></code></span></div>
 <div class="block">Determines whether an annotation of the specified type exists on the object. This
  includes inherited annotations.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedElement.html#isAnnotationPresent-com.bluegosling.apt.reflect.ArClass-">isAnnotationPresent</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedElement.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedElement</a></code></dd>
+<dd><code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedConstruct.html#isAnnotationPresent-com.bluegosling.apt.reflect.ArClass-">isAnnotationPresent</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedConstruct.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedConstruct</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>annotationClass</code> - the annotation type</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -562,34 +551,16 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <li class="blockList">
 <h4>isAnnotationPresent</h4>
 <pre>public&nbsp;boolean&nbsp;isAnnotationPresent(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>&gt;&nbsp;annotationClass)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedElement.html#isAnnotationPresent-java.lang.Class-">ArAnnotatedElement</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedConstruct.html#isAnnotationPresent-java.lang.Class-">ArAnnotatedConstruct</a></code></span></div>
 <div class="block">Determines whether an annotation of the specified type exists on the object. This
  includes inherited annotations.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedElement.html#isAnnotationPresent-java.lang.Class-">isAnnotationPresent</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedElement.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedElement</a></code></dd>
+<dd><code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedConstruct.html#isAnnotationPresent-java.lang.Class-">isAnnotationPresent</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedConstruct.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedConstruct</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>annotationClass</code> - the annotation type</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>true if an annotation of the specified type is present on the object</dd>
-</dl>
-</li>
-</ul>
-<a name="getAnnotations--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getAnnotations</h4>
-<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../com/bluegosling/apt/reflect/ArAnnotation.html" title="class in com.bluegosling.apt.reflect">ArAnnotation</a>&gt;&nbsp;getAnnotations()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedElement.html#getAnnotations--">ArAnnotatedElement</a></code></span></div>
-<div class="block">Gets all annotations for this object. This includes both annotations declared on the object
- as well as any inherited annotations.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedElement.html#getAnnotations--">getAnnotations</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedElement.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedElement</a></code></dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the list of annotations</dd>
 </dl>
 </li>
 </ul>
@@ -600,11 +571,11 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <li class="blockList">
 <h4>getDeclaredAnnotations</h4>
 <pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../com/bluegosling/apt/reflect/ArAnnotation.html" title="class in com.bluegosling.apt.reflect">ArAnnotation</a>&gt;&nbsp;getDeclaredAnnotations()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedElement.html#getDeclaredAnnotations--">ArAnnotatedElement</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedConstruct.html#getDeclaredAnnotations--">ArAnnotatedConstruct</a></code></span></div>
 <div class="block">Gets the annotations declared on this object.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedElement.html#getDeclaredAnnotations--">getDeclaredAnnotations</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedElement.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedElement</a></code></dd>
+<dd><code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedConstruct.html#getDeclaredAnnotations--">getDeclaredAnnotations</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedConstruct.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedConstruct</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the list of annotations</dd>
 </dl>
@@ -638,7 +609,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../com/bluegosling/apt/reflect/ArPackage.html" title="class in com.bluegosling.apt.reflect"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../com/bluegosling/apt/reflect/ArParameterizedType.html" title="class in com.bluegosling.apt.reflect"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../../com/bluegosling/apt/reflect/ArPrimitiveType.html" title="class in com.bluegosling.apt.reflect"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?com/bluegosling/apt/reflect/ArParameter.html" target="_top">Frames</a></li>

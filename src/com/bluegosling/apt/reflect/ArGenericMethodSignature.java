@@ -1,27 +1,20 @@
-package com.bluegosling.reflect;
+package com.bluegosling.apt.reflect;
 
-import static java.util.Objects.requireNonNull;
-
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 /**
- * Represents a method signature, composed of a method name and sequence of parameter types.
- * 
- * <p>{@code MethodSignature} objects are used in place of {@code java.lang.reflect.Method} objects
- * when configuring an {@link com.bluegosling.testing.InterfaceVerifier InterfaceVerifier}. A proxy
- * could implement multiple {@code Method}s with identical signatures if it is constructed for
- * multiple interfaces. A {@link MethodSignature} represents all such methods.
+ * Represents a generic method signature, composed of a method name and sequence of generic
+ * parameter types.
  * 
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-public class MethodSignature {
+public class ArGenericMethodSignature {
+
    private final String name;
-   private final List<Class<?>> argTypes;
+   private final List<ArType> argTypes;
 
    /**
     * Constructs a new signature for the specified method.
@@ -29,9 +22,8 @@ public class MethodSignature {
     * @param m the method
     * @throws NullPointerException If the specified method is {@code null}
     */
-   public MethodSignature(Method m) {
-      this.name = m.getName();
-      this.argTypes = Arrays.asList(m.getParameterTypes());
+   public ArGenericMethodSignature(ArMethod m) {
+      this(m.getName(), m.getGenericParameterTypes());
    }
 
    /**
@@ -42,7 +34,7 @@ public class MethodSignature {
     * @throws NullPointerException If the specified method name is {@code null} or any of the
     *            specified argument types is {@code null}
     */
-   public MethodSignature(String name, Class<?>... argTypes) {
+   public ArGenericMethodSignature(String name, ArType... argTypes) {
       this(name, Arrays.asList(argTypes));
    }
 
@@ -54,15 +46,19 @@ public class MethodSignature {
     * @throws NullPointerException If the specified method name is {@code null} or any of the
     *            specified argument types is {@code null}
     */
-   public MethodSignature(String name, List<Class<?>> argTypes) {
-      this.name = requireNonNull(name);
-      List<Class<?>> list = new ArrayList<>(argTypes);
-      for (Class<?> arg : list) {
-         requireNonNull(arg);
+   public ArGenericMethodSignature(String name, List<ArType> argTypes) {
+      if (name == null) {
+         throw new NullPointerException();
       }
-      this.argTypes = list;
+      for (ArType arg : argTypes) {
+         if (arg == null) {
+            throw new NullPointerException();
+         }
+      }
+      this.name = name;
+      this.argTypes = new ArrayList<>(argTypes);
    }
-
+   
    /**
     * Returns the name of the method that this signature represents.
     * 
@@ -77,14 +73,14 @@ public class MethodSignature {
     * 
     * @return the list of parameter types
     */
-   public List<Class<?>> getParameterTypes() {
+   public List<ArType> getParameterTypes() {
       return Collections.unmodifiableList(argTypes);
    }
 
    @Override
    public boolean equals(Object o) {
-      if (o instanceof MethodSignature) {
-         MethodSignature ms = (MethodSignature) o;
+      if (o instanceof ArGenericMethodSignature) {
+         ArGenericMethodSignature ms = (ArGenericMethodSignature) o;
          return name.equals(ms.name) && argTypes.equals(ms.argTypes);
       }
       return false;
@@ -92,25 +88,28 @@ public class MethodSignature {
 
    @Override
    public int hashCode() {
-      return Objects.hash(name, argTypes);
+      int ret = 17;
+      ret = 31 * ret + name.hashCode();
+      ret = 31 * ret + argTypes.hashCode();
+      return ret;
    }
 
    @Override
    public String toString() {
       StringBuilder sb = new StringBuilder();
       sb.append(name);
-      sb.append('(');
+      sb.append("(");
       boolean first = true;
-      for (Class<?> argType : argTypes) {
+      for (ArType argType : argTypes) {
          if (first) {
             first = false;
          }
          else {
-            sb.append(',');
+            sb.append(",");
          }
-         sb.append(argType.getTypeName());
+         sb.append(argType.toString());
       }
-      sb.append(')');
+      sb.append(")");
       return sb.toString();
    }
 }

@@ -13,8 +13,9 @@ import javax.lang.model.element.VariableElement;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  *
  * @see Field
+ * @see VariableElement
  */
-public class ArField extends ArAbstractMember {
+public class ArField extends ArAbstractMember<VariableElement> {
 
    private static final EnumSet<ElementKind> ALLOWED_KINDS =
          EnumSet.of(ElementKind.FIELD, ElementKind.ENUM_CONSTANT);
@@ -40,11 +41,6 @@ public class ArField extends ArAbstractMember {
                + ALLOWED_KINDS + "; got " + element.getKind().name());
       }
       return new ArField(element);
-   }
-   
-   @Override
-   public VariableElement asElement() {
-      return (VariableElement) super.asElement();
    }
    
    /**
@@ -138,27 +134,9 @@ public class ArField extends ArAbstractMember {
 
    @Override
    public String toString() {
-      return toString(false);
-   }
-   
-   /**
-    * Returns a string representation of this field that includes generic type information and
-    * possible references to the enclosing class's type parameters. This is similar to
-    * {@link #toString()} except that it includes generic type information instead of just
-    * indicating erased types.
-    * 
-    * @return a string representation of the field that includes generic type information
-    */
-   @Override
-   public String toGenericString() {
-      return toString(true);
-   }
-   
-   private String toString(boolean includeGenerics) {
       StringBuilder sb = new StringBuilder();
       ArModifier.appendModifiers(sb, getModifiers());
-      ArType type = includeGenerics ? getGenericType() : getType();
-      sb.append(type.toTypeString());
+      sb.append(getGenericType().toString());
       sb.append(" ");
       sb.append(getName());
       return sb.toString();

@@ -86,40 +86,33 @@
 </tr>
 <tbody>
 <tr class="altColor">
+<td class="colFirst"><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedConstruct.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedConstruct</a></td>
+<td class="colLast">
+<div class="block">Anything that can have annotations.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedElement.html" title="interface in com.bluegosling.apt.reflect">ArAnnotatedElement</a></td>
 <td class="colLast">
 <div class="block">An element that can have annotations.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../../com/bluegosling/apt/reflect/ArExecutableMember.html" title="interface in com.bluegosling.apt.reflect">ArExecutableMember</a></td>
 <td class="colLast">
 <div class="block">An interface that represents a member that has executable code -- a constructor or a method.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../../com/bluegosling/apt/reflect/ArGenericDeclaration.html" title="interface in com.bluegosling.apt.reflect">ArGenericDeclaration</a></td>
 <td class="colLast">
 <div class="block">An element that may include the declaration of generic type variables.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../../com/bluegosling/apt/reflect/ArMember.html" title="interface in com.bluegosling.apt.reflect">ArMember</a></td>
 <td class="colLast">
 <div class="block">A member of a Java class or interface.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><a href="../../../../com/bluegosling/apt/reflect/ArType.html" title="interface in com.bluegosling.apt.reflect">ArType</a></td>
-<td class="colLast">
-<div class="block">A interface that represents a generic type.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><a href="../../../../com/bluegosling/apt/reflect/ArType.Visitor.html" title="interface in com.bluegosling.apt.reflect">ArType.Visitor</a>&lt;R,P&gt;</td>
-<td class="colLast">
-<div class="block">A visitor for simulating multiple dispatch over the concrete implementations of
- <a href="../../../../com/bluegosling/apt/reflect/ArType.html" title="interface in com.bluegosling.apt.reflect"><code>ArType</code></a>.</div>
 </td>
 </tr>
 </tbody>
@@ -146,15 +139,27 @@
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><a href="../../../../com/bluegosling/apt/reflect/ArArrayType.html" title="class in com.bluegosling.apt.reflect">ArArrayType</a></td>
+<td class="colLast">
+<div class="block">An array type.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../../com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect">ArClass</a></td>
 <td class="colLast">
 <div class="block">A class (or interface, enum, or annotation type).</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../../com/bluegosling/apt/reflect/ArConstructor.html" title="class in com.bluegosling.apt.reflect">ArConstructor</a></td>
 <td class="colLast">
 <div class="block">A constructor.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../com/bluegosling/apt/reflect/ArDeclaredType.html" title="class in com.bluegosling.apt.reflect">ArDeclaredType</a></td>
+<td class="colLast">
+<div class="block">A declared type.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -164,9 +169,10 @@
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../com/bluegosling/apt/reflect/ArGenericArrayType.html" title="class in com.bluegosling.apt.reflect">ArGenericArrayType</a></td>
+<td class="colFirst"><a href="../../../../com/bluegosling/apt/reflect/ArGenericMethodSignature.html" title="class in com.bluegosling.apt.reflect">ArGenericMethodSignature</a></td>
 <td class="colLast">
-<div class="block">An array type with generic type information.</div>
+<div class="block">Represents a generic method signature, composed of a method name and sequence of generic
+ parameter types.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -194,9 +200,9 @@
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../com/bluegosling/apt/reflect/ArParameterizedType.html" title="class in com.bluegosling.apt.reflect">ArParameterizedType</a></td>
+<td class="colFirst"><a href="../../../../com/bluegosling/apt/reflect/ArPrimitiveType.html" title="class in com.bluegosling.apt.reflect">ArPrimitiveType</a></td>
 <td class="colLast">
-<div class="block">An instance of type with information about actual type parameters.</div>
+<div class="block">A primitive type.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -213,15 +219,27 @@
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="../../../../com/bluegosling/apt/reflect/ArTypes.html" title="class in com.bluegosling.apt.reflect">ArTypes</a></td>
+<td class="colFirst"><a href="../../../../com/bluegosling/apt/reflect/ArType.html" title="class in com.bluegosling.apt.reflect">ArType</a></td>
 <td class="colLast">
-<div class="block">Container of helper methods for working with <a href="../../../../com/bluegosling/apt/reflect/ArType.html" title="interface in com.bluegosling.apt.reflect"><code>ArType</code></a>s.</div>
+<div class="block">A interface that represents a generic type.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../com/bluegosling/apt/reflect/ArTypeVariable.html" title="class in com.bluegosling.apt.reflect">ArTypeVariable</a>&lt;D extends <a href="../../../../com/bluegosling/apt/reflect/ArGenericDeclaration.html" title="interface in com.bluegosling.apt.reflect">ArGenericDeclaration</a>&gt;</td>
+<td class="colFirst"><a href="../../../../com/bluegosling/apt/reflect/ArTypeParameter.html" title="class in com.bluegosling.apt.reflect">ArTypeParameter</a>&lt;D extends <a href="../../../../com/bluegosling/apt/reflect/ArGenericDeclaration.html" title="interface in com.bluegosling.apt.reflect">ArGenericDeclaration</a>&gt;</td>
 <td class="colLast">
-<div class="block">A type variable.</div>
+<div class="block">A type parameter declaration.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../com/bluegosling/apt/reflect/ArTypes.html" title="class in com.bluegosling.apt.reflect">ArTypes</a></td>
+<td class="colLast">
+<div class="block">Container of helper methods for working with <a href="../../../../com/bluegosling/apt/reflect/ArType.html" title="class in com.bluegosling.apt.reflect"><code>ArType</code></a>s.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../com/bluegosling/apt/reflect/ArTypeVariable.html" title="class in com.bluegosling.apt.reflect">ArTypeVariable</a></td>
+<td class="colLast">
+<div class="block">A type variable, or a use of a type parameter.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -253,12 +271,6 @@
 <div class="block">Represents a modifier used in Java source code.</div>
 </td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><a href="../../../../com/bluegosling/apt/reflect/ArType.Kind.html" title="enum in com.bluegosling.apt.reflect">ArType.Kind</a></td>
-<td class="colLast">
-<div class="block">An enumeration of the valid concrete kinds of <a href="../../../../com/bluegosling/apt/reflect/ArType.html" title="interface in com.bluegosling.apt.reflect"><code>ArType</code></a>s.</div>
-</td>
-</tr>
 </tbody>
 </table>
 </li>
@@ -283,6 +295,164 @@
  a <a href="../../../../com/bluegosling/apt/reflect/ArRoundEnvironment.html" title="class in com.bluegosling.apt.reflect"><code>ArRoundEnvironment</code></a>, which is very similar to the standard
  <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/RoundEnvironment.html?is-external=true" title="class or interface in javax.annotation.processing"><code>RoundEnvironment</code></a> except that its API is defined in terms of
  this set of reflection APIs (instead of in terms of elements and type mirrors).
+ 
+ <p>This API strives to maintain the abstraction fidelity provided by the <code>javax.lang.model</code>
+ APIs, but also provide the ease-of-use provided by core reflection APIs. So, like the
+ <code>javax.lang.model</code> types they wrap, the types in this API come in two flavors, elements
+ and types, which are described in more detail below.
+ 
+ <h3>Elements</h3>
+ <p>Elements represent components of a Java program: classes, methods, fields, etc. They map to
+ declarations in source code. They are analogous to the most commonly used types in the core
+ reflection API: <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang"><code>Class</code></a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Constructor.html?is-external=true" title="class or interface in java.lang.reflect"><code>Constructor</code></a>,
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Method.html?is-external=true" title="class or interface in java.lang.reflect"><code>Method</code></a>, and <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Field.html?is-external=true" title="class or interface in java.lang.reflect"><code>Field</code></a>. In this package, they are
+ represented by the <a href="../../../../com/bluegosling/apt/reflect/ArAnnotatedElement.html" title="interface in com.bluegosling.apt.reflect"><code>ArAnnotatedElement</code></a> type hierarchy and
+ generally wrap <code>javax.lang.model.element</code> objects.
+ 
+ <p>An exception to this is <a href="../../../../com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect"><code>ArClass</code></a>. Most classes <em>do</em>
+ wrap a <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/TypeElement.html?is-external=true" title="class or interface in javax.lang.model.element"><code>TypeElement</code></a>, but this API allows usage of class tokens
+ for primitive and array types, just like core reflection.
+ <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/TypeElement.html?is-external=true" title="class or interface in javax.lang.model.element"><code>TypeElement</code></a>s, on the other hand, only model declared types
+ and thus cannot represent primitive and array types.
+
+ <h3>Types</h3>
+ In core reflection, there are two different way to represent types: the
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect"><code>Type</code></a> hierarchy, introduced for modeling generic types in Java 5, and
+ the <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect"><code>AnnotatedType</code></a> hierarchy, introduced for modeling types with type
+ annotations in Java 8. The <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect"><code>Type</code></a> hierarchy "blurred the lines" between
+ types and elements by including a couple of classes that also represent elements:
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang"><code>Class</code></a> and <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/TypeVariable.html?is-external=true" title="class or interface in java.lang.reflect"><code>TypeVariable</code></a>. The
+ <code>java.lang.model.type</code> APIs do not blur the lines. And because they were a cleaner
+ separation from how elements were modeled, they did not need to introduce a parallel type
+ hierarchy to model type annotations when Java 8 came along.
+ 
+ <p>This package models types with the <a href="../../../../com/bluegosling/apt/reflect/ArType.html" title="class in com.bluegosling.apt.reflect"><code>ArType</code></a> hierarchy. Each
+ type object wraps a <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/TypeMirror.html?is-external=true" title="class or interface in javax.lang.model.type"><code>TypeMirror</code></a> object. The API resembles a mix of
+ <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/TypeMirror.html?is-external=true" title="class or interface in javax.lang.model.type"><code>TypeMirror</code></a> and <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect"><code>AnnotatedType</code></a>, attempting
+ to provide greater ease-of-use than type mirror while still maintaining the abstraction fidelity.
+ 
+ <h3>Differences from Core Reflection</h3>
+ <p>As alluded to above, this package models types more like type mirrors. Core reflection has
+ parallel APIs for generic types and annotated types, the former lacking the ability to model type
+ annotations and the latter addressing that. This package, however, has only a single way to model
+ types.
+ 
+ <p>Since types are modeled more like <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect"><code>AnnotatedType</code></a> than
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Type.html?is-external=true" title="class or interface in java.lang.reflect"><code>Type</code></a>, this package does not re-use class tokens and type variables for
+ modeling both language elements and types. And, like type mirrors, it does not distinguish in the
+ type system between declared types with type parameters and those without.
+ 
+ <p>The table below shows the type in this package that is used to model the same thing that a
+ given core reflection type models:
+ <table border=1 summary="java.lang.reflect vs. com.bluegosling.apt.reflect">
+ <tr><th>Context</th><th>Core Reflection</th><th>This Package</th></tr>
+ <tr><td rowspan=7>Elements</td>
+     <td><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang"><code>Class</code></a></td><td><a href="../../../../com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect"><code>ArClass</code></a></td></tr>
+ <tr><td><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/TypeVariable.html?is-external=true" title="class or interface in java.lang.reflect"><code>TypeVariable</code></a></td><td><a href="../../../../com/bluegosling/apt/reflect/ArTypeParameter.html" title="class in com.bluegosling.apt.reflect"><code>ArTypeParameter</code></a></td></tr>
+ <tr><td><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Field.html?is-external=true" title="class or interface in java.lang.reflect"><code>Field</code></a></td><td><a href="../../../../com/bluegosling/apt/reflect/ArField.html" title="class in com.bluegosling.apt.reflect"><code>ArField</code></a></td></tr>
+ <tr><td><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Constructor.html?is-external=true" title="class or interface in java.lang.reflect"><code>Constructor</code></a></td><td><a href="../../../../com/bluegosling/apt/reflect/ArConstructor.html" title="class in com.bluegosling.apt.reflect"><code>ArConstructor</code></a></td></tr>
+ <tr><td><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Method.html?is-external=true" title="class or interface in java.lang.reflect"><code>Method</code></a></td><td><a href="../../../../com/bluegosling/apt/reflect/ArMethod.html" title="class in com.bluegosling.apt.reflect"><code>ArMethod</code></a></td></tr>
+ <tr><td><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Parameter.html?is-external=true" title="class or interface in java.lang.reflect"><code>Parameter</code></a></td><td><a href="../../../../com/bluegosling/apt/reflect/ArParameter.html" title="class in com.bluegosling.apt.reflect"><code>ArParameter</code></a></td></tr>
+ <tr><td><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Package.html?is-external=true" title="class or interface in java.lang"><code>Package</code></a></td><td><a href="../../../../com/bluegosling/apt/reflect/ArPackage.html" title="class in com.bluegosling.apt.reflect"><code>ArPackage</code></a></td></tr>
+ <tr><td rowspan=16>Types</td>
+     <td colspan=2 align="center"><em>Generic Types</em></td></tr>
+ <tr><td rowspan=3><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang"><code>Class</code></a></td><td><a href="../../../../com/bluegosling/apt/reflect/ArDeclaredType.html" title="class in com.bluegosling.apt.reflect"><code>ArDeclaredType</code></a>&nbsp;*</td></tr>
+ <tr>                                          <td><a href="../../../../com/bluegosling/apt/reflect/ArPrimitiveType.html" title="class in com.bluegosling.apt.reflect"><code>ArPrimitiveType</code></a>&nbsp;†</td></tr>
+ <tr>                                          <td><a href="../../../../com/bluegosling/apt/reflect/ArArrayType.html" title="class in com.bluegosling.apt.reflect"><code>ArArrayType</code></a>&nbsp;‡</td></tr>
+ <tr><td><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/TypeVariable.html?is-external=true" title="class or interface in java.lang.reflect"><code>TypeVariable</code></a></td><td><a href="../../../../com/bluegosling/apt/reflect/ArTypeVariable.html" title="class in com.bluegosling.apt.reflect"><code>ArTypeVariable</code></a></td></tr>
+ <tr><td><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/ParameterizedType.html?is-external=true" title="class or interface in java.lang.reflect"><code>ParameterizedType</code></a></td><td><a href="../../../../com/bluegosling/apt/reflect/ArDeclaredType.html" title="class in com.bluegosling.apt.reflect"><code>ArDeclaredType</code></a>&nbsp;*</td></tr>
+ <tr><td><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/GenericArrayType.html?is-external=true" title="class or interface in java.lang.reflect"><code>GenericArrayType</code></a></td><td><a href="../../../../com/bluegosling/apt/reflect/ArArrayType.html" title="class in com.bluegosling.apt.reflect"><code>ArArrayType</code></a>&nbsp;‡</td></tr>
+ <tr><td><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/WildcardType.html?is-external=true" title="class or interface in java.lang.reflect"><code>WildcardType</code></a></td><td><a href="../../../../com/bluegosling/apt/reflect/ArTypeVariable.html" title="class in com.bluegosling.apt.reflect"><code>ArTypeVariable</code></a></td></tr>
+ <tr><td colspan=2 align="center"><em>Annotated Types</em></td></tr>
+ <tr><td rowspan=2><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect"><code>AnnotatedType</code></a>&nbsp;§</td><td><a href="../../../../com/bluegosling/apt/reflect/ArDeclaredType.html" title="class in com.bluegosling.apt.reflect"><code>ArDeclaredType</code></a>&nbsp;*</td></tr>
+ <tr>                                                                 <td><a href="../../../../com/bluegosling/apt/reflect/ArPrimitiveType.html" title="class in com.bluegosling.apt.reflect"><code>ArPrimitiveType</code></a>&nbsp;†</td></tr>
+ <tr><td><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedTypeVariable.html?is-external=true" title="class or interface in java.lang.reflect"><code>AnnotatedTypeVariable</code></a></td><td><a href="../../../../com/bluegosling/apt/reflect/ArTypeVariable.html" title="class in com.bluegosling.apt.reflect"><code>ArTypeVariable</code></a></td></tr>
+ <tr><td><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedParameterizedType.html?is-external=true" title="class or interface in java.lang.reflect"><code>AnnotatedParameterizedType</code></a></td><td><a href="../../../../com/bluegosling/apt/reflect/ArDeclaredType.html" title="class in com.bluegosling.apt.reflect"><code>ArDeclaredType</code></a>&nbsp;*</td></tr>
+ <tr><td><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedArrayType.html?is-external=true" title="class or interface in java.lang.reflect"><code>AnnotatedArrayType</code></a></td><td><a href="../../../../com/bluegosling/apt/reflect/ArArrayType.html" title="class in com.bluegosling.apt.reflect"><code>ArArrayType</code></a></td></tr>
+ <tr><td><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedWildcardType.html?is-external=true" title="class or interface in java.lang.reflect"><code>AnnotatedWildcardType</code></a></td><td><a href="../../../../com/bluegosling/apt/reflect/ArWildcardType.html" title="class in com.bluegosling.apt.reflect"><code>ArWildcardType</code></a></td></tr>
+ </table>
+ <ul style="list-style: none;margin-left: 0;padding-left: 1em;text-indent: -1em">
+ <li><strong>*</strong> This package models all declared types, whether they have parameters or
+ not, using the same <a href="../../../../com/bluegosling/apt/reflect/ArDeclaredType.html" title="class in com.bluegosling.apt.reflect"><code>ArDeclaredType</code></a>. It is a parameterized
+ type if it has <a href="../../../../com/bluegosling/apt/reflect/ArDeclaredType.html#getActualTypeArguments--">type arguments</a>.</li>
+ <li><strong>†</strong> This package models declared reference types differently from primitive
+ types, whereas core reflection does not.</li>
+ <li><strong>‡</strong> This package models all array types, whether their component type is
+ generic or not, using the same <a href="../../../../com/bluegosling/apt/reflect/ArArrayType.html" title="class in com.bluegosling.apt.reflect"><code>ArArrayType</code></a>. This is similar
+ to how annotated array types are modeled in core reflection.</li>
+ <li><strong>§</strong> In core reflection <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedType.html?is-external=true" title="class or interface in java.lang.reflect"><code>AnnotatedType</code></a> is the root of
+ the annotated type hierarchy. But it also used to represent an annotated type that is
+ neither a type variable nor a parameterized type, nor an array, nor a wildcard. The table above
+ indicates how that latter usage corresponds to this package.</li>
+ </ul>
+ 
+ <h3>Differences from Language Models</h3>
+ <p>In Java's language model APIs, elements that represent types can only represent types defined
+ in source code, thus excluding them for use in representing primitive and array types. But this
+ package's <a href="../../../../com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect"><code>ArClass</code></a> can be used for declared type elements and
+ for primitive and array types, much like the core reflection <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang"><code>Class</code></a>.
+ 
+ <p>Unlike type mirrors, this package's <a href="../../../../com/bluegosling/apt/reflect/ArType.html" title="class in com.bluegosling.apt.reflect"><code>ArType</code></a> does not have
+ a way to represent intersection or union types nor does it have a way to represent the "none"
+ type (e.g. the super-type of <code>Object</code>), the <code>null</code> type (aka "bottom type")
+ packages, or type signatures of methods and constructors. So its representation is more like core
+ reflection in those regards. Furthermore, the <code>void</code> type is modeled as an
+ <a href="../../../../com/bluegosling/apt/reflect/ArPrimitiveType.html" title="class in com.bluegosling.apt.reflect"><code>ArPrimitiveType</code></a>, like
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true#isPrimitive--" title="class or interface in java.lang">core reflection</a> but unlike type mirrors. 
+ 
+ <p>The table below shows the type in this package that is used to model the same thing that a
+ given core reflection type models:
+ <table border=1 summary="javax.lang.model vs. com.bluegosling.apt.reflect">
+ <tr><th>Context</th><th>Language Models</th><th>This Package</th></tr>
+ <tr><td rowspan=7>Elements</td>
+     <td><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/TypeElement.html?is-external=true" title="class or interface in javax.lang.model.element"><code>TypeElement</code></a></td><td><a href="../../../../com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect"><code>ArClass</code></a>&nbsp;*</td></tr>
+ <tr><td><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/TypeParameterElement.html?is-external=true" title="class or interface in javax.lang.model.element"><code>TypeParameterElement</code></a></td><td><a href="../../../../com/bluegosling/apt/reflect/ArTypeParameter.html" title="class in com.bluegosling.apt.reflect"><code>ArTypeParameter</code></a></td></tr>
+ <tr><td rowspan=2><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/VariableElement.html?is-external=true" title="class or interface in javax.lang.model.element"><code>VariableElement</code></a>&nbsp;†</td><td><a href="../../../../com/bluegosling/apt/reflect/ArField.html" title="class in com.bluegosling.apt.reflect"><code>ArField</code></a></td></tr>
+ <tr>                                                                   <td><a href="../../../../com/bluegosling/apt/reflect/ArParameter.html" title="class in com.bluegosling.apt.reflect"><code>ArParameter</code></a></td></tr>
+ <tr><td rowspan=2><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/ExecutableElement.html?is-external=true" title="class or interface in javax.lang.model.element"><code>ExecutableElement</code></a>&nbsp;‡</td><td><a href="../../../../com/bluegosling/apt/reflect/ArConstructor.html" title="class in com.bluegosling.apt.reflect"><code>ArConstructor</code></a></td></tr>
+ <tr>                                                                     <td><a href="../../../../com/bluegosling/apt/reflect/ArMethod.html" title="class in com.bluegosling.apt.reflect"><code>ArMethod</code></a></td></tr>
+ <tr><td><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/PackageElement.html?is-external=true" title="class or interface in javax.lang.model.element"><code>PackageElement</code></a></td><td><a href="../../../../com/bluegosling/apt/reflect/ArPackage.html" title="class in com.bluegosling.apt.reflect"><code>ArPackage</code></a></td></tr>
+ <tr><td rowspan=11>Types</td>
+     <td><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/DeclaredType.html?is-external=true" title="class or interface in javax.lang.model.type"><code>DeclaredType</code></a></td><td><a href="../../../../com/bluegosling/apt/reflect/ArDeclaredType.html" title="class in com.bluegosling.apt.reflect"><code>ArDeclaredType</code></a></td></tr>
+ <tr><td><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/PrimitiveType.html?is-external=true" title="class or interface in javax.lang.model.type"><code>PrimitiveType</code></a></td><td rowspan=2><a href="../../../../com/bluegosling/apt/reflect/ArPrimitiveType.html" title="class in com.bluegosling.apt.reflect"><code>ArPrimitiveType</code></a></td></tr>
+ <tr><td><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/NoType.html?is-external=true" title="class or interface in javax.lang.model.type"><code>NoType</code></a>&nbsp;§</td>
+ <tr><td><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/ArrayType.html?is-external=true" title="class or interface in javax.lang.model.type"><code>ArrayType</code></a></td><td><a href="../../../../com/bluegosling/apt/reflect/ArArrayType.html" title="class in com.bluegosling.apt.reflect"><code>ArArrayType</code></a></td></tr>
+ <tr><td><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/WildcardType.html?is-external=true" title="class or interface in javax.lang.model.type"><code>WildcardType</code></a></td><td><a href="../../../../com/bluegosling/apt/reflect/ArWildcardType.html" title="class in com.bluegosling.apt.reflect"><code>ArWildcardType</code></a></td></tr>
+ <tr><td><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/TypeVariable.html?is-external=true" title="class or interface in javax.lang.model.type"><code>TypeVariable</code></a></td><td><a href="../../../../com/bluegosling/apt/reflect/ArTypeVariable.html" title="class in com.bluegosling.apt.reflect"><code>ArTypeVariable</code></a></td></tr>
+ <tr><td><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/ErrorType.html?is-external=true" title="class or interface in javax.lang.model.type"><code>ErrorType</code></a>&nbsp;‖</td><td><em>None</em></td></tr>
+ <tr><td><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/ExecutableType.html?is-external=true" title="class or interface in javax.lang.model.type"><code>ExecutableType</code></a>&nbsp;‖</td><td><em>None</em></td></tr>
+ <tr><td><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/IntersectionType.html?is-external=true" title="class or interface in javax.lang.model.type"><code>IntersectionType</code></a>&nbsp;‖</td><td><em>None</em></td></tr>
+ <tr><td><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/NullType.html?is-external=true" title="class or interface in javax.lang.model.type"><code>NullType</code></a>&nbsp;‖</td><td><em>None</em></td></tr>
+ <tr><td><a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/UnionType.html?is-external=true" title="class or interface in javax.lang.model.type"><code>UnionType</code></a>&nbsp;‖</td><td><em>None</em></td></tr>
+ </table>
+ <ul style="list-style: none;margin-left: 0;padding-left: 1em;text-indent: -1em">
+ <li><strong>*</strong> As already stated, <a href="../../../../com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect"><code>ArClass</code></a> can
+ represent primitive and array types, too. Such instances will have no corresponding
+ <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/TypeElement.html?is-external=true" title="class or interface in javax.lang.model.element"><code>TypeElement</code></a>.</li>
+ <li><strong>†</strong> Variable elements that are 
+ <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/ElementKind.html?is-external=true#EXCEPTION_PARAMETER" title="class or interface in javax.lang.model.element">exception parameters</a>,
+ <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/ElementKind.html?is-external=true#LOCAL_VARIABLE" title="class or interface in javax.lang.model.element">local variables</a>, or
+ <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/ElementKind.html?is-external=true#RESOURCE_VARIABLE" title="class or interface in javax.lang.model.element">try-with-resources variables</a>
+ are not modeled with types in this package. Variable elements that are
+ <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/ElementKind.html?is-external=true#ENUM_CONSTANT" title="class or interface in javax.lang.model.element">enum constants</a> or
+ <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/ElementKind.html?is-external=true#FIELD" title="class or interface in javax.lang.model.element">fields</a> are both modeled with
+ <a href="../../../../com/bluegosling/apt/reflect/ArField.html" title="class in com.bluegosling.apt.reflect"><code>ArField</code></a>.</li>
+ <li><strong>‡</strong> Executable elements that are
+ <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/ElementKind.html?is-external=true#INSTANCE_INIT" title="class or interface in javax.lang.model.element">instance initialization blocks</a> or
+ <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/ElementKind.html?is-external=true#STATIC_INIT" title="class or interface in javax.lang.model.element">static initializers</a> are not modeled
+ with types in this package.</li>
+ <li><strong>§</strong> Type mirrors that represent
+ <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/TypeKind.html?is-external=true#NONE" title="class or interface in javax.lang.model.type">the "none" type</a> or
+ <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/TypeKind.html?is-external=true#PACKAGE" title="class or interface in javax.lang.model.type">packages</a> are not modeled with types in this
+ package. So the only <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/NoType.html?is-external=true" title="class or interface in javax.lang.model.type"><code>NoType</code></a> supported is
+ <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/TypeKind.html?is-external=true#VOID" title="class or interface in javax.lang.model.type">void</a>, which is considered a primitive type by
+ this package. The "none" type is generally represented by a <code>null</code> instance in this
+ package. Packages are treated like other unsupported kinds of type mirrors (see more below).</li>
+ <li><strong>‖</strong> Like core reflection, various specialized kinds of type mirrors are not
+ representable by this package. Attempts to wrap such a type mirror as an instance of
+ <a href="../../../../com/bluegosling/apt/reflect/ArType.html" title="class in com.bluegosling.apt.reflect"><code>ArType</code></a> will result in a
+ <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/type/MirroredTypeException.html?is-external=true" title="class or interface in javax.lang.model.type"><code>MirroredTypeException</code></a> being thrown.
+ </ul>
  
  <p><strong>NOTE:</strong> APIs in this package requires the executing thread to be <a href="../../../../com/bluegosling/apt/ProcessingEnvironments.html#setup-javax.annotation.processing.ProcessingEnvironment-">setup for the current processing environment</a>. If you are running from the same thread on which
  the processor was invoked and the processor extends <a href="../../../../com/bluegosling/apt/AbstractProcessor.html" title="class in com.bluegosling.apt"><code>AbstractProcessor</code></a>

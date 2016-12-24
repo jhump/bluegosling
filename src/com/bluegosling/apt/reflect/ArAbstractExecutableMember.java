@@ -15,7 +15,8 @@ import javax.lang.model.type.TypeMirror;
  *
  * @author Joshua Humphries (jhumphries131@gmail.com)
  */
-abstract class ArAbstractExecutableMember extends ArAbstractMember implements ArGenericDeclaration, ArExecutableMember {
+abstract class ArAbstractExecutableMember extends ArAbstractMember<ExecutableElement>
+      implements ArGenericDeclaration, ArExecutableMember {
 
    /**
     * Constructs a new object based on an {@link Element}.
@@ -27,22 +28,17 @@ abstract class ArAbstractExecutableMember extends ArAbstractMember implements Ar
    }
    
    @Override
-   public ExecutableElement asElement() {
-      return (ExecutableElement) super.asElement();
-   }
-
-   @Override
-   public List<ArTypeVariable<?>> getTypeVariables() {
+   public List<? extends ArTypeParameter<?>> getTypeParameters() {
       List<? extends TypeParameterElement> parameters = asElement().getTypeParameters();
-      List<ArTypeVariable<?>> ret = new ArrayList<ArTypeVariable<?>>(parameters.size());
+      List<ArTypeParameter<?>> ret = new ArrayList<ArTypeParameter<?>>(parameters.size());
       for (TypeParameterElement parameter : parameters) {
-         ret.add(ArTypeVariable.forElement(parameter));
+         ret.add(ArTypeParameter.forElement(parameter));
       }
       return Collections.unmodifiableList(ret);
    }
   
    @Override
-   public List<ArParameter<?>> getParameters() {
+   public List<? extends ArParameter<?>> getParameters() {
       List<? extends VariableElement> parameters = asElement().getParameters();
       List<ArParameter<?>> ret = new ArrayList<ArParameter<?>>(parameters.size());
       for (VariableElement parameter : parameters) {
@@ -81,7 +77,7 @@ abstract class ArAbstractExecutableMember extends ArAbstractMember implements Ar
       List<? extends VariableElement> parameters = asElement().getParameters();
       List<List<ArAnnotation>> ret = new ArrayList<List<ArAnnotation>>(parameters.size());
       for (VariableElement parameter : parameters) {
-         ret.add(ArAbstractAnnotatedElement.toAnnotations(parameter.getAnnotationMirrors()));
+         ret.add(ArAnnotation.fromMirrors(parameter.getAnnotationMirrors()));
       }
       return Collections.unmodifiableList(ret);
    }
@@ -125,42 +121,21 @@ abstract class ArAbstractExecutableMember extends ArAbstractMember implements Ar
 
    @Override
    public String toString() {
-      return toString(false);
-   }
-   
-   @Override
-   public String toGenericString() {
-      return toString(true);
-   }
-   
-   /**
-    * Allows sub-classes to hook in an optional return type into the output of {@link #toString()}
-    * and {@link #toGenericString()}.
-    * 
-    * @param sb the target for appending the return type's string representation
-    * @param includeGenerics whether or not the string representation should include generic type
-    *       information about the return type (if false, just use erased type)
-    */
-   abstract void appendReturnType(StringBuilder sb, boolean includeGenerics);
-   
-   private String toString(boolean includeGenerics) {
       StringBuilder sb = new StringBuilder();
       ArModifier.appendModifiers(sb, getModifiers());
-      if (includeGenerics) {
-         int l = sb.length();
-         ArTypeVariable.appendTypeParameters(sb, getTypeVariables());
-         if (sb.length() != l) {
-            sb.append(" ");
-         }
-      }
       int l = sb.length();
-      appendReturnType(sb, includeGenerics);
+      ArTypeParameter.appendTypeParameters(sb, getTypeParameters());
+      if (sb.length() != l) {
+         sb.append(" ");
+      }
+      l = sb.length();
+      appendReturnType(sb);
       if (sb.length() != l) {
          sb.append(" ");
       }
       sb.append(getName());
       sb.append("(");
-      List<ArParameter<?>> parameters = getParameters();
+      List<? extends ArParameter<?>> parameters = getParameters();
       boolean first = true;
       for (ArParameter<?> parameter : parameters) {
          if (first) {
@@ -168,10 +143,10 @@ abstract class ArAbstractExecutableMember extends ArAbstractMember implements Ar
          } else {
             sb.append(",");
          }
-         sb.append(includeGenerics ? parameter.toGenericString() : parameter.toString());
+         sb.append(parameter.toString());
       }
       sb.append(")");
-      List<? extends ArType> exceptions = includeGenerics ? getGenericExceptionTypes() : getExceptionTypes();
+      List<? extends ArType> exceptions = getGenericExceptionTypes();
       if (!exceptions.isEmpty()) {
          sb.append(" throws ");
          first = true;
@@ -181,9 +156,18 @@ abstract class ArAbstractExecutableMember extends ArAbstractMember implements Ar
             } else {
                sb.append(",");
             }
-            sb.append(type.toTypeString());
+            sb.append(type.toString());
          }
       }
       return sb.toString();
    }
+   
+   /**
+    * Allows sub-classes to hook in an optional return type into the output of {@link #toString()}.
+    * 
+    * @param sb the target for appending the return type's string representation
+    * @param includeGenerics whether or not the string representation should include generic type
+    *       information about the return type (if false, just use erased type)
+    */
+   abstract void appendReturnType(StringBuilder sb);
 }

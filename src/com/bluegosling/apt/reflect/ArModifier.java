@@ -24,6 +24,7 @@ import java.util.Set;
  * @author Joshua Humphries (jhumphries131@gmail.com)
  * 
  * @see Modifier
+ * @see javax.lang.model.element.Modifier
  */
 public enum ArModifier {
    /**
@@ -33,7 +34,7 @@ public enum ArModifier {
     * @see java.lang.reflect.Modifier#PRIVATE
     * @see java.lang.reflect.Modifier#isPrivate(int)
     */
-   PRIVATE,
+   PRIVATE(Modifier.PRIVATE, javax.lang.model.element.Modifier.PRIVATE),
 
    /**
     * The {@code protected} modifier.
@@ -42,7 +43,7 @@ public enum ArModifier {
     * @see java.lang.reflect.Modifier#PROTECTED
     * @see java.lang.reflect.Modifier#isProtected(int)
     */
-   PROTECTED,
+   PROTECTED(Modifier.PROTECTED, javax.lang.model.element.Modifier.PROTECTED),
    
    /**
     * The {@code public} modifier.
@@ -51,7 +52,7 @@ public enum ArModifier {
     * @see java.lang.reflect.Modifier#PUBLIC
     * @see java.lang.reflect.Modifier#isPublic(int)
     */
-   PUBLIC,
+   PUBLIC(Modifier.PUBLIC, javax.lang.model.element.Modifier.PUBLIC),
 
    /**
     * A psuedo-modifier that represents package-private (aka "default") access. It's not an
@@ -59,7 +60,7 @@ public enum ArModifier {
     * {@code protected}, or {@code public} modifiers. It's represented by an enum here to make
     * testing for this type of access easier and more explicit.
     */
-   PACKAGE_PRIVATE,
+   PACKAGE_PRIVATE(0, null),
    
    /**
     * The {@code static} modifier.
@@ -68,7 +69,7 @@ public enum ArModifier {
     * @see java.lang.reflect.Modifier#STATIC
     * @see java.lang.reflect.Modifier#isStatic(int)
     */
-   STATIC,
+   STATIC(Modifier.STATIC, javax.lang.model.element.Modifier.STATIC),
 
    /**
     * The {@code abstract} modifier.
@@ -77,7 +78,14 @@ public enum ArModifier {
     * @see java.lang.reflect.Modifier#ABSTRACT
     * @see java.lang.reflect.Modifier#isAbstract(int)
     */
-   ABSTRACT,
+   ABSTRACT(Modifier.ABSTRACT, javax.lang.model.element.Modifier.ABSTRACT),
+
+   /**
+    * The {@code default} modifier.
+    * 
+    * @see javax.lang.model.element.Modifier#DEFAULT
+    */
+   DEFAULT(0, javax.lang.model.element.Modifier.DEFAULT),
 
    /**
     * The {@code final} modifier.
@@ -86,7 +94,7 @@ public enum ArModifier {
     * @see java.lang.reflect.Modifier#FINAL
     * @see java.lang.reflect.Modifier#isFinal(int)
     */
-   FINAL,
+   FINAL(Modifier.FINAL, javax.lang.model.element.Modifier.FINAL),
 
    /**
     * The {@code transient} modifier.
@@ -95,7 +103,7 @@ public enum ArModifier {
     * @see java.lang.reflect.Modifier#TRANSIENT
     * @see java.lang.reflect.Modifier#isTransient(int)
     */
-   TRANSIENT,
+   TRANSIENT(Modifier.TRANSIENT, javax.lang.model.element.Modifier.TRANSIENT),
 
    /**
     * The {@code volatile} modifier.
@@ -104,7 +112,7 @@ public enum ArModifier {
     * @see java.lang.reflect.Modifier#VOLATILE
     * @see java.lang.reflect.Modifier#isVolatile(int)
     */
-   VOLATILE,
+   VOLATILE(Modifier.VOLATILE, javax.lang.model.element.Modifier.VOLATILE),
 
    /**
     * The {@code native} modifier.
@@ -113,7 +121,7 @@ public enum ArModifier {
     * @see java.lang.reflect.Modifier#NATIVE
     * @see java.lang.reflect.Modifier#isNative(int)
     */
-   NATIVE,
+   NATIVE(Modifier.NATIVE, javax.lang.model.element.Modifier.NATIVE),
 
    /**
     * The {@code strictfp} modifier.
@@ -122,7 +130,7 @@ public enum ArModifier {
     * @see java.lang.reflect.Modifier#STRICT
     * @see java.lang.reflect.Modifier#isStrict(int)
     */
-   STRICTFP,
+   STRICTFP(Modifier.STRICT, javax.lang.model.element.Modifier.STRICTFP),
 
    /**
     * The {@code synchronized} modifier.
@@ -131,66 +139,30 @@ public enum ArModifier {
     * @see java.lang.reflect.Modifier#SYNCHRONIZED
     * @see java.lang.reflect.Modifier#isSynchronized(int)
     */
-   SYNCHRONIZED;
+   SYNCHRONIZED(Modifier.SYNCHRONIZED, javax.lang.model.element.Modifier.SYNCHRONIZED);
    
-   private final static Map<javax.lang.model.element.Modifier, ArModifier> elementToMod =
-         new HashMap<javax.lang.model.element.Modifier, ArModifier>();
-   private final static Map<ArModifier, javax.lang.model.element.Modifier> modToElement =
-         new EnumMap<ArModifier, javax.lang.model.element.Modifier>(ArModifier.class);
-   private final static Map<Integer, ArModifier> intToMod =
-         new HashMap<Integer, ArModifier>();
-   private final static Map<ArModifier, Integer> modToInt =
-         new EnumMap<ArModifier, Integer>(ArModifier.class);
+   private final static EnumMap<javax.lang.model.element.Modifier, ArModifier> elementToMod =
+         new EnumMap<>(javax.lang.model.element.Modifier.class);
+   private final static Map<Integer, ArModifier> intToMod = new HashMap<>();
    static {
-      elementToMod.put(javax.lang.model.element.Modifier.PRIVATE, PRIVATE);
-      elementToMod.put(javax.lang.model.element.Modifier.PROTECTED, PROTECTED);
-      elementToMod.put(javax.lang.model.element.Modifier.PUBLIC, PUBLIC);
-      elementToMod.put(javax.lang.model.element.Modifier.STATIC, STATIC);
-      elementToMod.put(javax.lang.model.element.Modifier.ABSTRACT, ABSTRACT);
-      elementToMod.put(javax.lang.model.element.Modifier.FINAL, FINAL);
-      elementToMod.put(javax.lang.model.element.Modifier.TRANSIENT, TRANSIENT);
-      elementToMod.put(javax.lang.model.element.Modifier.VOLATILE, VOLATILE);
-      elementToMod.put(javax.lang.model.element.Modifier.NATIVE, NATIVE);
-      elementToMod.put(javax.lang.model.element.Modifier.STRICTFP, STRICTFP);
-      elementToMod.put(javax.lang.model.element.Modifier.SYNCHRONIZED, SYNCHRONIZED);
-
-      modToElement.put(PRIVATE, javax.lang.model.element.Modifier.PRIVATE);
-      modToElement.put(PROTECTED, javax.lang.model.element.Modifier.PROTECTED);
-      modToElement.put(PUBLIC, javax.lang.model.element.Modifier.PUBLIC);
-      modToElement.put(PACKAGE_PRIVATE, null);
-      modToElement.put(STATIC, javax.lang.model.element.Modifier.STATIC);
-      modToElement.put(ABSTRACT, javax.lang.model.element.Modifier.ABSTRACT);
-      modToElement.put(FINAL, javax.lang.model.element.Modifier.FINAL);
-      modToElement.put(TRANSIENT, javax.lang.model.element.Modifier.TRANSIENT);
-      modToElement.put(VOLATILE, javax.lang.model.element.Modifier.VOLATILE);
-      modToElement.put(NATIVE, javax.lang.model.element.Modifier.NATIVE);
-      modToElement.put(STRICTFP, javax.lang.model.element.Modifier.STRICTFP);
-      modToElement.put(SYNCHRONIZED, javax.lang.model.element.Modifier.SYNCHRONIZED);
-      
-      intToMod.put(java.lang.reflect.Modifier.PRIVATE, PRIVATE);
-      intToMod.put(java.lang.reflect.Modifier.PROTECTED, PROTECTED);
-      intToMod.put(java.lang.reflect.Modifier.PUBLIC, PUBLIC);
-      intToMod.put(java.lang.reflect.Modifier.STATIC, STATIC);
-      intToMod.put(java.lang.reflect.Modifier.ABSTRACT, ABSTRACT);
-      intToMod.put(java.lang.reflect.Modifier.FINAL, FINAL);
-      intToMod.put(java.lang.reflect.Modifier.TRANSIENT, TRANSIENT);
-      intToMod.put(java.lang.reflect.Modifier.VOLATILE, VOLATILE);
-      intToMod.put(java.lang.reflect.Modifier.NATIVE, NATIVE);
-      intToMod.put(java.lang.reflect.Modifier.STRICT, STRICTFP);
-      intToMod.put(java.lang.reflect.Modifier.SYNCHRONIZED, SYNCHRONIZED);
-
-      modToInt.put(PRIVATE, java.lang.reflect.Modifier.PRIVATE);
-      modToInt.put(PROTECTED, java.lang.reflect.Modifier.PROTECTED);
-      modToInt.put(PUBLIC, java.lang.reflect.Modifier.PUBLIC);
-      modToInt.put(PACKAGE_PRIVATE, 0);
-      modToInt.put(STATIC, java.lang.reflect.Modifier.STATIC);
-      modToInt.put(ABSTRACT, java.lang.reflect.Modifier.ABSTRACT);
-      modToInt.put(FINAL, java.lang.reflect.Modifier.FINAL);
-      modToInt.put(TRANSIENT, java.lang.reflect.Modifier.TRANSIENT);
-      modToInt.put(VOLATILE, java.lang.reflect.Modifier.VOLATILE);
-      modToInt.put(NATIVE, java.lang.reflect.Modifier.NATIVE);
-      modToInt.put(STRICTFP, java.lang.reflect.Modifier.STRICT);
-      modToInt.put(SYNCHRONIZED, java.lang.reflect.Modifier.SYNCHRONIZED);
+      for (ArModifier m : values()) {
+         javax.lang.model.element.Modifier e = m.asElementModifier();
+         if (e != null) {
+            elementToMod.put(e, m);
+         }
+         int i = m.asInt();
+         if (i != 0) {
+            intToMod.put(i, m);
+         }
+      }
+   }
+   
+   private final int intMod;
+   private final javax.lang.model.element.Modifier elementMod;
+   
+   ArModifier(int intMod, javax.lang.model.element.Modifier elementMod) {
+      this.intMod = intMod;
+      this.elementMod = elementMod;
    }
 
    /**
@@ -199,7 +171,7 @@ public enum ArModifier {
     * @return the bit mask for this modifier
     */
    public int asInt() {
-      return modToInt.get(this);
+      return intMod;
    }
    
    /**
@@ -208,7 +180,7 @@ public enum ArModifier {
     * @return the corresponding {@code javax.lang.model.element.Modifier}
     */
    public javax.lang.model.element.Modifier asElementModifier() {
-      return modToElement.get(this);
+      return elementMod;
    }
 
    /**
@@ -220,7 +192,7 @@ public enum ArModifier {
    public static int toBitfield(EnumSet<ArModifier> modifiers) {
       int ret = 0;
       for (ArModifier mod : modifiers) {
-         ret |= modToInt.get(mod);
+         ret |= mod.asInt();
       }
       return ret;
    }
@@ -259,6 +231,16 @@ public enum ArModifier {
       return ret;
    }
    
+   // TODO(jh): doc
+   public static EnumSet<ArModifier> fromBitFieldWithVisibility(int modifiers) {
+      EnumSet<ArModifier> ret = fromBitfield(modifiers);
+      if (!ret.contains(ArModifier.PUBLIC) && !ret.contains(ArModifier.PROTECTED)
+            && !ret.contains(ArModifier.PRIVATE)) {
+         ret.add(ArModifier.PACKAGE_PRIVATE);
+      }
+      return ret;
+   }
+   
    /**
     * Converts a set of {@link javax.lang.model.element.Modifier}s to a set of modifiers.
     * 
@@ -276,7 +258,18 @@ public enum ArModifier {
       }
       return ret;
    }
-   
+
+   // TODO(jh): doc
+   public static EnumSet<ArModifier> fromElementModifiersWithVisibility(
+         Set<javax.lang.model.element.Modifier> mods) {
+      EnumSet<ArModifier> ret = fromElementModifiers(mods);
+      if (!ret.contains(ArModifier.PUBLIC) && !ret.contains(ArModifier.PROTECTED)
+            && !ret.contains(ArModifier.PRIVATE)) {
+         ret.add(ArModifier.PACKAGE_PRIVATE);
+      }
+      return ret;
+   }
+
    static void appendModifiers(StringBuilder sb, Set<ArModifier> modifiers) {
       if (!modifiers.isEmpty()) {
          for (ArModifier modifier : modifiers) {
