@@ -1,6 +1,7 @@
 package com.bluegosling.apt.reflect;
 
 import java.lang.reflect.Parameter;
+import java.util.EnumSet;
 
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
@@ -91,11 +92,6 @@ public class ArParameter<M extends ArExecutableMember>
       return param;
    }
 
-   @Override
-   public VariableElement asElement() {
-      return (VariableElement) super.asElement();
-   }
-   
    /**
     * Returns the parameter name.
     * 
@@ -104,7 +100,20 @@ public class ArParameter<M extends ArExecutableMember>
    public String getName() {
       return asElement().getSimpleName().toString();
    }
-   
+
+   /**
+    * Returns the modifiers that apply to this member. Intentionally unlike 
+    * {@link Parameter#getModifiers()}, this returns a set of modifiers (defined in an
+    * {@linkplain ArModifier enum}) instead of a bitmasked integer.
+    * 
+    * @return the modifiers for this member
+    * 
+    * @see Parameter#getModifiers()
+    */
+   public EnumSet<ArModifier> getModifiers() {
+      return ArModifier.fromElementModifiers(asElement().getModifiers());
+   }
+
    /**
     * Returns the type of this parameter. This is a raw type with generic type information erased.
     * For full generic type information, use {@link #getGenericType()}.

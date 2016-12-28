@@ -52,7 +52,8 @@ final class CoreReflectionPackages {
          } catch (ClassNotFoundException | LinkageError e) {
             continue; // skip unloadable entries
          }
-         if (!cl.isAnonymousClass() && !cl.isLocalClass() && !cl.isMemberClass()) {
+         if (!cl.isSynthetic() && !cl.isAnonymousClass() && !cl.isLocalClass()
+               && !cl.isMemberClass()) {
             results.add(new CoreReflectionTypeElement(cl));
          }
       }

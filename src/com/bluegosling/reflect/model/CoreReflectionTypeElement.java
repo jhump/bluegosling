@@ -84,15 +84,27 @@ class CoreReflectionTypeElement extends CoreReflectionBaseElement<Class<?>> impl
       List<Element> result =
             new ArrayList<>(fields.length + ctors.length + methods.length + classes.length);
       for (Field f : fields) {
+         if (f.isSynthetic()) {
+            continue;
+         }
          result.add(CoreReflectionElements.INSTANCE.getFieldElement(f));
       }
       for (Constructor<?> c : ctors) {
+         if (c.isSynthetic()) {
+            continue;
+         }
          result.add(CoreReflectionElements.INSTANCE.getExecutableElement(c));
       }
       for (Method m : methods) {
+         if (m.isSynthetic() || m.isBridge()) {
+            continue;
+         }
          result.add(CoreReflectionElements.INSTANCE.getExecutableElement(m));
       }
       for (Class<?> c : classes) {
+         if (c.isSynthetic()) {
+            continue;
+         }
          result.add(CoreReflectionElements.INSTANCE.getTypeElement(c));
       }
       return result;

@@ -231,7 +231,7 @@ public enum ArModifier {
       return ret;
    }
    
-   // TODO(jh): doc
+   // TODO: doc
    public static EnumSet<ArModifier> fromBitFieldWithVisibility(int modifiers) {
       EnumSet<ArModifier> ret = fromBitfield(modifiers);
       if (!ret.contains(ArModifier.PUBLIC) && !ret.contains(ArModifier.PROTECTED)
@@ -259,7 +259,7 @@ public enum ArModifier {
       return ret;
    }
 
-   // TODO(jh): doc
+   // TODO: doc
    public static EnumSet<ArModifier> fromElementModifiersWithVisibility(
          Set<javax.lang.model.element.Modifier> mods) {
       EnumSet<ArModifier> ret = fromElementModifiers(mods);
