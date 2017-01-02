@@ -982,6 +982,9 @@ enum CoreReflectionElements implements Elements {
 
    @Override
    public TypeElement getTypeElement(Class<?> clazz) {
+      if (clazz.isSynthetic()) {
+         throw new IllegalArgumentException("Synthetic types are not valid elements");
+      }
       return new CoreReflectionTypeElement(clazz);
    }
 
@@ -992,16 +995,27 @@ enum CoreReflectionElements implements Elements {
 
    @Override
    public VariableElement getParameterElement(Parameter parameter) {
+      if (parameter.isSynthetic()) {
+         throw new IllegalArgumentException("Synthetic parameters are not valid elements");
+      }
       return new CoreReflectionParameterElement(parameter);
    }
 
    @Override
    public VariableElement getFieldElement(Field field) {
+      if (field.isSynthetic()) {
+         throw new IllegalArgumentException("Synthetic fields are not valid elements");
+      }
       return new CoreReflectionFieldElement(field);
    }
 
    @Override
    public ExecutableElement getExecutableElement(Executable executable) {
+      if (executable.isSynthetic()
+            || (executable instanceof Method && ((Method) executable).isBridge())) {
+         throw new IllegalArgumentException(
+               "Synthetic and bridge methods and constructors are not valid elements");
+      }
       return new CoreReflectionExecutableElement(executable);
    }
 

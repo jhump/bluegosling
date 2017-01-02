@@ -93,7 +93,9 @@ implements ExecutableElement {
       Parameter[] params = base().getParameters();
       List<VariableElement> result = new ArrayList<>(params.length);
       for (Parameter param : params) {
-         result.add(CoreReflectionElements.INSTANCE.getParameterElement(param));
+         if (!param.isSynthetic()) {
+            result.add(CoreReflectionElements.INSTANCE.getParameterElement(param));
+         }
       }
       return result;
    }

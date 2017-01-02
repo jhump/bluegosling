@@ -201,7 +201,6 @@ public class CompilationContext {
    }
 
    private class TaskBuilderImpl implements TaskBuilderWithProcessor {
-
       private final List<String> options = new ArrayList<>();
       private final Set<Class<?>> classesToProcess = new HashSet<>();
       private final Set<JavaFileObject> filesToProcess = new HashSet<>();
@@ -250,8 +249,12 @@ public class CompilationContext {
       }
 
       private boolean run(Processor processor) throws Throwable {
-         Set<String> classNames =
-               classesToProcess.stream().map(Class::getCanonicalName)
+         // if no classes or files specified, just use Object as a dummy class to process
+         // (just to get us into a processing environment)
+         Set<String> classNames = classesToProcess.isEmpty() && filesToProcess.isEmpty()
+               ? new LinkedHashSet<>(Arrays.asList(Object.class.getCanonicalName()))
+               : classesToProcess.stream()
+                     .map(Class::getCanonicalName)
                      .collect(Collectors.toCollection(LinkedHashSet::new));
          JavaCompiler.CompilationTask task =
                compiler.getTask(null, fileManager, diagnosticCollector.getListener(), options,

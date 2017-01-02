@@ -904,7 +904,7 @@ public final class MoreSpliterators {
          if (p == null) {
             return null;
          }
-         // TODO(jh): dynamically sub in a Set instead of array if depth is high
+         // TODO: dynamically sub in a Set instead of array if depth is high
          @SuppressWarnings("unchecked") // generic array creation
          ForkingSpliterator<T>[] ret =
                (ForkingSpliterator<T>[]) new ForkingSpliterator<?>[parent.depth];

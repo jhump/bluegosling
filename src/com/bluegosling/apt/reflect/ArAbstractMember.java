@@ -36,7 +36,7 @@ abstract class ArAbstractMember<E extends Element> extends ArAbstractAnnotatedEl
 
    @Override
    public EnumSet<ArModifier> getModifiers() {
-      return ArModifier.fromElementModifiers(asElement().getModifiers());
+      return ArModifier.fromElementModifiersWithVisibility(asElement().getModifiers());
    }
 
    @Override
