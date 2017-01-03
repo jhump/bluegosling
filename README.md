@@ -41,5 +41,5 @@ You can peruse the complete java doc here: [https://jhump.github.io/bluegosling/
 
 ## Who are you?
 
-Ostensibly, we are [Apriori Enterprises](http://apriori.bluegosling.com). Really, it's just me. My name is [Joshua](https://github.com/jhump) [Humphries](https://www.linkedin.com/in/jhumphries131). I am currently a software engineer at [Square](https://squareup.com/) and [Xoogler](http://google.about.com/od/wx/g/xooglers.htm), and I have over 17 years of software engineering experience.
+Ostensibly, we are [Apriori Enterprises](http://apriori.bluegosling.com). Really, it's just me. My name is [Joshua](https://github.com/jhump) [Humphries](https://www.linkedin.com/in/jhumphries131). I am currently a software engineer at [FullStory](https://fullstory.com/); I am a former [Square](https://squareup.com/) and [Xoogler](http://google.about.com/od/wx/g/xooglers.htm); and I have over 17 years of software engineering experience.
 
