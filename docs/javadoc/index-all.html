@@ -1611,8 +1611,6 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArClass.html#asElement--">asElement()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArClass.html" title="class in com.bluegosling.apt.reflect">ArClass</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArParameter.html#asElement--">asElement()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArParameter.html" title="class in com.bluegosling.apt.reflect">ArParameter</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArModifier.html#asElementModifier--">asElementModifier()</a></span> - Method in enum com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArModifier.html" title="enum in com.bluegosling.apt.reflect">ArModifier</a></dt>
 <dd>
 <div class="block">Returns the corresponding <a href="https://docs.oracle.com/javase/8/docs/api/javax/lang/model/element/Modifier.html?is-external=true" title="class or interface in javax.lang.model.element"><code>javax.lang.model.element.Modifier</code></a>.</div>
@@ -2004,6 +2002,14 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/concurrent/fluent/FluentFutureTask.html#await-long-java.util.concurrent.TimeUnit-">await(long, TimeUnit)</a></span> - Method in class com.bluegosling.concurrent.fluent.<a href="com/bluegosling/concurrent/fluent/FluentFutureTask.html" title="class in com.bluegosling.concurrent.fluent">FluentFutureTask</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/concurrent/UpAndDownLatch.html#await--">await()</a></span> - Method in class com.bluegosling.concurrent.<a href="com/bluegosling/concurrent/UpAndDownLatch.html" title="class in com.bluegosling.concurrent">UpAndDownLatch</a></dt>
+<dd>
+<div class="block">Waits for the number of references to reach zero.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/concurrent/UpAndDownLatch.html#await-long-java.util.concurrent.TimeUnit-">await(long, TimeUnit)</a></span> - Method in class com.bluegosling.concurrent.<a href="com/bluegosling/concurrent/UpAndDownLatch.html" title="class in com.bluegosling.concurrent">UpAndDownLatch</a></dt>
+<dd>
+<div class="block">Waits up to specified amount of time for the number of references to reach zero.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/reflect/scanner/PackageScanner.ScanResult.html#await--">await()</a></span> - Method in class com.bluegosling.reflect.scanner.<a href="com/bluegosling/reflect/scanner/PackageScanner.ScanResult.html" title="class in com.bluegosling.reflect.scanner">PackageScanner.ScanResult</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/reflect/scanner/PackageScanner.ScanResult.html#await-long-java.util.concurrent.TimeUnit-">await(long, TimeUnit)</a></span> - Method in class com.bluegosling.reflect.scanner.<a href="com/bluegosling/reflect/scanner/PackageScanner.ScanResult.html" title="class in com.bluegosling.reflect.scanner">PackageScanner.ScanResult</a></dt>
@@ -4355,6 +4361,22 @@
 <dt><span class="memberNameLink"><a href="com/bluegosling/collections/CircularBuffer.html#count--">count()</a></span> - Method in class com.bluegosling.collections.<a href="com/bluegosling/collections/CircularBuffer.html" title="class in com.bluegosling.collections">CircularBuffer</a></dt>
 <dd>
 <div class="block">Returns the number of items in the buffer.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/concurrent/UpAndDownLatch.html#countDown--">countDown()</a></span> - Method in class com.bluegosling.concurrent.<a href="com/bluegosling/concurrent/UpAndDownLatch.html" title="class in com.bluegosling.concurrent">UpAndDownLatch</a></dt>
+<dd>
+<div class="block">Removes a single reference from the latch.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/concurrent/UpAndDownLatch.html#countDown-int-">countDown(int)</a></span> - Method in class com.bluegosling.concurrent.<a href="com/bluegosling/concurrent/UpAndDownLatch.html" title="class in com.bluegosling.concurrent">UpAndDownLatch</a></dt>
+<dd>
+<div class="block">Removes the given number of single references from the latch.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/concurrent/UpAndDownLatch.html#countUp--">countUp()</a></span> - Method in class com.bluegosling.concurrent.<a href="com/bluegosling/concurrent/UpAndDownLatch.html" title="class in com.bluegosling.concurrent">UpAndDownLatch</a></dt>
+<dd>
+<div class="block">Adds a single reference to the latch.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/concurrent/UpAndDownLatch.html#countUp-int-">countUp(int)</a></span> - Method in class com.bluegosling.concurrent.<a href="com/bluegosling/concurrent/UpAndDownLatch.html" title="class in com.bluegosling.concurrent">UpAndDownLatch</a></dt>
+<dd>
+<div class="block">Adds the given number of references to the latch.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/collections/concurrent/ShardedConcurrentSets.Builder.html#create--">create()</a></span> - Method in class com.bluegosling.collections.concurrent.<a href="com/bluegosling/collections/concurrent/ShardedConcurrentSets.Builder.html" title="class in com.bluegosling.collections.concurrent">ShardedConcurrentSets.Builder</a></dt>
 <dd>
@@ -7888,6 +7910,10 @@
 <dd>
 <div class="block">Returns the size of the core pool of worker threads.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/concurrent/UpAndDownLatch.html#getCount--">getCount()</a></span> - Method in class com.bluegosling.concurrent.<a href="com/bluegosling/concurrent/UpAndDownLatch.html" title="class in com.bluegosling.concurrent">UpAndDownLatch</a></dt>
+<dd>
+<div class="block">Returns the current number of references.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/concurrent/executors/ActorThreadPool.html#getCurrentPoolSize--">getCurrentPoolSize()</a></span> - Method in class com.bluegosling.concurrent.executors.<a href="com/bluegosling/concurrent/executors/ActorThreadPool.html" title="class in com.bluegosling.concurrent.executors">ActorThreadPool</a></dt>
 <dd>
 <div class="block">Returns the current size of the thread pool.</div>
@@ -8493,6 +8519,10 @@
 <div class="block">Returns all modifiers that were on the declaration of this class.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArMember.html#getModifiers--">getModifiers()</a></span> - Method in interface com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArMember.html" title="interface in com.bluegosling.apt.reflect">ArMember</a></dt>
+<dd>
+<div class="block">Returns the modifiers that apply to this member.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/apt/reflect/ArParameter.html#getModifiers--">getModifiers()</a></span> - Method in class com.bluegosling.apt.reflect.<a href="com/bluegosling/apt/reflect/ArParameter.html" title="class in com.bluegosling.apt.reflect">ArParameter</a></dt>
 <dd>
 <div class="block">Returns the modifiers that apply to this member.</div>
 </dd>
@@ -10495,6 +10525,8 @@
 <div class="block">Returns true if the event has occurred.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/concurrent/fluent/AbstractFluentFuture.html#isDone--">isDone()</a></span> - Method in class com.bluegosling.concurrent.fluent.<a href="com/bluegosling/concurrent/fluent/AbstractFluentFuture.html" title="class in com.bluegosling.concurrent.fluent">AbstractFluentFuture</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/concurrent/UpAndDownLatch.html#isDone--">isDone()</a></span> - Method in class com.bluegosling.concurrent.<a href="com/bluegosling/concurrent/UpAndDownLatch.html" title="class in com.bluegosling.concurrent">UpAndDownLatch</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/reflect/scanner/PackageScanner.ScanResult.html#isDone--">isDone()</a></span> - Method in class com.bluegosling.reflect.scanner.<a href="com/bluegosling/reflect/scanner/PackageScanner.ScanResult.html" title="class in com.bluegosling.reflect.scanner">PackageScanner.ScanResult</a></dt>
 <dd>&nbsp;</dd>
@@ -17981,6 +18013,8 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/concurrent/Duration.html#toString--">toString()</a></span> - Method in class com.bluegosling.concurrent.<a href="com/bluegosling/concurrent/Duration.html" title="class in com.bluegosling.concurrent">Duration</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/concurrent/UpAndDownLatch.html#toString--">toString()</a></span> - Method in class com.bluegosling.concurrent.<a href="com/bluegosling/concurrent/UpAndDownLatch.html" title="class in com.bluegosling.concurrent">UpAndDownLatch</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/graph/Key.html#toString--">toString()</a></span> - Method in class com.bluegosling.graph.<a href="com/bluegosling/graph/Key.html" title="class in com.bluegosling.graph">Key</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/graph/Node.Input.html#toString--">toString()</a></span> - Method in class com.bluegosling.graph.<a href="com/bluegosling/graph/Node.Input.html" title="class in com.bluegosling.graph">Node.Input</a></dt>
@@ -18953,6 +18987,18 @@
 <dt><span class="memberNameLink"><a href="com/bluegosling/possible/Reference.html#unset--">unset()</a></span> - Static method in class com.bluegosling.possible.<a href="com/bluegosling/possible/Reference.html" title="class in com.bluegosling.possible">Reference</a></dt>
 <dd>
 <div class="block">Creates a reference where the value is unset (absent).</div>
+</dd>
+<dt><a href="com/bluegosling/concurrent/UpAndDownLatch.html" title="class in com.bluegosling.concurrent"><span class="typeNameLink">UpAndDownLatch</span></a> - Class in <a href="com/bluegosling/concurrent/package-summary.html">com.bluegosling.concurrent</a></dt>
+<dd>
+<div class="block">A latch that allows counting up, not just down.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/concurrent/UpAndDownLatch.html#UpAndDownLatch--">UpAndDownLatch()</a></span> - Constructor for class com.bluegosling.concurrent.<a href="com/bluegosling/concurrent/UpAndDownLatch.html" title="class in com.bluegosling.concurrent">UpAndDownLatch</a></dt>
+<dd>
+<div class="block">Constructs a new latch that has zero references.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/bluegosling/concurrent/UpAndDownLatch.html#UpAndDownLatch-int-">UpAndDownLatch(int)</a></span> - Constructor for class com.bluegosling.concurrent.<a href="com/bluegosling/concurrent/UpAndDownLatch.html" title="class in com.bluegosling.concurrent">UpAndDownLatch</a></dt>
+<dd>
+<div class="block">Constructs a new latch that has the given number of initial references.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/bluegosling/possible/Reference.html#upcast-com.bluegosling.possible.Reference-">upcast(Reference&lt;T&gt;)</a></span> - Static method in class com.bluegosling.possible.<a href="com/bluegosling/possible/Reference.html" title="class in com.bluegosling.possible">Reference</a></dt>
 <dd>

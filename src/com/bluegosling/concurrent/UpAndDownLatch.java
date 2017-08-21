@@ -153,8 +153,8 @@ public class UpAndDownLatch implements Awaitable {
     * @throws InterruptedException if this thread is interrupted while waiting
     */
    @Override
-   public boolean await(long timeLimit, TimeUnit unit) throws InterruptedException {
-      return sync.tryAcquireSharedNanos(0, unit.toNanos(timeLimit));
+   public boolean await(long limit, TimeUnit unit) throws InterruptedException {
+      return sync.tryAcquireSharedNanos(0, unit.toNanos(limit));
    }
 
    @Override
