@@ -32,7 +32,7 @@ public class Duration implements Comparable<Duration> {
     * Cache of the time unit values. We don't invoke {@code TimeUnit.values()} repeatedly since it
     * must create a defensive copy of the array every time.
     */
-   private static final TimeUnit UNITS_BY_ORDINAL[] = TimeUnit.values();
+   private static final TimeUnit[] UNITS_BY_ORDINAL = TimeUnit.values();
 
    /**
     * Represents the scale of converting from one given unit to another. The first index for this
@@ -41,7 +41,7 @@ public class Duration implements Comparable<Duration> {
     * it from unit to the other. The scale is computed using {@link TimeUnit#convert(long, TimeUnit)
     * from.convert(1, to)}.
     */
-   private static final long UNIT_SCALE[][];
+   private static final long[][] UNIT_SCALE;
 
    /**
     * Represents the scale of converting from a given unit (indexed by ordinal) to the next unit
@@ -49,7 +49,7 @@ public class Duration implements Comparable<Duration> {
     * {@code UNIT_SCALE[i][i + 1]} where {@code i} is the ordinal of any unit smaller than
     * {@link TimeUnit#DAYS}.
     */
-   private static final long UNIT_SCALE_TO_NEXT[];
+   private static final long[] UNIT_SCALE_TO_NEXT;
 
    /**
     * The maximum value for a given unit to convert to another given unit. The first index for this
@@ -57,7 +57,7 @@ public class Duration implements Comparable<Duration> {
     * The value in the array represents the maximum value allowed for conversion to proceed without
     * overflow.
     */
-   private static final long UNIT_CONVERSION_MAX[][];
+   private static final long[][] UNIT_CONVERSION_MAX;
 
    /**
     * The minimum value for a given unit to convert to another given unit. The first index for this
@@ -65,7 +65,7 @@ public class Duration implements Comparable<Duration> {
     * The value in the array represents the minimum value allowed for conversion to proceed without
     * underflow.
     */
-   private static final long UNIT_CONVERSION_MIN[][];
+   private static final long[][] UNIT_CONVERSION_MIN;
 
    /**
     * The maximum threshold, in 128 bit values, for coarsening from unit to another. The first index
@@ -74,7 +74,7 @@ public class Duration implements Comparable<Duration> {
     * respectively. The value in the array represents the maximum value that can be converted to the
     * target unit without overflow.
     */
-   private static final long UNIT_128_TO_64_COARSEN_MAX[][][];
+   private static final long[][][] UNIT_128_TO_64_COARSEN_MAX;
 
    /**
     * The minimum threshold, in 128 bit values, for coarsening from unit to another. The first index
@@ -83,7 +83,7 @@ public class Duration implements Comparable<Duration> {
     * respectively. The value in the array represents the minimum value that can be converted to the
     * target unit without underflow.
     */
-   private static final long UNIT_128_TO_64_COARSEN_MIN[][][];
+   private static final long[][][] UNIT_128_TO_64_COARSEN_MIN;
 
    static {
       // compute maximums for preventing overflow/underflow
@@ -527,44 +527,7 @@ public class Duration implements Comparable<Duration> {
       }
       return of(product, resultUnit);
    }
-   
-   public static void main(String args[]) {
-      // TODO: move to unit tests
-      long lo = Long.MIN_VALUE * Long.MIN_VALUE;
-      long hi = int128_multiply64x64High(Long.MIN_VALUE, Long.MIN_VALUE);
-      System.out.println(Long.toHexString(Long.MIN_VALUE) + " * " + Long.toHexString(Long.MIN_VALUE)
-            + " = " + Long.toHexString(hi) + " " + Long.toHexString(lo));
 
-      
-      
-      Random rnd = new Random();
-      long[] required = new long[] { 1, -1, 0, 5, 100, Integer.MAX_VALUE, Integer.MIN_VALUE,
-            Long.MAX_VALUE, Long.MIN_VALUE };
-      long[] operands = new long[100 + required.length];
-      System.arraycopy(required, 0, operands, 0, required.length);
-      for (int i = 0; i < 100; i++) {
-         operands[i + required.length] = rnd.nextLong(); 
-      }
-
-      long[] product = new long[2];
-      for (long l1 : operands) {
-         for (long l2 : operands) {
-            product[1] = l1 * l2;
-            product[0] = int128_multiply64x64High(l1, l2);
-            BigInteger expectedResult = BigInteger.valueOf(l1).multiply(BigInteger.valueOf(l2));
-            
-            long[] product2 = new long[2];
-            product2[0] = expectedResult.shiftRight(64).longValueExact();
-            product2[1] = expectedResult.longValue();
-            
-            if (product[0] != product2[0] || product[1] != product2[1]) {
-               System.err.printf("%x * %x should be %x %x but was %x %x%n", l1, l2,
-                     product2[0], product2[1], product[0], product[1]);
-            }
-         }
-      }
-   }
-   
    /**
     * Returns this duration divided by the specified number. The unit of the returned duration will
     * be either the same as this duration or a more precise unit. A finer unit may be used if the
@@ -794,7 +757,7 @@ public class Duration implements Comparable<Duration> {
 
    /**
     * Divides a 128-bit unsigned integer by a 64-bit unsigned divisor and produces the low-order
-    * 64-bits of the quotient.
+    * 64-bits of the quotient. The 128-bit value must be positive.
     *
     * @param u1 high-order 64 bits of the dividend
     * @param u0 low-order 64 bits of the dividend
@@ -802,14 +765,25 @@ public class Duration implements Comparable<Duration> {
     * @return low-order 64 bits of the quotient
     */
    static long int128_udivideBy64(long u1, long u0, long v) {
-      long b = 1l << 32;
+      // Adapted from https://www.codeproject.com/Tips/785014/UInt128-Division-Modulus
+      if (u1 == 0) {
+         return Long.divideUnsigned(u0, v);
+      }
+      if (Long.compareUnsigned(u1, v) < 0) {
+         return int128_udivideBy64_helper(u1, u0, v);
+      }
+      return int128_udivideBy64_helper(Long.remainderUnsigned(u1, v), u0, v);
+   }
+
+   private static long int128_udivideBy64_helper(long u1, long u0, long v) {
+      long b = 1L << 32;
       long un1, un0, vn1, vn0, q1, q0, un32, un21, un10, rhat, left, right;
       int s;
 
       s = Long.numberOfLeadingZeros(v);
       v <<= s;
       vn1 = v >>> 32;
-      vn0 = v & 0xffffffffL;
+      vn0 = v & 0xffff_ffffL;
 
       if (s > 0) {
          un32 = (u1 << s) | (u0 >>> (64 - s));
@@ -820,13 +794,13 @@ public class Duration implements Comparable<Duration> {
       }
 
       un1 = un10 >>> 32;
-      un0 = un10 & 0xffffffffL;
+      un0 = un10 & 0xffff_ffffL;
 
       q1 = Long.divideUnsigned(un32, vn1);
       rhat = Long.remainderUnsigned(un32, vn1);
 
       left = q1 * vn0;
-      right = (rhat << 32) + un1;
+      right = (rhat << 32) | un1;
 
       while (true) {
          if (Long.compareUnsigned(q1, b) >= 0 || Long.compareUnsigned(left, right) > 0) {
@@ -874,16 +848,16 @@ public class Duration implements Comparable<Duration> {
     */
    static long int128_multiply64x64High(long x, long y) {
       long u0 = x >>> 32;
-      long u1 = x & 0xffffffffl;
+      long u1 = x & 0xffff_ffffL;
       long v0 = y >>> 32;
-      long v1 = y & 0xffffffffl;
+      long v1 = y & 0xffff_ffffL;
 
       long w0 = u1 * v1;
       long w1 = u1 * v0;
       long w2 = u0 * v1;
       long w3 = u0 * v0;
       
-      long c = ((w0 >>> 32) + (w1 & 0xffffffffl) + (w2 & 0xffffffffl)) >>> 32;
+      long c = ((w0 >>> 32) + (w1 & 0xffff_ffffL) + (w2 & 0xffff_ffffL)) >>> 32;
       long hi = w3 + (w2 >>> 32) + (w1 >>> 32) + c;
       
       return hi - ((x < 0) ? y : 0) - ((y < 0) ? x : 0);
