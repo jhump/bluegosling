@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import java.math.BigInteger;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 /** Test cases for {@link Duration}. */
@@ -420,5 +421,86 @@ public class DurationTest {
         assertTrue(d1.compareTo(d2) < 0);
       }
     }
+  }
+
+  @Test public void int128_arithmetic() {
+    Random rnd = new Random();
+    long[] required = new long[] { 1, 3, -1, 0, 5, 100, Integer.MAX_VALUE, Integer.MIN_VALUE,
+            Long.MAX_VALUE, Long.MIN_VALUE, 0x4638D12A75A03B7BL };
+    long[] operands = new long[100 + required.length];
+    System.arraycopy(required, 0, operands, 0, required.length);
+    for (int i = 0; i < 100; i++) {
+      operands[i + required.length] = rnd.nextLong();
+    }
+
+    long[] product = new long[2];
+    for (long l1 : operands) {
+      for (long l2 : operands) {
+        product[0] = Duration.int128_multiply64x64High(l1, l2);
+        product[1] = l1 * l2;
+        BigInteger expectedResult = BigInteger.valueOf(l1).multiply(BigInteger.valueOf(l2));
+
+        long[] product2 = new long[2];
+        product2[0] = expectedResult.shiftRight(64).longValueExact();
+        product2[1] = expectedResult.longValue();
+
+        assertEquals(product[0], product2[0]);
+        assertEquals(product[1], product2[1]);
+
+        if (product2[0] < 0) {
+          continue;
+        }
+
+        for (long l3 : operands) {
+          if (l3 == 0) {
+            continue;
+          }
+
+          long res = Duration.int128_udivideBy64(product2[0], product2[1], l3);
+          long res2 = expectedResult.divide(bigIntOfUnsigned(l3)).longValue();
+
+          assertEquals(res, res2);
+        }
+      }
+    }
+
+    for (long l1 : operands) {
+      for (long l2 : operands) {
+        l1 = Math.abs(l1);
+        BigInteger bl1 = bigIntOfUnsigned(l1);
+        BigInteger bl2 = bigIntOfUnsigned(l2);
+        BigInteger bigVal = bl1.shiftLeft(64).or(bl2);
+
+        // Sanity check the BigInteger value
+        String s = bigVal.toString(16);
+        String s2;
+        if (l1 == 0) {
+          s2 = String.format("%x", l2);
+        } else {
+          s2 = String.format("%x%016x", l1, l2);
+        }
+        assertEquals(s, s2);
+
+        for (long l3 : operands) {
+          if (l3 == 0) {
+            continue;
+          }
+          long res = Duration.int128_udivideBy64(l1, l2, l3);
+          long res2 = bigVal.divide(bigIntOfUnsigned(l3)).longValue();
+
+          assertEquals(res, res2);
+        }
+      }
+    }
+  }
+
+  static BigInteger bigIntOfUnsigned(long l) {
+    if (l < 0) {
+      // Interpret sign bit as a 64th high bit.
+      BigInteger lowerBits = BigInteger.valueOf(l & Long.MAX_VALUE);
+      BigInteger highBit = BigInteger.valueOf(Long.MIN_VALUE).negate();
+      return lowerBits.or(highBit);
+    }
+    return BigInteger.valueOf(l);
   }
 }
